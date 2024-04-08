@@ -1,6 +1,6 @@
 ## Quickstart
 
-1. Install the dependencies with `npm install`
+1. Install the dpendencies with `npm install`
 2. Run the application with `npm run dev`
 
 ## File Structure 🗂️
