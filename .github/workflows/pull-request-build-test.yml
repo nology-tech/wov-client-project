@@ -1,5 +1,7 @@
 name: Pull Requests build and test
 on: [pull_request]
+env:
+  VITE_FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
 jobs:
   starts_tests:
     runs-on: ubuntu-latest
