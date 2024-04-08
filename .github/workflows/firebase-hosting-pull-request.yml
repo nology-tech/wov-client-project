@@ -3,7 +3,7 @@
 name: Deploy to Firebase Hosting on PR
 on:
   workflow_run:
-    workflows: [Pull Requests build and test]
+    workflows: [starts_tests]
     types:
       - completed
 env:
