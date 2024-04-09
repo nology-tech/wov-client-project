@@ -1,9 +1,10 @@
 import Layout from "../../components/Layout/Layout";
+import Header from "../../components/Header/Header";
 
 const Home = () => {
   return (
     <Layout>
-      <h1>Page Heading</h1>
+      <Header title="test" subtitle="test2" />
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
       <p>
