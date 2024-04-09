@@ -1,25 +1,27 @@
+@use "../../styles/variables" as *;
+
 .button {
   outline: none;
   border: none;
   border-radius: 5px;
   font-weight: 700;
   text-transform: uppercase;
-  color: #fff;
+  color: $white-color;
   cursor: pointer;
   padding: 0.625rem 1.25rem;
   max-width: 20.938rem;
   min-width: 16.75rem;
 
   &--primary {
-    background-color: #a7cca4;
+    background-color: $primary-color;
   }
 
   &--secondary {
-    background-color: #5d4a3c;
+    background-color: $secondary-color;
   }
 
   &--light-grey {
-    background-color: #e4e5f0;
-    color: #5f6068;
+    background-color: $light-grey-color;
+    color: $slate-grey-color;
   }
 }
