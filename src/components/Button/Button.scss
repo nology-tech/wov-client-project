@@ -6,6 +6,9 @@
   text-transform: uppercase;
   color: #fff;
   cursor: pointer;
+  padding: 0.625rem 1.25rem;
+  max-width: 20.938rem;
+  min-width: 16.75rem;
 
   &--primary {
     background-color: #a7cca4;
@@ -18,15 +21,5 @@
   &--light-grey {
     background-color: #e4e5f0;
     color: #5f6068;
-  }
-
-  &--sm {
-    width: 16.75rem;
-    height: 3.8rem;
-  }
-
-  &--md {
-    width: 20.938rem;
-    height: 4.125rem;
   }
 }

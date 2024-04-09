@@ -2,10 +2,6 @@ import Button from "../../components/Button/Button";
 import Layout from "../../components/Layout/Layout";
 
 const Home = () => {
-  const handleClick = () => {
-    console.log("Handle Click ");
-  };
-
   return (
     <Layout>
       <h1>Page Heading</h1>
@@ -17,7 +13,7 @@ const Home = () => {
         maxime tempora, temporibus beatae voluptas repellat rerum. Dignissimos,
         necessitatibus.
       </p>
-      <Button label="Home" onClick={handleClick} />
+      <Button label="Home" />
     </Layout>
   );
 };
