@@ -7,5 +7,56 @@
     padding-left: 1rem;
     background-color: $secondary-color;
     padding-bottom: 8rem;
-    font-family: $font-family-modern-content
+    font-family: $font-family-modern-content;
 }
+
+
+
+@media screen and (min-width: $tablet-breakpoint) {
+  .header-home {
+    font-size: 2rem;
+    padding: 3rem;
+    padding-bottom: 5rem;
+  }
+}  
+
+
+
+@media screen and (min-width: $desktop-breakpoint) {
+ .header-home {
+  margin-top: -2px;
+  font-size: 2rem;
+  padding: 0 4rem;
+  padding-bottom: 5rem;
+ }
+}  
+
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .header-home {
+    margin-top: -2px;
+    font-size: 3rem;
+    padding: 0 5rem;
+    padding-bottom: 6rem;
+   }
+}
+
+
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .header-home {
+    margin-top: -2px;
+    font-size: 3.5rem;
+    padding: 0 6rem;
+    padding-bottom: 7rem;
+   }
+}  
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) { 
+  .header-home {
+    margin-top: -4px;
+    font-size: 5rem;
+    padding: 0 8rem;
+    padding-bottom: 15rem;
+   }
+}  

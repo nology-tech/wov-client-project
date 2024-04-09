@@ -5,7 +5,7 @@ import HeaderHome from "../../components/HeaderHome/HeaderHome";
 const Home = () => {
   return (
     <Layout>
-      <Header title="test" subtitle="test2" image="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" />
+      <Header title="WAY OF THE VIKING" subtitle="test2" image="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" />
       <HeaderHome/>
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
