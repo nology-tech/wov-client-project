@@ -1,1 +1,10 @@
 @use "../../styles/variables" as *;
+.bottom-navigation__item .MuiSvgIcon-root {
+  color: lightgray;
+}
+.Mui-selected .MuiSvgIcon-root {
+  color: black;
+}
+.Mui-selected {
+  color: black;
+}
