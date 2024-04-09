@@ -25,9 +25,9 @@ $white-color:  #FFFFFF;
 
 // typography
 
-$font-family-modern-headers: "Poppins", sans-serif;
+$font-family-modern-header: "Poppins", sans-serif;
 $font-family-modern-content: "PT Sans", sans-serif;
-$font-family-classic-headers: "Playfair Display", sans-serif;
+$font-family-classic-header: "Playfair Display", sans-serif;
 $font-family-classic-content: "Lato", sans-serif;
 
 $font-h1: bold 2.25rem;   // used with "font:" property
@@ -40,4 +40,6 @@ $font-button: bold 1rem;
 
 // spacing
 
-
+$line-height-header: 2.25rem;
+$line-height-paragraph: 1.688rem;
+$line-height-subtext: 1.313rem;     // For tasks section subtext
