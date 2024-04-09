@@ -1,0 +1,24 @@
+.button {
+  width: 268px;
+  height: 61px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  &--primary {
+    background-color: #a7cca4;
+    color: #ffffff;
+  }
+
+  &--secondary {
+    background-color: #5d4a3c;
+    color: #ffffff;
+  }
+
+  &--light-grey {
+    background-color: #e4e5f0;
+    color: #5f6068;
+  }
+}
