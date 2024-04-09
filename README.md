@@ -23,3 +23,10 @@
 ## Code Quality 🌟
 
 - This project uses prettier and ESlint to increase code readability and consistency.
+
+### Navigation Menu 
+
+- The Nav menu is imported as the Mui Component Bottom Navigation 
+- This contains 4 BottomNavigationAction components, that each contain Icon Components. 
+- All of these components are imported from the Mui Component Library and can be style by the selectors stipulated in the Navigation.scss file. 
+- Currently they prove the Link for the react-router-dom dependency, that will be used to route to different pages within the App.
