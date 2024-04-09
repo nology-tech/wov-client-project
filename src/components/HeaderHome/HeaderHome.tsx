@@ -8,7 +8,9 @@ const HeaderHome = () => {
 
 // const location = getCurrentPosition()
   return (
-    <p>{date}</p> 
+    <div className="header-home">
+      <p>{date}</p> 
+    </div>
   )
 }
 

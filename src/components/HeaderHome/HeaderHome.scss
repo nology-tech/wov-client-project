@@ -1,0 +1,11 @@
+@use "../../styles/reset";
+@use "../../styles/variables" as *;
+@use "../../styles/typography" ;
+
+.header-home{
+    margin-top: -1px;
+    padding-left: 1rem;
+    background-color: $secondary-color;
+    padding-bottom: 8rem;
+    font-family: $font-family-modern-content
+}

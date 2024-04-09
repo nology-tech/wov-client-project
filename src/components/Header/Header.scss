@@ -1,18 +1,29 @@
 @use "../../styles/reset";
-@use "../../styles/variables";
+@use "../../styles/variables" as *;
 @use "../../styles/typography";
+
 
 .header{
     padding: 1rem;
+    background-color: $secondary-color;
     &__image-div{
-        display: flex;
-        justify-content: right;
-    }
-    &__image{
-        border: 2rem solid white;
-        
+        float: right;
+        width: 2.2rem;
+        height: auto;
+        &--image{
+            border-radius: 50%;
+            background-color: $white-color;
+        }
     }
    &__title-div{
-    padding-left: 1.5rem;
+    &--title{
+        color: $primary-color;
+        margin-bottom: unset;
+        font-family: $font-family-header-title;
+    }
+    &--subtitle{
+        margin-top: unset;
+        font-family: $font-family-modern-header;
+    }
    }
 }
