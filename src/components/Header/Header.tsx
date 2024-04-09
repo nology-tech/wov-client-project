@@ -8,11 +8,7 @@ type HeaderProps = {
 }
 
 const Header = ({title, subtitle, image}: HeaderProps) => {
-    // "today" should only be used in the Home page header.
-    const today = new Date(),
-        date = today.getDate() + " " +  today.toLocaleString('default', { month: 'long' }) + " " +  today.getFullYear();
     
-    // const location = getCurrentPosition()
 
     return (
         <header className="header">
@@ -22,7 +18,6 @@ const Header = ({title, subtitle, image}: HeaderProps) => {
             <div className="header__title-div">
                 <h4 className="header__title">{title}</h4>
                 <h1 className="header__subtitle">{subtitle}</h1>
-            <p>{date}</p>
             </div>
         </header>
     )

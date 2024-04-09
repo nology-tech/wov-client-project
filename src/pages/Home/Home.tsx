@@ -1,10 +1,12 @@
 import Layout from "../../components/Layout/Layout";
 import Header from "../../components/Header/Header";
+import HeaderHome from "../../components/HeaderHome/HeaderHome";
 
 const Home = () => {
   return (
     <Layout>
       <Header title="test" subtitle="test2" />
+      <HeaderHome/>
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
       <p>
