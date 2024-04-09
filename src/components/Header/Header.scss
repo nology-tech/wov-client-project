@@ -1,0 +1,18 @@
+@use "../../styles/reset";
+@use "../../styles/variables";
+@use "../../styles/typography";
+
+.header{
+    padding: 1rem;
+    &__image-div{
+        display: flex;
+        justify-content: right;
+    }
+    &__image{
+        border: 2rem solid white;
+        
+    }
+   &__title-div{
+    padding-left: 1.5rem;
+   }
+}
