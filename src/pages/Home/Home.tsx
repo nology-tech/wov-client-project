@@ -1,4 +1,3 @@
-import Button from "../../components/Button/Button";
 import Layout from "../../components/Layout/Layout";
 
 const Home = () => {
@@ -13,7 +12,6 @@ const Home = () => {
         maxime tempora, temporibus beatae voluptas repellat rerum. Dignissimos,
         necessitatibus.
       </p>
-      <Button label="Home" />
     </Layout>
   );
 };

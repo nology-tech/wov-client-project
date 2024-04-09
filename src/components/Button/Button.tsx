@@ -1,9 +1,10 @@
+import { MouseEventHandler } from "react";
 import "./Button.scss";
 
 type ButtonProps = {
   label: string;
   variant?: "primary" | "secondary" | "light-grey";
-  onClick?: () => void;
+  onClick?: MouseEventHandler;
 };
 
 const Button = ({ label, variant = "primary", onClick }: ButtonProps) => {
