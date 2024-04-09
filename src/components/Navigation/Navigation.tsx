@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box";
+import "./Navigation.scss";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import HomeIcon from "@mui/icons-material/Home";
