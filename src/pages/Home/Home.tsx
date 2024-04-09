@@ -13,7 +13,7 @@ const Home = () => {
         maxime tempora, temporibus beatae voluptas repellat rerum. Dignissimos,
         necessitatibus.
       </p>
-      <Button label="Home" variant="light-grey" />
+      <Button label="Home" />
     </Layout>
   );
 };
