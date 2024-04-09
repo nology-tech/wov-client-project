@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import "./Navigation.scss";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import HomeIcon from "@mui/icons-material/Home";
@@ -26,24 +25,31 @@ const Navigation = () => {
           className="bottom-navigation__item"
           label="Home"
           icon={<HomeIcon />}
+          component={Link}
+          to="/"
         />
         <BottomNavigationAction
           className="bottom-navigation__item"
           label="Tasks"
           icon={<MapIcon />}
+          component={Link}
+          to="/Tasks"
         />
         <BottomNavigationAction
           className="bottom-navigation__item"
           label="Calendar"
           icon={<CalendarMonthIcon />}
+          component={Link}
+          to="/Calendar"
         />
-        <Link to={"/"}>
-          <BottomNavigationAction
-            className="bottom-navigation__item"
-            label="Leaderboard"
-            icon={<LeaderboardIcon />}
-          />
-        </Link>
+
+        <BottomNavigationAction
+          className="bottom-navigation__item"
+          label="Leaderboard"
+          icon={<LeaderboardIcon />}
+          component={Link}
+          to="/Leaderboard"
+        />
       </BottomNavigation>
     </Box>
   );
