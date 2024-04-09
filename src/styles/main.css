@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Playfair+Display:wght@400;500;600;700&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+* {
+  font-family: "Poppins", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  color: #f3f2e8;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0.5rem 0;
+  display: inline-block;
+  width: 100%;
+}
+
+button {
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 2.1rem;
+}
+
+h2 {
+  font-size: 1.65rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    font-size: 110%;
+  }
+}
+@media screen and (min-width: 1024px) {
+  :root {
+    font-size: 120%;
+  }
+}/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,34 @@
+@use "../../styles/variables" as *;
+
+.active-task {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.active-task__requirement {
+    font-family: $font-family-modern-content;
+    font-size: $font-h4;
+}
+
+.active-task__subtext {
+    font-family: $font-family-modern-content;
+    font-size: $font-subText;
+    margin: 0;  
+    line-height: $line-height-subtext;
+}
+
+.active-task__category, 
+.active-task__points {
+    margin: 0;  
+}
+
+
+// .active-task__category {
+// }
+
+
+.active-task__inputs {
+    align-self: flex-start;
+    margin: 1rem;
+}

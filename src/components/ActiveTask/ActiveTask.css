@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Playfair+Display:wght@400;500;600;700&display=swap");
+.active-task {
+  display: flex;
+  justify-content: space-between;
+}
+
+.active-task__requirement {
+  font-family: "PT Sans", sans-serif;
+  font-size: bold 1.125rem;
+}
+
+.active-task__subtext {
+  font-family: "PT Sans", sans-serif;
+  font-size: normal 1rem;
+  margin: 0;
+  line-height: 1.313rem;
+}
+
+.active-task__category,
+.active-task__points {
+  margin: 0;
+}
+
+.active-task__inputs {
+  align-self: flex-start;
+  margin: 1rem;
+}/*# sourceMappingURL=ActiveTask.css.map */
