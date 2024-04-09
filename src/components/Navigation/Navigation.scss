@@ -8,3 +8,11 @@
 .Mui-selected {
   color: black;
 }
+
+.bottom-navigation__item {
+  fill: #cacbcd;
+}
+
+.bottom-navigation__item.active {
+  fill: black;
+}

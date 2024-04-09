@@ -4,9 +4,11 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import HomeIcon from "@mui/icons-material/Home";
 import MapIcon from "@mui/icons-material/Map";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import IconHome from "./iconHome";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navigation.scss";
+import { Home } from "@mui/icons-material";
 
 const Navigation = () => {
   const [value, setValue] = useState(0);
@@ -23,11 +25,17 @@ const Navigation = () => {
       >
         <BottomNavigationAction
           className="bottom-navigation__item"
-          label="Home"
           icon={<HomeIcon />}
+          label="Home"
           component={Link}
           to="/"
         />
+        {/* <BottomNavigationAction
+          className="bottom-navigation__item"
+          icon={<IconHome isActive={value === 0} onClick={() => setValue(0)} />}
+          component={Link}
+          to="/"
+        /> */}
         <BottomNavigationAction
           className="bottom-navigation__item"
           label="Tasks"
