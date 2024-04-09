@@ -1,5 +1,5 @@
-import { Meta, StoryFn } from "@storybook/react";
-import Button, { ButtonProps } from "./Button";
+import { Meta, StoryObj } from "@storybook/react";
+import Button from "./Button";
 
 const meta = {
   title: "Components/Button",
@@ -15,21 +15,31 @@ const meta = {
 
 export default meta;
 
+type Story = StoryObj<typeof Button>;
+
 /**
  * Stories
  * @returns button with label and variant
  */
 
-export const Primary: StoryFn<ButtonProps> = () => {
+export const Primary: Story = () => {
   return <Button label="Primary Button" variant="primary" />;
 };
 
-export const Secondary: StoryFn<ButtonProps> = () => {
+export const Secondary: Story = () => {
   return <Button label="Secondary Button" variant="secondary" />;
 };
 
-export const LightGrey: StoryFn<ButtonProps> = () => {
+export const LightGrey: Story = () => {
   return <Button label="Light Grey Button" variant="light-grey" />;
+};
+
+export const WithOneClick: Story = () => {
+  const handleClick = () => {
+    alert("Button is clicked...");
+  };
+
+  return <Button label="Button with on click..." onClick={handleClick} />;
 };
 
 /**
@@ -57,6 +67,14 @@ LightGrey.parameters = {
   docs: {
     description: {
       story: "A light-grey button with a defined label and variant.",
+    },
+  },
+};
+
+WithOneClick.parameters = {
+  docs: {
+    description: {
+      story: "A button with an onClick event handler.",
     },
   },
 };
