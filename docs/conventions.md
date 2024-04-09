@@ -31,6 +31,10 @@ Examples:
 ---
 
 ## TS, TSX
+Components will have stories.
+
+Features will be tested with React testing library.
+
 ### How will you write functions?
 
 If a function is very long and if it makes sense to be used elsewhere, it should be created in a separate folder/file, e.g. `src/utilities/utilities.ts`
@@ -51,7 +55,7 @@ const myFunction = ({name, email, age}: MyFunctionProps) => {
 ### How will you name state, variables, arrays, and props?
 
 - camelCase naming for all variables, 
-  - excluding​ types and components, which are written in PascalCase
+  - _excluding_ types and components, which are written in PascalCase
 - Arrays should be named in plural
   - Array's names should be descriptive enough for the reader to know what is inside
 
@@ -62,8 +66,8 @@ const myFunction = ({name, email, age}: MyFunctionProps) => {
 
 ### Should you comment on how something works?
 
-- Large pieces of code should be commented if they are not self-descriptive BUT​​ self-descriptive and concise code should be prioritised
-- e.g. if a function can be broken up into smaller pieces, then it should be
+- Large and/or complex pieces of code should be commented if they are not self-descriptive __BUT__ self-descriptive and concise code should be prioritised
+  - e.g. if a function can be broken up into smaller pieces, then it should be
 
 ### Should you leave console.log in the code?
 
