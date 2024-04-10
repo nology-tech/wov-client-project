@@ -1,6 +1,5 @@
-import { render, waitFor, screen } from "@testing-library/react";
+import { waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter, BrowserRouter as Router } from "react-router-dom";
 import Navigation from "./Navigation";
 import { customRender } from "../../utils/testUtils";
 
