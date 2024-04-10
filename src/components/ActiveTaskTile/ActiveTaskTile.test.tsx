@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ActiveTask from "./ActiveTask";
+import ActiveTaskTile from "./ActiveTaskTile";
 
 describe("Active Tile component", () => {
   it("should render the active task tile", () => {
     render(
-      <ActiveTask requirement="5am wake up" category="Routine" points={5} />
+      <ActiveTaskTile requirement="5am wake up" category="Routine" points={5} />
     );
 
     const activeTask = screen.getByTestId("active-task");
@@ -14,7 +14,7 @@ describe("Active Tile component", () => {
 
   it("should render the requirement header", () => {
     render(
-      <ActiveTask requirement="5am wake up" category="Routine" points={5} />
+      <ActiveTaskTile requirement="5am wake up" category="Routine" points={5} />
     );
 
     const requirement = screen.getByText("5am wake up");
@@ -26,7 +26,7 @@ describe("Active Tile component", () => {
 
     it("should check the initial state of the button", () => {
       render(
-        <ActiveTask requirement="requirement" category="category" points={5} />
+        <ActiveTaskTile requirement="requirement" category="category" points={5} />
       );
 
       const checkboxInitial = screen.getByRole("checkbox");
@@ -35,7 +35,7 @@ describe("Active Tile component", () => {
 
     it("should check the selected state of the button", async () => {
       render(
-        <ActiveTask requirement="requirement" category="category" points={5} />
+        <ActiveTaskTile requirement="requirement" category="category" points={5} />
       );
 
       const checkboxSelected = screen.getByRole("checkbox");

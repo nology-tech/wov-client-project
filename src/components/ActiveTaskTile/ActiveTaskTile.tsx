@@ -1,15 +1,15 @@
 import { useState } from "react";
-import "./ActiveTask.scss";
-type ActiveTaskProps = {
+import "./ActiveTaskTile.scss";
+type ActiveTaskTileProps = {
   requirement: string;
   category: string;
   points: number;
 };
-const ActiveTask = ({
+const ActiveTaskTile = ({
   requirement,
   category,
   points
-}: ActiveTaskProps) => {
+}: ActiveTaskTileProps) => {
   const [completedTasks, setCompletedTasks] = useState<boolean>(false);
 
   const handleTaskCompletion = () => {
@@ -34,4 +34,4 @@ const ActiveTask = ({
     </div>
   );
 };
-export default ActiveTask;
+export default ActiveTaskTile;
