@@ -14,7 +14,7 @@ const meta: Meta<typeof Navigation> = {
   parameters: {
     docs: {
       description: {
-        component: "A customizable button component.",
+        component: "A Material UI Navigation Component",
       },
     },
   },
