@@ -11,6 +11,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+/** The CompletedTask component has 5 props: taskHeading(string), category(string), points(number), description(string) and image(url as a string). */
+
 export const CompletedTaskComponent: Story = {
   args: {
     taskHeading: "Run 5k",

@@ -1,5 +1,4 @@
 import Layout from "../../components/Layout/Layout";
-import CompletedTask from "../../components/CompletedTask/CompletedTask";
 
 const Home = () => {
   return (
