@@ -4,6 +4,7 @@ import HeaderHome from "./HeaderHome";
 const meta: Meta<typeof HeaderHome> = {
     title: "Components/HeaderHome",
     component: HeaderHome,
+    tags: ["autodocs"],
   };
 
   export default meta;
@@ -16,14 +17,7 @@ export const WithDate: Story = {
   },
 };
 
-export const WithLocation: Story = {
-    args: {
-      date: "29 April 2024",
-      location: "Malvern Hills"
-    },
-  };
-
-  export const WithImage: Story = {
+export const WithLocationAndImage: Story = {
     args: {
       date: "29 April 2024",
       location: "Malvern Hills",

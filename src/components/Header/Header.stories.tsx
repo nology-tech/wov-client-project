@@ -9,6 +9,7 @@ const meta: Meta<typeof Header> = {
   title: "Components/Header",
   component: Header,
   decorators: [withRouter],
+  tags: ["autodocs"],
 };
 
 export default meta;

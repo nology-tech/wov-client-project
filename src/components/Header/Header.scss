@@ -2,124 +2,103 @@
 @use "../../styles/variables" as *;
 @use "../../styles/typography";
 
-
-.header{
-    padding: 1rem;
-    background-color: $secondary-color;
-    &__image-div{
-        float: right;
-        width: 2.2rem;
-        height: auto;
-        &--image{
-            border-radius: 50%;
-            background-color: $white-color;
-        }
+.header {
+  padding: 1rem;
+  padding-bottom: 0;
+  background-color: $secondary-color;
+  &__image-div {
+    float: right;
+    width: 2.2rem;
+    height: auto;
+    &--image {
+      border-radius: 50%;
+      background-color: $white-color;
     }
-   &__title-div{
-    &--title{
-        color: $primary-color;
-        margin-bottom: unset;
-        font-family: $font-family-header-title;
+  }
+  &__title-div {
+    &--title {
+      color: $primary-color;
+      margin-bottom: unset;
+      font-family: $font-family-header-title;
     }
-    &--subtitle{
-        margin-top: unset;
-        font-family: $font-family-modern-header;
+    &--subtitle {
+      margin-top: unset;
+      font-family: $font-family-modern-header;
     }
-   }
-   
+  }
 }
-
 
 @media screen and (min-width: $tablet-breakpoint) {
-    .header{
-        padding: 3rem;
-        &__image-div{
-            width: 3.5rem;
-            
-        }
-       &__title-div{
-        &--title{
-            font-size: 2rem;
-        }
-        &--subtitle{
-            font-size: 4.5rem;
-        }
-       }
+  .header {
+    padding: 3rem;
+    padding-bottom: 0;
+
+    &__image-div {
+      width: 3.5rem;
     }
-    
+    &__title-div {
+      &--title {
+        font-size: 1.2rem;
+      }
+      &--subtitle {
+        font-size: 3.5rem;
+      }
+    }
+  }
 }
 
-  @media screen and (min-width: $desktop-breakpoint) {
-    .header{
-        padding: 4rem;
-        &__image-div{
-            width: 4rem;
-            
-        }
-       &__title-div{
-        &--title{
-            font-size: 2.5rem;
-        }
-        &--subtitle{
-            font-size: 5.5rem;
-        }
-       }
+@media screen and (min-width: $desktop-breakpoint) {
+  .header {
+    padding: 4rem;
+    padding-bottom: 0;
+
+    &__image-div {
+      width: 4rem;
+    }
+    &__title-div {
+      &--title {
+        font-size: 1.5rem;
+      }
+      &--subtitle {
+        font-size: 4rem;
+      }
     }
   }
+}
 
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .header {
+    padding: 4rem;
+    padding-bottom: 0;
 
-  @media screen and (min-width: $large-desktop-breakpoint) {
-    .header{
-        padding: 5rem;
-        &__image-div{
-            width: 5rem;
-            
-        }
-       &__title-div{
-        &--title{
-            font-size: 3.5rem;
-        }
-        &--subtitle{
-            font-size: 7.5rem;
-        }
-       }
+    &__image-div {
+      width: 4rem;
+    }
+    &__title-div {
+      &--title {
+        font-size: 1.5rem;
+      }
+      &--subtitle {
+        font-size: 4rem;
+      }
     }
   }
+}
 
-
-  @media screen and (min-width: $large-desktop-breakpoint) {
-    .header{
-        padding: 6rem;
-        &__image-div{
-            width: 6.5rem;
-            
-        }
-       &__title-div{
-        &--title{
-            font-size: 4rem;
-        }
-        &--subtitle{
-            font-size: 8.5rem;
-        }
-       }
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .header {
+    padding: 8rem;
+    padding-bottom: 0;
+    &__image-div {
+      width: 9.5rem;
     }
-  }  
-
-
-  @media screen and (min-width: $extra-large-desktop-breakpoint) {
-    .header{
-        padding: 8rem;
-        &__image-div{
-            width: 9.5rem;
-            
-        }
-       &__title-div{
-        &--title{
-            font-size: 6rem;
-        }
-        &--subtitle{
-            font-size: 11.5rem;
-        }
-       }
+    &__title-div {
+      &--title {
+        font-size: 2.5rem;
+      }
+      &--subtitle {
+        font-size: 6.5rem;
+      }
     }
   }
+}
