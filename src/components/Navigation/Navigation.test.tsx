@@ -6,13 +6,13 @@ import { customRender } from "../../utils/testUtils";
 
 describe("Navigation component", () => {
   it("renders navigation items correctly", async () => {
-    customRender(<Navigation />);
+    customRender(<Navigation navActionIndex={0} />);
   });
 
   it("changes color when a navigation item is clicked", () => {
     const { getByText } = render(
       <Router>
-        <Navigation />
+        <Navigation navActionIndex={0} />
       </Router>
     );
 
@@ -26,7 +26,7 @@ describe("Navigation component", () => {
   it("activates the correct link when clicked", async () => {
     const { getByText } = render(
       <Router>
-        <Navigation />
+        <Navigation navActionIndex={0} />
       </Router>
     );
 
@@ -37,7 +37,7 @@ describe("Navigation component", () => {
   it("navigates to the correct link upon click", async () => {
     render(
       <MemoryRouter>
-        <Navigation />
+        <Navigation navActionIndex={0} />
       </MemoryRouter>
     );
 
