@@ -44,8 +44,8 @@ const Profile = () => {
           onClick={() => console.log("Sign out ")}
         ></Button>
       </section>
+      <Navigation navActionIndex={4} />
     </div>
-    //Nav
   );
 };
 export default Profile;
