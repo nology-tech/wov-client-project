@@ -1,39 +1,41 @@
 @use "../../styles/variables" as *;
-.profile {
-  border: 2px solid red;
-  font-family: "poppins";
-  font-size: 1rem;
-  background-color: $off-white-color;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex;
-  padding: 80px 0 0 0;
-  height: 100vh;
-  &__img {
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    border: 3px solid black;
-  }
-  &__score {
-    padding: 20px 0 20px 0;
-    display: flex;
-    justify-content: center;
-    color: $primary-color;
-  }
-  &__info {
-    display: flex;
-    flex-direction: column;
-    padding: 0 80px 0 80px;
-    color: $black-color;
-  }
 
-  &__buttons {
-    margin-top: 70px;
+@media only screen and (max-width: $mobile-breakpoint) {
+  .profile {
+    font-family: "poppins";
+    font-size: 0.6rem;
+    background-color: $off-white-color;
     display: flex;
     flex-direction: column;
-    justify-self: flex-end;
-    gap: 20px;
+    align-items: center;
+    justify-content: flex;
+    padding: 6rem 0 0 0;
+    height: 100vh;
+    &__img {
+      height: 9rem;
+      width: 9rem;
+      border-radius: 50%;
+      border: 3px solid black;
+    }
+    &__score {
+      padding: 1rem 0 1rem 0;
+      display: flex;
+      justify-content: center;
+      color: $primary-color;
+    }
+    &__info {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 3rem 0 3rem;
+      color: $black-color;
+    }
+
+    &__buttons {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-self: flex-end;
+      gap: 3rem;
+    }
   }
 }
