@@ -9,7 +9,7 @@ import {
 import Navigation from "./Navigation.tsx";
 
 const meta: Meta<typeof Navigation> = {
-  title: "Example/Navigation",
+  title: "Components/Navigation",
   tags: ["autodocs"],
   parameters: {
     docs: {
