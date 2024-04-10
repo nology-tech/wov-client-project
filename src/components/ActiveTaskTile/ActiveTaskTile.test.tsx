@@ -19,31 +19,39 @@ describe("Active Tile component", () => {
 
     const requirement = screen.getByText("5am wake up");
     const category = screen.getByText("Routine");
-    const points = screen.getByText("5");
+    const points = screen.getByText("5 points");
     expect(requirement).toBeInTheDocument();
     expect(category).toBeInTheDocument();
     expect(points).toBeInTheDocument();
+  });
 
-    it("should check the initial state of the button", () => {
-      render(
-        <ActiveTaskTile requirement="requirement" category="category" points={5} />
-      );
+  it("should check the initial state of the button", () => {
+    render(
+      <ActiveTaskTile
+        requirement="requirement"
+        category="category"
+        points={5}
+      />
+    );
 
-      const checkboxInitial = screen.getByRole("checkbox");
-      expect(checkboxInitial).not.toBeChecked();
-    });
+    const checkboxInitial = screen.getByRole("checkbox");
+    expect(checkboxInitial).not.toBeChecked();
+  });
 
-    it("should check the selected state of the button", async () => {
-      render(
-        <ActiveTaskTile requirement="requirement" category="category" points={5} />
-      );
+  it("should check the selected state of the button", async () => {
+    render(
+      <ActiveTaskTile
+        requirement="requirement"
+        category="category"
+        points={5}
+      />
+    );
 
-      const checkboxSelected = screen.getByRole("checkbox");
-      await userEvent.click(checkboxSelected);
-      expect(checkboxSelected).toBeChecked();
+    const checkboxSelected = screen.getByRole("checkbox");
+    await userEvent.click(checkboxSelected);
+    expect(checkboxSelected).toBeChecked();
 
-      await userEvent.click(checkboxSelected);
-      expect(checkboxSelected).not.toBeChecked();
-    });
+    await userEvent.click(checkboxSelected);
+    expect(checkboxSelected).not.toBeChecked();
   });
 });

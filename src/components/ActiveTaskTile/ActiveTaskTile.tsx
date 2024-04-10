@@ -17,7 +17,7 @@ const ActiveTaskTile = ({
   }
 
   return (
-    <div className="active-task" data-id="active-task">
+    <div className="active-task" data-testid="active-task">
       <div className="active-task__content">
         <label htmlFor="input-field">
           <h4 className="active-task__requirement">{requirement}</h4>
