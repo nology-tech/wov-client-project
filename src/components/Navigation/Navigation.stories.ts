@@ -40,7 +40,3 @@ export const Calendar: Story = {
     navActionIndex: 2,
   },
 };
-
-// export const Leaderboard: Story {
-
-// }
