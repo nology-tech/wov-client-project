@@ -1,41 +1,45 @@
 @use "../../styles/variables" as *;
 
-@media only screen and (max-width: $mobile-breakpoint) {
-  .profile {
-    font-family: "poppins";
-    font-size: 0.6rem;
-    background-color: $off-white-color;
+.profile {
+  font-family: "poppins";
+  font-size: 1.12rem;
+  background-color: $off-white-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem 0 0 0;
+  height: 100vh;
+  &__img {
+    height: 9rem;
+    width: 9rem;
+    border-radius: 50%;
+    border: 3px solid black;
+  }
+  &__score {
+    font-size: 2.25rem;
+    padding: 1rem 0 1rem 0;
+    display: flex;
+    justify-content: center;
+    color: $primary-color;
+  }
+  &__info {
+    p {
+      color: $slate-grey-color;
+    }
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex;
-    padding: 6rem 0 0 0;
-    height: 100vh;
-    &__img {
-      height: 9rem;
-      width: 9rem;
-      border-radius: 50%;
-      border: 3px solid black;
-    }
-    &__score {
-      padding: 1rem 0 1rem 0;
-      display: flex;
-      justify-content: center;
-      color: $primary-color;
-    }
-    &__info {
-      display: flex;
-      flex-direction: column;
-      padding: 1rem 3rem 0 3rem;
-      color: $black-color;
-    }
+    gap: 10px;
+    padding: 1rem 3rem 0 5rem;
+    color: $black-color;
+    font-size: 1rem;
+  }
 
-    &__buttons {
-      margin-top: 4rem;
-      display: flex;
-      flex-direction: column;
-      justify-self: flex-end;
-      gap: 3rem;
-    }
+  &__buttons {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-end;
+    gap: 2.2rem;
   }
 }

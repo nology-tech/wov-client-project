@@ -3,12 +3,15 @@ import Button from "../../components/Button/Button";
 import Navigation from "../../components/Navigation/Navigation";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
+
 const mockUser = users[0];
 let starredPassword = "";
 
 for (let char of mockUser.password) {
   starredPassword += "*";
 }
+
+type ProfileProps = {};
 
 const Profile = () => {
   return (
