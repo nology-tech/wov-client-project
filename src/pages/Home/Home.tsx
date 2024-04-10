@@ -6,7 +6,6 @@ const Home = () => {
   return (
     <Layout>
       <Profile />
-      <Navigation navActionIndex={0} />
     </Layout>
   );
 };
