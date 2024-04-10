@@ -10,7 +10,6 @@ import "./Navigation.scss";
 
 const Navigation = () => {
   const [value, setValue] = useState(0);
-
   return (
     <Box sx={{ width: "100%", position: "absolute", bottom: 0 }}>
       <BottomNavigation
@@ -23,8 +22,8 @@ const Navigation = () => {
       >
         <BottomNavigationAction
           className="bottom-navigation__item"
-          label="Home"
           icon={<HomeIcon />}
+          label="Home"
           component={Link}
           to="/"
         />
@@ -33,14 +32,14 @@ const Navigation = () => {
           label="Tasks"
           icon={<MapIcon />}
           component={Link}
-          to="/Tasks"
+          to="/tasks"
         />
         <BottomNavigationAction
           className="bottom-navigation__item"
           label="Calendar"
           icon={<CalendarMonthIcon />}
           component={Link}
-          to="/Calendar"
+          to="/calendar"
         />
 
         <BottomNavigationAction
@@ -48,7 +47,7 @@ const Navigation = () => {
           label="Leaderboard"
           icon={<LeaderboardIcon />}
           component={Link}
-          to="/Leaderboard"
+          to="/leaderboard"
         />
       </BottomNavigation>
     </Box>
