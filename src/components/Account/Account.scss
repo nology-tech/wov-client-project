@@ -1,12 +1,16 @@
 @use "../../styles/variables" as *;
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@400..700&family=Oswald:wght@200..700&display=swap");
 
+// TODO: Remove import font size (Oswald)
 .account {
   display: flex;
   flex-direction: column;
+  // justify-content: end;
   justify-content: center;
   align-items: center;
   text-align: center;
   background-color: $white-color;
+  height: 100vh;
 
   gap: 10px;
   &__info {
@@ -24,6 +28,7 @@
       font-weight: 700;
       color: $black-color;
       //   font-family: Oswald;
+      font-family: "Oswald", sans-serif;
     }
   }
   &__buttons {
