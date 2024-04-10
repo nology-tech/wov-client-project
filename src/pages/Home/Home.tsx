@@ -1,4 +1,5 @@
 import Layout from "../../components/Layout/Layout";
+import CompletedTask from "../../components/CompletedTask/CompletedTask";
 
 const Home = () => {
   return (
@@ -12,6 +13,13 @@ const Home = () => {
         maxime tempora, temporibus beatae voluptas repellat rerum. Dignissimos,
         necessitatibus.
       </p>
+      <CompletedTask
+        taskHeading={"Run 5k"}
+        category={"Fitness"}
+        points={0}
+        description={"Run as fast as you can"}
+        image={""}
+      />
     </Layout>
   );
 };
