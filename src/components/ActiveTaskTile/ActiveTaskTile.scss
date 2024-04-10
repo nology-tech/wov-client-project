@@ -1,0 +1,40 @@
+@use "../../styles/variables" as *;
+
+.active-task {
+  display: flex;
+  justify-content: space-between;
+  max-width: 80%;
+  margin: 0 auto;
+  border-bottom: 2px solid $light-grey-color;
+  padding-bottom: 1.2rem;
+  align-items: flex-start;
+
+  &__requirement {
+    font: $font-h4 $font-family-modern-content;
+    color: $black-color;
+    margin: 0;
+  }
+
+  &__category,
+  &__points {
+    font: $font-subText/$line-height-subtext $font-family-modern-content;
+    margin: 0;
+    color: $slate-grey-color;
+  }
+
+  &__inputs {
+    margin: 0.33rem 0.3rem 0.3rem;
+    appearance: none;
+    -webkit-appearance: none;
+    height: 22px;
+    width: 22px;
+    background-color: $white-color;
+    border-radius: 50%;
+    border: 1px solid $pure-black-color;
+    cursor: pointer;
+
+    &:checked {
+      background-color: $primary-color;
+    }
+  }
+}
