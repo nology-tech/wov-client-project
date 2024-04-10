@@ -9,11 +9,7 @@ import {
 import Navigation from "./Navigation.tsx";
 
 const meta: Meta<typeof Navigation> = {
-<<<<<<< HEAD
   title: "Component/Navigation",
-  tags: ["autodocs"],
-=======
-  title: "Components/Navigation",
   tags: ["autodocs"],
   parameters: {
     docs: {
@@ -23,16 +19,7 @@ const meta: Meta<typeof Navigation> = {
     },
   },
   component: Navigation,
->>>>>>> 2a50ae0510688dc4c30808b26f4360200ffe19ef
   decorators: [withRouter],
-  parameters: {
-    docs: {
-      description: {
-        component: "A customizable button component.",
-      },
-    },
-  },
-  component: Navigation,
 } as Meta;
 
 export default meta;

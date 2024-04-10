@@ -1,10 +1,14 @@
-// Button.stories.ts
-
 import type { Meta, StoryObj } from "@storybook/react";
 import Profile from "./Profile.tsx";
+import { randomUserProfiles } from "./mockData.ts";
+
+/**
+ * Stories
+ * @returns button with label and variant
+ */
 
 const meta: Meta<typeof Profile> = {
-  title: "Component/Profile",
+  title: "Components/Profile",
   tags: ["autodocs"],
   parameters: {
     docs: {
@@ -23,35 +27,35 @@ type Story = StoryObj<typeof Profile>;
 
 export const Athish: Story = {
   args: {
-    id: 1,
-    img: "https://picsum.photos/200/300",
-    score: 300,
-    name: "Athish Thayalan",
-    bio: "Passionate about technology and innovation.",
-    email: "athish.thayalan@example.com",
-    password: "password1",
+    user: randomUserProfiles[0],
   },
 };
 
 export const Todd: Story = {
   args: {
-    id: 2,
-    img: "https://picsum.photos/200/300",
-    score: 450,
-    name: "Todd Griffin",
-    bio: "Adventure seeker with a love for coding.",
-    email: "todd.griffin@example.com",
-    password: "password2",
+    user: randomUserProfiles[1],
   },
 };
 
-export const EditProfile: Story = {
-  parameters: {
-    reactRouter: reactRouterParameters({
-      routing: { path: "/editprofile" },
-    }),
+/**
+ * Parameters
+ * @returns parameters with the description of the story
+ */
+
+Athish.parameters = {
+  docs: {
+    description: {
+      story:
+        "An instance of the profile component filled with the user profile corresponding to Athish",
+    },
   },
-  args: {
-    navActionIndex: 3,
+};
+
+Todd.parameters = {
+  docs: {
+    description: {
+      story:
+        "An instance of the profile component filled with the user profile corresponding to Todd",
+    },
   },
 };
