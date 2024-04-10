@@ -1,10 +1,11 @@
 import Layout from "../../components/Layout/Layout";
 import Profile from "../Profile/Profile";
+import { randomUserProfiles } from "../Profile/mockData";
 
 const Home = () => {
   return (
     <Layout>
-      <Profile />
+      <Profile user={randomUserProfiles[0]} />
     </Layout>
   );
 };

@@ -3,22 +3,18 @@ import Button from "../../components/Button/Button";
 import Navigation from "../../components/Navigation/Navigation";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
+import { UserProfile } from "./mockData";
 
 const mockUser = users[0];
-let starredPassword = "";
 
-for (let char of mockUser.password) {
-  starredPassword += "*";
-}
+const starredPassword = "*".repeat(mockUser.password.length);
 
-type ProfileProps = {};
+type ProfileProps = {
+  user: UserProfile;
+};
 
-const Profile = () => {
+const Profile = ({ user }: ProfileProps) => {
   return (
-    //Header
-
-    //Profile
-    //-------------------------------------------------------------
     <div className="profile">
       <img src={mockUser.img} className="profile__img" />
       <h1 className="profile__score">{mockUser.score}</h1>
@@ -37,7 +33,7 @@ const Profile = () => {
         </p>
       </section>
       <section className="profile__buttons">
-        <Link to="/editprofile">
+        <Link to="/edit">
           <Button
             label={"EDIT PROFILE"}
             variant={"light-grey"}
