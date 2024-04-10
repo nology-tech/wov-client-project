@@ -1,4 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Playfair+Display:wght@400;500;600;700&display=swap");
+
 // breakpoints
+
 $mobile-breakpoint: 320px;
 $tablet-breakpoint: 768px;
 $desktop-breakpoint: 1024px;
@@ -6,6 +10,34 @@ $large-desktop-breakpoint: 1440px;
 $extra-large-desktop-breakpoint: 2560px;
 
 //colors
+
 $text-color: #f3f2e8;
 $background-color: #1f1b1b;
-$nav-text-color: #5f6068;
+$primary-color: #a7cca4;
+$secondary-color: #5d4a3c;
+$black-color: #393939;
+$slate-grey-color: #5f6068;
+$grey-color: #cacbcd;
+$light-grey-color: #e4e5f0;
+$off-white-color: #fafafc;
+$white-color: #ffffff;
+
+// typography
+
+$font-family-modern-header: "Poppins", sans-serif;
+$font-family-modern-content: "PT Sans", sans-serif;
+$font-family-classic-header: "Playfair Display", sans-serif;
+$font-family-classic-content: "Lato", sans-serif;
+
+$font-h1: bold 2.25rem; // used with "font:" property
+$font-h2: bold 1.5rem;
+$font-h3: bold 1.25rem;
+$font-h4: bold 1.125rem;
+$font-p: normal 1.125rem;
+$font-button: bold 1rem;
+
+// spacing
+
+$line-height-header: 2.25rem;
+$line-height-paragraph: 1.688rem;
+$line-height-subtext: 1.313rem; // For tasks section subtext
