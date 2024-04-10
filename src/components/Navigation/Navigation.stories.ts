@@ -46,3 +46,14 @@ export const Calendar: Story = {
     navActionIndex: 2,
   },
 };
+
+export const Leaderboard: Story = {
+  parameters: {
+    reactRouter: reactRouterParameters({
+      routing: { path: "/leaderboard" },
+    }),
+  },
+  args: {
+    navActionIndex: 3,
+  },
+};
