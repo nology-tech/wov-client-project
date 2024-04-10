@@ -1,32 +1,27 @@
-import { randomUserProfiles as users } from "./mockData";
 import Button from "../../components/Button/Button";
-import Navigation from "../../components/Navigation/Navigation";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
 import { UserProfile } from "./mockData";
-
-const mockUser = users[0];
-
-const starredPassword = "*".repeat(mockUser.password.length);
 
 type ProfileProps = {
   user: UserProfile;
 };
 
 const Profile = ({ user }: ProfileProps) => {
+  const starredPassword = "*".repeat(user.password.length);
   return (
     <div className="profile">
-      <img src={mockUser.img} className="profile__img" />
-      <h1 className="profile__score">{mockUser.score}</h1>
+      <img src={user.img} className="profile__img" />
+      <h1 className="profile__score">{user.score}</h1>
       <section className="profile__info">
         <p>
-          <strong>Name</strong> : {mockUser.name}{" "}
+          <strong>Name</strong> : {user.name}{" "}
         </p>
         <p>
-          <strong>Bio</strong> : {mockUser.bio}{" "}
+          <strong>Bio</strong> : {user.bio}{" "}
         </p>
         <p>
-          <strong>Email</strong> : {mockUser.email}{" "}
+          <strong>Email</strong> : {user.email}{" "}
         </p>
         <p>
           <strong>Password</strong> : {starredPassword}{" "}
@@ -38,15 +33,14 @@ const Profile = ({ user }: ProfileProps) => {
             label={"EDIT PROFILE"}
             variant={"light-grey"}
             onClick={() => console.log("edit")}
-          ></Button>
+          />
         </Link>
         <Button
           label={"SIGN OUT"}
           variant={"secondary"}
-          onClick={() => console.log("Sign out ")}
-        ></Button>
+          onClick={() => console.log("Sign out")}
+        />
       </section>
-      <Navigation navActionIndex={4} />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { randomUserProfiles } from "./mockData";
 import { customRender } from "../../utils/testUtils";
 
 describe("Profile component", () => {
-  it("renders navigation items correctly", async () => {
+  it("renders navigation items correctly", () => {
     customRender(<Profile user={randomUserProfiles[0]} />);
   });
 
