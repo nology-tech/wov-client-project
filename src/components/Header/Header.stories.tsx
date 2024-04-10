@@ -1,19 +1,39 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
+import type { Meta, StoryObj } from "@storybook/react";
+import {
+  reactRouterParameters,
+  withRouter,
+} from "storybook-addon-remix-react-router";
 import Header from "./Header";
 
-const meta: Meta = {
-  title: "Component/Header",
+const meta: Meta<typeof Header> = {
+  title: "Components/Header",
   component: Header,
-} as Meta;
+  decorators: [withRouter],
+};
 
 export default meta;
 
-type Story = StoryObj<typeof Header>
+type Story = StoryObj<typeof Header>;
 
-export const Title: Story = {
- render: () => <Header 
- title="WAY OF THE VIKINGS"
- subtitle="home"
- profileImage=""/>
-}
+export const WithTitle: Story = {
+  parameters: {
+    reactRouter: reactRouterParameters({
+      routing: { path: "/" },
+    }),
+  },
+  args: {
+    title: "WAY OF THE VIKINGS",
+  },
+};
+
+export const WithSubTitle: Story = {
+  parameters: {
+    reactRouter: reactRouterParameters({
+      routing: { path: "/" },
+    }),
+  },
+  args: {
+    title: "WAY OF THE VIKINGS",
+    subtitle: "",
+  },
+};
