@@ -1,5 +1,4 @@
 import Layout from "../../components/Layout/Layout";
-import ActiveTask from "../../components/ActiveTask/ActiveTask";
 
 const Home = () => {
   return (
@@ -13,7 +12,6 @@ const Home = () => {
         maxime tempora, temporibus beatae voluptas repellat rerum. Dignissimos,
         necessitatibus.
       </p>
-      <ActiveTask requirement = "Eat or not maybe drink" category = "mundane" points = {0} />
     </Layout>
   );
 };
