@@ -34,6 +34,19 @@ export const WithSubTitle: Story = {
   },
   args: {
     title: "WAY OF THE VIKINGS",
-    subtitle: "",
+    subtitle: "Home",
+  },
+};
+
+export const WithProfileImage: Story = {
+  parameters: {
+    reactRouter: reactRouterParameters({
+      routing: { path: "/" },
+    }),
+  },
+  args: {
+    title: "WAY OF THE VIKINGS",
+    subtitle: "Home",
+    profileImage: "https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png"
   },
 };

@@ -7,8 +7,6 @@ type HeaderHomeProps = {
 }
 
 const HeaderHome = ({image, date, location }: HeaderHomeProps) => {
-  
-// const location = getCurrentPosition()
   return (
     <div className="header-home">
       <p>{date}</p>
