@@ -1,9 +1,5 @@
 @use "../../styles/variables" as *;
 
-// **NOTES**
-// - Border bottom offset
-// - Remove component from home when finished ***
-
 .active-task {
   display: flex;
   justify-content: space-between;
