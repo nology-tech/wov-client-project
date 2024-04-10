@@ -23,18 +23,3 @@
 ## Code Quality 🌟
 
 - This project uses prettier and ESlint to increase code readability and consistency.
-
-### ActiveTaskTile
-
-- TheActiveTile is a reusable component which diplays dynamic information about a task.
-
-- The component displays tasks for the user to complete and points associated with that task. 
-
-- Its props include
-  The task requirement e.g. 5am wake up
-  The category of task e.g. routine
-  The number of points it is worth
-
-- It includes a functional checkbox to visually display if a task is complete or incomplete
-
-
