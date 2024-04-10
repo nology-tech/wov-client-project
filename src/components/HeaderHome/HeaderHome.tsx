@@ -1,15 +1,21 @@
 import "./HeaderHome.scss";
 
+type HeaderHomeProps = {
+  image: string;
+  date?: string;
+  location?: string;
+}
 
-const HeaderHome = () => {
-  // "today" should only be used in the Home page header.
-  const today = new Date(),
-  date = today.getDate() + " " +  today.toLocaleString('default', { month: 'long' }) + " " +  today.getFullYear();
-
+const HeaderHome = ({image, date, location }: HeaderHomeProps) => {
+  
 // const location = getCurrentPosition()
   return (
     <div className="header-home">
-      <p>{date}</p> 
+      <p>{date}</p>
+      <p>{location}</p>
+      <div className="header-home__div">
+      <img className="header-home__div header-home__div--img" src={image} />
+      </div>
     </div>
   )
 }

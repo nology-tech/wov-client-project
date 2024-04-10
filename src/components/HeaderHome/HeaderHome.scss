@@ -4,10 +4,20 @@
 
 .header-home{
     margin-top: -1px;
-    padding-left: 1rem;
+    padding:0 1rem;
     background-color: $secondary-color;
-    padding-bottom: 8rem;
     font-family: $font-family-modern-content;
+    background: linear-gradient(to bottom, $secondary-color 60%, $white-color 0%);
+    &__div{
+      &--img{
+        width: 18rem;
+        border-radius: 7px;
+        display: block;
+        margin: 2rem auto;
+        position: relative;
+        aspect-ratio: 3/2 ;
+       }
+    }
 }
 
 
@@ -15,8 +25,12 @@
 @media screen and (min-width: $tablet-breakpoint) {
   .header-home {
     font-size: 2rem;
-    padding: 3rem;
-    padding-bottom: 5rem;
+    padding: 0 3rem;
+    &__div{
+      &--img{
+        width: 35rem;
+       }
+    }
   }
 }  
 
@@ -28,6 +42,12 @@
   font-size: 2rem;
   padding: 0 4rem;
   padding-bottom: 5rem;
+  &__div{
+    &--img{
+      width: 45rem;
+      border-radius: 10px;
+     }
+  }
  }
 }  
 
@@ -35,9 +55,14 @@
 @media screen and (min-width: $large-desktop-breakpoint) {
   .header-home {
     margin-top: -2px;
-    font-size: 3rem;
+    font-size: 2.5rem;
     padding: 0 5rem;
     padding-bottom: 6rem;
+    &__div{
+      &--img{
+        width: 62rem;
+       }
+    }
    }
 }
 
@@ -49,6 +74,11 @@
     font-size: 3.5rem;
     padding: 0 6rem;
     padding-bottom: 7rem;
+    &__div{
+      &--img{
+        width: 62rem;
+       }
+    }
    }
 }  
 
@@ -58,5 +88,10 @@
     font-size: 5rem;
     padding: 0 8rem;
     padding-bottom: 15rem;
+    &__div{
+      &--img{
+        width: 115rem;
+       }
+    }
    }
 }  
