@@ -2,12 +2,16 @@ import { randomUserProfiles as users } from "./mockData";
 import Button from "../../components/Button/Button";
 import Navigation from "../../components/Navigation/Navigation";
 import "./Profile.scss";
+import { Link } from "react-router-dom";
+
 const mockUser = users[0];
 let starredPassword = "";
 
 for (let char of mockUser.password) {
   starredPassword += "*";
 }
+
+type ProfileProps = {};
 
 const Profile = () => {
   return (
@@ -33,11 +37,13 @@ const Profile = () => {
         </p>
       </section>
       <section className="profile__buttons">
-        <Button
-          label={"EDIT PROFILE"}
-          variant={"light-grey"}
-          onClick={() => console.log("edit")}
-        ></Button>
+        <Link to="/editprofile">
+          <Button
+            label={"EDIT PROFILE"}
+            variant={"light-grey"}
+            onClick={() => console.log("edit")}
+          ></Button>
+        </Link>
         <Button
           label={"SIGN OUT"}
           variant={"secondary"}
