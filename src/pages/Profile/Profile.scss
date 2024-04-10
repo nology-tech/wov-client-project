@@ -1,0 +1,11 @@
+@use "../../styles/variables" as *;
+.profile {
+  background-color: $off-white-color;
+  height: 100%;
+  &__score {
+    color: $primary-color;
+  }
+  &__info {
+    color: $black-color;
+  }
+}
