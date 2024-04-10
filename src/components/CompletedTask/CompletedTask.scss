@@ -1,0 +1,28 @@
+@use "../../styles/variables" as *;
+
+.completed-task {
+  &__header {
+    svg {
+      path {
+        color: $black-color;
+      }
+    }
+  }
+
+  &__heading,
+  &__media {
+    color: $black-color;
+  }
+
+  &__category,
+  &__points,
+  &__description,
+  &__img {
+    color: $slate-grey-color;
+  }
+
+  &__img{
+    width:50%
+  }
+}
+

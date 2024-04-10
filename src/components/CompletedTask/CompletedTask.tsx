@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import "./CompletedTask.scss";
 import {
   Card,
@@ -51,8 +52,9 @@ const CompletedTask = ({
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card className="completed-task">
       <CardHeader
+        className="completed-task__header"
         action={
           <ExpandMore
             expand={expanded}
@@ -63,27 +65,40 @@ const CompletedTask = ({
             <ExpandMoreIcon />
           </ExpandMore>
         }
-        title={taskHeading}
-        subheader={category}
+        disableTypography={true}
+        title={
+          <Typography variant="h3" className="completed-task__heading">
+            {taskHeading}
+          </Typography>
+        }
+        subheader={
+          <div>
+            <Typography variant="body1" className="completed-task__category">
+              {category}
+            </Typography>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              className="completed-task__points"
+            >
+              {`${points} points`}
+            </Typography>
+          </div>
+        }
       />
-
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {points} points
-        </Typography>
-      </CardContent>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{description}</Typography>
+          <Typography paragraph className="completed-task__description">
+            {description}
+          </Typography>
 
-          <Typography variant="h3">Media</Typography>
-          <CardMedia
-            component="img"
-            height="194"
-            image={image}
-            alt={taskHeading}
-          />
+          <Typography variant="h4" className="completed-task__media">
+            Media
+          </Typography>
+          <div className="completed-task__img">
+            <CardMedia component="img" image={image} alt={taskHeading} />
+          </div>
         </CardContent>
       </Collapse>
     </Card>
