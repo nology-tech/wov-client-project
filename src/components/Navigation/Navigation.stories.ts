@@ -8,10 +8,18 @@ import {
 import Navigation from "./Navigation.tsx";
 
 const meta: Meta<typeof Navigation> = {
-  title: "Example/Navigation",
-  component: Navigation,
+  title: "Component/Navigation",
+  tags: ["autodocs"],
   decorators: [withRouter],
-};
+  parameters: {
+    docs: {
+      description: {
+        component: "A customizable button component.",
+      },
+    },
+  },
+  component: Navigation,
+} as Meta;
 
 export default meta;
 
