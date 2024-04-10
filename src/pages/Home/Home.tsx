@@ -13,15 +13,6 @@ const Home = () => {
         maxime tempora, temporibus beatae voluptas repellat rerum. Dignissimos,
         necessitatibus.
       </p>
-      <CompletedTask
-        taskHeading={"Run 5k"}
-        category={"Fitness"}
-        points={0}
-        description={"Run as fast as you can"}
-        image={
-          "https://img.freepik.com/premium-photo/running-man-silhouette-sunset-time-sport-active-life-concept_221513-1606.jpg"
-        }
-      />
     </Layout>
   );
 };
