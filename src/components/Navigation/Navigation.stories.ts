@@ -19,13 +19,17 @@ type Story = StoryObj<typeof Navigation>;
 
 export const Home: Story = {
   parameters: {
-    reactRouter: reactRouterParameters(),
+    reactRouter: reactRouterParameters({
+      routing: { path: "/" },
+    }),
   },
 };
 
 export const Tasks: Story = {
   parameters: {
-    reactRouter: reactRouterParameters(),
+    reactRouter: reactRouterParameters({
+      routing: { path: "/tasks" },
+    }),
   },
   args: {
     navActionIndex: 1,
@@ -34,9 +38,15 @@ export const Tasks: Story = {
 
 export const Calendar: Story = {
   parameters: {
-    reactRouter: reactRouterParameters(),
+    reactRouter: reactRouterParameters({
+      routing: { path: "/calendar" },
+    }),
   },
   args: {
     navActionIndex: 2,
   },
 };
+
+// export const Leaderboard: Story {
+
+// }
