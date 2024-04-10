@@ -1,5 +1,4 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import CompletedTask from "./CompletedTask";
 
@@ -21,7 +20,7 @@ it("should render the Completed Task component", () => {
   expect(taskPoints).toBeInTheDocument();
 });
 
-it("shouldn't display the media on initial render", () => {
+it("shouldn't display the collapsed information on initial render", () => {
   render(
     <CompletedTask
       taskHeading={"Run 5k"}
@@ -41,7 +40,7 @@ it("shouldn't display the media on initial render", () => {
   expect(img).not.toBeInTheDocument();
 });
 
-it("should display the media when the arrow icon is clicked", async () => {
+it("should display the collapsed information when the arrow icon is clicked", async () => {
   render(
     <CompletedTask
       taskHeading={"Run 5k"}
@@ -51,7 +50,34 @@ it("should display the media when the arrow icon is clicked", async () => {
       image={""}
     />
   );
-  const arrowIcon = await screen.findByTestId("ExpandMoreIcon");
-  userEvent.click(arrowIcon);
+  const arrowIcon = screen.getByTestId("ExpandMoreIcon");
+  fireEvent.click(arrowIcon);
   expect(await screen.findByText(/Media/i)).toBeInTheDocument();
+  expect(await screen.findByText("Run as fast as you can")).toBeInTheDocument();
+  expect(await screen.findByAltText("Run 5k")).toBeInTheDocument();
+});
+
+it("shouldn't display the collapsed information when the arrow icon is clicked twice", () => {
+  render(
+    <CompletedTask
+      taskHeading={"Run 5k"}
+      category={"Fitness"}
+      points={10}
+      description={"Run as fast as you can"}
+      image={""}
+    />
+  );
+  const arrowIcon = screen.getByTestId("ExpandMoreIcon");
+  fireEvent.click(arrowIcon);
+  setTimeout(() => {
+    fireEvent.click(arrowIcon);
+  }, 100);
+  setTimeout(() => {
+    const taskMedia = screen.queryByText("Media");
+    const desc = screen.queryByText("Run as fast as you can");
+    const img = screen.queryByAltText("Run 5k");
+    expect(taskMedia).not.toBeInTheDocument();
+    expect(desc).not.toBeInTheDocument();
+    expect(img).not.toBeInTheDocument();
+  }, 100);
 });
