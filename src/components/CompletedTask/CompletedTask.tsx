@@ -35,7 +35,7 @@ type CompletedTaskProps = {
   category: string;
   points: number;
   description: string;
-  image: string;
+  image?: string;
 };
 
 const CompletedTask = ({
@@ -93,12 +93,18 @@ const CompletedTask = ({
             {description}
           </Typography>
 
-          <Typography variant="h4" className="completed-task__media">
-            Media
-          </Typography>
-          <div className="completed-task__img">
-            <CardMedia component="img" image={image} alt={taskHeading} />
-          </div>
+          {image ? (
+            <div>
+              <Typography variant="h4" className="completed-task__media">
+                Media
+              </Typography>
+              <div className="completed-task__img">
+                <CardMedia component="img" image={image} alt={taskHeading} />
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </CardContent>
       </Collapse>
     </Card>
