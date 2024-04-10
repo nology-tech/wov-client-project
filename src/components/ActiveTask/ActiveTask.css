@@ -3,26 +3,34 @@
 .active-task {
   display: flex;
   justify-content: space-between;
+  max-width: 80%;
+  margin: 0 auto;
+  border-bottom: 2px solid #E4E5F0;
+  padding-bottom: 1.2rem;
+  align-items: flex-start;
 }
-
 .active-task__requirement {
-  font-family: "PT Sans", sans-serif;
-  font-size: bold 1.125rem;
-}
-
-.active-task__subtext {
-  font-family: "PT Sans", sans-serif;
-  font-size: normal 1rem;
-  margin: 0;
-  line-height: 1.313rem;
-}
-
-.active-task__category,
-.active-task__points {
+  font: bold 1.125rem "PT Sans", sans-serif;
+  color: #393939;
   margin: 0;
 }
-
+.active-task__category, .active-task__points {
+  font: normal 1rem/1.313rem "PT Sans", sans-serif;
+  margin: 0;
+  color: #5F6068;
+}
 .active-task__inputs {
-  align-self: flex-start;
-  margin: 1rem;
+  margin: 0.33rem 0.3rem 0.3rem;
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none;
+  height: 22px;
+  width: 22px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  cursor: pointer;
+}
+.active-task__inputs:checked {
+  background-color: #A7CCA4;
 }/*# sourceMappingURL=ActiveTask.css.map */
