@@ -5,12 +5,6 @@ import {
   reactRouterParameters,
   withRouter,
 } from "storybook-addon-remix-react-router";
-//import HomeIcon from "@mui/icons-material/Home";
-// import MapIcon from "@mui/icons-material/Map";
-// import LeaderboardIcon from "@mui/icons-material/Leaderboard";
-// import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-//import Link from "react-router-dom";
-
 import Navigation from "./Navigation.tsx";
 
 const meta: Meta<typeof Navigation> = {
@@ -23,41 +17,27 @@ export default meta;
 
 type Story = StoryObj<typeof Navigation>;
 
-// export const Primary: Story = {
-//   args: {
-//     primary: true,
-//     label: "Click",
-//     backgroundColor: "red",
-//   },
-// };
-
 export const Home: Story = {
   parameters: {
-    reactRouter: reactRouterParameters({
-      routing: {
-        path: "./home",
-      },
-    }),
+    reactRouter: reactRouterParameters(),
   },
 };
 
 export const Tasks: Story = {
   parameters: {
-    reactRouter: reactRouterParameters({
-      routing: {
-        path: "./Tasks",
-      },
-    }),
+    reactRouter: reactRouterParameters(),
+  },
+  args: {
+    navActionIndex: 1,
   },
 };
 
 export const Calendar: Story = {
   parameters: {
-    reactRouter: reactRouterParameters({
-      routing: {
-        path: "./Tasks",
-      },
-    }),
+    reactRouter: reactRouterParameters(),
+  },
+  args: {
+    navActionIndex: 2,
   },
 };
 

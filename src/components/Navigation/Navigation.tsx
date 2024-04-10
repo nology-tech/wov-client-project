@@ -8,15 +8,19 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navigation.scss";
 
-const Navigation = () => {
-  const [value, setValue] = useState(0);
+type NavProps = {
+  navActionIndex : number
+}
+
+const Navigation = ({ navActionIndex = 0 } : NavProps) => {
+  const [value, setValue] = useState(navActionIndex);
   return (
     <Box sx={{ width: "100%", position: "absolute", bottom: 0 }}>
       <BottomNavigation
         className="bottom-navigation"
         showLabels
         value={value}
-        onChange={(event, newValue) => {
+        onChange={(_, newValue) => {
           setValue(newValue);
         }}
       >
