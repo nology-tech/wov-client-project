@@ -1,5 +1,5 @@
 import Layout from "../../components/Layout/Layout";
-
+import Account from "../../components/Account/Account";
 const Home = () => {
   return (
     <Layout>
@@ -12,6 +12,7 @@ const Home = () => {
         maxime tempora, temporibus beatae voluptas repellat rerum. Dignissimos,
         necessitatibus.
       </p>
+      <Account />
     </Layout>
   );
 };
