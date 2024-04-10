@@ -1,5 +1,6 @@
 import Layout from "../../components/Layout/Layout";
 import Account from "../../components/Account/Account";
+import Register from "../../components/Register/Register";
 const Home = () => {
   return (
     <Layout>
@@ -13,6 +14,7 @@ const Home = () => {
         necessitatibus.
       </p>
       <Account />
+      <Register />
     </Layout>
   );
 };

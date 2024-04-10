@@ -1,0 +1,52 @@
+@use "../../styles/variables" as *;
+
+.register {
+  width: 80vw;
+  margin: 0 auto;
+  height: 100vh;
+
+  &__icon-arrow {
+    width: 30px;
+    height: 30px;
+    border: solid 1px $black-color;
+    border-radius: 50%;
+    padding: 3px;
+    margin-bottom: 3.5rem;
+    margin-top: -1rem;
+  }
+
+  &__heading {
+    color: $black-color;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 10px;
+    margin: 1.4rem 0;
+    font-size: 0.813rem;
+
+    &--label {
+      color: $black-color;
+    }
+
+    &--input {
+      width: 100%;
+      padding: 0.6rem;
+      outline: none;
+      border: none;
+      background-color: $off-white-color;
+      border-radius: 5px;
+    }
+
+    .with-margin-bottom {
+      margin-bottom: 7rem;
+    }
+
+    ::placeholder {
+      color: $light-grey-color;
+    }
+  }
+}
