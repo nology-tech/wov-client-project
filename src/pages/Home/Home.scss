@@ -10,17 +10,20 @@
     margin-top: 2rem;
   }
   &__header {
-    padding: 0 5rem 0 5rem;
+    margin-top: 1rem;
+    padding: 0 2rem 0 4rem;
     color: $pure-black-color;
   }
   &__paragraph {
-    padding: 0 5rem 0 5rem;
+    padding: 0 2rem 0 4rem;
     color: $pure-black-color;
   }
   &__quote {
-    padding: 0 5rem 0 7rem;
-    margin-top: 1rem;
-    margin-left: 4rem;
+    padding: 0 4rem 0 6rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    margin-left: 5.5rem;
     border-left: 0.2rem solid #ccc;
     padding-left: 10px;
     color: $pure-black-color;

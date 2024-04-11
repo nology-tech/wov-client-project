@@ -44,9 +44,11 @@ const Home = () => {
           sale. The tour is organized and presented by Chelsea Handmade & Local.
         </p>
         <blockquote className="daily-tasks__quote">
-          This is an indented quote. It provides a way to visually set apart a
-          piece of text from the rest of the content, typically used for
-          quotations or excerpts.
+          <strong>
+            This is an indented quote. It provides a way to visually set apart a
+            piece of text from the rest of the content, typically used for
+            quotations or excerpts.
+          </strong>
         </blockquote>
         <p className="daily-tasks__paragraph">
           Local producer of bath and beauty products. Check out the bath and
