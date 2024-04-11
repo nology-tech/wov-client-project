@@ -2,6 +2,7 @@ import Layout from "../../components/Layout/Layout";
 import Header from "../../components/Header/Header";
 import HeaderHome from "../../components/HeaderHome/HeaderHome";
 import Button from "../../components/Button/Button";
+import Navigation from "../../components/Navigation/Navigation";
 import { Link } from "react-router-dom";
 import "./Home.scss";
 
@@ -64,6 +65,7 @@ const Home = () => {
           tools you learned from the workshop you will make a few pieces
         </p>
       </div>
+      <Navigation navActionIndex={0} />
     </Layout>
   );
 };

@@ -3,13 +3,15 @@ import Home from "./Home";
 
 import { customRender } from "../../utils/testUtils";
 
-it("should render the form", () => {
-  customRender(<Home />);
-
-  const heading = screen.getByRole("heading", {
-    name: /section heading/i,
+describe("Navigation component", () => {
+  it("should render the home page", () => {
+    customRender(<Home />);
   });
 
-  expect(heading).toBeInTheDocument();
+  it("should render the button"),
+    () => {
+      customRender(<Home />);
+      const homeButton = screen.getByText("VIEW TODAY's TASKS");
+      expect(homeButton).toBeInTheDocument();
+    };
 });
- 
