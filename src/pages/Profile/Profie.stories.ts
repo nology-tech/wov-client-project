@@ -17,8 +17,15 @@ const meta: Meta<typeof Profile> = {
   parameters: {
     docs: {
       description: {
-        component:
-          "A Profile component that displays profile user data on the screen, offering the user to edit user data or sign out.",
+        component: `
+        A profile component that display profile information related to the signed in user; 
+        - Image 
+        - Score
+        - Name
+        - Bio
+        - Starred out password
+        
+        `,
       },
     },
   },
