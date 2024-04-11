@@ -14,4 +14,13 @@ describe("Navigation component", () => {
       const homeButton = screen.getByText("VIEW TODAY's TASKS");
       expect(homeButton).toBeInTheDocument();
     };
+
+  it("shoulld render the paragraph"),
+    () => {
+      customRender(<Home />);
+      const paragraph = screen
+        .getByTestId("container")
+        .querySelector("paragraph");
+      expect([paragraph]).toBeInTheDocument;
+    };
 });
