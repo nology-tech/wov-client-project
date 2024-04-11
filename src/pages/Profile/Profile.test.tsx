@@ -1,12 +1,33 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Profile from "./Profile";
-import { randomUserProfiles } from "../../utils/mockData";
+import { UserProfile } from "../../utils/mockData";
 import { customRender } from "../../utils/testUtils";
+
+const mockData: UserProfile = {
+  id: 1,
+  img: "https://picsum.photos/200/300",
+  score: 300,
+  name: "John Doe",
+  bio: "lean,mean,fighting machine",
+  email: "john.doe@example.com",
+  password: "password1",
+};
 
 describe("Profile component", () => {
   it("renders navigation items correctly", () => {
-    customRender(<Profile user={randomUserProfiles[0]} />);
+    customRender(
+      <Profile
+        id={mockData.id}
+        img={mockData.img}
+        score={mockData.score}
+        name={mockData.name}
+        bio={mockData.bio}
+        email={mockData.email}
+        password={mockData.password}
+      />
+    );
+
     const nameText = screen.getByText(/Name/i);
     const bioText = screen.getByText(/Bio/i);
     const emailText = screen.getByText(/Email/i);
@@ -26,7 +47,15 @@ describe("Profile component", () => {
 
   it("redirects to edit profile page when 'EDIT PROFILE' button is clicked", async () => {
     const { getByText } = customRender(
-      <Profile user={randomUserProfiles[0]} />
+      <Profile
+        id={mockData.id}
+        img={mockData.img}
+        score={mockData.score}
+        name={mockData.name}
+        bio={mockData.bio}
+        email={mockData.email}
+        password={mockData.password}
+      />
     );
     const editProfileButton = getByText("EDIT PROFILE");
     await userEvent.click(editProfileButton);
@@ -34,7 +63,15 @@ describe("Profile component", () => {
   });
   it("represents the user's password as asterisks", () => {
     const { getByText } = customRender(
-      <Profile user={randomUserProfiles[0]} />
+      <Profile
+        id={mockData.id}
+        img={mockData.img}
+        score={mockData.score}
+        name={mockData.name}
+        bio={mockData.bio}
+        email={mockData.email}
+        password={mockData.password}
+      />
     );
     const passwordElement = getByText(/password/i);
 

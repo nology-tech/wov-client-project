@@ -3,21 +3,21 @@ import "./Profile.scss";
 import { Link } from "react-router-dom";
 import { UserProfile } from "../../utils/mockData";
 
-const Profile = ({ user }: { user: UserProfile }) => {
-  const starredPassword = "*".repeat(user.password.length);
+const Profile = ({ id, score, img, name, bio, email }: UserProfile) => {
+  const starredPassword = "*********";
   return (
     <div className="profile">
-      <img src={user.img} className="profile__img" />
-      <h1 className="profile__score">{user.score}</h1>
+      <img src={img} className="profile__img" alt="Profile" />
+      <h1 className="profile__score">{score}</h1>
       <section className="profile__info">
         <p>
-          <span className="profile__label">Name</span> : {user.name}{" "}
+          <span className="profile__label">Name</span> : {name}{" "}
         </p>
         <p>
-          <span className="profile__label">Bio</span> : {user.bio}{" "}
+          <span className="profile__label">Bio</span> : {bio}{" "}
         </p>
         <p>
-          <span className="profile__label">Email</span> : {user.email}{" "}
+          <span className="profile__label">Email</span> : {email}{" "}
         </p>
         <p>
           <span className="profile__label">Password</span> : {starredPassword}{" "}
@@ -40,4 +40,5 @@ const Profile = ({ user }: { user: UserProfile }) => {
     </div>
   );
 };
+
 export default Profile;
