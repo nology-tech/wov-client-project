@@ -5,6 +5,10 @@
   flex-direction: column;
   align-items: center;
   background-color: $off-white-color;
+
+  &__button {
+    margin-top: 2rem;
+  }
   &__header {
     padding: 0 5rem 0 5rem;
     color: $pure-black-color;
