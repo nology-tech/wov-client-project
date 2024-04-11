@@ -1,26 +1,25 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
+import fallbackProfile from "../../../public/assets/images/default-profile-image.png"
 
 type HeaderProps = {
-  title: string;
   subtitle?: string;
   profileImage?: string;
 };
 
-const Header = ({ title, subtitle, profileImage }: HeaderProps) => {
+const Header = ({ subtitle, profileImage }: HeaderProps) => {
   return (
     <header className="header">
       <div className="header__image-div">
         <Link to="/profile">
           <img
             className="header__image-div header__image-div--image"
-            src={profileImage}
+            src={profileImage ?? fallbackProfile}
           />
         </Link>
       </div>
-
       <div className="header__title-div">
-        <h4 className="header__title-div header__title-div--title">{title}</h4>
+        <h4 className="header__title-div header__title-div--title">WAY OF THE VIKING</h4>
         <h1 className="header__title-div header__title-div--subtitle">
           {subtitle}
         </h1>

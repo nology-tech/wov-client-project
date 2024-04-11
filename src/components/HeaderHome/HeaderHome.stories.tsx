@@ -11,13 +11,7 @@ const meta: Meta<typeof HeaderHome> = {
 
   type Story = StoryObj<typeof HeaderHome>;
 
-export const WithDate: Story = {
-  args: {
-    date: "29 April 2024",
-  },
-};
-
-export const WithLocationAndImage: Story = {
+export const WithAllComponents: Story = {
     args: {
       date: "29 April 2024",
       location: "Malvern Hills",
