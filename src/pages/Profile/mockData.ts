@@ -24,7 +24,7 @@ export const randomUserProfiles: UserProfile[] = [
     name: "Todd Griffin",
     bio: "bold,brave,adventurous spirit",
     email: "todd.griffin@example.com",
-    password: "password2",
+    password: "password2sdfsd",
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ export const randomUserProfiles: UserProfile[] = [
     name: "Hamish Lawson",
     bio: "fierce,driven,never backs down",
     email: "hamish.lawson@example.com",
-    password: "password3",
+    password: "password3dsfsfsd",
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ export const randomUserProfiles: UserProfile[] = [
     name: "Samuel Raducan",
     bio: "determined,tenacious,always striving",
     email: "samuel.raducan@example.com",
-    password: "password4",
+    password: "password4dskfjhskf",
   },
   {
     id: 5,
