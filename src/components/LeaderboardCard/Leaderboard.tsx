@@ -8,10 +8,14 @@ type LeaderboardCardProps = {
 };
 
 const LeaderboardCard = ({name, profileImage, totalScore} : LeaderboardCardProps) => {
+
+    const myName = name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+
+
     return(
         <div className="leaderboard-card">
             <img src={profileImage ?? fallbackProfile }  className="leaderboard-card__img"/>
-            <h4 className="leaderboard-card__name">{name}</h4>
+            <h4 className="leaderboard-card__name">{myName}</h4>
             <h4 className="leaderboard-card__score">{totalScore}</h4>
         </div>
     )
