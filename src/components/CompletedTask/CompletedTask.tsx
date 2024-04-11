@@ -47,7 +47,7 @@ const CompletedTask = ({
         }
         disableTypography={true}
         title={
-          <Typography variant="h3" className="completed-task__heading">
+          <Typography variant="body1" className="completed-task__heading">
             {taskHeading}
           </Typography>
         }
@@ -75,7 +75,7 @@ const CompletedTask = ({
 
           {image && (
             <div>
-              <Typography variant="h4" className="completed-task__media">
+              <Typography variant="body1" className="completed-task__media">
                 Media
               </Typography>
               <div className="completed-task__img">
