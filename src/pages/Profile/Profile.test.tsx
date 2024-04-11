@@ -7,16 +7,23 @@ import { customRender } from "../../utils/testUtils";
 describe("Profile component", () => {
   it("renders navigation items correctly", () => {
     customRender(<Profile user={randomUserProfiles[0]} />);
+    expect(screen.getByText(/Name/i)).toBeInTheDocument();
+    expect(screen.getByText(/Bio/i)).toBeInTheDocument();
+    expect(screen.getByText(/Email/i)).toBeInTheDocument();
+    expect(screen.getByText(/Password/i)).toBeInTheDocument();
+    const editButton = screen.getByRole("button", { name: /edit profile/i });
+    const signOutButton = screen.getByRole("button", { name: /sign out/i });
+
+    expect(editButton).toBeInTheDocument();
+    expect(signOutButton).toBeInTheDocument();
   });
 
   it("redirects to edit profile page when 'EDIT PROFILE' button is clicked", async () => {
     const { getByText } = customRender(
       <Profile user={randomUserProfiles[0]} />
     );
-
     const editProfileButton = getByText("EDIT PROFILE");
     await userEvent.click(editProfileButton);
-
     expect(window.location.pathname).toEqual("/edit");
   });
 
