@@ -35,7 +35,7 @@ const Home = () => {
         <p className="daily-tasks__paragraph">
           Made by the people for the people. A local studio tour of local makers
           around the area of bristol. Come see the workshops where the magic
-          happ Stop for a quick sketch and pot of tea and pastry from the
+          happens Stop for a quick sketch and pot of tea and pastry from the
           pottery studio. Make something from the local craft shop. Explore the
           amazing works of art from a number of craft artists. Make it yourself
           from ceramics and other hand made materials. Sign up for an excursion
