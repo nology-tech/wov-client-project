@@ -1,12 +1,14 @@
 @use "./variables" as *;
+@import url("@fontsource/roboto/300.css");
 
 // here we use rem for font-size
 // rem is relative to the :root element in the dom (html tag)
 // we can manipulate the :root element's font-size at different breakpoints to scale up the font-size application-wide
-
 * {
   font-family: "Poppins", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+}
+body {
   color: $text-color;
 }
 

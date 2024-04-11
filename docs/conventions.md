@@ -31,6 +31,7 @@ Examples:
 ---
 
 ## TS, TSX
+
 Components will have stories.
 
 Features will be tested with React testing library.
@@ -40,6 +41,7 @@ Features will be tested with React testing library.
 If a function is very long and if it makes sense to be used elsewhere, it should be created in a separate folder/file, e.g. `src/utilities/utilities.ts`
 
 All functions will use arrow function syntax and destructuring where possible
+
 ```
 const myFunction = ({name, email, age}: MyFunctionProps) => {
 }
@@ -54,7 +56,7 @@ const myFunction = ({name, email, age}: MyFunctionProps) => {
 
 ### How will you name state, variables, arrays, and props?
 
-- camelCase naming for all variables, 
+- camelCase naming for all variables,
   - _excluding_ types and components, which are written in PascalCase
 - Arrays should be named in plural
   - Array's names should be descriptive enough for the reader to know what is inside
@@ -66,7 +68,7 @@ const myFunction = ({name, email, age}: MyFunctionProps) => {
 
 ### Should you comment on how something works?
 
-- Large and/or complex pieces of code should be commented if they are not self-descriptive __BUT__ self-descriptive and concise code should be prioritised
+- Large and/or complex pieces of code should be commented if they are not self-descriptive **BUT** self-descriptive and concise code should be prioritised
   - e.g. if a function can be broken up into smaller pieces, then it should be
 
 ### Should you leave console.log in the code?
@@ -78,6 +80,7 @@ const myFunction = ({name, email, age}: MyFunctionProps) => {
 - NO!!!!!
 
 # SCSS, Styling
+
 ## Where are the styles for a component kept?
 
 - Within the folder for each component.

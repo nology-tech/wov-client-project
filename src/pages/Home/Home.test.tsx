@@ -7,8 +7,9 @@ it("should render the form", () => {
   customRender(<Home />);
 
   const heading = screen.getByRole("heading", {
-    name: /page heading/i,
+    name: /section heading/i,
   });
 
   expect(heading).toBeInTheDocument();
 });
+ 
