@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans&family=Poppins:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato&family=Playfair+Display:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
 
 // breakpoints
 
@@ -29,6 +30,7 @@ $font-family-modern-header: "Poppins", sans-serif;
 $font-family-modern-content: "PT Sans", sans-serif;
 $font-family-classic-header: "Playfair Display", sans-serif;
 $font-family-classic-content: "Lato", sans-serif;
+$font-family-header-title: "Oswald", sans-serif;
 
 $font-h1: bold 2.25rem; // used with "font:" property
 $font-h2: bold 1.5rem;
