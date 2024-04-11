@@ -42,7 +42,6 @@ const Profile = ({ user }: ProfileProps) => {
           onClick={() => console.log("Sign out")}
         />
       </section>
-      <Navigation navActionIndex={4} />
     </div>
   );
 };
