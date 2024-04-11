@@ -1,4 +1,5 @@
-import { screen, userEvent } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Home from "./Home";
 
 import { customRender } from "../../utils/testUtils";
@@ -28,6 +29,6 @@ describe("Navigation component", () => {
     const { getByText } = customRender(<Home />);
     const goToTasks = getByText("VIEW TODAY's TASKS");
     await userEvent.click(goToTasks);
-    expect(window.location.pathname).toEqual("daily-tasks");
+    expect(window.location.pathname).toEqual("/daily-tasks");
   });
 });
