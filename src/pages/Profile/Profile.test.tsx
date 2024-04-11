@@ -27,7 +27,9 @@ describe("Profile component", () => {
     expect(window.location.pathname).toEqual("/edit");
   });
 
-  it("represents the users password as *******"),
+  it(
+    "represents the users password as ******* that is accurate to the length of the password"
+  ),
     () => {
       expect(screen.getByText("starredPassword")).toBeInTheDocument();
       expect(screen.getByText("starredPassword")).toEqual(
