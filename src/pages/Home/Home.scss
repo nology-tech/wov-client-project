@@ -17,4 +17,12 @@
     padding: 0 5rem 0 5rem;
     color: $pure-black-color;
   }
+  &__quote {
+    padding: 0 5rem 0 7rem;
+    margin-top: 1rem;
+    margin-left: 4rem;
+    border-left: 0.2rem solid #ccc;
+    padding-left: 10px;
+    color: $pure-black-color;
+  }
 }

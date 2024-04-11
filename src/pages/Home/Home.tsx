@@ -43,6 +43,24 @@ const Home = () => {
           Pottery Workshop. All activities are free and all the pottery is for
           sale. The tour is organized and presented by Chelsea Handmade & Local.
         </p>
+        <blockquote className="daily-tasks__quote">
+          This is an indented quote. It provides a way to visually set apart a
+          piece of text from the rest of the content, typically used for
+          quotations or excerpts.
+        </blockquote>
+        <p className="daily-tasks__paragraph">
+          Local producer of bath and beauty products. Check out the bath and
+          beauty products line from this maker. Located in oak barrels. Make
+          yourself some bath salts and use the handmade containers for a nice
+          relaxing bath at home. Make some small pots with creative molding
+          techniques. Tryens. making some pieces with the pottery tools. Visit a
+          local art store and get some handmade brushes. You can paint your own
+          wall at the studio where you’ll get a tour of the studio and you can
+          choose a souvenir tile to make yourself a unique decorative piece in
+          your house. Learn more about the history of pottery and how ceramics
+          can be used as a building material for small clay bricks. Using the
+          tools you learned from the workshop you will make a few pieces
+        </p>
       </div>
     </Layout>
   );
