@@ -1,7 +1,6 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Home from "./Home";
-
 import { customRender } from "../../utils/testUtils";
 
 describe("Navigation component", () => {
