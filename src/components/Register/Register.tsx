@@ -3,6 +3,32 @@ import Button from "../Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { Link } from "react-router-dom";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+
+// const auth = getAuth();
+// createUserWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+//     // Signed up
+//     const user = userCredential.user;
+//     // ...
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // ..
+//   });
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_TOKEN,
+  authDomain: "wov-client-project.firebaseapp.com",
+  projectId: "wov-client-project",
+  storageBucket: "wov-client-project.appspot.com",
+  messagingSenderId: "500736757552",
+  appId: "1:500736757552:web:2a7142e64715df07aec2f5",
+  measurementId: "G-CJVJ3K385S",
+};
+initializeApp(firebaseConfig);
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,9 +44,21 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(formData);
+
+    try {
+      const auth = getAuth();
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      console.log("user registered successfully", userCredentials.user);
+    } catch (error) {
+      console.error("Error registering user", error);
+    }
   };
 
   return (
@@ -36,7 +74,7 @@ const Register = () => {
       </div>
       <h2 className="register__heading">Create Account</h2>
 
-      <form onSubmit={handleSubmit} className="register__form" action="#">
+      {/* <form onSubmit={handleSubmit} className="register__form" action="#">
         <label className="register__form--label" htmlFor="">
           First Name
         </label>
@@ -62,9 +100,9 @@ const Register = () => {
           onChange={handleChange}
         />
         <Button label="Next" />
-      </form>
+      </form> */}
 
-      {/* <form onSubmit={handleSubmit} className="register__form" action="#">
+      <form onSubmit={handleSubmit} className="register__form" action="#">
         <label className="register__form--label" htmlFor="">
           Email Address
         </label>
@@ -101,7 +139,7 @@ const Register = () => {
           onChange={handleChange}
         />
         <Button label="SIGN UP" />
-      </form> */}
+      </form>
     </section>
   );
 };
