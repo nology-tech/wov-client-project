@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { UserProfile } from "../../utils/mockData";
 
 const Profile = ({ user }: { user: UserProfile }) => {
-  const { id, score, img, name, bio, email } = user;
+  const { score, img, name, bio, email } = user;
 
   return (
     <div className="profile">
