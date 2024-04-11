@@ -1,3 +1,42 @@
+// import ActiveTaskTile from "../../../components/ActiveTaskTile/ActiveTaskTile";
+// import 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import { FormEvent, useState } from "react";
 // //import TaskTiles from "../../components/..... do want to create a gallery of all?;
 // import ActiveTaskTile from "../../../components/ActiveTaskTile/ActiveTaskTile";
@@ -31,20 +70,20 @@
 //   }, [selectedFilters]);
 
 
-//const handleInputChange --->function linked to handletaskcompletion
+// const handleInputChange --->function linked to handletaskcompletion
 
 //   return (
-    // *searchbar with placeholder - captures search term and oninput handles input which links to handler
-    //function handleTaskCompletion passed up from child
-    // <div className="active-tasks__search-box">
-    //   <input
-    //     type="text"
-    //     id={label}
-    //     name={label}
-    //     value={searchTerm}
-    //     onInput={handleInputChange}
-    //     className="active-tasks__search-box__input"
-    //   />
+//     *searchbar with placeholder - captures search term and oninput handles input which links to handler
+//     function handleTaskCompletion passed up from child
+//     <div className="active-tasks__search-box">
+//       <input
+//         type="text"
+//         id={label}
+//         name={label}
+//         value={searchTerm}
+//         onInput={handleInputChange}
+//         className="active-tasks__search-box__input"
+//       />
 // map over data and create tile for each piece of mockdata return a active task tile
 //       <ActiveTaskTile props requirement = {tasks.requirement} category = {tasks.category} points = {tasks.points} />  
 //     </>
