@@ -29,7 +29,7 @@ const tasks: Tasks[] = [
     category: "Wellness",
     points: 3,
     desc: "Ommmm",
-    completedDate: new Date(2024, 3, 11),
+    completedDate: new Date(2024, 3, 10),
   },
   {
     Title: "1 hour exercise",
