@@ -3,8 +3,9 @@ import "./Profile.scss";
 import { Link } from "react-router-dom";
 import { UserProfile } from "../../utils/mockData";
 
-const Profile = ({ id, score, img, name, bio, email }: UserProfile) => {
-  const starredPassword = "*********";
+const Profile = ({ user }: { user: UserProfile }) => {
+  const { id, score, img, name, bio, email } = user;
+
   return (
     <div className="profile">
       <img src={img} className="profile__img" alt="Profile" />
@@ -20,7 +21,7 @@ const Profile = ({ id, score, img, name, bio, email }: UserProfile) => {
           <span className="profile__label">Email</span> : {email}{" "}
         </p>
         <p>
-          <span className="profile__label">Password</span> : {starredPassword}{" "}
+          <span className="profile__label">Password</span> : {"*********"}{" "}
         </p>
       </section>
       <section className="profile__buttons">
