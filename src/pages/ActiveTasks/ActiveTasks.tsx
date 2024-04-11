@@ -14,6 +14,13 @@ const ActiveTasks = () => {
     setSearchTerm(searchedInput)
   }
 
+  const searchedTasks = tasks.filter((task) => 
+    task.requirement.toLowerCase().includes(searchTerm) || task.category.toLowerCase().includes(searchTerm)
+  )
+
+  console.log(searchedTasks);
+  
+
   return (
     <div className="task-page">
       <label htmlFor="task-search">Search Bar</label>
@@ -26,9 +33,9 @@ const ActiveTasks = () => {
         className="task-page__search" 
         placeholder="Search by task, category"
         />
-      {tasks.map((task, index) => (
+      {searchedTasks.map((task) => (
         <ActiveTaskTile
-          key={index}
+          key={task.id}
           requirement={task.requirement}
           category={task.category}
           points={task.points}
