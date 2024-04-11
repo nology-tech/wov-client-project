@@ -4,6 +4,7 @@ import HeaderHome from "../../components/HeaderHome/HeaderHome";
 import Button from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 import "./Home.scss";
+import Navigation from "../../components/Navigation/Navigation";
 
 const Home = () => {
   // "today" shows current day, only used in the Home page.
@@ -64,6 +65,7 @@ const Home = () => {
           tools you learned from the workshop you will make a few pieces
         </p>
       </div>
+      <Navigation navActionIndex={4} />
     </Layout>
   );
 };
