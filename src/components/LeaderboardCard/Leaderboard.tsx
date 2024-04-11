@@ -8,15 +8,18 @@ type LeaderboardCardProps = {
 };
 
 const LeaderboardCard = ({name, profileImage, totalScore} : LeaderboardCardProps) => {
-
-    const myName = name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
-
+    // Using RegEx, it capitalises the first letter of each word.
+    const myName = name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()).slice(0, 20);
+   
+   
 
     return(
         <div className="leaderboard-card">
             <img src={profileImage ?? fallbackProfile }  className="leaderboard-card__img"/>
-            <h4 className="leaderboard-card__name">{myName}</h4>
+            <p className="leaderboard-card__name">{myName}</p>
+            <div>
             <h4 className="leaderboard-card__score">{totalScore}</h4>
+            </div>
         </div>
     )
 }
