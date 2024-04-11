@@ -2,68 +2,104 @@ import "./Register.scss";
 import Button from "../Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { Link } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 const Register = () => {
-  //   const [userDetails, setUserDetails] = useState({
-  //     firstName: "",
-  //     lastName: "",
-  //     email: "",
-  //     password: "",
-  //     confirmPassword: "",
-  //   });
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(formData);
+  };
 
   return (
     <section className="register">
-      <Link to={"#"}>
-        <img
-          className="register__icon-arrow"
-          src={arrowLeft}
-          alt="Arrow Left Icon"
-        />
-      </Link>
-      <h2 className="register__heading">Create An Account</h2>
+      <div className="register__icon--container">
+        <Link to={"#"}>
+          <img
+            className="register__icon--arrow"
+            src={arrowLeft}
+            alt="Arrow Left Icon"
+          />
+        </Link>
+      </div>
+      <h2 className="register__heading">Create Account</h2>
 
-      <form className="register__form" action="#">
+      <form onSubmit={handleSubmit} className="register__form" action="#">
         <label className="register__form--label" htmlFor="">
           First Name
         </label>
         <input
+          id="firstName"
+          name="firstName"
+          value={formData.firstName}
           className="register__form--input"
           type="text"
           placeholder="John"
+          onChange={handleChange}
         />
         <label className="register__form--label" htmlFor="">
           Last Name
         </label>
         <input
+          id="lastName"
+          name="lastName"
+          value={formData.lastName}
           className="register__form--input with-margin-bottom"
           type="text"
           placeholder="Smith"
+          onChange={handleChange}
         />
         <Button label="Next" />
       </form>
 
-      {/* <form className="register__form" action="#">
+      {/* <form onSubmit={handleSubmit} className="register__form" action="#">
         <label className="register__form--label" htmlFor="">
           Email Address
         </label>
         <input
+          id="email"
+          name="email"
+          value={formData.email}
           className="register__form--input"
           type="email"
           placeholder="you@example.com"
+          onChange={handleChange}
         />
         <label className="register__form--label" htmlFor="">
           Password
         </label>
         <input
+          id="password"
+          name="password"
+          value={formData.password}
           className="register__form--input"
           type="password"
           placeholder="Your password"
+          onChange={handleChange}
         />
         <label className="register__form--label" htmlFor="">
           Confirm Password
         </label>
-        <input className="register__form--input mb" type="password" />
+        <input
+          id="confirmPassword"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          className="register__form--input with-margin-bottom"
+          type="password"
+          onChange={handleChange}
+        />
         <Button label="SIGN UP" />
       </form> */}
     </section>

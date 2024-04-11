@@ -37,3 +37,60 @@
     gap: 24px;
   }
 }
+
+@media screen and (min-width: $tablet-breakpoint) {
+  .account {
+    gap: 25px;
+    &__info {
+      &--heading {
+        line-height: 1;
+        font-size: 3.25rem;
+        margin-bottom: 2.5rem;
+      }
+      &--text {
+        font-size: 1.5rem;
+      }
+    }
+    &__buttons {
+      width: 52%;
+      margin: 0 auto;
+
+      gap: 34px;
+    }
+  }
+}
+@media screen and (min-width: $desktop-breakpoint) {
+  .account {
+    gap: 40px;
+    &__info {
+      &--heading {
+        line-height: 1;
+        font-size: 3rem;
+      }
+    }
+    &__buttons {
+      width: 40%;
+      margin: 0 auto;
+    }
+  }
+}
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .account {
+    gap: 10px;
+    &__info {
+    }
+    &__buttons {
+      width: 25%;
+    }
+  }
+}
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .account {
+    gap: 0px;
+    &__info {
+    }
+    &__buttons {
+      width: 15%;
+    }
+  }
+}

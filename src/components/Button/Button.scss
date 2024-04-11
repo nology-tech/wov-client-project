@@ -9,6 +9,7 @@
   color: $white-color;
   cursor: pointer;
   padding: 1rem 1.25rem;
+  width: 100%;
   max-width: 20.938rem;
   min-width: 16.75rem;
 
@@ -23,5 +24,11 @@
   &--light-grey {
     background-color: $light-grey-color;
     color: $slate-grey-color;
+  }
+}
+@media screen and (min-width: $tablet-breakpoint) {
+  .button {
+    max-width: 24rem;
+    min-width: 18rem;
   }
 }

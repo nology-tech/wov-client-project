@@ -1,25 +1,37 @@
 @use "../../styles/variables" as *;
 
 .register {
-  width: 80vw;
+  width: 71vw;
   margin: 0 auto;
+  margin-top: -5rem;
   height: 100vh;
-
-  &__icon-arrow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  &__icon--arrow {
     width: 30px;
     height: 30px;
     border: solid 1px $black-color;
     border-radius: 50%;
     padding: 3px;
     margin-bottom: 3.5rem;
-    margin-top: -1rem;
+    margin-top: 5rem;
+    transform: translateY(10px);
+  }
+  &__icon--container {
+    align-self: start;
   }
 
   &__heading {
+    text-align: left;
+    font-size: 8.7vw;
     color: $black-color;
   }
 
   &__form {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,6 +59,84 @@
 
     ::placeholder {
       color: $light-grey-color;
+    }
+  }
+}
+
+@media screen and (min-width: $tablet-breakpoint) {
+  .register {
+    width: 50vw;
+
+    &__icon--arrow {
+      width: 60px;
+      height: 60px;
+      border: solid 2px $black-color;
+      padding: 7px;
+    }
+    &__icon--container {
+      margin-top: 0;
+    }
+
+    &__heading {
+      text-align: left;
+      font-size: 6vw;
+    }
+
+    &__form {
+      gap: 20px;
+      font-size: 1.5rem;
+
+      &--input {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+@media screen and (min-width: $desktop-breakpoint) {
+  .register {
+    width: 30%;
+
+    &__icon--container {
+      margin-top: 2rem;
+    }
+
+    &__heading {
+      font-size: 3.7vw;
+    }
+
+    &__form {
+      gap: 0;
+      font-size: 1.2rem;
+
+      &--input {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .register {
+    width: 25%;
+
+    &__icon--container {
+      margin-top: 2rem;
+    }
+
+    &__heading {
+      font-size: 3vw;
+    }
+  }
+}
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .register {
+    width: 15%;
+
+    &__icon--container {
+      margin-top: 2rem;
+    }
+
+    &__heading {
+      font-size: 1.8vw;
     }
   }
 }
