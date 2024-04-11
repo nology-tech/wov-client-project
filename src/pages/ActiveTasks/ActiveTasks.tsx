@@ -24,7 +24,7 @@ const ActiveTasks = () => {
   );
 
   return (
-    <div className="task-page">
+    <div className="task-page" data-testid="task-page">
       <Header subtitle="Task" />
       <label htmlFor="task-search" className="task-page__label">
         Search Bar
@@ -35,6 +35,7 @@ const ActiveTasks = () => {
           id="task-search"
           placeholder="Search by task, category"
           variant="outlined"
+          role="search"
           onChange={handleTaskSearchChange}
           InputProps={{
             startAdornment: (
@@ -80,6 +81,3 @@ const ActiveTasks = () => {
 };
 
 export default ActiveTasks;
-
-// Notes
-// - How data storing works, will real data have id

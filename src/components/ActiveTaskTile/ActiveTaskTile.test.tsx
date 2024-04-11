@@ -2,10 +2,15 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ActiveTaskTile from "./ActiveTaskTile";
 
-describe("Active Tile component", () => {
+describe("ActiveTaskTile component", () => {
   it("should render the active task tile", () => {
     render(
-      <ActiveTaskTile requirement="5am wake up" category="Routine" points={5} />
+      <ActiveTaskTile
+        requirement="5am wake up"
+        category="Routine"
+        points={5}
+        classModifier={"active-task"}
+      />
     );
 
     const activeTask = screen.getByTestId("active-task");
@@ -14,7 +19,7 @@ describe("Active Tile component", () => {
 
   it("should render the requirement header", () => {
     render(
-      <ActiveTaskTile requirement="5am wake up" category="Routine" points={5} />
+      <ActiveTaskTile requirement="5am wake up" category="Routine" points={5} classModifier={"active-task"} />
     );
 
     const requirement = screen.getByText("5am wake up");
@@ -31,6 +36,7 @@ describe("Active Tile component", () => {
         requirement="requirement"
         category="category"
         points={5}
+        classModifier={"active-task"}
       />
     );
 
@@ -39,11 +45,13 @@ describe("Active Tile component", () => {
   });
 
   it("should check the selected state of the button", async () => {
+
     render(
       <ActiveTaskTile
         requirement="requirement"
         category="category"
         points={5}
+        classModifier={"active-task"}
       />
     );
 
