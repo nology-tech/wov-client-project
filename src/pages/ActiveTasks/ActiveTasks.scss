@@ -1,10 +1,44 @@
 @use "../../styles/variables" as *;
 
 .task-page {
-  // margin-top: 100px;
   background-color: $white-color;
   height: 100%;
   overflow: scroll;
   margin-bottom: 56px;
+
+  &__label {
+    // Visually hidding search box label but still screen reader accessible
+    position: absolute;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
 }
 
+.task-page__search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.8rem auto 0;
+  width: 100%;
+}
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border-radius: 30px;
+}
+
+.task-page__input {
+  width: 86%;
+  font-family: $font-family-modern-header;
+}
+
+.search-icon {
+  margin-left: 15px;
+  color: #3b5165;
+}
