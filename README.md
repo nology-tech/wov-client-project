@@ -44,3 +44,8 @@
 
 - The player's password is starred out.
 - The buttons allow the user to edit their profile data and sign out.
+
+### Home Page
+
+- A welcome page that uses the Navigation, Header and Button components.
+- The page displays a welcome message to the user and allows them to navigate to other parts of the app.

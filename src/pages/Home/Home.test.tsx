@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, userEvent } from "@testing-library/react";
 import Home from "./Home";
 
 import { customRender } from "../../utils/testUtils";
@@ -23,4 +23,11 @@ describe("Navigation component", () => {
         .querySelector("paragraph");
       expect([paragraph]).toBeInTheDocument;
     };
+
+  it("shoulld redirect to tasklist when 'TASK LIST' button is clicked", async () => {
+    const { getByText } = customRender(<Home />);
+    const goToTasks = getByText("VIEW TODAY's TASKS");
+    await userEvent.click(goToTasks);
+    expect(window.location.pathname).toEqual("daily-tasks");
+  });
 });
