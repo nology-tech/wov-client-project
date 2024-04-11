@@ -1,7 +1,7 @@
 import Layout from "../../components/Layout/Layout";
 import Header from "../../components/Header/Header";
 import HeaderHome from "../../components/HeaderHome/HeaderHome";
-import LeaderboardCard from "../../components/LeaderboardCard/Leaderboard";
+import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
 import profileImage from "../../../public/assets/images/default-profile-image.png"
 
 const Home = () => {
