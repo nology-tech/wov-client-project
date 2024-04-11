@@ -20,7 +20,7 @@ const meta: Meta<typeof Navigation> = {
   },
   component: Navigation,
   decorators: [withRouter],
-};
+} as Meta;
 
 export default meta;
 
