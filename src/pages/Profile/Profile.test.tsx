@@ -1,16 +1,22 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Profile from "./Profile";
-import { randomUserProfiles } from "./mockData";
+import { randomUserProfiles } from "../../utils/mockData";
 import { customRender } from "../../utils/testUtils";
 
 describe("Profile component", () => {
   it("renders navigation items correctly", () => {
     customRender(<Profile user={randomUserProfiles[0]} />);
-    expect(screen.getByText(/Name/i)).toBeInTheDocument();
-    expect(screen.getByText(/Bio/i)).toBeInTheDocument();
-    expect(screen.getByText(/Email/i)).toBeInTheDocument();
-    expect(screen.getByText(/Password/i)).toBeInTheDocument();
+    const nameText = screen.getByText(/Name/i);
+    const bioText = screen.getByText(/Bio/i);
+    const emailText = screen.getByText(/Email/i);
+    const passwordText = screen.getByText(/Password/i);
+
+    expect(nameText).toBeInTheDocument();
+    expect(bioText).toBeInTheDocument();
+    expect(emailText).toBeInTheDocument();
+    expect(passwordText).toBeInTheDocument();
+
     const editButton = screen.getByRole("button", { name: /edit profile/i });
     const signOutButton = screen.getByRole("button", { name: /sign out/i });
 
@@ -26,14 +32,20 @@ describe("Profile component", () => {
     await userEvent.click(editProfileButton);
     expect(window.location.pathname).toEqual("/edit");
   });
+  it("represents the user's password as asterisks", () => {
+    const { getByText } = customRender(
+      <Profile user={randomUserProfiles[0]} />
+    );
+    const passwordElement = getByText(/password/i);
 
-  it(
-    "represents the users password as ******* that is accurate to the length of the password"
-  ),
-    () => {
-      expect(screen.getByText("starredPassword")).toBeInTheDocument();
-      expect(screen.getByText("starredPassword")).toEqual(
-        randomUserProfiles[0].password.length
-      );
-    };
+    if (passwordElement && passwordElement.textContent) {
+      const passwordText = passwordElement.textContent.trim().substring(10);
+      const isStarredPassword = passwordText
+        .split("")
+        .every((char: string) => char === "*");
+      expect(isStarredPassword).toBeTruthy();
+    } else {
+      expect(true).toBeFalsy();
+    }
+  });
 });

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Profile from "./Profile.tsx";
-import { randomUserProfiles } from "./mockData.ts";
+import { randomUserProfiles } from "../../utils/mockData.ts";
 import {
   reactRouterParameters,
   withRouter,

@@ -1,13 +1,9 @@
 import Button from "../../components/Button/Button";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
-import { UserProfile } from "./mockData";
+import { UserProfile } from "../../utils/mockData";
 
-type ProfileProps = {
-  user: UserProfile;
-};
-
-const Profile = ({ user }: ProfileProps) => {
+const Profile = ({ user }: { user: UserProfile }) => {
   const starredPassword = "*".repeat(user.password.length);
   return (
     <div className="profile">
@@ -15,16 +11,16 @@ const Profile = ({ user }: ProfileProps) => {
       <h1 className="profile__score">{user.score}</h1>
       <section className="profile__info">
         <p>
-          <strong>Name</strong> : {user.name}{" "}
+          <span className="profile__label">Name</span> : {user.name}{" "}
         </p>
         <p>
-          <strong>Bio</strong> : {user.bio}{" "}
+          <span className="profile__label">Bio</span> : {user.bio}{" "}
         </p>
         <p>
-          <strong>Email</strong> : {user.email}{" "}
+          <span className="profile__label">Email</span> : {user.email}{" "}
         </p>
         <p>
-          <strong>Password</strong> : {starredPassword}{" "}
+          <span className="profile__label">Password</span> : {starredPassword}{" "}
         </p>
       </section>
       <section className="profile__buttons">
