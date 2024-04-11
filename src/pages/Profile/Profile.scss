@@ -11,8 +11,8 @@
   padding: 3rem 0 0 0;
   height: 100vh;
   &__img {
-    height: 9rem;
-    width: 9rem;
+    height: 9em;
+    width: 9em;
     border-radius: 50%;
     border: 3px solid $black-color;
   }
@@ -33,6 +33,9 @@
     padding: 2rem 3rem 0 4rem;
     color: $black-color;
     font-size: 1rem;
+    .profile__label {
+      font-weight: bold;
+    }
   }
 
   &__buttons {
