@@ -19,4 +19,12 @@ describe("Profile component", () => {
 
     expect(window.location.pathname).toEqual("/edit");
   });
+
+  it("represents the users password as *******"),
+    () => {
+      expect(screen.getByText("starredPassword")).toBeInTheDocument();
+      expect(screen.getByText("starredPassword")).toEqual(
+        randomUserProfiles[0].password.length
+      );
+    };
 });

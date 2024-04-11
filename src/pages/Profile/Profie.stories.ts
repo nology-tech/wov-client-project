@@ -18,7 +18,7 @@ const meta: Meta<typeof Profile> = {
     docs: {
       description: {
         component:
-          "A Navigation component that adjusts based on current page selected.",
+          "A Profile component that displays profile user data on the screen, offering the user to edit user data or sign out.",
       },
     },
   },

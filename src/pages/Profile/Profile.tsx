@@ -2,6 +2,7 @@ import Button from "../../components/Button/Button";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
 import { UserProfile } from "./mockData";
+import Navigation from "../../components/Navigation/Navigation";
 
 type ProfileProps = {
   user: UserProfile;
@@ -41,6 +42,7 @@ const Profile = ({ user }: ProfileProps) => {
           onClick={() => console.log("Sign out")}
         />
       </section>
+      <Navigation navActionIndex={4} />
     </div>
   );
 };
