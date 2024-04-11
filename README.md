@@ -30,3 +30,7 @@
 - This contains 4 BottomNavigationAction components, that each contain Icon Components. 
 - All of these components are imported from the Mui Component Library and can be style by the selectors stipulated in the Navigation.scss file. 
 - Currently they prove the Link for the react-router-dom dependency, that will be used to route to different pages within the App.
+
+### Leaderboard Card
+- Contains the profile picture, name and total score that can be reused to display and render for each user.
+- Able to see the profile picture, name and total score of each user.
