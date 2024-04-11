@@ -5,11 +5,17 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs, { Dayjs } from "dayjs";
 import updateLocale from "dayjs/plugin/updateLocale";
 import Stack from "@mui/material/Stack";
-import tasks from "../../data/completedTasks";
+import tasks, { Tasks } from "../../data/completedTasks";
 import CompletedTask from "../../components/CompletedTask/CompletedTask";
 import { Divider } from "@mui/material";
 
-const Calendar = () => {
+ export const filterCompletedTasks = (tasks: Tasks[], date: Date): Tasks[] => {
+   return tasks.filter(
+     (task) => task.completedDate.toDateString() == date.toDateString()
+   );
+ };
+
+export const Calendar = () => {
   const [date, setDate] = React.useState<Date>(new Date());
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
@@ -18,10 +24,8 @@ const Calendar = () => {
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
-  console.log(date);
-  const filteredCompletedTasks = tasks.filter(
-    (task) => task.completedDate.toDateString() == date.toDateString()
-  );
+ 
+  const filteredCompletedTasks = filterCompletedTasks(tasks, date);
 
   return (
     <div>
@@ -53,4 +57,3 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
