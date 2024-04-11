@@ -1,5 +1,54 @@
-// import ActiveTaskTile from "../../../components/ActiveTaskTile/ActiveTaskTile";
-// import 
+import { FormEvent, useState } from "react";
+import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
+import Navigation from "../../components/Navigation/Navigation";
+import tasks from "../../MockData/tasks";
+import { Tasks } from "../../MockData/tasks";
+import './ActiveTasks.scss'
+
+
+const ActiveTasks = () => {
+  const [searchTerm, setSearchTerm] = useState<string>("")
+
+  const handleTaskSearchChange = (event: FormEvent<HTMLInputElement>) => {
+    const searchedInput = event.currentTarget.value;
+    setSearchTerm(searchedInput)
+  }
+
+  return (
+    <div className="task-page">
+      <label htmlFor="task-search">Search Bar</label>
+      <input 
+        type="text" 
+        id="task-search"
+        name="task-search"
+        value={searchTerm}
+        onInput={handleTaskSearchChange}
+        className="task-page__search" 
+        placeholder="Search by task, category"
+        />
+      {tasks.map((task, index) => (
+        <ActiveTaskTile
+          key={index}
+          requirement={task.requirement}
+          category={task.category}
+          points={task.points}
+        />
+      ))}
+      <Navigation navActionIndex={1} />
+    </div>
+  );
+}
+
+export default ActiveTasks
+
+
+
+
+// Notes
+// - How data storing works, will real data have id
+
+
+
 
 
 
