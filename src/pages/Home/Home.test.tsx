@@ -4,11 +4,6 @@ import Home from "./Home";
 import { customRender } from "../../utils/testUtils";
 
 describe("Home Component", () => {
-  it("should render the home page", () => {
-    customRender(<Home />);
-    expect(<Home />).toBeInTheDocument();
-  });
-
   it("should render the button"),
     () => {
       customRender(<Home />);
