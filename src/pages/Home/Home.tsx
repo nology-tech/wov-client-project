@@ -1,6 +1,8 @@
 import Layout from "../../components/Layout/Layout";
 import Header from "../../components/Header/Header";
 import HeaderHome from "../../components/HeaderHome/HeaderHome";
+import ActiveTasks from "../ActiveTasks/ActiveTasks";
+import Navigation from "../../components/Navigation/Navigation";
 
 const Home = () => {
   // "today" shows current day, only used in the Home page.
@@ -22,6 +24,7 @@ const Home = () => {
       />
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
+      <Navigation navActionIndex={0} />
     </Layout>
   );
 };

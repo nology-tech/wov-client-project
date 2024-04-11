@@ -4,11 +4,13 @@ type ActiveTaskTileProps = {
   requirement: string;
   category: string;
   points: number;
+  classModifier: string;
 };
 const ActiveTaskTile = ({
   requirement,
   category,
-  points
+  points,
+  classModifier
 }: ActiveTaskTileProps) => {
   const [completedTasks, setCompletedTasks] = useState<boolean>(false);
 
@@ -17,7 +19,7 @@ const ActiveTaskTile = ({
   }
 
   return (
-    <div className="active-task" data-testid="active-task">
+    <div className={classModifier}  data-testid="active-task">
       <div className="active-task__content">
         <label htmlFor="input-field">
           <h4 className="active-task__requirement">{requirement}</h4>

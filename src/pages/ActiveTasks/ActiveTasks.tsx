@@ -4,6 +4,7 @@ import Navigation from "../../components/Navigation/Navigation";
 import tasks from "../../MockData/tasks";
 import { Tasks } from "../../MockData/tasks";
 import './ActiveTasks.scss'
+import Header from "../../components/Header/Header";
 
 
 const ActiveTasks = () => {
@@ -23,22 +24,24 @@ const ActiveTasks = () => {
 
   return (
     <div className="task-page">
+      <Header subtitle="Task" />
       <label htmlFor="task-search">Search Bar</label>
-      <input 
-        type="text" 
+      <input
+        type="text"
         id="task-search"
         name="task-search"
         value={searchTerm}
         onInput={handleTaskSearchChange}
-        className="task-page__search" 
+        className="task-page__search"
         placeholder="Search by task, category"
-        />
-      {searchedTasks.map((task) => (
+      />
+      {searchedTasks.map((task, index) => (
         <ActiveTaskTile
           key={task.id}
           requirement={task.requirement}
           category={task.category}
           points={task.points}
+          classModifier={(index === searchedTasks.length - 1) ? "active-task active-task--last" : "active-task"}
         />
       ))}
       <Navigation navActionIndex={1} />

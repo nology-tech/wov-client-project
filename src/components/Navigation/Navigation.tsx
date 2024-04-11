@@ -9,13 +9,13 @@ import { useState } from "react";
 import "./Navigation.scss";
 
 type NavProps = {
-  navActionIndex : number
+  navActionIndex? : number
 }
 
 const Navigation = ({ navActionIndex = 0 } : NavProps) => {
   const [value, setValue] = useState(navActionIndex);
   return (
-    <Box sx={{ width: "100%", position: "absolute", bottom: 0 }}>
+    <Box sx={{ width: "100%", position: "fixed", bottom: 0 }}>
       <BottomNavigation
         className="bottom-navigation"
         showLabels

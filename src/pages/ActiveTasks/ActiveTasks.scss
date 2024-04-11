@@ -3,7 +3,8 @@
 .task-page {
   // margin-top: 100px;
   background-color: $white-color;
-  height: calc(100% - 143.19px - 56px);
-  overflow: scroll; 
+  height: 100%;
+  overflow: scroll;
+  margin-bottom: 56px;
 }
 
