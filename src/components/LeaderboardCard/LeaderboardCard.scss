@@ -23,3 +23,23 @@
         width: 50rem;
     }
 }
+
+@media screen and (min-width: $tablet-breakpoint) {
+    .leaderboard-card{
+        &__img{
+            width: 2.4rem;
+            margin: 0.7rem 1rem;
+        }
+        &__name{
+            font-size: 1.2rem;
+        }
+    }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+    .leaderboard-card{
+        &__img{
+            
+        }
+    }
+}
