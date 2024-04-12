@@ -1,0 +1,34 @@
+@use "../../styles/variables" as *;
+
+.error-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__heading-first {
+    font-family: $font-family-header-title;
+    font-size: 1.5rem;
+    color: $pure-black-color;
+    padding: 4rem 2rem 0 2rem;
+    text-align: center;
+    padding-top: 5rem;
+    z-index: 101;
+  }
+
+  &__heading-second {
+    font-family: $font-family-header-title;
+    font-size: 1.5rem;
+    color: $pure-black-color;
+    padding: 0 2rem 0 2rem;
+    text-align: center;
+    margin-bottom: -4rem;
+    z-index: 100;
+  }
+
+  &__image {
+  }
+
+  &__button {
+  }
+}
