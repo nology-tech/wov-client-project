@@ -11,7 +11,7 @@ import { InputAdornment } from "@mui/material";
 
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-
+  
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchedInput = event.currentTarget.value.toLowerCase();
     setSearchTerm(searchedInput);

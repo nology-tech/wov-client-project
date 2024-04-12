@@ -3,7 +3,6 @@
 .task-page {
   background-color: $white-color;
   height: 100%;
-  overflow: scroll;
   margin-bottom: 56px;
 
   &__label {
@@ -19,26 +18,26 @@
     white-space: nowrap !important;
     border: 0 !important;
   }
-}
 
-.task-page__search-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1.8rem auto 0;
-  width: 100%;
-}
+  &__search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.8rem auto 0;
+    width: 100%;
+  }
 
-.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-  border-radius: 30px;
-}
+  .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border-radius: 30px;
+  }
 
-.task-page__input {
-  width: 86%;
-  font-family: $font-family-modern-header;
-}
+  .task-page__input {
+    width: 86%;
+    font-family: $font-family-modern-header;
+  }
 
-.search-icon {
-  margin-left: 15px;
-  color: #3b5165;
+  .search-icon {
+    margin-left: 15px;
+    color: #3b5165;
+  }
 }

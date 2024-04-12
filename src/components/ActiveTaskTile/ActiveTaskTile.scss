@@ -42,3 +42,23 @@
 .active-task--last {
   border-bottom: none;
 }
+
+
+@media screen and (min-width: $tablet-breakpoint) {
+  .active-task{
+    &__inputs{
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .active-task{
+    &__inputs{
+      height: 35px;
+      width: 35px;
+    }
+  }
+}
+

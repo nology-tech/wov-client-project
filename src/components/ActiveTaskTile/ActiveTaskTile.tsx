@@ -10,16 +10,16 @@ const ActiveTaskTile = ({
   requirement,
   category,
   points,
-  classModifier
+  classModifier,
 }: ActiveTaskTileProps) => {
   const [completedTasks, setCompletedTasks] = useState<boolean>(false);
 
   const handleTaskCompletion = () => {
-    setCompletedTasks(!completedTasks)
-  }
+    setCompletedTasks(!completedTasks);
+  };
 
   return (
-    <div className={classModifier}  data-testid="active-task">
+    <div className={classModifier} data-testid="active-task">
       <div className="active-task__content">
         <label htmlFor="input-field">
           <h4 className="active-task__requirement">{requirement}</h4>
