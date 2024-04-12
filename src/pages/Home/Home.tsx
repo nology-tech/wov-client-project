@@ -1,4 +1,3 @@
-import Layout from "../../components/Layout/Layout";
 import Header from "../../components/Header/Header";
 import HeaderHome from "../../components/HeaderHome/HeaderHome";
 
