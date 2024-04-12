@@ -7,13 +7,13 @@ describe("ErrorPage", () => {
   it("should render the button"),
     () => {
       customRender(<ErrorPage />);
-      const homeButton = screen.getByText("Home");
+      const homeButton = screen.getByText("HOME");
       expect(homeButton).toBeInTheDocument();
     };
 
   it("should redirect to /home when 'home' button is clicked", async () => {
     const { getByText } = customRender(<ErrorPage />);
-    const home = getByText("Home");
+    const home = getByText("HOME");
     await userEvent.click(home);
     expect(window.location.pathname).toEqual("/home");
   });
