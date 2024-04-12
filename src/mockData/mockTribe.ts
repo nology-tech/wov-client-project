@@ -10,7 +10,7 @@ export type UserProfile = {
 export const tribeUsers: UserProfile[] = [
   {
     id: "g234",
-    img: "https://upload.wikimedia.org/wikipedia/commons/a/af/Default_avatar_profile.jpg",
+    img: "https://picsum.photos/200/300",
     totalScore: 300,
     name: "John Doe",
     bio: "lean,mean,fighting machine",
