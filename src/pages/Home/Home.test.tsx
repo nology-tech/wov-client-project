@@ -3,11 +3,7 @@ import userEvent from "@testing-library/user-event";
 import Home from "./Home";
 import { customRender } from "../../utils/testUtils";
 
-describe("Navigation component", () => {
-  it("should render the home page", () => {
-    customRender(<Home />);
-  });
-
+describe("Home Component", () => {
   it("should render the button"),
     () => {
       customRender(<Home />);
@@ -15,7 +11,7 @@ describe("Navigation component", () => {
       expect(homeButton).toBeInTheDocument();
     };
 
-  it("shoulld render the paragraph"),
+  it("should render the paragraph"),
     () => {
       customRender(<Home />);
       const paragraph = screen
@@ -24,7 +20,7 @@ describe("Navigation component", () => {
       expect([paragraph]).toBeInTheDocument;
     };
 
-  it("shoulld redirect to tasklist when 'TASK LIST' button is clicked", async () => {
+  it("should redirect to tasklist when 'TASK LIST' button is clicked", async () => {
     const { getByText } = customRender(<Home />);
     const goToTasks = getByText("VIEW TODAY's TASKS");
     await userEvent.click(goToTasks);
