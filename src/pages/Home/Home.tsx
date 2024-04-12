@@ -11,6 +11,15 @@ const Home = () => {
       " " +
       today.getFullYear();
 
+  // "today" shows current day, only used in the Home page.
+  const today = new Date(),
+    date =
+      today.getDate() +
+      " " +
+      today.toLocaleString("default", { month: "long" }) +
+      " " +
+      today.getFullYear();
+
   return (
     <>
       <Header subtitle="Home" />

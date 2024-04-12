@@ -1,0 +1,48 @@
+@use "../../styles/variables" as *;
+
+.profile {
+  font-family: "poppins";
+  font-size: 1.125rem;
+  background-color: $off-white-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3rem 0 0 0;
+  height: 100vh;
+  &__img {
+    height: 9em;
+    width: 9em;
+    border-radius: 50%;
+    border: 3px solid $black-color;
+  }
+  &__score {
+    font-size: 2.25rem;
+    padding: 1rem 0 1rem 0;
+    display: flex;
+    justify-content: center;
+    color: $primary-color;
+  }
+  &__info {
+    p {
+      color: $slate-grey-color;
+    }
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2rem 3rem 0 4rem;
+    color: $black-color;
+    font-size: 1rem;
+    .profile__label {
+      font-weight: bold;
+    }
+  }
+
+  &__buttons {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-end;
+    gap: 2.2rem;
+  }
+}

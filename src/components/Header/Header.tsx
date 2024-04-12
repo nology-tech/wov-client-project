@@ -1,6 +1,6 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
-import fallbackProfile from "../../../public/assets/images/default-profile-image.png"
+import fallbackProfile from "../../../public/assets/images/default-profile-image.png";
 
 type HeaderProps = {
   subtitle?: string;
@@ -19,7 +19,9 @@ const Header = ({ subtitle, profileImage }: HeaderProps) => {
         </Link>
       </div>
       <div className="header__title-div">
-        <h4 className="header__title-div header__title-div--title">WAY OF THE VIKING</h4>
+        <h4 className="header__title-div header__title-div--title">
+          WAY OF THE VIKING
+        </h4>
         <h1 className="header__title-div header__title-div--subtitle">
           {subtitle}
         </h1>
