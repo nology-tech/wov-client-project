@@ -46,13 +46,13 @@
   }
 
   &__input {
-    border: 1px solid red;
     width: 100%;
     padding: 0.6rem;
     outline: none;
-    // border: none;
+    border: none;
     background-color: $off-white-color;
     border-radius: 5px;
+
     &--margin-bottom {
       margin-bottom: 2.5rem;
     }
@@ -62,8 +62,7 @@
   }
   &__error-message {
     color: $color-error;
-    position: fixed;
-    margin-top: 5.5rem;
+    margin-top: 2rem;
     text-align: left;
   }
 }
@@ -73,6 +72,7 @@
     width: 60%;
     padding: 2rem;
     margin: 0 auto;
+
     &__icon--arrow {
       width: 60px;
       height: 60px;
@@ -85,30 +85,11 @@
 
     &__heading {
       text-align: left;
-      // font-size: 2.25rem;
-      font-size: 6vw;
+      font-size: 2.25rem;
     }
 
     &__form {
       gap: 15px;
-      font-size: 1rem;
-
-      &__input {
-        font-size: 1rem;
-      }
-    }
-  }
-}
-@media screen and (min-width: $desktop-breakpoint) {
-  .register {
-    width: 50%;
-
-    &__heading {
-      font-size: 2.5rem;
-    }
-
-    &__form {
-      gap: 0;
       font-size: 1rem;
     }
     &__input {
@@ -116,29 +97,19 @@
     }
   }
 }
-// @media screen and (min-width: $large-desktop-breakpoint) {
-//   .register {
-//     padding: 3rem;
-//     width: 100%;
-//     &__icon--container {
-//       margin-top: 2rem;
-//     }
+@media screen and (min-width: $desktop-breakpoint) {
+  .register {
+    width: 55%;
 
-//     &__heading {
-//       font-size: 3.5vw;
-//     }
-//   }
-// }
-// @media screen and (min-width: $extra-large-desktop-breakpoint) {
-//   .register {
-//     width: 15%;
+    &__heading {
+      font-size: 2rem;
+    }
 
-//     &__icon--container {
-//       margin-top: 2rem;
-//     }
-
-//     &__heading {
-//       font-size: 1.8vw;
-//     }
-//   }
-// }
+    &__form {
+      font-size: 1rem;
+    }
+    &__input {
+      font-size: 1rem;
+    }
+  }
+}

@@ -46,12 +46,11 @@ const Register = () => {
       }
       setPasswordMatchError("");
       const auth = getAuth();
-      const userCredential = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         formData.email,
         formData.password
       );
-      console.log("user registered successfully", userCredential.user);
     } catch (error) {
       setFormData(emptyFormData);
       setPasswordMatchError((error as Error).message);
