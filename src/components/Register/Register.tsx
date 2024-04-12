@@ -5,29 +5,8 @@ import { Link } from "react-router-dom";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../utils/testUtils";
 
-// const auth = getAuth();
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed up
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // ..
-//   });
-
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_TOKEN,
-  authDomain: "wov-client-project.firebaseapp.com",
-  projectId: "wov-client-project",
-  storageBucket: "wov-client-project.appspot.com",
-  messagingSenderId: "500736757552",
-  appId: "1:500736757552:web:2a7142e64715df07aec2f5",
-  measurementId: "G-CJVJ3K385S",
-};
 initializeApp(firebaseConfig);
 
 const Register = () => {
@@ -46,16 +25,19 @@ const Register = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
 
     try {
+      if (formData.password !== formData.confirmPassword) {
+        throw new Error("Passwords do not match");
+      }
       const auth = getAuth();
-      const userCredentials = await createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
         formData.password
       );
-      console.log("user registered successfully", userCredentials.user);
+
+      console.log("user registered successfully", userCredential.user);
     } catch (error) {
       console.error("Error registering user", error);
     }
@@ -74,7 +56,7 @@ const Register = () => {
       </div>
       <h2 className="register__heading">Create Account</h2>
 
-      {/* <form onSubmit={handleSubmit} className="register__form" action="#">
+      <form onSubmit={handleSubmit} className="register__form" action="#">
         <label className="register__form--label" htmlFor="">
           First Name
         </label>
@@ -100,7 +82,7 @@ const Register = () => {
           onChange={handleChange}
         />
         <Button label="Next" />
-      </form> */}
+      </form>
 
       <form onSubmit={handleSubmit} className="register__form" action="#">
         <label className="register__form--label" htmlFor="">
