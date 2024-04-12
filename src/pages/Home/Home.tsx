@@ -24,6 +24,7 @@ const Home = () => {
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
       <Navigation navActionIndex={0} />
+      <></>
     </Layout>
   );
 };
