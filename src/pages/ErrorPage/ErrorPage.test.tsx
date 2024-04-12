@@ -18,7 +18,7 @@ describe("ErrorPage", () => {
 
   it("should redirect to /home when 'home' button is clicked", async () => {
     const { getByText } = customRender(<ErrorPage />);
-    const home = getByText("HOME");
+    const home = getByText("Home");
     await userEvent.click(home);
     expect(window.location.pathname).toEqual("/home");
   });
