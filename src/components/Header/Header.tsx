@@ -1,6 +1,5 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
-import fallbackProfile from "../../../public/assets/images/default-profile-image.png";
 
 type HeaderProps = {
   subtitle?: string;
@@ -14,11 +13,7 @@ const Header = ({ subtitle, profileImage }: HeaderProps) => {
         <Link to="/profile">
           <img
             className="header__image-div header__image-div--image"
-<<<<<<<<< Temporary merge branch 1
             src={profileImage ?? "./assets/images/default-profile-image.png"}
-=========
-            src={profileImage ?? fallbackProfile}
->>>>>>>>> Temporary merge branch 2
           />
         </Link>
       </div>
