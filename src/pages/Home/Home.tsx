@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import Layout from "../../components/Layout/Layout";
+>>>>>>> be9847b2579caf341c401b1e6f015f8c897a9a3e
 import Header from "../../components/Header/Header";
 import HeaderHome from "../../components/HeaderHome/HeaderHome";
 
@@ -12,7 +16,11 @@ const Home = () => {
       today.getFullYear();
 
   return (
+<<<<<<< HEAD
     <>
+=======
+    <Layout>
+>>>>>>> be9847b2579caf341c401b1e6f015f8c897a9a3e
       <Header subtitle="Home" />
       <HeaderHome
         date={date}
@@ -21,7 +29,12 @@ const Home = () => {
       />
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
+<<<<<<< HEAD
     </>
+=======
+      <></>
+    </Layout>
+>>>>>>> be9847b2579caf341c401b1e6f015f8c897a9a3e
   );
 };
 
