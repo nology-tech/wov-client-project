@@ -31,18 +31,16 @@ const Home = () => {
           </Link>
         </div>
         <h2 className="daily-tasks__header">
-          Welcome to the home page for your 10 week Way of the Viking adventure
+          Welcome to the Way of the Viking, where strength isn't measured in
+          muscle mass, but in mentality and commitment.
         </h2>
         <p className="daily-tasks__paragraph">
-          Made by the people for the people. A local studio tour of local makers
-          around the area of bristol. Come see the workshops where the magic
-          happens Stop for a quick sketch and pot of tea and pastry from the
-          pottery studio. Make something from the local craft shop. Explore the
-          amazing works of art from a number of craft artists. Make it yourself
-          from ceramics and other hand made materials. Sign up for an excursion
-          to the city where you will learn how pottery is made at the Bristol
-          Pottery Workshop. All activities are free and all the pottery is for
-          sale. The tour is organized and presented by Chelsea Handmade & Local.
+          Step into a community forged by resilience and determination, where
+          every journey begins with a single step towards empowerment. Discover
+          a realm where mental fortitude meets physical prowess, as we embark on
+          a transformative quest together. Our comprehensive program is tailored
+          to unleash your inner warrior, guiding you through exercises designed
+          to sharpen both body and mind.
         </p>
         <blockquote className="daily-tasks__quote">
           <strong>
@@ -52,17 +50,14 @@ const Home = () => {
           </strong>
         </blockquote>
         <p className="daily-tasks__paragraph">
-          Local producer of bath and beauty products. Check out the bath and
-          beauty products line from this maker. Located in oak barrels. Make
-          yourself some bath salts and use the handmade containers for a nice
-          relaxing bath at home. Make some small pots with creative molding
-          techniques. Tryens. making some pieces with the pottery tools. Visit a
-          local art store and get some handmade brushes. You can paint your own
-          wall at the studio where you’ll get a tour of the studio and you can
-          choose a souvenir tile to make yourself a unique decorative piece in
-          your house. Learn more about the history of pottery and how ceramics
-          can be used as a building material for small clay bricks. Using the
-          tools you learned from the workshop you will make a few pieces
+          Join us in embracing the challenge, where every triumph is celebrated
+          and every setback is an opportunity for growth. Together as Vikings,
+          we'll conquer obstacles, break barriers, and emerge victorious on the
+          battlefield of self-improvement. Are you ready to rewrite your story,
+          to forge a path towards unparalleled strength and vitality? Unleash
+          your potential, ignite your passion, and let’s begin your journey into
+          the Way of the Viking today. Your destiny awaits. Could you become the
+          next Most Valuable Viking?
         </p>
       </div>
     </Layout>
