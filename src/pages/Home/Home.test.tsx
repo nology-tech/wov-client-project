@@ -24,6 +24,6 @@ describe("Home Component", () => {
     const { getByText } = customRender(<Home />);
     const goToTasks = getByText("VIEW TODAY's TASKS");
     await userEvent.click(goToTasks);
-    expect(window.location.pathname).toEqual("/daily-tasks");
+    expect(window.location.pathname).toEqual("/tasks");
   });
 });
