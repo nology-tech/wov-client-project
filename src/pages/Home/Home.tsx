@@ -1,7 +1,5 @@
 import Header from "../../components/Header/Header";
 import HeaderHome from "../../components/HeaderHome/HeaderHome";
-import Profile from "../Profile/Profile";
-import { randomUserProfiles, UserProfile } from "../../utils/mockData.ts";
 
 const Home = () => {
   // "today" shows current day, only used in the Home page.
