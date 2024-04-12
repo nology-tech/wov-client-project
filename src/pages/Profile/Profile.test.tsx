@@ -1,17 +1,16 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Profile from "./Profile";
-import { UserProfile } from "../../utils/mockData";
+import { UserProfile } from "../../mockData/mockTribe";
 import { customRender } from "../../utils/testUtils";
 
 const mockData: UserProfile = {
-  id: 1,
+  id: "123ja",
   img: "https://picsum.photos/200/300",
-  score: 300,
+  totalScore: 300,
   name: "John Doe",
   bio: "lean,mean,fighting machine",
   email: "john.doe@example.com",
-  password: "password1",
 };
 
 describe("Profile component", () => {

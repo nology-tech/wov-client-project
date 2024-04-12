@@ -1,7 +1,7 @@
 import Button from "../../components/Button/Button";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
-import { UserProfile } from "../../utils/mockData";
+import { UserProfile } from "../../mockData/mockTribe";
 
 const Profile = ({ user }: { user: UserProfile }) => {
   const { totalScore, img, name, bio, email } = user;
