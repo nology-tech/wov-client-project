@@ -44,20 +44,17 @@ const Home = () => {
         </p>
         <blockquote className="daily-tasks__quote">
           <strong>
-            This is an indented quote. It provides a way to visually set apart a
-            piece of text from the rest of the content, typically used for
-            quotations or excerpts.
+            Together as Vikings, we'll conquer obstacles, break barriers, and
+            emerge victorious on the battlefield of self-improvement.
           </strong>
         </blockquote>
         <p className="daily-tasks__paragraph">
           Join us in embracing the challenge, where every triumph is celebrated
-          and every setback is an opportunity for growth. Together as Vikings,
-          we'll conquer obstacles, break barriers, and emerge victorious on the
-          battlefield of self-improvement. Are you ready to rewrite your story,
-          to forge a path towards unparalleled strength and vitality? Unleash
-          your potential, ignite your passion, and let’s begin your journey into
-          the Way of the Viking today. Your destiny awaits. Could you become the
-          next Most Valuable Viking?
+          and every setback is an opportunity for growth. Are you ready to
+          rewrite your story, to forge a path towards unparalleled strength and
+          vitality? Unleash your potential, ignite your passion, and let’s begin
+          your journey into the Way of the Viking today. Your destiny awaits.
+          Could you become the next Most Valuable Viking?
         </p>
       </section>
       <Navigation navActionIndex={0} />
