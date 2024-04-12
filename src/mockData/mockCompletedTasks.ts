@@ -15,7 +15,7 @@ type CompletedTask = {
 
 const completedTasks: CompletedTask[] = [
   {
-    id: "12321",
+    id: "k2321",
     type: "daily",
     taskHeading: "5am wake up",
     category: "Routine",
@@ -24,7 +24,7 @@ const completedTasks: CompletedTask[] = [
     description: "Example description",
   },
   {
-    id: "83213",
+    id: "8l213",
     type: "weekly",
     taskHeading: "Walk 70,000 steps",
     category: "Fitness",
@@ -33,7 +33,7 @@ const completedTasks: CompletedTask[] = [
     description: "Example description",
   },
   {
-    id: "44513",
+    id: "44c13",
     type: "daily",
     taskHeading: "Cold shower",
     category: "Routine",
@@ -42,7 +42,7 @@ const completedTasks: CompletedTask[] = [
     description: "Example description",
   },
   {
-    id: "12049",
+    id: "12i49",
     type: "daily",
     taskHeading: "10 minutes meditation",
     category: "Wellness",
@@ -51,7 +51,7 @@ const completedTasks: CompletedTask[] = [
     description: "Example description",
   },
   {
-    id: "85556",
+    id: "85z56",
     type: "daily",
     taskHeading: "1 hour exercise",
     category: "Fitness",

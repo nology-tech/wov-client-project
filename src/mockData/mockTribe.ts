@@ -9,7 +9,7 @@ export type UserProfile = {
 
 export const tribeUsers: UserProfile[] = [
   {
-    id: "1234",
+    id: "g234",
     img: "https://upload.wikimedia.org/wikipedia/commons/a/af/Default_avatar_profile.jpg",
     totalScore: 300,
     name: "John Doe",
@@ -17,7 +17,7 @@ export const tribeUsers: UserProfile[] = [
     email: "john.doe@example.com",
   },
   {
-    id: "1235",
+    id: "123f",
     img: "https://picsum.photos/200/300",
     totalScore: 420,
     name: "Todd Griffin",
@@ -25,7 +25,7 @@ export const tribeUsers: UserProfile[] = [
     email: "todd.griffin@example.com",
   },
   {
-    id: "1236",
+    id: "12z6",
     img: "https://picsum.photos/200/300",
     totalScore: 200,
     name: "Hamish Lawson",
@@ -33,7 +33,7 @@ export const tribeUsers: UserProfile[] = [
     email: "hamish.lawson@example.com",
   },
   {
-    id: "1237",
+    id: "1l37",
     img: "https://picsum.photos/200/300",
     totalScore: 600,
     name: "Samuel Raducan",
@@ -41,7 +41,7 @@ export const tribeUsers: UserProfile[] = [
     email: "samuel.raducan@example.com",
   },
   {
-    id: "1238",
+    id: "1a38",
     img: "https://picsum.photos/200/300",
     totalScore: 350,
     name: "Baheer Wardak",
