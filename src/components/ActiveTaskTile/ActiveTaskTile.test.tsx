@@ -13,7 +13,7 @@ describe("ActiveTaskTile component", () => {
         points={5}
         classModifier={"active-task"}
         completed={false}
-        onCompletionChange={() => {}}
+        onCompletionChange={() => console.log("Completion change")}
       />
     );
 
@@ -30,7 +30,7 @@ describe("ActiveTaskTile component", () => {
         points={5}
         classModifier={"active-task"}
         completed={false}
-        onCompletionChange={() => {}}
+        onCompletionChange={() => console.log("Completion change")}
       />
     );
 
@@ -51,7 +51,7 @@ describe("ActiveTaskTile component", () => {
         points={5}
         classModifier={"active-task"}
         completed={false}
-        onCompletionChange={() => {}}
+        onCompletionChange={() => console.log("Completion change")}
       />
     );
 
