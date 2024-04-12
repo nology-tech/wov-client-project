@@ -18,7 +18,7 @@ const Navigation = ({ navActionIndex = 0 }: NavProps) => {
     <Box
       sx={{
         width: "100%",
-        position: "sticky",
+        position: "fixed",
         bottom: 0,
       }}
     >
