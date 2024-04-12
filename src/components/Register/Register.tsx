@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { firebaseConfig } from "../../utils/testUtils";
 import Button from "../Button/Button";
@@ -20,7 +20,7 @@ const Register = () => {
   const [formData, setFormData] = useState(emptyFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -31,6 +31,10 @@ const Register = () => {
     if (formData.firstName && formData.lastName) {
       setShowSecondFrom(true);
     }
+  };
+
+  const handlePrevious = () => {
+    showSecondForm ? setShowSecondFrom(false) : navigate(-1);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -57,13 +61,12 @@ const Register = () => {
   return (
     <section className="register">
       <div className="register__icon--container">
-        <Link to={`#`}>
-          <img
-            className="register__icon--arrow"
-            src={arrowLeft}
-            alt="Arrow Left Icon"
-          />
-        </Link>
+        <img
+          onClick={handlePrevious}
+          className="register__icon--arrow"
+          src={arrowLeft}
+          alt="Arrow Left Icon"
+        />
       </div>
       <h2 className="register__heading">Create Account</h2>
 
