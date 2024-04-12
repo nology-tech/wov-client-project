@@ -1,7 +1,7 @@
 import "./ErrorPage.scss";
 import Button from "../../components/Button/Button";
 import { Link } from "react-router-dom";
-import ErrorSVG from "./ErrorSVG";
+import ErrorSVG from "../../components/ErrorSVG/ErrorSVG";
 
 const ErrorPage = () => {
   return (
