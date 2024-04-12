@@ -1,5 +1,6 @@
 import "./LeaderboardCard.scss"
 import fallbackProfile from "../../../public/assets/images/default-profile-image.png"
+import { capitalisedFirstLetters} from "../../utils/capitalisedFirstLetters"
 
 type LeaderboardCardProps = {
     name: string;
@@ -8,8 +9,9 @@ type LeaderboardCardProps = {
 };
 
 const LeaderboardCard = ({name, profileImage, totalScore} : LeaderboardCardProps) => {
-    // Using RegEx, it capitalises the first letter of each word in the user's name.
-    const myName = name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+
+    const myName = capitalisedFirstLetters(name)
+
     return(
         <div className="leaderboard-card">
             <div className="leaderboard-card__img-div">
