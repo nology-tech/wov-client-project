@@ -6,7 +6,7 @@ import ErrorSVG from "./ErrorSVG";
 const ErrorPage = () => {
   return (
     <div className="error-page">
-      <h1 className="error-page__heading-first">
+      <h1 className="error-page__heading">
         OOPS.
         <br />
         LOOKS LIKE YOU'VE TAKEN A WRONG TURN.
