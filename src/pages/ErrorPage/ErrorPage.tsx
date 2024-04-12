@@ -1,6 +1,5 @@
 import "./ErrorPage.scss";
 import Button from "../../components/Button/Button";
-import errorMessage from "../../../public/assets/images/error-message.png";
 import { Link } from "react-router-dom";
 import ErrorSVG from "./ErrorSVG";
 

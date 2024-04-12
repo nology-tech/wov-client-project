@@ -6,8 +6,8 @@ import "./styles/main.scss";
 const App = () => {
   return (
     <Routes>
-      <Route path="*" element={<Home />} />
-      <Route path="/error-page" element={<ErrorPage />} />
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<ErrorPage />} />S
     </Routes>
   );
 };
