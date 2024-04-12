@@ -5,18 +5,13 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs, { Dayjs } from "dayjs";
 import updateLocale from "dayjs/plugin/updateLocale";
 import Stack from "@mui/material/Stack";
-import tasks, { Tasks } from "../../data/completedTasks";
+import tasks from "../../data/completedTasks";
 import CompletedTask from "../../components/CompletedTask/CompletedTask";
 import { Divider } from "@mui/material";
 import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
-
-export const filterCompletedTasks = (tasks: Tasks[], date: Date): Tasks[] => {
-  return tasks.filter(
-    (task) => task.completedDate.toDateString() == date.toDateString()
-  );
-};
+import filterCompletedTasks from "./filterCompletedTasks";
 
 const Calendar = () => {
   const [date, setDate] = React.useState<Date>(new Date());
@@ -46,7 +41,7 @@ const Calendar = () => {
           defaultValue={dayjs(
             `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
           )}
-          data-testid="calendarComponent" 
+          data-testid="calendarComponent"
         />
       </LocalizationProvider>
 

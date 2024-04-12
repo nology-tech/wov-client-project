@@ -1,5 +1,6 @@
 import { screen } from "@testing-library/react";
-import Calendar, { filterCompletedTasks } from "./Calendar";
+import Calendar from "./Calendar";
+import filterCompletedTasks from "./filterCompletedTasks";
 import tasks from "../../data/completedTasks";
 import { customRender } from "../../utils/testUtils";
 
@@ -36,7 +37,7 @@ describe("Filter completed tasks function", () => {
   });
 
   it("should return an empty array when an empty array is given", () => {
-     const filteredData = filterCompletedTasks([], new Date(2024, 3, 11));
+    const filteredData = filterCompletedTasks([], new Date(2024, 3, 11));
 
     expect(filteredData).toEqual([]);
   });
