@@ -7,10 +7,14 @@
   padding: 1rem;
   padding-bottom: 0;
   background-color: $secondary-color;
+  position: "sticky";
+  top: 0;
+
   &__image-div {
     float: right;
     width: 2.2rem;
     height: auto;
+
     &--image {
       border-radius: 50%;
       background-color: $white-color;
