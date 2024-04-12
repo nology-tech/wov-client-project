@@ -53,8 +53,9 @@ describe("should pass the leaderboard tests", () => {
     const sortUsersByScore = screen.getAllByTestId(
       "leaderboard__score"
     ) as HTMLParagraphElement[];
+    const sortedScores = ["600", "450", "350", "300", "200"]
     for (let i = 0; i < mockUsers.length; i++) {
-      expect(sortUsersByScore[i].textContent);
+      expect(sortUsersByScore[i].textContent === sortedScores[i]);
     }
   }); 
 });
