@@ -1,7 +1,6 @@
 import "./Leaderboard.scss";
 import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
 import { UserProfile } from "../../utils/mockData";
-import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 
@@ -31,8 +30,8 @@ const Leaderboard = ({ users }: { users: UserProfile[] }) => {
           />
         ))};
         </div>
-        <div>
-        <Navigation navActionIndex={0} />
+        <div className="leaderboard__navigation">
+        <Navigation navActionIndex={3} />
         </div>
       </div>
     );
