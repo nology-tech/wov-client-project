@@ -24,11 +24,11 @@
 
 - This project uses prettier and ESlint to increase code readability and consistency.
 
-### Navigation Menu 
+### Navigation Menu
 
-- The Nav menu is imported as the Mui Component Bottom Navigation 
-- This contains 4 BottomNavigationAction components, that each contain Icon Components. 
-- All of these components are imported from the Mui Component Library and can be style by the selectors stipulated in the Navigation.scss file. 
+- The Nav menu is imported as the Mui Component Bottom Navigation
+- This contains 4 BottomNavigationAction components, that each contain Icon Components.
+- All of these components are imported from the Mui Component Library and can be style by the selectors stipulated in the Navigation.scss file.
 - Currently they prove the Link for the react-router-dom dependency, that will be used to route to different pages within the App.
 
 ### Calendar Page
@@ -39,3 +39,18 @@
 - All the fututre dates and months in the calender are disabled.
 - By clicking on the down arrow in the task, additional information about the task will be displayed.
 - The page has the Header at the top and the Navigation Menu at the bottom.
+
+### Profile Page
+
+- The Profile page contains the information regarding a players profile displaying it on the prfolie screen.
+
+  - Image
+  - Score
+  - Name
+  - Bio
+  - Email
+  - Password
+
+- The player's password is starred out.
+- The buttons allow the user to edit their profile data and sign out.
+
