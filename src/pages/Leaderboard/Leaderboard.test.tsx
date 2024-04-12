@@ -32,8 +32,9 @@ describe("should pass the leaderboard tests", () => {
       customRender(<Leaderboard users={[mockUser]} />);
       const sortUsersByScore = screen.queryAllByTestId(mockUser.score);
       expect(sortUsersByScore)
-  })
+
 });
+})
 
 //add test id
 // queryAllBy
