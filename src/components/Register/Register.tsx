@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { firebaseConfig } from "../../utils/testUtils";
 import Button from "../Button/Button";
@@ -72,7 +72,7 @@ const Register = () => {
 
       {!showSecondForm ? (
         <form onSubmit={handleSubmit} className="register__form" action="#">
-          <label className="register__form--label" htmlFor="">
+          <label className="register__form--label" htmlFor="firstName">
             First Name
           </label>
           <input
@@ -84,7 +84,7 @@ const Register = () => {
             placeholder="John"
             onChange={handleChange}
           />
-          <label className="register__form--label" htmlFor="">
+          <label className="register__form--label" htmlFor="lastName">
             Last Name
           </label>
           <input
@@ -100,7 +100,7 @@ const Register = () => {
         </form>
       ) : (
         <form onSubmit={handleSubmit} className="register__form" action="#">
-          <label className="register__form--label" htmlFor="">
+          <label className="register__form--label" htmlFor="email">
             Email Address
           </label>
           <input
@@ -112,7 +112,7 @@ const Register = () => {
             placeholder="you@example.com"
             onChange={handleChange}
           />
-          <label className="register__form--label" htmlFor="">
+          <label className="register__form--label" htmlFor="password">
             Password
           </label>
           <input
@@ -124,7 +124,7 @@ const Register = () => {
             placeholder="Your password"
             onChange={handleChange}
           />
-          <label className="register__form--label" htmlFor="">
+          <label className="register__form--label" htmlFor="confirmPassword">
             Confirm Password
           </label>
           <input

@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, fireEvent, waitFor } from "@testing-library/react";
 import Register from "./Register";
 import { customRender } from "../../utils/testUtils";
 
@@ -30,5 +30,30 @@ describe("Register Component", () => {
     const image = screen.getByAltText("Arrow Left Icon");
 
     expect(image).toBeInTheDocument();
+  });
+  it("should show an error message when passwords don't match", async () => {
+    customRender(<Register />);
+    fireEvent.change(screen.getByLabelText("First Name"), {
+      target: { value: "John" },
+    });
+    fireEvent.change(screen.getByLabelText("Last Name"), {
+      target: { value: "Doe" },
+    });
+    fireEvent.click(screen.getByText(/NEXT/i));
+    fireEvent.change(screen.getByLabelText("Email Address"), {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText("Password"), {
+      target: { value: "password" },
+    });
+    fireEvent.change(screen.getByLabelText("Confirm Password"), {
+      target: { value: "password1" },
+    });
+    fireEvent.click(screen.getByText("SIGN UP"));
+    await waitFor(() => {
+      expect(
+        screen.getByText("Passwords do not match. Try again.")
+      ).toBeInTheDocument();
+    });
   });
 });
