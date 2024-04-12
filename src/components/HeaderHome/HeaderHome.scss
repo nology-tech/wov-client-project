@@ -1,58 +1,55 @@
 @use "../../styles/reset";
 @use "../../styles/variables" as *;
-@use "../../styles/typography" ;
+@use "../../styles/typography";
 
-.header-home{
-    margin-top: -1px;
-    padding:0 1rem;
-    background-color: $secondary-color;
-    font-family: $font-family-modern-content;
-    background: linear-gradient(to bottom, $secondary-color 60%, $white-color 0%);
-    margin-bottom: 0;
-    &__info{
-      margin: 0;
+.header-home {
+  margin-top: -1px;
+  padding: 0 1rem;
+  background-color: $secondary-color;
+  font-family: $font-family-modern-content;
+  background: linear-gradient(to bottom, $secondary-color 60%, $white-color 0%);
+  margin-bottom: 0;
+  &__info {
+    margin: 0;
+  }
+  &__div {
+    &--img {
+      width: 18rem;
+      border-radius: 7px;
+      display: block;
+      margin: 2rem auto;
+      position: relative;
+      aspect-ratio: 3/2;
     }
-    &__div{
-      &--img{
-        width: 18rem;
-        border-radius: 7px;
-        display: block;
-        margin: 2rem auto;
-        position: relative;
-        aspect-ratio: 3/2 ;
-       }
-    }
+  }
 }
 
 @media screen and (min-width: $tablet-breakpoint) {
   .header-home {
     font-size: 1.2rem;
     padding: 0 3rem;
-    &__div{
-      &--img{
-        width: 35rem;
-       }
+    &__div {
+      &--img {
+        width: 20rem;
+      }
     }
   }
-}  
-
-
+}
 
 @media screen and (min-width: $desktop-breakpoint) {
- .header-home {
-  margin-top: -2px;
-  font-size: 1.5rem;
-  padding: 0 4rem;
-  padding-bottom: 5rem;
-  &__div{
-    &--img{
-      width: 35rem;
-      border-radius: 1rem;
-     }
+  .header-home {
+    margin-top: -2px;
+    font-size: 1.5rem;
+    padding: 0 4rem;
+    padding-bottom: 5rem;
+    &__div {
+      &--img {
+        width: 24rem;
+        border-radius: 1rem;
+      }
+    }
   }
- }
-}  
-
+}
 
 @media screen and (min-width: $large-desktop-breakpoint) {
   .header-home {
@@ -60,29 +57,31 @@
     font-size: 1.5rem;
     padding: 0 5rem;
     padding-bottom: 6rem;
-    background: linear-gradient(to bottom, $secondary-color 50%, $white-color 0%);
+    background: linear-gradient(
+      to bottom,
+      $secondary-color 50%,
+      $white-color 0%
+    );
 
-    &__div{
-      &--img{
-        width: 50rem;
-       }
+    &__div {
+      &--img {
+        width: 27rem;
+      }
     }
-   }
+  }
 }
 
-  
-
-@media screen and (min-width: $extra-large-desktop-breakpoint) { 
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
   .header-home {
     margin-top: -4px;
     font-size: 2.5rem;
     padding: 0 8rem;
     padding-bottom: 15rem;
-    &__div{
-      &--img{
-        width: 90rem;
+    &__div {
+      &--img {
+        width: 50rem;
         border-radius: 2rem;
-       }
+      }
     }
-   }
-}  
+  }
+}
