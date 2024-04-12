@@ -14,9 +14,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 type CompletedTaskProps = {
   taskHeading: string;
-  category: string;
+  category?: string;
   points: number;
-  description: string;
+  description?: string;
   image?: string;
 };
 
@@ -53,9 +53,11 @@ const CompletedTask = ({
         }
         subheader={
           <div>
-            <Typography variant="body1" className="completed-task__category">
-              {category}
-            </Typography>
+            {category && (
+              <Typography variant="body1" className="completed-task__category">
+                {category}
+              </Typography>
+            )}
             <Typography
               variant="body1"
               color="text.secondary"
@@ -69,9 +71,11 @@ const CompletedTask = ({
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph className="completed-task__description">
-            {description}
-          </Typography>
+          {description && (
+            <Typography paragraph className="completed-task__description">
+              {description}
+            </Typography>
+          )}
 
           {image && (
             <div>

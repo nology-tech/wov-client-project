@@ -5,6 +5,12 @@
     color: $pure-black-color;
     font-family: $font-family-modern-content;
     padding-top: 2rem;
+    margin: 0 auto;
+    max-width: 90%;
+
+    .MuiDayCalendar-weekDayLabel {
+      font-family: $font-family-modern-content;
+    }
 
     .MuiPickersCalendarHeader-root {
       display: grid;
@@ -14,6 +20,7 @@
         grid-area: 1/1/2/2;
         justify-content: center;
         width: 100%;
+        font-family: $font-family-modern-content;
       }
 
       .MuiPickersArrowSwitcher-root {
@@ -35,9 +42,18 @@
       border-radius: 0.5rem;
       border-color: $primary-color;
     }
+
+    Button.MuiButtonBase-root.MuiPickersDay-root {
+      font-family: $font-family-modern-content;
+    }
   }
 
-  &__task-container{
+  &__task-container {
     margin: 0 1rem;
+  }
+
+  &__no-tasks-message {
+    color: $pure-black-color;
+    text-align: center;
   }
 }

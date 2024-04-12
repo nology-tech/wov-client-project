@@ -5,13 +5,13 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs, { Dayjs } from "dayjs";
 import updateLocale from "dayjs/plugin/updateLocale";
 import Stack from "@mui/material/Stack";
-import tasks from "../../data/completedTasks";
 import CompletedTask from "../../components/CompletedTask/CompletedTask";
 import { Divider } from "@mui/material";
 import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
-import filterCompletedTasks from "./filterCompletedTasks";
+import filterCompletedTasks from "../../utils/filterCompletedTasks";
+import { completedTasks } from "../../mockData/mockCompletedTasks";
 
 const Calendar = () => {
   const [date, setDate] = React.useState<Date>(new Date());
@@ -23,7 +23,7 @@ const Calendar = () => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
 
-  const filteredCompletedTasks = filterCompletedTasks(tasks, date);
+  const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
 
   return (
     <div className="calendar">
@@ -38,7 +38,7 @@ const Calendar = () => {
           dayOfWeekFormatter={(weekday) =>
             `${weekday.format("ddd").toUpperCase()}`
           }
-          defaultValue={dayjs(
+          value={dayjs(
             `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
           )}
           data-testid="calendarComponent"
@@ -50,16 +50,22 @@ const Calendar = () => {
         divider={<Divider flexItem />}
         className="calendar__task-container"
       >
-        {filteredCompletedTasks.map((task, index) => (
-          <CompletedTask
-            key={index}
-            taskHeading={task.Title}
-            category={task.category}
-            points={task.points}
-            description={task.desc}
-            image={task.img}
-          />
-        ))}
+        {filteredCompletedTasks.length > 0 ? (
+          filteredCompletedTasks.map((task) => (
+            <CompletedTask
+              key={task.id}
+              taskHeading={task.taskHeading}
+              category={task.category}
+              points={task.points}
+              description={task.description}
+              image={task.image}
+            />
+          ))
+        ) : (
+          <p className="calendar__no-tasks-message">
+            No completed tasks to display.
+          </p>
+        )}
       </Stack>
       <Navigation navActionIndex={2} />
     </div>
