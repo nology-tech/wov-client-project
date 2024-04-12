@@ -12,8 +12,6 @@ const ErrorPage = () => {
         <br />
         LOOKS LIKE YOU'VE TAKEN A WRONG TURN.
       </h1>
-
-      {/* <img className="error-page__image" src={errorMessage}></img> */}
       <ErrorSVG />
       <Link to="/home">
         <div className="error-page__button">

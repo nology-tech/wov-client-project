@@ -1,7 +1,7 @@
 const ErrorSVG = () => {
   return (
     <svg
-      width="417"
+      width="100%"
       height="441"
       viewBox="0 0 417 441"
       fill="none"
