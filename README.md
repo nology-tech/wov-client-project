@@ -45,14 +45,12 @@
 - The player's password is starred out.
 - The buttons allow the user to edit their profile data and sign out.
 
-<<<<<<< HEAD
 ### Leaderboard Page
 - The Leaderboard page contains each users score, ranking them in order from high to low.
 - It allows for users to see how many points other users have.
 - The user can also navigate to the leaderboard page.
-=======
+
 ### Home Page
 
 - A welcome page that uses the Navigation, Header and Button components.
 - The page displays a welcome message to the user and allows them to navigate to other parts of the app.
->>>>>>> b08f0ffd9b0ca0580bfd363adaa2ec83c08222fc
