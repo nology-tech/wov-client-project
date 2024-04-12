@@ -3,7 +3,7 @@
 @use "../../styles/typography";
 
 .leaderboard{
-    background-color: $background-color;
+        background-color: white;
     &__cards{
         margin-top: 3rem;
     }
@@ -12,7 +12,6 @@
 
 @media screen and (min-width: $large-desktop-breakpoint) {
     .leaderboard{
-        background-color: $background-color;
         &__cards{
             margin-top: 5rem;
         }
@@ -21,7 +20,6 @@
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
     .leaderboard{
-        background-color: $background-color;
         &__cards{
             margin-top: 9rem;
         }

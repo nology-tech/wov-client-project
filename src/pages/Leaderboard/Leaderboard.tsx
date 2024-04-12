@@ -4,7 +4,7 @@ import { UserProfile } from "../../utils/mockData";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 
-const Leaderboard = ({ users }: { users: UserProfile[] }) => {
+export const Leaderboard = ({ users }: { users: UserProfile[] }) => {
     const sortUserByScore = () => {
       const sortedUsers = [...users];
       const sortScore = sortedUsers.sort((a, b) => b.score - a.score);
