@@ -26,7 +26,7 @@ const Home = () => {
 
       <section className="daily-tasks" data-testid="container">
         <div className="daily-tasks__button">
-          <Link to="/daily-tasks">
+          <Link to="/tasks">
             <Button label="VIEW TODAY's TASKS" variant="primary"></Button>
           </Link>
         </div>

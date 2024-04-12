@@ -29,6 +29,7 @@ describe("Navigation component", () => {
     customRender(<Navigation navActionIndex={0} />);
 
     await userEvent.click(screen.getByText("Tasks"));
+
     await waitFor(() => {
       expect(window.location.pathname).toEqual("/tasks");
     });
