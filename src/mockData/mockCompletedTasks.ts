@@ -49,6 +49,7 @@ export const completedTasks: CompletedTask[] = [
     points: 3,
     completed: "12 April 2024 at 06:50:00 UTC+1",
     description: "Example description",
+    image: "https://www.cancer.org/adobe/dynamicmedia/deliver/dm-aid--c705d936-4526-4d8f-a221-455a9c0a8ed5/man-meditating-outside-restricted.jpg?quality=82&width=1280&preferwebp=true"
   },
   {
     id: "85z56",
@@ -58,5 +59,6 @@ export const completedTasks: CompletedTask[] = [
     points: 30,
     completed: "12 April 2024 at 10:20:00 UTC+1",
     description: "Example description",
+    image: "https://hips.hearstapps.com/hmg-prod/images/running-is-one-of-the-best-ways-to-stay-fit-royalty-free-image-1036780592-1553033495.jpg?resize=1000:*"
   }
 ]
