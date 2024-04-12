@@ -1,14 +1,30 @@
 import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Home from "./Home";
 import { customRender } from "../../utils/testUtils";
 
-it("should render the form", () => {
-  customRender(<Home />);
+describe("Home Component", () => {
+  it("should render the button"),
+    () => {
+      customRender(<Home />);
+      const homeButton = screen.getByText("VIEW TODAY's TASKS");
+      expect(homeButton).toBeInTheDocument();
+    };
 
-  const heading = screen.getByRole("heading", {
-    name: /section heading/i,
+  it("should render the paragraph"),
+    () => {
+      customRender(<Home />);
+      const paragraph = screen
+        .getByTestId("container")
+        .querySelector("paragraph");
+      expect([paragraph]).toBeInTheDocument;
+    };
+
+  it("should redirect to tasklist when 'TASK LIST' button is clicked", async () => {
+    const { getByText } = customRender(<Home />);
+    const goToTasks = getByText("VIEW TODAY's TASKS");
+    await userEvent.click(goToTasks);
+    expect(window.location.pathname).toEqual("/tasks");
   });
-
-  expect(heading).toBeInTheDocument();
 });
  
