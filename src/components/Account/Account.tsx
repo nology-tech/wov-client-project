@@ -1,5 +1,6 @@
 import "./Account.scss";
 import Button from "../Button/Button";
+import { Link } from "react-router-dom";
 
 const Account = () => {
   return (
@@ -12,7 +13,9 @@ const Account = () => {
       </div>
 
       <div className="account__buttons">
-        <Button label="CREATE AN ACCOUNT" />
+        <Link to="/register">
+          <Button label="CREATE AN ACCOUNT" />
+        </Link>
         <Button label="SIGN IN" variant="secondary" />
       </div>
     </section>

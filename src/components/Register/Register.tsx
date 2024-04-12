@@ -2,21 +2,23 @@ import "./Register.scss";
 import Button from "../Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { Link } from "react-router-dom";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../utils/testUtils";
 
 initializeApp(firebaseConfig);
+const emptyFormData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [formData, setFormData] = useState(emptyFormData);
+  const [passwordMatchError, setPasswordMatchError] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -28,18 +30,20 @@ const Register = () => {
 
     try {
       if (formData.password !== formData.confirmPassword) {
-        throw new Error("Passwords do not match");
+        throw new Error("Passwords do not match. Try again.");
       }
+      setPasswordMatchError("");
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
         formData.password
       );
-
       console.log("user registered successfully", userCredential.user);
     } catch (error) {
       console.error("Error registering user", error);
+      setFormData(emptyFormData);
+      setPasswordMatchError((error as Error).message);
     }
   };
 
@@ -120,6 +124,11 @@ const Register = () => {
           type="password"
           onChange={handleChange}
         />
+        {passwordMatchError && (
+          <p className="register__error-message">{passwordMatchError}</p>
+        )}
+        {/* WHEN REGISTERING IS SUCCESSFUL -> LINK TO SIGN PAGE */}
+        {/* ALSO, SHOW A MESSAGE TO THE USER WITH CONGRATULATIONS FOR CREATING AN ACCOUNT */}
         <Button label="SIGN UP" />
       </form>
     </section>

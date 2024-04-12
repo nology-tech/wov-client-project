@@ -61,6 +61,12 @@
       color: $light-grey-color;
     }
   }
+  &__error-message {
+    color: $color-error;
+    position: fixed;
+    margin-top: 5.5rem;
+    text-align: left;
+  }
 }
 
 @media screen and (min-width: $tablet-breakpoint) {

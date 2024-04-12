@@ -1,6 +1,4 @@
 import Layout from "../../components/Layout/Layout";
-import Account from "../../components/Account/Account";
-import Register from "../../components/Register/Register";
 import Header from "../../components/Header/Header";
 import HeaderHome from "../../components/HeaderHome/HeaderHome";
 const Home = () => {
@@ -23,8 +21,6 @@ const Home = () => {
       />
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
-      <Register />
-      <Account />
     </Layout>
   );
 };
