@@ -2,18 +2,19 @@
 
 .error-page {
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: hidden;
 
   &__heading-first {
     font-family: $font-family-header-title;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: $pure-black-color;
     padding: 4rem 2rem 0 2rem;
     text-align: center;
     padding-top: 5rem;
-    z-index: 101;
   }
 
   &__heading-second {
@@ -26,9 +27,7 @@
     z-index: 100;
   }
 
-  &__image {
-  }
-
   &__button {
+    margin-bottom: 2rem;
   }
 }
