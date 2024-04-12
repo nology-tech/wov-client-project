@@ -27,3 +27,4 @@ describe("Home Component", () => {
     expect(window.location.pathname).toEqual("/tasks");
   });
 });
+ 
