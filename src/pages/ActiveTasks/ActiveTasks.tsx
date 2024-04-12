@@ -5,9 +5,8 @@ import tasks from "../../MockData/tasks";
 import "./ActiveTasks.scss";
 import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 type CompletedTasks = {
   [key: number]: boolean;
@@ -24,7 +23,6 @@ const ActiveTasks = () => {
   const handleTaskCompletionChange = (id: number, isCompleted: boolean) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
   };
-  
 
   const searchedTasks = tasks.filter(
     (task) =>
@@ -49,7 +47,7 @@ const ActiveTasks = () => {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                <SearchIcon className="search-icon" />
               </InputAdornment>
             ),
           }}

@@ -1,39 +1,26 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ActiveTasks from "./ActiveTasks";
 import tasks from "../../MockData/tasks";
-import { MemoryRouter } from "react-router-dom";
+import { customRender } from "../../utils/testUtils";
 
 describe("ActiveTask page component", () => {
   it("should render the ActiveTask page", () => {
-    render(
-      <MemoryRouter>
-        <ActiveTasks />
-      </MemoryRouter>
-    );
+    customRender(<ActiveTasks />);
 
     const activeTask = screen.getByTestId("task-page");
     expect(activeTask).toBeInTheDocument();
   });
 
   it("should render the header component", () => {
-    render(
-      <MemoryRouter>
-        <ActiveTasks />
-      </MemoryRouter>
-    );
+    customRender(<ActiveTasks />);
 
     const header = screen.getByText("WAY OF THE VIKING");
     expect(header).toBeInTheDocument();
-    console.log(header);
   });
 
   it("should render the navigation component", () => {
-    render(
-      <MemoryRouter>
-        <ActiveTasks />
-      </MemoryRouter>
-    );
+    customRender(<ActiveTasks />);
 
     const home = screen.getByText("Home");
     const tasks = screen.getByText("Tasks");
@@ -46,11 +33,7 @@ describe("ActiveTask page component", () => {
   });
 
   it("should check the initial state of the button", () => {
-    render(
-      <MemoryRouter>
-        <ActiveTasks />
-      </MemoryRouter>
-    );
+    customRender(<ActiveTasks />);
 
     const checkboxInitial = screen.getAllByRole("checkbox");
     checkboxInitial.forEach((checkbox) => {
@@ -59,11 +42,7 @@ describe("ActiveTask page component", () => {
   });
 
   it("should check the search input renders correct results", async () => {
-    render(
-      <MemoryRouter>
-        <ActiveTasks />
-      </MemoryRouter>
-    );
+    customRender(<ActiveTasks />);
 
     const searchInput = screen.getByRole("search");
     await userEvent.type(searchInput, "di");
