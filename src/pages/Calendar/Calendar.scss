@@ -1,3 +1,43 @@
+@use "../../styles/variables" as *;
+
 .calendar {
-  color: $pure-black-color;
+  &__calendar {
+    color: $pure-black-color;
+    font-family: $font-family-modern-content;
+    padding-top: 2rem;
+
+    .MuiPickersCalendarHeader-root {
+      display: grid;
+      padding-right: 1rem;
+      padding-left: 1rem;
+      .MuiPickersCalendarHeader-labelContainer {
+        grid-area: 1/1/2/2;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .MuiPickersArrowSwitcher-root {
+        grid-area: 1/1/2/2;
+        width: 100%;
+        justify-content: space-between;
+
+        Button {
+          background-color: $light-grey-color;
+        }
+      }
+    }
+
+    Button.MuiButtonBase-root.MuiPickersDay-root.Mui-selected {
+      background-color: $primary-color;
+      border-radius: 0.5rem;
+    }
+    Button.MuiButtonBase-root.MuiPickersDay-root.MuiPickersDay-today {
+      border-radius: 0.5rem;
+      border-color: $primary-color;
+    }
+  }
+
+  &__task-container{
+    margin: 0 1rem;
+  }
 }
