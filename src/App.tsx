@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
 import ActiveTasks from "./pages/ActiveTasks/ActiveTasks";
+import { randomUserProfiles } from "./utils/mockData";
+import { Leaderboard } from "./pages/Leaderboard/Leaderboard"
 
 const App = () => {
   return (
@@ -9,7 +11,8 @@ const App = () => {
       <Routes>
         <Route path="*" element={<Home />} />
         <Route path="/tasks" element={<ActiveTasks />} />
-      </Routes>
+        <Route path="/leaderboard" element={<Leaderboard users={randomUserProfiles}/>}/>
+    </Routes>
     </>
   );
 };
