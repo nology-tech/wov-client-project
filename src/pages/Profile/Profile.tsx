@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import { UserProfile } from "../../utils/mockData";
 
 const Profile = ({ user }: { user: UserProfile }) => {
-  const { score, img, name, bio, email } = user;
+  const { totalScore, img, name, bio, email } = user;
 
   return (
     <div className="profile">
       <img src={img} className="profile__img" alt="Profile" />
-      <h1 className="profile__score">{score}</h1>
+      <h1 className="profile__score">{totalScore}</h1>
       <section className="profile__info">
         <p>
           <span className="profile__label">Name</span> : {name}{" "}
