@@ -2,6 +2,7 @@ import Layout from "../../components/Layout/Layout";
 import Header from "../../components/Header/Header";
 import HeaderHome from "../../components/HeaderHome/HeaderHome";
 import Leaderboard from "../../pages/Leaderboard/Leaderboard";
+import { randomUserProfiles } from "../../utils/mockData";
 
 
 const Home = () => {
@@ -24,7 +25,7 @@ const Home = () => {
       />
       <h2>Section Heading</h2>
       <h3>Panel Heading</h3>
-      <Leaderboard />
+      <Leaderboard users={randomUserProfiles} />
       <></>
     </Layout>
   );
