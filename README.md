@@ -30,3 +30,15 @@
 - This contains 4 BottomNavigationAction components, that each contain Icon Components. 
 - All of these components are imported from the Mui Component Library and can be style by the selectors stipulated in the Navigation.scss file. 
 - Currently they prove the Link for the react-router-dom dependency, that will be used to route to different pages within the App.
+
+### Tasks Page
+
+- The task page displays the current tasks the user must complete.
+- It displays the: 
+  - The task
+  - The task category
+  - The points for completion
+- It enables the user to:
+  - Search through through the tasks by name and category
+  - Check the tasks they've completed
+

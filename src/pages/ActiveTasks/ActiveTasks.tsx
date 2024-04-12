@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState, ChangeEvent } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Navigation from "../../components/Navigation/Navigation";
 import tasks from "../../MockData/tasks";
@@ -9,13 +9,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { InputAdornment } from "@mui/material";
 
+type CompletedTasks = {
+  [key: number]: boolean;
+};
+
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  
+  const [completedTasks, setCompletedTasks] = useState<CompletedTasks>({});
+
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const searchedInput = event.currentTarget.value.toLowerCase();
-    setSearchTerm(searchedInput);
+    setSearchTerm(event.currentTarget.value.toLowerCase());
   };
+
+  const handleTaskCompletionChange = (id: number, isCompleted: boolean) => {
+    setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
+  };
+  
 
   const searchedTasks = tasks.filter(
     (task) =>
@@ -44,30 +53,17 @@ const ActiveTasks = () => {
               </InputAdornment>
             ),
           }}
-          sx={{
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderRadius: "30px",
-              border: "1px solid #f0f0f0",
-            },
-            "& .MuiFormControl-root .MuiTextField-root .task-page__input": {
-              width: "600px",
-            },
-            "& .MuiInputBase-input": {
-              marginLeft: "20px",
-            },
-            "& .MuiInputBase-formControl": {
-              fontFamily: "'Poppins', sans-serif",
-              color: "#B1B8CF",
-            },
-          }}
         />
       </div>
       {searchedTasks.map((task, index) => (
         <ActiveTaskTile
           key={task.id}
+          id={task.id}
           requirement={task.requirement}
           category={task.category}
           points={task.points}
+          completed={!!completedTasks[task.id]}
+          onCompletionChange={handleTaskCompletionChange}
           classModifier={
             index === searchedTasks.length - 1 && searchedTasks.length > 4
               ? "active-task active-task--last"
