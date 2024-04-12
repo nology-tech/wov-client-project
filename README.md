@@ -44,9 +44,3 @@
 
 - The player's password is starred out.
 - The buttons allow the user to edit their profile data and sign out.
-
-
-### Leaderboard Card
-
-- Contains the profile picture, name and total score that can be reused to display and render for each user.
-- Able to see the profile picture, name and total score of each user.
