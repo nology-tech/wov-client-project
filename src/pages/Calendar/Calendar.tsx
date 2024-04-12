@@ -46,6 +46,7 @@ const Calendar = () => {
           defaultValue={dayjs(
             `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
           )}
+          data-testid="calendarComponent" 
         />
       </LocalizationProvider>
 

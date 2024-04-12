@@ -1,10 +1,17 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { Calendar, filterCompletedTasks } from "./Calendar";
+import { screen } from "@testing-library/react";
+import Calendar, { filterCompletedTasks } from "./Calendar";
 import tasks from "../../data/completedTasks";
+import { customRender } from "../../utils/testUtils";
 
-describe("Completed Task Component", () => {
+describe("Calendar page", () => {
   it("should render the calender with the current date highlighted", () => {
-    render(<Calendar />);
+    customRender(<Calendar />);
+    const cal = screen.queryByTestId("calendarComponent");
+    expect(cal).toBeInTheDocument();
+    const today: number = new Date().getDate();
+    const todayButton = screen.queryByText(`${today}`);
+    expect(todayButton).toHaveClass("MuiPickersDay-today");
+    expect(todayButton).toHaveClass("Mui-selected");
   });
 });
 
@@ -26,5 +33,11 @@ describe("Filter completed tasks function", () => {
     filterCompletedTasks(tasks, new Date(2024, 3, 11));
 
     expect(tasks).toEqual(originalData);
+  });
+
+  it("should return an empty array when an empty array is given", () => {
+     const filteredData = filterCompletedTasks([], new Date(2024, 3, 11));
+
+    expect(filteredData).toEqual([]);
   });
 });
