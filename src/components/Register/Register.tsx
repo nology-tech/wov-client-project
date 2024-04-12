@@ -72,26 +72,26 @@ const Register = () => {
 
       {!showSecondForm ? (
         <form onSubmit={handleSubmit} className="register__form" action="#">
-          <label className="register__form--label" htmlFor="firstName">
+          <label className="register__label" htmlFor="firstName">
             First Name
           </label>
           <input
             id="firstName"
             name="firstName"
             value={formData.firstName}
-            className="register__form--input"
+            className="register__input"
             type="text"
             placeholder="John"
             onChange={handleChange}
           />
-          <label className="register__form--label" htmlFor="lastName">
+          <label className="register__label" htmlFor="lastName">
             Last Name
           </label>
           <input
             id="lastName"
             name="lastName"
             value={formData.lastName}
-            className="register__form--input with-margin-bottom"
+            className="register__input register__input--margin-bottom"
             type="text"
             placeholder="Smith"
             onChange={handleChange}
@@ -100,38 +100,38 @@ const Register = () => {
         </form>
       ) : (
         <form onSubmit={handleSubmit} className="register__form" action="#">
-          <label className="register__form--label" htmlFor="email">
+          <label className="register__label" htmlFor="email">
             Email Address
           </label>
           <input
             id="email"
             name="email"
             value={formData.email}
-            className="register__form--input"
+            className="register__input"
             type="email"
             placeholder="you@example.com"
             onChange={handleChange}
           />
-          <label className="register__form--label" htmlFor="password">
+          <label className="register__label" htmlFor="password">
             Password
           </label>
           <input
             id="password"
             name="password"
             value={formData.password}
-            className="register__form--input"
+            className="register__input"
             type="password"
             placeholder="Your password"
             onChange={handleChange}
           />
-          <label className="register__form--label" htmlFor="confirmPassword">
+          <label className="register__label" htmlFor="confirmPassword">
             Confirm Password
           </label>
           <input
             id="confirmPassword"
             name="confirmPassword"
             value={formData.confirmPassword}
-            className="register__form--input with-margin-bottom"
+            className="register__input with-margin-bottom"
             type="password"
             onChange={handleChange}
           />

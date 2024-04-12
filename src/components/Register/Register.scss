@@ -1,7 +1,8 @@
 @use "../../styles/variables" as *;
 
 .register {
-  width: 71vw;
+  max-width: 30rem;
+  padding: 0 2rem;
   margin: 0 auto;
   margin-top: -5rem;
   height: 100vh;
@@ -39,24 +40,22 @@
     gap: 10px;
     margin: 1.4rem 0;
     font-size: 0.813rem;
+  }
+  &__label {
+    color: $black-color;
+  }
 
-    &--label {
-      color: $black-color;
+  &__input {
+    border: 1px solid red;
+    width: 100%;
+    padding: 0.6rem;
+    outline: none;
+    // border: none;
+    background-color: $off-white-color;
+    border-radius: 5px;
+    &--margin-bottom {
+      margin-bottom: 2.5rem;
     }
-
-    &--input {
-      width: 100%;
-      padding: 0.6rem;
-      outline: none;
-      border: none;
-      background-color: $off-white-color;
-      border-radius: 5px;
-    }
-
-    .with-margin-bottom {
-      margin-bottom: 7rem;
-    }
-
     ::placeholder {
       color: $light-grey-color;
     }
@@ -71,8 +70,9 @@
 
 @media screen and (min-width: $tablet-breakpoint) {
   .register {
-    width: 50vw;
-
+    width: 60%;
+    padding: 2rem;
+    margin: 0 auto;
     &__icon--arrow {
       width: 60px;
       height: 60px;
@@ -85,64 +85,60 @@
 
     &__heading {
       text-align: left;
+      // font-size: 2.25rem;
       font-size: 6vw;
     }
 
     &__form {
-      gap: 20px;
-      font-size: 1.5rem;
+      gap: 15px;
+      font-size: 1rem;
 
-      &--input {
-        font-size: 1.5rem;
+      &__input {
+        font-size: 1rem;
       }
     }
   }
 }
 @media screen and (min-width: $desktop-breakpoint) {
   .register {
-    width: 30%;
-
-    &__icon--container {
-      margin-top: 2rem;
-    }
+    width: 50%;
 
     &__heading {
-      font-size: 3.7vw;
+      font-size: 2.5rem;
     }
 
     &__form {
       gap: 0;
-      font-size: 1.2rem;
-
-      &--input {
-        font-size: 1.2rem;
-      }
+      font-size: 1rem;
+    }
+    &__input {
+      font-size: 1rem;
     }
   }
 }
-@media screen and (min-width: $large-desktop-breakpoint) {
-  .register {
-    width: 25%;
+// @media screen and (min-width: $large-desktop-breakpoint) {
+//   .register {
+//     padding: 3rem;
+//     width: 100%;
+//     &__icon--container {
+//       margin-top: 2rem;
+//     }
 
-    &__icon--container {
-      margin-top: 2rem;
-    }
+//     &__heading {
+//       font-size: 3.5vw;
+//     }
+//   }
+// }
+// @media screen and (min-width: $extra-large-desktop-breakpoint) {
+//   .register {
+//     width: 15%;
 
-    &__heading {
-      font-size: 3vw;
-    }
-  }
-}
-@media screen and (min-width: $extra-large-desktop-breakpoint) {
-  .register {
-    width: 15%;
+//     &__icon--container {
+//       margin-top: 2rem;
+//     }
 
-    &__icon--container {
-      margin-top: 2rem;
-    }
-
-    &__heading {
-      font-size: 1.8vw;
-    }
-  }
-}
+//     &__heading {
+//       font-size: 1.8vw;
+//     }
+//   }
+// }
