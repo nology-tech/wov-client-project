@@ -1,4 +1,4 @@
-type CompletedTask = {
+export type CompletedTask = {
   id: string;
   taskHeading: string;
   type?: "weekly" | "daily" | "monthly";
@@ -13,7 +13,7 @@ type CompletedTask = {
 // Completed tasks will be stored per user, these are a list of tasks for a single user
 //
 
-const completedTasks: CompletedTask[] = [
+export const completedTasks: CompletedTask[] = [
   {
     id: "k2321",
     type: "daily",

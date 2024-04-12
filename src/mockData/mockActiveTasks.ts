@@ -1,4 +1,4 @@
-type Task = {
+export type Task = {
   id: string;
   taskHeading: string;
   type?: "weekly" | "daily" | "monthly";
@@ -10,7 +10,7 @@ type Task = {
 // Active tasks will be stored per user, these are a list of tasks for a single user
 //
 
-const activeTasks: Task[] = [
+export const activeTasks: Task[] = [
   {
     id: "k2321",
     type: "daily",
