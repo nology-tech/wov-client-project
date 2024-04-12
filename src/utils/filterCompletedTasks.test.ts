@@ -10,7 +10,7 @@ const completedTasksTestData: CompletedTask[] = [
     description: "Yawn",
     image:
       "https://cdn11.bigcommerce.com/s-zllqv0a9td/product_images/uploaded_images/adobestock-136439169-min.jpeg",
-    completed: new Date(2024, 3, 11).toString(),
+    completed: "11 April 2024 at 05:20:00 UTC+1",
   },
   {
     id: "2",
@@ -20,7 +20,7 @@ const completedTasksTestData: CompletedTask[] = [
     description: "Freeze",
     image:
       "https://www.statnews.com/wp-content/uploads/2015/12/ICE_AP-645x645.jpg",
-    completed: new Date(2024, 3, 11).toString(),
+    completed: "11 April 2024 at 05:20:00 UTC+1",
   },
   {
     id: "3",
@@ -28,7 +28,7 @@ const completedTasksTestData: CompletedTask[] = [
     category: "Wellness",
     points: 3,
     description: "Ommmm",
-    completed: new Date(2024, 3, 11).toString(),
+    completed: "11 April 2024 at 05:20:00 UTC+1",
   },
   {
     id: "4",
@@ -38,7 +38,7 @@ const completedTasksTestData: CompletedTask[] = [
     description: "Run as fast as you can",
     image:
       "https://img.freepik.com/premium-photo/running-man-silhouette-sunset-time-sport-active-life-concept_221513-1606.jpg",
-    completed: new Date(2024, 3, 10).toString(),
+    completed: "11 April 2024 at 05:20:00 UTC+1",
   },
   {
     id: "5",
@@ -48,7 +48,7 @@ const completedTasksTestData: CompletedTask[] = [
     description: "Run as fast as you can",
     image:
       "https://img.freepik.com/premium-photo/running-man-silhouette-sunset-time-sport-active-life-concept_221513-1606.jpg",
-    completed: new Date(2024, 3, 11).toString(),
+    completed: "10 April 2024 at 05:20:00 UTC+1",
   },
   {
     id: "6",
@@ -58,7 +58,7 @@ const completedTasksTestData: CompletedTask[] = [
     description: "Run as fast as you can",
     image:
       "https://img.freepik.com/premium-photo/running-man-silhouette-sunset-time-sport-active-life-concept_221513-1606.jpg",
-    completed: new Date(2024, 3, 9).toString(),
+    completed: "9 April 2024 at 05:20:00 UTC+1",
   },
   {
     id: "7",
@@ -68,7 +68,7 @@ const completedTasksTestData: CompletedTask[] = [
     description: "Run as fast as you can",
     image:
       "https://img.freepik.com/premium-photo/running-man-silhouette-sunset-time-sport-active-life-concept_221513-1606.jpg",
-    completed: new Date(2024, 3, 8).toString(),
+    completed: "8 April 2024 at 05:20:00 UTC+1",
   },
 ];
 
