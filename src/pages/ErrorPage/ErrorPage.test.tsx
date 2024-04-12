@@ -4,10 +4,15 @@ import ErrorPage from "./ErrorPage";
 import { customRender } from "../../utils/testUtils";
 
 describe("ErrorPage", () => {
-  it("should render the button"),
+  it("should render content properly "),
     () => {
       customRender(<ErrorPage />);
-      const homeButton = screen.getByText("HOME");
+
+      const homeButton = screen.getByText("Home");
+      const errorMessage = screen.getByText(
+        "OOPS. LOOKS LIKE YOU'VE TAKEN A WRONG TURN."
+      );
+      expect(errorMessage).toBeInTheDocument();
       expect(homeButton).toBeInTheDocument();
     };
 
