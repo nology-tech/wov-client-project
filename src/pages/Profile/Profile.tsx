@@ -3,6 +3,7 @@ import "./Profile.scss";
 import { Link } from "react-router-dom";
 import { UserProfile } from "../../utils/mockData";
 import Header from "../../components/Header/Header";
+import Navigation from "../../components/Navigation/Navigation";
 
 const Profile = ({ user }: { user: UserProfile }) => {
   const { score, img, name, bio, email } = user;
@@ -15,16 +16,16 @@ const Profile = ({ user }: { user: UserProfile }) => {
         <h1 className="profile__score">{score}</h1>
         <section className="profile__info">
           <p>
-            <span className="profile__label">Name</span> : {name}{" "}
+            <span className="profile__label">Name</span> : {name}
           </p>
           <p>
-            <span className="profile__label">Bio</span> : {bio}{" "}
+            <span className="profile__label">Bio</span> : {bio}
           </p>
           <p>
-            <span className="profile__label">Email</span> : {email}{" "}
+            <span className="profile__label">Email</span> : {email}
           </p>
           <p>
-            <span className="profile__label">Password</span> : {"*********"}{" "}
+            <span className="profile__label">Password</span> : {"*********"}
           </p>
         </section>
         <section className="profile__buttons">
@@ -42,6 +43,7 @@ const Profile = ({ user }: { user: UserProfile }) => {
           />
         </section>
       </div>
+      <Navigation navActionIndex={-1} />
     </div>
   );
 };

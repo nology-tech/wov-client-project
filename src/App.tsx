@@ -5,6 +5,7 @@ import Calendar from "./pages/Calendar/Calendar";
 import { randomUserProfiles } from "./utils/mockData";
 import { completedTasks } from "./mockData/mockCompletedTasks";
 import { Leaderboard } from "./pages/Leaderboard/Leaderboard";
+import Profile from "./pages/Profile/Profile";
 
 const App = () => {
   return (
@@ -17,6 +18,10 @@ const App = () => {
       <Route
         path="/leaderboard"
         element={<Leaderboard users={randomUserProfiles} />}
+      />
+      <Route
+        path="/profile"
+        element={<Profile user={randomUserProfiles[0]} />}
       />
     </Routes>
   );
