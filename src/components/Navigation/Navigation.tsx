@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import HomeIcon from "@mui/icons-material/Home";
@@ -7,6 +6,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navigation.scss";
+import { Box } from "@mui/material";
 
 type NavProps = {
   navActionIndex: number;

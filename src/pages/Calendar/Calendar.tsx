@@ -11,9 +11,13 @@ import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
-import { completedTasks } from "../../mockData/mockCompletedTasks";
+import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
 
-const Calendar = () => {
+type CalendarProps = {
+  completedTasks: CompletedTaskType[];
+};
+
+const Calendar = ({ completedTasks }: CalendarProps) => {
   const [date, setDate] = React.useState<Date>(new Date());
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
