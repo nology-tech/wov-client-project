@@ -31,6 +31,15 @@
 - All of these components are imported from the Mui Component Library and can be style by the selectors stipulated in the Navigation.scss file.
 - Currently they prove the Link for the react-router-dom dependency, that will be used to route to different pages within the App.
 
+### Calendar Page
+
+- The calender page displays a calender and the completed tasks for the current date.
+- By clicking on a previous date, the completed tasks for that date can be viewed.
+- A different month can be viewed by clicking on the arrow buttons on either side of the month name.
+- All the fututre dates and months in the calender are disabled.
+- By clicking on the down arrow in the task, additional information about the task will be displayed.
+- The page has the Header at the top and the Navigation Menu at the bottom.
+
 ### Profile Page
 
 - The Profile page contains the information regarding a players profile displaying it on the prfolie screen.
@@ -44,3 +53,13 @@
 
 - The player's password is starred out.
 - The buttons allow the user to edit their profile data and sign out.
+
+### Leaderboard Page
+- The Leaderboard page contains each users score, ranking them in order from high to low.
+- It allows for users to see how many points other users have.
+- The user can also navigate to the leaderboard page.
+
+### Home Page
+
+- A welcome page that uses the Navigation, Header and Button components.
+- The page displays a welcome message to the user and allows them to navigate to other parts of the app.

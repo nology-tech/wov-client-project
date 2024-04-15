@@ -1,0 +1,36 @@
+@use "../../styles/variables" as *;
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  margin-bottom: 70px;
+
+  &__daily-tasks-button {
+    margin-top: 2rem;
+  }
+  &__header {
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    line-height: $line-height-header;
+    padding: 0 2rem 0 4rem;
+    color: $pure-black-color;
+  }
+  &__paragraph {
+    padding: 0 2rem 0 4rem;
+    color: $pure-black-color;
+    line-height: $line-height-paragraph;
+  }
+  &__quote {
+    line-height: $line-height-subtext;
+    padding: 0 4rem 0 6rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    margin-left: 4rem;
+    border-left: 0.2rem solid $grey-color;
+    padding-left: 10px;
+    color: $pure-black-color;
+  }
+}
