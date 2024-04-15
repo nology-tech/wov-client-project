@@ -12,7 +12,7 @@ const ErrorPage = () => {
         LOOKS LIKE YOU'VE TAKEN A WRONG TURN.
       </h1>
       <ErrorSVG />
-      <Link to="/home">
+      <Link to="/">
         <div className="error-page__button">
           <Button label={"Home"}></Button>
         </div>

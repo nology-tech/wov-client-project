@@ -20,6 +20,6 @@ describe("ErrorPage", () => {
     const { getByText } = customRender(<ErrorPage />);
     const home = getByText("Home");
     await userEvent.click(home);
-    expect(window.location.pathname).toEqual("/home");
+    expect(window.location.pathname).toEqual("/");
   });
 });
