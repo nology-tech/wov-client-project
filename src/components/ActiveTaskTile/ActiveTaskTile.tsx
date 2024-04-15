@@ -1,12 +1,12 @@
 
 import "./ActiveTaskTile.scss";
 type ActiveTaskTileProps = {
-  id: number;
+  id: string;
   requirement: string;
   category: string;
   points: number;
   completed: boolean;
-  onCompletionChange: (id: number, completed: boolean) => void;
+  onCompletionChange: (id: string, completed: boolean) => void;
   classModifier: string;
 };
 

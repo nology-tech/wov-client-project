@@ -7,7 +7,7 @@ describe("ActiveTaskTile component", () => {
   it("should render the active task tile", () => {
     render(
       <ActiveTaskTile
-        id={1}
+        id={"k2321"}
         requirement="5am wake up"
         category="Routine"
         points={5}
@@ -24,7 +24,7 @@ describe("ActiveTaskTile component", () => {
   it("should render the requirement header", () => {
     render(
       <ActiveTaskTile
-        id={1}
+        id={"k2321"}
         requirement="5am wake up"
         category="Routine"
         points={5}
@@ -45,7 +45,7 @@ describe("ActiveTaskTile component", () => {
   it("should check the initial state of the button", () => {
     render(
       <ActiveTaskTile
-        id={1}
+        id={"k2321"}
         requirement="5am wake up"
         category="Routine"
         points={5}
@@ -62,16 +62,16 @@ describe("ActiveTaskTile component", () => {
   it("should check the selected state of the button", async () => {
     const TestComponent = () => {
       const [completedTasks, setCompletedTasks] = useState<{
-        [key: number]: boolean;
+        [key: string]: boolean;
       }>({});
 
-      const handleTaskCompletionChange = (id: number, isCompleted: boolean) => {
+      const handleTaskCompletionChange = (id: string, isCompleted: boolean) => {
         setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
       };
 
       return (
         <ActiveTaskTile
-          id={1}
+          id={"k2321"}
           requirement="5am wake up"
           category="Routine"
           points={5}

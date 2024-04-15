@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Navigation from "../../components/Navigation/Navigation";
-import tasks from "../../MockData/tasks";
+import { activeTasks } from "../../MockData/mockActiveTasks";
 import "./ActiveTasks.scss";
 import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
@@ -9,7 +9,7 @@ import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 type CompletedTasks = {
-  [key: number]: boolean;
+  [key: string]: boolean;
 };
 
 const ActiveTasks = () => {
@@ -20,14 +20,14 @@ const ActiveTasks = () => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
   };
 
-  const handleTaskCompletionChange = (id: number, isCompleted: boolean) => {
+  const handleTaskCompletionChange = (id: string, isCompleted: boolean) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
   };
 
-  const searchedTasks = tasks.filter(
+  const searchedTasks = activeTasks.filter(
     (task) =>
-      task.requirement.toLowerCase().includes(searchTerm) ||
-      task.category.toLowerCase().includes(searchTerm)
+      task.taskHeading.toLowerCase().includes(searchTerm) ||
+      task.category?.toLowerCase().includes(searchTerm)
   );
 
   return (
@@ -57,8 +57,8 @@ const ActiveTasks = () => {
         <ActiveTaskTile
           key={task.id}
           id={task.id}
-          requirement={task.requirement}
-          category={task.category}
+          requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
+          category={task.category || ""}
           points={task.points}
           completed={!!completedTasks[task.id]}
           onCompletionChange={handleTaskCompletionChange}
