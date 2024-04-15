@@ -1,4 +1,4 @@
-import { CompletedTask } from "../mockData/mockCompletedTasks";
+import { CompletedTask } from "../tempname/mockCompletedTasks";
 
 const filterCompletedTasks = (
   completedTasks: CompletedTask[],

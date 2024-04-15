@@ -1,6 +1,6 @@
 import "./Leaderboard.scss";
 import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
-import { UserProfile } from "../../mockData/mockTribe";
+import { UserProfile } from "../../tempname/mockTribe";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 

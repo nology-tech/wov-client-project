@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Profile from "./Profile";
-import { UserProfile } from "../../MockData/mockTribe";
+import { UserProfile } from "../../tempname/mockTribe";
 import { customRender } from "../../utils/testUtils";
 
 const mockData: UserProfile = {

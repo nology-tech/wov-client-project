@@ -1,7 +1,7 @@
 import Button from "../../components/Button/Button";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
-import { UserProfile } from "../../MockData/mockTribe";
+import { UserProfile } from "../../tempname/mockTribe";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 
