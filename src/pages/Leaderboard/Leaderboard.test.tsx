@@ -1,6 +1,5 @@
-import React from "react";
 import { screen } from "@testing-library/react";
-import { Leaderboard } from "./Leaderboard";
+import  Leaderboard from "./Leaderboard";
 import { customRender } from "../../utils/testUtils";
 import { UserProfile } from "../../mockData/mockTribe";
 

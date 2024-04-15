@@ -4,7 +4,7 @@ import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
 import { tribeUsers } from "./mockData/mockTribe";
 import { completedTasks } from "./mockData/mockCompletedTasks";
-import { Leaderboard } from "./pages/Leaderboard/Leaderboard";
+import Leaderboard  from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 
 const App = () => {
