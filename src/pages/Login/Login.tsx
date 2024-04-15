@@ -35,6 +35,12 @@ export const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        if(errorMessage){
+            alert("Invalid Email or Password")
+        } else {
+            alert("Something went wrong... Try again later.")
+        }
+        
       });
   }
 
