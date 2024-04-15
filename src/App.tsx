@@ -6,6 +6,7 @@ import { tribeUsers } from "./mockData/mockTribe";
 import { completedTasks } from "./mockData/mockCompletedTasks";
 import Leaderboard  from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
+import "./utils/Login";
 
 const App = () => {
   return (
