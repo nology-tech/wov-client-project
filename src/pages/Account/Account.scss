@@ -1,11 +1,8 @@
 @use "../../styles/variables" as *;
-@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@400..700&family=Oswald:wght@200..700&display=swap");
 
-// TODO: Remove import font size (Oswald)
 .account {
   display: flex;
   flex-direction: column;
-  // justify-content: end;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -27,8 +24,7 @@
       font-size: 1rem;
       font-weight: 700;
       color: $black-color;
-      //   font-family: Oswald;
-      font-family: "Oswald", sans-serif;
+      font-family: $font-family-header-title;
     }
   }
   &__buttons {
@@ -77,8 +73,7 @@
 @media screen and (min-width: $large-desktop-breakpoint) {
   .account {
     gap: 10px;
-    &__info {
-    }
+
     &__buttons {
       width: 25%;
     }
@@ -87,8 +82,7 @@
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
   .account {
     gap: 0px;
-    &__info {
-    }
+
     &__buttons {
       width: 15%;
     }

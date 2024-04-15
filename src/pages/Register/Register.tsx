@@ -2,11 +2,8 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
-import Button from "../Button/Button";
-import { app } from "../../firebase";
+import Button from "../../components/Button/Button";
 import "./Register.scss";
-
-app;
 
 const emptyFormData = {
   firstName: "",
