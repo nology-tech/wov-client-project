@@ -13,16 +13,14 @@ import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
 import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
 import { app } from "../../firebase";
-import { collection, getDocs, getFirestore, query } from "firebase/firestore";
-import { doc, getDoc, DocumentReference } from "firebase/firestore";
-import { ref } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
-type CalendarProps = {
-  completedTasks: CompletedTaskType[];
-};
-
-const Calendar = ({ completedTasks }: CalendarProps) => {
+const Calendar = () => {
   const [date, setDate] = React.useState<Date>(new Date());
+  const [completedTaskArray, setCompletedTaskArray] = React.useState<
+    CompletedTaskType[]
+  >([]);
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
     weekStart: 1,
@@ -31,10 +29,8 @@ const Calendar = ({ completedTasks }: CalendarProps) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
 
-  const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
   const getData = async () => {
     try {
-      console.log("RUNNING");
       const db = getFirestore(app);
       const completedTask = doc(
         db,
@@ -44,29 +40,17 @@ const Calendar = ({ completedTasks }: CalendarProps) => {
       const completedTasksData = await getDoc(completedTask);
       if (completedTasksData.exists()) {
         const completedTaskArray = completedTasksData.data().completedTasks;
-        console.log(completedTaskArray);
+        setCompletedTaskArray(completedTaskArray);
       }
-
-      console.log(completedTasksData);
     } catch {
-      console.log("error");
+      console.log("Error: Could not locate Completed Tasks from database");
     }
   };
   React.useEffect(() => {
     getData();
   }, []);
 
-  // const getTask = async () => {
-  //   const db = getFirestore(app);
-  //   const task = doc(db, "test-completed-tickets", "wake up ");
-  //   const taskDoc = await getDoc(task);
-  //   if (taskDoc.exists()) {
-  //     console.log(taskDoc.data());
-  //   } else {
-  //     console.log("Error");
-  //   }
-  // };
-  // getTask();
+  const filteredCompletedTasks = filterCompletedTasks(completedTaskArray, date);
 
   return (
     <div className="calendar">
