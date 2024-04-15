@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
@@ -19,6 +20,7 @@ const App = () => {
       />
       <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
       <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+      <Route path="*" element={<ErrorPage />} />
       <Route path="/auth" element={<Account />} />
       <Route path="/register" element={<Register />} />
     </Routes>
