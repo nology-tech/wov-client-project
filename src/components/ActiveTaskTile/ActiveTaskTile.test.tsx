@@ -76,7 +76,7 @@ describe("ActiveTaskTile component", () => {
           category="Routine"
           points={5}
           classModifier="active-task"
-          completed={!!completedTasks[1]}
+          completed={!!completedTasks["k2321"]}
           onCompletionChange={handleTaskCompletionChange}
         />
       );
@@ -87,12 +87,9 @@ describe("ActiveTaskTile component", () => {
     const checkboxSelected = screen.getByRole("checkbox");
     await userEvent.click(checkboxSelected);
     expect(checkboxSelected).toBeChecked();
-    console.log(checkboxSelected);
-    
 
     await userEvent.click(checkboxSelected);
     expect(checkboxSelected).not.toBeChecked();
-    console.log(checkboxSelected);
     
   });
 });

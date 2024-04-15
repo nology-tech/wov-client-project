@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ActiveTasks from "./ActiveTasks";
-import tasks from "../../MockData/tasks";
 import { customRender } from "../../utils/testUtils";
+import { activeTasks } from "../../MockData/mockActiveTasks";
 
 describe("ActiveTask page component", () => {
   it("should render the ActiveTask page", () => {
@@ -47,21 +47,19 @@ describe("ActiveTask page component", () => {
     const searchInput = screen.getByRole("search");
     await userEvent.type(searchInput, "di");
 
-    const filteredTasks = tasks.filter(
+    const filteredTasks = activeTasks.filter(
       (task) =>
-        task.requirement.toLowerCase().includes("di") ||
-        task.category.toLowerCase().includes("di")
+        task.taskHeading.toLowerCase().includes("di") ||
+        task.category?.toLowerCase().includes("di")
     );
     const unexpectedTasks = [
       "5am wake up",
-      "Cold shower",
-      "1 hour exercise",
-      "5k Run",
-      "1 hour walk",
+      "Walk 70,000 steps",
+      "20 minute run",
     ];
 
     filteredTasks.forEach((task) => {
-      expect(screen.getByText(task.requirement)).toBeInTheDocument();
+      expect(screen.getByText(task.taskHeading)).toBeInTheDocument();
       unexpectedTasks.forEach((noTask) => {
         expect(screen.getByText(noTask)).not.toBeInTheDocument;
       });
