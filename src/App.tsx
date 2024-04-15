@@ -4,10 +4,32 @@ import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
 import { tribeUsers } from "./mockData/mockTribe";
 import { completedTasks } from "./mockData/mockCompletedTasks";
-import Leaderboard  from "./pages/Leaderboard/Leaderboard";
+import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
+// -- CHARLIE
+import { app } from "./firebase";
+import { getFirestore } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
+import { activeTasks } from "./mockData/mockActiveTasks";
 
-const App = () => {
+const App = async () => {
+  // const firestore = getFirestore(app);
+
+  // await setDoc(
+  //   doc(firestore, "test-tribe", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
+  //   tribeUsers[0]
+  // );
+
+  // setDoc(
+  //   doc(firestore, "test-active-tickets", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
+  //   { completedTasks: activeTasks }
+  // );
+
+  // setDoc(
+  //   doc(firestore, "test-completed-tickets", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
+  //   { completedTasks: completedTasks }
+  // );
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />

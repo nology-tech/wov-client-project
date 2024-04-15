@@ -4,7 +4,7 @@ export type Task = {
   type?: "weekly" | "daily" | "monthly";
   category?: string;
   points: number;
-}
+};
 
 // NOTE:
 // Active tasks will be stored per user, these are a list of tasks for a single user
@@ -42,8 +42,8 @@ export const activeTasks: Task[] = [
   {
     id: "85z56",
     type: "daily",
-    taskHeading: "",
+    taskHeading: "Example",
     category: "Fitness",
     points: 30,
-  }
-]
+  },
+];
