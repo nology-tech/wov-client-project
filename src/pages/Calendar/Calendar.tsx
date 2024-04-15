@@ -12,12 +12,10 @@ import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
 import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
-import {app} from "../../firebase"
+import { app } from "../../firebase";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore"
+import { doc, getDoc, DocumentReference } from "firebase/firestore";
 import { ref } from "firebase/database";
-
-
 
 type CalendarProps = {
   completedTasks: CompletedTaskType[];
@@ -34,19 +32,41 @@ const Calendar = ({ completedTasks }: CalendarProps) => {
   };
 
   const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
-
   const getData = async () => {
     try {
+      console.log("RUNNING");
       const db = getFirestore(app);
-      const completedTask = query(collection(db, "completedTasks"))
-      const completedTaskDocs = await getDocs(completedTask)
-      console.log(completedTaskDocs)
+      const completedTask = doc(
+        db,
+        "test-completed-tickets",
+        "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
+      );
+      const completedTasksData = await getDoc(completedTask);
+      if (completedTasksData.exists()) {
+        const completedTaskArray = completedTasksData.data().completedTasks;
+        console.log(completedTaskArray);
+      }
+
+      console.log(completedTasksData);
     } catch {
-      console.log("Error")
+      console.log("error");
     }
-  }
- 
-  getData()
+  };
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  // const getTask = async () => {
+  //   const db = getFirestore(app);
+  //   const task = doc(db, "test-completed-tickets", "wake up ");
+  //   const taskDoc = await getDoc(task);
+  //   if (taskDoc.exists()) {
+  //     console.log(taskDoc.data());
+  //   } else {
+  //     console.log("Error");
+  //   }
+  // };
+  // getTask();
 
   return (
     <div className="calendar">
