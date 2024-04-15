@@ -1,7 +1,6 @@
 @use "../../styles/variables" as *;
-$color-error: red;
 
-.register {
+.sign-in {
   max-width: 30rem;
   padding: 0 2rem;
   margin: 0 auto;
@@ -69,7 +68,7 @@ $color-error: red;
 }
 
 @media screen and (min-width: $tablet-breakpoint) {
-  .register {
+  .sign-in {
     width: 60%;
     padding: 2rem;
     margin: 0 auto;
@@ -99,7 +98,7 @@ $color-error: red;
   }
 }
 @media screen and (min-width: $desktop-breakpoint) {
-  .register {
+  .sign-in {
     width: 55%;
 
     &__heading {

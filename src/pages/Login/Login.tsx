@@ -31,40 +31,43 @@ export const Login = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="register">
-      <div className="register__icon--container">
+    <section className="sign-in">
+      <div className="sign-in__icon--container">
         <img
           onClick={handlePrevious}
-          className="register__icon--arrow"
+          className="sign-in__icon--arrow"
           src={arrowLeft}
           alt="Arrow Left Icon"
         />
       </div>
-      <h2 className="register__heading">Sign In</h2>
-      <form className="register__form" action="#">
-        <label className="register__label" htmlFor="email">
+      <h2 className="sign-in__heading">Welcome Back</h2>
+      <form className="sign-in__form" action="#">
+        <label className="sign-in__label" htmlFor="email">
           Email Address
         </label>
         <input
           id="email"
           name="email"
           // value={formData.email}
-          className="register__input"
+          className="sign-in__input"
           type="email"
           placeholder="you@example.com"
         // onChange={handleChange}
         />
-      </form>
+      <label className="register__label" htmlFor="lastName">
+            Last Name
+          </label>
       <input
         id="password"
         name="password"
         // value={formData.password}
-        className="register__input"
+        className="sign-in__input"
         type="password"
         placeholder="Your password"
       // onChange={handleChange}
       />
       <Button label="Sign In" />
+      </form>
     </section>
   )
 }
