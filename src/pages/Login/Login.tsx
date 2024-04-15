@@ -1,6 +1,6 @@
 import "./Login.scss";
 import Button from "../../components/Button/Button";
-// import arrowLeft from "../assets/images/arrow-left.png";
+import arrowLeft from "../../assets/images/arrow-left.png";
 import { useState } from "react";
 
 
@@ -28,7 +28,7 @@ export const Login = () => {
         <img
           // onClick={handlePrevious}
           className="register__icon--arrow"
-          // src={arrowLeft}
+          src={arrowLeft}
           alt="&lt;"
         />
       </div>
