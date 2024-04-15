@@ -1,0 +1,19 @@
+@use "../../styles/variables" as *;
+
+.popup {
+  // TODO: Remove bg color styles
+  background: salmon;
+
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+
+  &__heading {
+    color: $black-color;
+    text-align: center;
+    margin-bottom: -5px;
+  }
+}

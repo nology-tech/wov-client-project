@@ -7,6 +7,7 @@ import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import Popup from "../../components/Popup/Popup";
 
 type CompletedTasks = {
   [key: string]: boolean;
@@ -69,6 +70,11 @@ const ActiveTasks = () => {
           }
         />
       ))}
+      <Popup
+        heading="Task Completed"
+        labelButtonOne="ADD MEDIA"
+        labelButtonTwo="VIEW LEADERBOARD"
+      />
       <Navigation navActionIndex={1} />
     </div>
   );
