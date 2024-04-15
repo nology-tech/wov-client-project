@@ -12,6 +12,12 @@ import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
 import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
+import {app} from "../../firebase"
+import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore"
+import { ref } from "firebase/database";
+
+
 
 type CalendarProps = {
   completedTasks: CompletedTaskType[];
@@ -28,6 +34,19 @@ const Calendar = ({ completedTasks }: CalendarProps) => {
   };
 
   const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
+
+  const getData = async () => {
+    try {
+      const db = getFirestore(app);
+      const completedTask = query(collection(db, "completedTasks"))
+      const completedTaskDocs = await getDocs(completedTask)
+      console.log(completedTaskDocs)
+    } catch {
+      console.log("Error")
+    }
+  }
+ 
+  getData()
 
   return (
     <div className="calendar">
