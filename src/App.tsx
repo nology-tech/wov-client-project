@@ -2,9 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
-import { tribeUsers } from "./tempname/mockTribe";
+import { tribeUsers } from "./mockData/mockTribe";
 import ActiveTasks from "./pages/ActiveTasks/ActiveTasks";
-import { completedTasks } from "./tempname/mockCompletedTasks";
+import { completedTasks } from "./mockData/mockCompletedTasks";
 import Leaderboard  from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 

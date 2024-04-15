@@ -11,7 +11,7 @@ import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
-import { CompletedTask as CompletedTaskType } from "../../tempname/mockCompletedTasks";
+import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
 
 type CalendarProps = {
   completedTasks: CompletedTaskType[];

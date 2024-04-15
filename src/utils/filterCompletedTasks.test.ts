@@ -1,5 +1,5 @@
 import filterCompletedTasks from "./filterCompletedTasks";
-import { CompletedTask } from "../tempname/mockCompletedTasks";
+import { CompletedTask } from "../mockData/mockCompletedTasks";
 
 const completedTasksTestData: CompletedTask[] = [
   {

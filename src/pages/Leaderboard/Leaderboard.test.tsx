@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import  Leaderboard from "./Leaderboard";
 import { customRender } from "../../utils/testUtils";
-import { UserProfile } from "../../tempname/mockTribe";
+import { UserProfile } from "../../mockData/mockTribe";
 
 describe("should pass the leaderboard tests", () => {
   it("should render leaderboard with default props", () => {

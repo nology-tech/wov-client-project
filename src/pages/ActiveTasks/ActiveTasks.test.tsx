@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ActiveTasks from "./ActiveTasks";
 import { customRender } from "../../utils/testUtils";
-import { activeTasks } from "../../tempname/mockActiveTasks";
+import { activeTasks } from "../../mockData/mockActiveTasks";
 
 describe("ActiveTask page component", () => {
   it("should render the ActiveTask page", () => {
