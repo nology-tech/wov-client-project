@@ -7,14 +7,43 @@ import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { app } from "../../firebase";
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
-type CompletedTasks = {
+const db = getFirestore(app);
+
+const wakeUpTaskRef = doc(
+  db,
+  "test-active-tickets",
+  "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
+);
+const wakeUpTaskDoc = await getDoc(wakeUpTaskRef);
+if (wakeUpTaskDoc.exists()) {
+  console.log("Document data:", wakeUpTaskDoc.data());
+} else {
+  // docSnap.data() will be undefined in this case
+  console.log("No such document!");
+}
+
+type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
+// create a prop type
+// pass the prop into Active Tasks
+
+// Check that the ActiveTasks receive a list of tasks prop
+// Ask how firebase stores the tasks
+// Asks whether active tasks interacts with the api, or whether this should be
+// done by a separate component / container
+
+// does the user object object store the classes or are
+//they stored and accessible to users of a certain type
+
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [completedTasks, setCompletedTasks] = useState<CompletedTasks>({});
+  const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
