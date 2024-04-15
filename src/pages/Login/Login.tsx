@@ -1,8 +1,11 @@
 import "./Login.scss";
 import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword, signInWithCustomToken } from "firebase/auth";
+import { app } from "../../firebase";
+
 
 
 const emptyFormData = {
@@ -10,25 +13,34 @@ const emptyFormData = {
   password: "",
 }
 
+const auth = getAuth(app);
+
 export const Login = () => {
-  const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState(emptyFormData);
 
-  // const handleNext = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //     event.preventDefault();
-  //     if (formData.firstName && formData.lastName) {
-  //       setShowSecondFrom(true);
-  //     }
-  //   };
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  // const handlePrevious = () => {
-  //     showSecondForm ? setShowSecondFrom(false) : navigate(-1);
-  //   };
+  const onLogin = (e: FormEvent) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigate("/")
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  }
 
   const handlePrevious = () => {
     navigate(-1);
   };
-
-  const navigate = useNavigate();
 
   return (
     <section className="sign-in">
@@ -41,7 +53,7 @@ export const Login = () => {
         />
       </div>
       <h2 className="sign-in__heading">Welcome Back</h2>
-      <form className="sign-in__form" action="#">
+      <form className="sign-in__form" action="#" onSubmit={onLogin}>
         <label className="sign-in__label" htmlFor="email">
           Email Address
         </label>
@@ -52,21 +64,21 @@ export const Login = () => {
           className="sign-in__input"
           type="email"
           placeholder="you@example.com"
-        // onChange={handleChange}
+          onChange={handleChange}
         />
-      <label className="register__label" htmlFor="lastName">
-            Last Name
-          </label>
-      <input
-        id="password"
-        name="password"
-        // value={formData.password}
-        className="sign-in__input"
-        type="password"
-        placeholder="Your password"
-      // onChange={handleChange}
-      />
-      <Button label="Sign In" />
+        <label className="register__label" htmlFor="lastName">
+          Last Name
+        </label>
+        <input
+          id="password"
+          name="password"
+          // value={formData.password}
+          className="sign-in__input"
+          type="password"
+          placeholder="Your password"
+          onChange={handleChange}
+        />
+        <Button label="Sign In" />
       </form>
     </section>
   )
