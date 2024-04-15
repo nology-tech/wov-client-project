@@ -18,6 +18,7 @@ const App = () => {
       />
       <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
       <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };
