@@ -1,6 +1,6 @@
 import "./Login.scss";
 import Button from "../../components/Button/Button";
-import arrowLeft from "../../assets/images/arrow-left.png";
+// import arrowLeft from "../assets/images/arrow-left.png";
 import { useState } from "react";
 
 
@@ -9,7 +9,7 @@ const emptyFormData = {
     password: "",
 }
 
-const Login = () => {
+export const Login = () => {
     const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
 
     // const handleNext = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,35 +26,35 @@ const Login = () => {
         <section className="register">
       <div className="register__icon--container">
         <img
-          onClick={handlePrevious}
+          // onClick={handlePrevious}
           className="register__icon--arrow"
-          src={arrowLeft}
-          alt="Arrow Left Icon"
+          // src={arrowLeft}
+          alt="&lt;"
         />
       </div>
       <h2 className="register__heading">Sign In</h2>
-      <form onSubmit={handleSubmit} className="register__form" action="#">
+      <form className="register__form" action="#">
           <label className="register__label" htmlFor="email">
             Email Address
           </label>
           <input
             id="email"
             name="email"
-            value={formData.email}
+            // value={formData.email}
             className="register__input"
             type="email"
             placeholder="you@example.com"
-            onChange={handleChange}
+            // onChange={handleChange}
           />
           </form>
           <input
             id="password"
             name="password"
-            value={formData.password}
+            // value={formData.password}
             className="register__input"
             type="password"
             placeholder="Your password"
-            onChange={handleChange}
+            // onChange={handleChange}
           />
           <Button label="Sign In" />
       </section>

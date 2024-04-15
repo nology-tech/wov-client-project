@@ -7,6 +7,7 @@ import { completedTasks } from "./mockData/mockCompletedTasks";
 import Leaderboard  from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 import "./utils/Login";
+import Login from "./pages/Login/Login";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       />
       <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
       <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+      <Route path="/sign-in" element={<Login />} />
     </Routes>
   );
 };

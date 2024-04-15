@@ -1,0 +1,116 @@
+@use "../../styles/variables" as *;
+$color-error: red;
+
+.register {
+  max-width: 30rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+  margin-top: -5rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  &__icon--arrow {
+    width: 30px;
+    height: 30px;
+    border: solid 1px $black-color;
+    border-radius: 50%;
+    padding: 3px;
+    margin-bottom: 3.5rem;
+    margin-top: 5rem;
+    transform: translateY(10px);
+  }
+  &__icon--container {
+    align-self: start;
+  }
+
+  &__heading {
+    text-align: left;
+    font-size: 8.7vw;
+    color: $black-color;
+  }
+
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 10px;
+    margin: 1.4rem 0;
+    font-size: 0.813rem;
+  }
+  &__label {
+    color: $black-color;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.6rem;
+    outline: none;
+    border: none;
+    background-color: $off-white-color;
+    border-radius: 5px;
+
+    &--margin-bottom {
+      margin-bottom: 2.5rem;
+    }
+    ::placeholder {
+      color: $light-grey-color;
+    }
+  }
+  &__error-message {
+    color: $color-error;
+    margin-top: 2rem;
+    text-align: left;
+  }
+}
+
+@media screen and (min-width: $tablet-breakpoint) {
+  .register {
+    width: 60%;
+    padding: 2rem;
+    margin: 0 auto;
+
+    &__icon--arrow {
+      width: 60px;
+      height: 60px;
+      border: solid 2px $black-color;
+      padding: 7px;
+    }
+    &__icon--container {
+      margin-top: 0;
+    }
+
+    &__heading {
+      text-align: left;
+      font-size: 2.25rem;
+    }
+
+    &__form {
+      gap: 15px;
+      font-size: 1rem;
+    }
+    &__input {
+      font-size: 1rem;
+    }
+  }
+}
+@media screen and (min-width: $desktop-breakpoint) {
+  .register {
+    width: 55%;
+
+    &__heading {
+      font-size: 2rem;
+    }
+
+    &__form {
+      font-size: 1rem;
+    }
+    &__input {
+      font-size: 1rem;
+    }
+  }
+}
