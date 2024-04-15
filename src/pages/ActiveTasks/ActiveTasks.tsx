@@ -1,7 +1,7 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Navigation from "../../components/Navigation/Navigation";
-import { activeTasks } from "../../mockData/mockActiveTasks";
+import { activeTasks, Task } from "../../mockData/mockActiveTasks";
 import "./ActiveTasks.scss";
 import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
@@ -9,41 +9,16 @@ import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { app } from "../../firebase";
 import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
-
-const db = getFirestore(app);
-
-const wakeUpTaskRef = doc(
-  db,
-  "test-active-tickets",
-  "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
-);
-const wakeUpTaskDoc = await getDoc(wakeUpTaskRef);
-if (wakeUpTaskDoc.exists()) {
-  console.log("Document data:", wakeUpTaskDoc.data());
-} else {
-  // docSnap.data() will be undefined in this case
-  console.log("No such document!");
-}
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
-// create a prop type
-// pass the prop into Active Tasks
-
-// Check that the ActiveTasks receive a list of tasks prop
-// Ask how firebase stores the tasks
-// Asks whether active tasks interacts with the api, or whether this should be
-// done by a separate component / container
-
-// does the user object object store the classes or are
-//they stored and accessible to users of a certain type
-
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
+  const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
@@ -53,7 +28,53 @@ const ActiveTasks = () => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
   };
 
-  const searchedTasks = activeTasks.filter(
+  // get list of completed tasks
+  // this works but needs adapting to consider different users
+  // should take in a value for retrieval reference that is specific to the user
+  useEffect(() => {
+    const getTasks = async () => {
+      const db = getFirestore(app);
+      const retrievalReference = doc(
+        db,
+        "test-active-tickets",
+        "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
+      );
+      const retrieveTasks = await getDoc(retrievalReference);
+      if (retrieveTasks.exists()) {
+        console.log("Document data:", retrieveTasks.data());
+        setActiveTasksList(retrieveTasks.data().activeTasks);
+      } else {
+        // docSnap.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    };
+    getTasks();
+    console.log("active tasks list", activeTasksList);
+  }, []);
+
+  // update completed tasks
+  // should take in values regarding which ticket is being changed
+  // and be called at the relevant moment
+  useEffect(() => {
+    console.log("use effect accessed");
+    const addCompletedTasks = async () => {
+      const db = getFirestore(app);
+      await setDoc(
+        doc(db, "test-completed-tickets", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
+        {
+          taskName: "5am Wake Up",
+          category: "routine",
+          // category isn't included in the request -> the
+          // updated document will not include it in the database
+          // entry
+          points: 5,
+        }
+      );
+    };
+    addCompletedTasks();
+  }, []);
+
+  const searchedTasks = activeTasksList.filter(
     (task) =>
       task.taskHeading.toLowerCase().includes(searchTerm) ||
       task.category?.toLowerCase().includes(searchTerm)
@@ -104,3 +125,25 @@ const ActiveTasks = () => {
 };
 
 export default ActiveTasks;
+
+// useEffect(() => {
+//   console.log("use effect ran");
+//   const getTasks = async () => {
+//     const db = getFirestore(app);
+//     const wakeUpTaskRef = doc(
+//       db,
+//       "test-active-tickets",
+//       "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
+//     );
+//     const wakeUpTaskDoc = await getDoc(wakeUpTaskRef);
+//     if (wakeUpTaskDoc.exists()) {
+//       console.log("Document data:", wakeUpTaskDoc.data());
+//       taskArray = wakeUpTaskDoc.data().activeTasks;
+//     } else {
+//       // docSnap.data() will be undefined in this case
+//       console.log("No such document!");
+//     }
+//   };
+//   getTasks();
+//   console.log(taskArray);
+// }, []);
