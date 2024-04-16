@@ -3,7 +3,7 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
-import { tribeUsers } from "./mockData/mockTribe";
+import { tribeUsers } from "./Mockdata/mockTribe";
 import ActiveTasks from "./pages/ActiveTasks/ActiveTasks";
 import { completedTasks } from "./mockData/mockCompletedTasks";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
@@ -12,7 +12,7 @@ import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import { getDocs, query, collection } from "firebase/firestore";
 import { db } from "./firebase";
-import { UserProfile } from "./mockData/mockTribe";
+import { UserProfile } from "./Mockdata/mockTribe";
 import { useState, useEffect } from "react";
 
 const App = () => {

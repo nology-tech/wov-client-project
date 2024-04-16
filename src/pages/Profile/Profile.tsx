@@ -1,12 +1,28 @@
 import Button from "../../components/Button/Button";
 import "./Profile.scss";
-import { Link } from "react-router-dom";
-import { UserProfile } from "../../mockData/mockTribe";
+import { Link, Navigate } from "react-router-dom";
+import { UserProfile } from "../../Mockdata/mockTribe";;
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
+import {signOut} from "firebase/auth";
+import {auth} from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Profile = ({ user }: { user: UserProfile }) => {
   const { totalScore, img, name, bio, email } = user;
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    signOut(auth)
+   
+      .then(() => {
+        navigate ("/auth");
+      })
+  // .catch((error) => {
+  //     // An error occurred during log out
+  //     console.error("Error logging out:", error);
+  // });
+};
 
   return (
     <div>
@@ -39,7 +55,7 @@ const Profile = ({ user }: { user: UserProfile }) => {
           <Button
             label={"SIGN OUT"}
             variant={"secondary"}
-            onClick={() => console.log("Sign out")}
+            onClick={() => handleSignOut()}
           />
         </section>
       </div>
@@ -49,3 +65,10 @@ const Profile = ({ user }: { user: UserProfile }) => {
 };
 
 export default Profile;
+
+
+
+
+
+
+
