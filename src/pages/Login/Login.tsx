@@ -1,7 +1,7 @@
 import "./Login.scss";
 import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
-import { ChangeEvent, FormEvent, SetStateAction, useState } from "react";
+import { ChangeEvent, FormEvent, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword, signInWithCustomToken } from "firebase/auth";
 import { app } from "../../firebase";
@@ -21,12 +21,18 @@ type LoginProps = {
 export const Login = ({ setUserUID }: LoginProps) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(emptyFormData);
-  const [formErrorMessage, setFormErrorMessage] = useState("")
+  const [formErrorMessage, setFormErrorMessage] = useState("");
+  const [accessToken, setAccessToken] = useState([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  // Setting accessToken allows for easier login.
+  useEffect(() => {
+    localStorage.setItem('accessToken', JSON.stringify(accessToken))
+  }, [accessToken]);
 
   const onLogin = (e: FormEvent) => {
     e.preventDefault();
