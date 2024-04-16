@@ -1,4 +1,5 @@
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
@@ -42,7 +43,6 @@ const Register = () => {
         throw new Error("Passwords do not match. Try again.");
       }
       setPasswordMatchError("");
-      const auth = getAuth();
       await createUserWithEmailAndPassword(
         auth,
         formData.email,
