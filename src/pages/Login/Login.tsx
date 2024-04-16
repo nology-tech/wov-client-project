@@ -35,9 +35,11 @@ export const Login = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        setFormErrorMessage(error.message);
-    
+        if (errorCode === "auth/invalid-credential") {
+          setFormErrorMessage("Invalid email/password");
+        } else {
+          setFormErrorMessage("Oops, something went wrong. Try again in a few minutes")
+        }
       });
   }
 
