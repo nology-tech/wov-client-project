@@ -1,4 +1,3 @@
-import * as React from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
@@ -15,17 +14,15 @@ import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompleted
 
 type CalendarProps = {
   completedTasks: CompletedTaskType[];
+  changeDate?: (value: Dayjs) => void;
+  date: Date;
 };
 
-const Calendar = ({ completedTasks }: CalendarProps) => {
-  const [date, setDate] = React.useState<Date>(new Date());
+const Calendar = ({ completedTasks, changeDate, date }: CalendarProps) => {
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
     weekStart: 1,
   });
-  const changeDate = (value: Dayjs) => {
-    setDate(new Date(value.year(), value.month(), value.date()));
-  };
 
   const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
 
