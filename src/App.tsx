@@ -21,14 +21,14 @@ import { AuthProvider } from "./Provider/Provider";
 import PrivateRoute from "./Provider/PrivateRoute";
 
 const App = () => {
-  const [userUID, setUserUID] = useState<null | string>(null)
+  const [userUID, setUserUID] = useState<null | string>(null);
   // NOTE: this console.log is used to workaround an eslint warning
   // It should be deleted once userUID is used
-  console.log(userUID)
+  console.log(userUID);
 
   const handleSetUserUID = (userUID: string) => {
-    setUserUID(userUID)
-  }
+    setUserUID(userUID);
+  };
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
 
   const [date, setDate] = useState<Date>(new Date());
@@ -82,11 +82,14 @@ const App = () => {
         <Routes>
           <Route path="/auth" element={<Account />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/sign-in" element={<Login setUserUID={handleSetUserUID} />} />
+          <Route
+            path="/sign-in"
+            element={<Login setUserUID={handleSetUserUID} />}
+          />
           <Route path="*" element={<ErrorPage />} />
 
-          <Route path="/" element={<PrivateRoute />} >
-            <Route path="/" element={<Home />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/home" element={<Home />} />
             <Route path="/tasks" element={<ActiveTasks />} />
             <Route
               path="/calendar"
@@ -105,7 +108,7 @@ const App = () => {
             <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
           </Route>
         </Routes>
-      </AuthProvider >
+      </AuthProvider>
     </>
   );
 };
