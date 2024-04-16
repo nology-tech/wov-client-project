@@ -10,6 +10,7 @@ import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
+import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 
 const App = () => {
   return (
@@ -18,15 +19,20 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/tasks" element={<ActiveTasks />} />
         <Route
-        path="/calendar"
-        element={<Calendar completedTasks={completedTasks} />}
-      />
-      <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
-      <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-      <Route path="*" element={<ErrorPage />} />
-      <Route path="/auth" element={<Account />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
+          path="/calendar"
+          element={<Calendar completedTasks={completedTasks} />}
+        />
+        <Route
+          path="/leaderboard"
+          element={<Leaderboard users={tribeUsers} />}
+        />
+        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+        <Route path="/auth" element={<Account />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/edit" element={<UpdateProfile user={tribeUsers[0]} />} />
+
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
     </>
   );
 };
