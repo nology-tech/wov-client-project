@@ -15,6 +15,20 @@ type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
+type ActiveTickets = {
+  category: string;
+  id: string;
+  points: number;
+  taskHeading: string;
+  type: string;
+};
+
+type CompletedTickets = {
+  category: string;
+  points: number;
+  taskName: string;
+};
+
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
@@ -26,9 +40,11 @@ const ActiveTasks = () => {
 
   const handleTaskCompletionChange = (id: string, isCompleted: boolean) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
+
+    // handle task completion may require more information from active task tile.
   };
 
-  // get list of completed tasks
+  // get list of active tasks
   // this works but needs adapting to consider different users
   // should take in a value for retrieval reference that is specific to the user
   useEffect(() => {
@@ -44,7 +60,6 @@ const ActiveTasks = () => {
         console.log("Document data:", retrieveTasks.data());
         setActiveTasksList(retrieveTasks.data().activeTasks);
       } else {
-        // docSnap.data() will be undefined in this case
         console.log("No such document!");
       }
     };
@@ -55,6 +70,30 @@ const ActiveTasks = () => {
   // update completed tasks
   // should take in values regarding which ticket is being changed
   // and be called at the relevant moment
+  // deletes and recreates document
+  useEffect(() => {
+    console.log("use effect accessed");
+    const addCompletedTasks = async () => {
+      const db = getFirestore(app);
+      await setDoc(
+        doc(db, "test-completed-tickets", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
+        {
+          taskName: "5am Wake Up",
+          category: "routine",
+          // category isn't included in the request -> the
+          // updated document will not include it in the database
+          // entry
+          points: 5,
+        }
+      );
+    };
+    addCompletedTasks();
+  }, []);
+
+  // update completed tasks
+  // should take in values regarding which ticket is being changed
+  // and be called at the relevant moment
+  // deletes and recreates document
   useEffect(() => {
     console.log("use effect accessed");
     const addCompletedTasks = async () => {
@@ -125,25 +164,3 @@ const ActiveTasks = () => {
 };
 
 export default ActiveTasks;
-
-// useEffect(() => {
-//   console.log("use effect ran");
-//   const getTasks = async () => {
-//     const db = getFirestore(app);
-//     const wakeUpTaskRef = doc(
-//       db,
-//       "test-active-tickets",
-//       "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
-//     );
-//     const wakeUpTaskDoc = await getDoc(wakeUpTaskRef);
-//     if (wakeUpTaskDoc.exists()) {
-//       console.log("Document data:", wakeUpTaskDoc.data());
-//       taskArray = wakeUpTaskDoc.data().activeTasks;
-//     } else {
-//       // docSnap.data() will be undefined in this case
-//       console.log("No such document!");
-//     }
-//   };
-//   getTasks();
-//   console.log(taskArray);
-// }, []);
