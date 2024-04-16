@@ -17,6 +17,21 @@ import { useEffect, useState } from "react";
 import { Dayjs } from "dayjs";
 
 const App = () => {
+  const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const tribeQuery = query(collection(db, "test-tribe"));
+      const tribeDocs = await getDocs(tribeQuery);
+      const tribeData: UserProfile[] = tribeDocs.docs.map(
+        (doc) => doc.data() as UserProfile
+      );
+      setFetchedTribe(tribeData);
+    };
+
+    fetchUsers();
+  }, []);
+
   const [date, setDate] = useState<Date>(new Date());
   const [completedTaskArray, setCompletedTaskArray] = useState<
     CompletedTaskType[]
