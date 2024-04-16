@@ -18,6 +18,7 @@ const auth = getAuth(app);
 export const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(emptyFormData);
+  const [formErrorMessage, setFormErrorMessage] = useState("")
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -35,12 +36,8 @@ export const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        if(errorMessage){
-            alert("Invalid Email or Password")
-        } else {
-            alert("Something went wrong... Try again later.")
-        }
-        
+        setFormErrorMessage(error.message);
+    
       });
   }
 
@@ -73,7 +70,7 @@ export const Login = () => {
           onChange={handleChange}
         />
         <label className="register__label" htmlFor="lastName">
-          Last Name
+          Password
         </label>
         <input
           id="password"
@@ -85,6 +82,7 @@ export const Login = () => {
           onChange={handleChange}
         />
         <Button label="Sign In" />
+        <p className="sign-in__error-message">{formErrorMessage}</p>
       </form>
     </section>
   )
