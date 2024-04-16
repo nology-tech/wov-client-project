@@ -10,6 +10,7 @@ import Popup from "../../components/Popup/Popup";
 import { app } from "../../firebase";
 import { activeTasks } from "../../mockData/mockActiveTasks";
 import "./ActiveTasks.scss";
+import { useNavigate } from "react-router-dom";
 
 type CompletedTasks = {
   [key: string]: boolean;
@@ -29,7 +30,9 @@ type UserData = {
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<CompletedTasks>({});
-  const [popup, setPopup] = useState<boolean>(false);
+  const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
+  const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false)
+  const navigate = useNavigate();
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
@@ -42,7 +45,7 @@ const ActiveTasks = () => {
   ) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
     if (isCompleted) {
-      setPopup(!popup);
+      setPopupTaskCompleted(!popupTaskCompleted);
 
       try {
         const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
@@ -70,6 +73,11 @@ const ActiveTasks = () => {
       // TODO: Hide when user presses outside the container/window.
     }
   };
+
+  const handleGoToAddMediaPopup = () => {
+    setPopupTaskCompleted(!popupTaskCompleted);
+    setPopupAddMedia(!popupAddMedia)
+  }
 
   const searchedTasks = activeTasks.filter(
     (task) =>
@@ -116,11 +124,22 @@ const ActiveTasks = () => {
           }
         />
       ))}
-      {popup && (
+      {popupTaskCompleted && (
         <Popup
           heading="Task Completed"
           labelButtonOne="ADD MEDIA"
           labelButtonTwo="VIEW LEADERBOARD"
+          onButtonOne={handleGoToAddMediaPopup}
+          onButtonTwo={() => navigate('/leaderboard')}
+          descriptionShown={false}
+        />
+      )}
+      {popupAddMedia && (
+        <Popup
+          heading="ADD MEDIA"
+          labelButtonOne="ADD PHOTOS"
+          labelButtonTwo="UPDATE TASK"
+          descriptionShown={true}
         />
       )}
       <Navigation navActionIndex={1} />

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import "./Popup.scss";
 
@@ -7,6 +6,9 @@ type PopupProps = {
   labelButtonOne: string;
   labelButtonTwo: string;
   description?: string;
+  descriptionShown: boolean;
+  onButtonOne?: () => void;
+  onButtonTwo?: () => void;
 };
 
 const Popup = ({
@@ -14,18 +16,27 @@ const Popup = ({
   labelButtonOne,
   labelButtonTwo,
   description,
+  descriptionShown,
+  onButtonOne,
+  onButtonTwo
 }: PopupProps) => {
-  const navigate = useNavigate();
+
 
   return (
     <div className="popup">
       <div className="popup__container">
         <h2 className="popup__heading">{heading}</h2>
-        <Button label={labelButtonOne} variant="light-grey" />
+        { descriptionShown &&
+          <div className="popup__description">
+            <label htmlFor="popup__input" className="popup__label">Description: </label>
+            <input type="text" name="popup__input" className="popup__input" placeholder="How did it go..."/>
+          </div>
+        }
+        <Button label={labelButtonOne} variant="light-grey" onClick={onButtonOne}/>
         <Button
           label={labelButtonTwo}
           variant="primary"
-          onClick={() => navigate("/leaderboard")}
+          onClick={onButtonTwo}
         />
       </div>
     </div>
