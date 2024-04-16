@@ -7,22 +7,18 @@ import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { app } from "../../firebase";
-import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
 type ActiveTasksProp = {
-  userId: string;
+  activeTasks: Task[];
 };
 
-const ActiveTasks = ({ userId }: ActiveTasksProp) => {
+const ActiveTasks = ({ activeTasks }: ActiveTasksProp) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
-  const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
@@ -32,22 +28,7 @@ const ActiveTasks = ({ userId }: ActiveTasksProp) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
   };
 
-  useEffect(() => {
-    const getTasks = async () => {
-      const db = getFirestore(app);
-      const retrievalReference = doc(db, "test-active-tasks", userId);
-      const retrieveTasks = await getDoc(retrievalReference);
-      if (retrieveTasks.exists()) {
-        console.log("Document data:", retrieveTasks.data());
-        setActiveTasksList(retrieveTasks.data().activeTasks);
-      } else {
-        console.log("No such document!");
-      }
-    };
-    getTasks();
-  }, []);
-
-  const searchedTasks = activeTasksList.filter(
+  const searchedTasks = taskArray.filter(
     (task) =>
       task.taskHeading.toLowerCase().includes(searchTerm) ||
       task.category?.toLowerCase().includes(searchTerm)
@@ -76,22 +57,27 @@ const ActiveTasks = ({ userId }: ActiveTasksProp) => {
           }}
         />
       </div>
-      {searchedTasks.map((task, index) => (
-        <ActiveTaskTile
-          key={task.id}
-          id={task.id}
-          requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
-          category={task.category || ""}
-          points={task.points}
-          completed={!!completedTasks[task.id]}
-          onCompletionChange={handleTaskCompletionChange}
-          classModifier={
-            index === searchedTasks.length - 1 && searchedTasks.length > 4
-              ? "active-task active-task--last"
-              : "active-task"
-          }
-        />
-      ))}
+      {searchedTasks.length === 0 ? (
+        <p>There are no tasks to display</p>
+      ) : (
+        searchedTasks.map((task, index) => (
+          <ActiveTaskTile
+            key={task.id}
+            id={task.id}
+            requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
+            category={task.category || ""}
+            points={task.points}
+            completed={!!completedTasks[task.id]}
+            onCompletionChange={handleTaskCompletionChange}
+            classModifier={
+              index === searchedTasks.length - 1 && searchedTasks.length > 4
+                ? "active-task active-task--last"
+                : "active-task"
+            }
+          />
+        ))
+      )}
+
       <Navigation navActionIndex={1} />
     </div>
   );
