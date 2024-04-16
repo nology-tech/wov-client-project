@@ -1,28 +1,74 @@
-import { useState, ChangeEvent } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import { InputAdornment } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
+import { ChangeEvent, useState } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
+import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
+import Popup from "../../components/Popup/Popup";
+import { app } from "../../firebase";
 import { activeTasks } from "../../mockData/mockActiveTasks";
 import "./ActiveTasks.scss";
-import Header from "../../components/Header/Header";
-import TextField from "@mui/material/TextField";
-import { InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import Popup from "../../components/Popup/Popup";
 
 type CompletedTasks = {
   [key: string]: boolean;
 };
 
+const db = getFirestore(app);
+
+type UserData = {
+  bio: string;
+  email: string;
+  id: string;
+  img: string;
+  name: string;
+  totalScore: number;
+};
+
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<CompletedTasks>({});
+  const [popup, setPopup] = useState<boolean>(false);
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
   };
 
-  const handleTaskCompletionChange = (id: string, isCompleted: boolean) => {
+  const handleTaskCompletionChange = async (
+    id: string,
+    isCompleted: boolean,
+    points: number
+  ) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
+    if (isCompleted) {
+      setPopup(!popup);
+
+      try {
+        const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+        const userRefDoc = await getDoc(userRef);
+
+        if (userRefDoc.exists()) {
+          const userData: UserData = userRefDoc.data() as UserData;
+          const updateScore = userData.totalScore + points;
+          console.log(updateScore);
+
+          await updateDoc(
+            doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+            {
+              ...userData,
+              totalScore: updateScore,
+            }
+          );
+        } else {
+          console.log("User document does not exist.");
+        }
+      } catch (error) {
+        console.error("Error updating totalScore", error);
+      }
+
+      // TODO: Hide when user presses outside the container/window.
+    }
   };
 
   const searchedTasks = activeTasks.filter(
@@ -70,11 +116,13 @@ const ActiveTasks = () => {
           }
         />
       ))}
-      <Popup
-        heading="Task Completed"
-        labelButtonOne="ADD MEDIA"
-        labelButtonTwo="VIEW LEADERBOARD"
-      />
+      {popup && (
+        <Popup
+          heading="Task Completed"
+          labelButtonOne="ADD MEDIA"
+          labelButtonTwo="VIEW LEADERBOARD"
+        />
+      )}
       <Navigation navActionIndex={1} />
     </div>
   );
