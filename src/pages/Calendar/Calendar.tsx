@@ -34,7 +34,7 @@ const Calendar = () => {
       const db = getFirestore(app);
       const completedTask = doc(
         db,
-        "test-completed-tickets",
+        "test-completed-tasks",
         "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
       );
       const completedTasksData = await getDoc(completedTask);
