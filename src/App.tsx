@@ -10,8 +10,8 @@ import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
-import { getDocs, query, collection, getFirestore } from "firebase/firestore";
-import { app } from "./firebase";
+import { getDocs, query, collection } from "firebase/firestore";
+import { db } from "./firebase";
 import { UserProfile } from "./mockData/mockTribe";
 import { useState, useEffect } from "react";
 
@@ -20,7 +20,6 @@ const App = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const db = getFirestore(app);
       const tribeQuery = query(collection(db, "test-tribe"));
       const tribeDocs = await getDocs(tribeQuery);
       const tribeData: UserProfile[] = tribeDocs.docs.map(
