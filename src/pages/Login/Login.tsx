@@ -1,12 +1,11 @@
 import "./Login.scss";
 import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword, signInWithCustomToken } from "firebase/auth";
 import { app } from "../../firebase";
-
-
+import { Dispatch } from "react";
 
 const emptyFormData = {
   email: "",
@@ -15,7 +14,11 @@ const emptyFormData = {
 
 const auth = getAuth(app);
 
-export const Login = () => {
+type LoginProps = {
+  setUserUID: Dispatch<SetStateAction<string | null>>
+}
+
+export const Login = ({ setUserUID }: LoginProps) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(emptyFormData);
   const [formErrorMessage, setFormErrorMessage] = useState("")
@@ -29,8 +32,9 @@ export const Login = () => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {
+        console.log(userCredential)
+        setUserUID(userCredential.user.uid)
         // Signed in
-        const user = userCredential.user;
         navigate("/")
       })
       .catch((error) => {

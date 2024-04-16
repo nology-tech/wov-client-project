@@ -12,8 +12,10 @@ import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
+import { useState } from "react";
 
 const App = () => {
+  const [userUID, setUserUID] = useState<null|string>(null)
   return (
     <>
       <Routes>
@@ -25,7 +27,7 @@ const App = () => {
       />
       <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
       <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-      <Route path="/sign-in" element={<Login />} />
+      <Route path="/sign-in" element={<Login setUserUID={setUserUID} />} />
       <Route path="*" element={<ErrorPage />} />
       <Route path="/auth" element={<Account />} />
       <Route path="/register" element={<Register />} />
