@@ -9,8 +9,9 @@ import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
-import { app } from "./firebase";
-import { getFirestore } from "firebase/firestore";
+import { UserProfile } from "./mockData/mockTribe";
+import { app, db } from "./firebase";
+import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { useEffect, useState } from "react";
@@ -18,6 +19,10 @@ import { Dayjs } from "dayjs";
 
 const App = () => {
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
+  const [date, setDate] = useState<Date>(new Date());
+  const [completedTaskArray, setCompletedTaskArray] = useState<
+    CompletedTaskType[]
+  >([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,11 +36,6 @@ const App = () => {
 
     fetchUsers();
   }, []);
-
-  const [date, setDate] = useState<Date>(new Date());
-  const [completedTaskArray, setCompletedTaskArray] = useState<
-    CompletedTaskType[]
-  >([]);
 
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
