@@ -3,7 +3,7 @@ import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { ChangeEvent, FormEvent, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { AuthError, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
 import { Dispatch } from "react";
 
@@ -22,7 +22,7 @@ export const Login = ({ setUserUID }: LoginProps) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(emptyFormData);
   const [formErrorMessage, setFormErrorMessage] = useState("");
-  const [accessToken, setAccessToken] = useState([]);
+  const [accessToken, setAccessToken] = useState<string>("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -31,27 +31,27 @@ export const Login = ({ setUserUID }: LoginProps) => {
 
   // Setting accessToken allows for easier login.
   useEffect(() => {
-    localStorage.setItem('accessToken', JSON.stringify(accessToken))
+    localStorage.setItem('accessToken', JSON.stringify([accessToken]))
   }, [accessToken]);
 
-  const onLogin = (e: FormEvent) => {
+  const onLogin = async (e: FormEvent) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, formData.email, formData.password)
-      .then((userCredential) => {
-        console.log(userCredential)
-        setUserUID(userCredential.user.uid)
-        setAccessToken(userCredential.user.getIdToken())
-        // Signed in
-        navigate("/")
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        if (errorCode === "auth/invalid-credential") {
-          setFormErrorMessage("Invalid email/password");
-        } else {
-          setFormErrorMessage("Oops, something went wrong. Try again in a few minutes")
-        }
-      });
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password)
+      console.log(userCredential)
+      setUserUID(userCredential.user.uid)
+      const userIDToken = await userCredential.user.getIdToken()
+      setAccessToken(userIDToken)
+      // Signed in
+      navigate("/")
+    } catch (error: any) {
+      const errorCode = error.code;
+      if (errorCode === "auth/invalid-credential") {
+        setFormErrorMessage("Invalid email/password");
+      } else {
+        setFormErrorMessage("Oops, something went wrong. Try again in a few minutes")
+      }
+    }
   }
 
   const handlePrevious = () => {
