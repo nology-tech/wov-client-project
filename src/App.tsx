@@ -53,25 +53,6 @@ const App = () => {
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    const getTasks = async () => {
-      const db = getFirestore(app);
-      const retrievalReference = doc(
-        db,
-        "test-active-tasks",
-        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
-      );
-      const retrieveTasks = await getDoc(retrievalReference);
-      if (retrieveTasks.exists()) {
-        console.log("Document data:", retrieveTasks.data());
-        setActiveTasksList(retrieveTasks.data().activeTasks);
-      } else {
-        console.log("No such document!");
-      }
-    };
-    getTasks();
-  }, []);
-
   return (
     <>
       <Routes>
