@@ -1,22 +1,21 @@
 import "./Login.scss";
 import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
-import { ChangeEvent, FormEvent, SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthError, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
-import { Dispatch } from "react";
 
 const emptyFormData = {
   email: "",
   password: "",
-}
+};
 
 const auth = getAuth(app);
 
 type LoginProps = {
-  setUserUID: (arg0: string) => void
-}
+  setUserUID: (arg0: string) => void;
+};
 
 export const Login = ({ setUserUID }: LoginProps) => {
   const navigate = useNavigate();
@@ -31,27 +30,35 @@ export const Login = ({ setUserUID }: LoginProps) => {
 
   // Setting accessToken allows for easier login.
   useEffect(() => {
-    localStorage.setItem('accessToken', JSON.stringify([accessToken]))
+    localStorage.setItem("accessToken", JSON.stringify([accessToken]));
   }, [accessToken]);
 
   const onLogin = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password)
-      console.log(userCredential)
-      setUserUID(userCredential.user.uid)
-      const userIDToken = await userCredential.user.getIdToken()
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      console.log(userCredential);
+      setUserUID(userCredential.user.uid);
+      const userIDToken = await userCredential.user.getIdToken();
+      setAccessToken(userIDToken);
       // Signed in
-      navigate("/")
+      navigate("/");
+      // eslint-disable-next-line no-explicit-any
     } catch (error: any) {
       const errorCode = error.code;
       if (errorCode === "auth/invalid-credential") {
         setFormErrorMessage("Invalid email/password");
       } else {
-        setFormErrorMessage("Oops, something went wrong. Try again in a few minutes")
+        setFormErrorMessage(
+          "Oops, something went wrong. Try again in a few minutes"
+        );
       }
     }
-  }
+  };
 
   const handlePrevious = () => {
     navigate(-1);
@@ -75,7 +82,6 @@ export const Login = ({ setUserUID }: LoginProps) => {
         <input
           id="email"
           name="email"
-          // value={formData.email}
           className="sign-in__input"
           type="email"
           placeholder="you@example.com"
@@ -87,7 +93,6 @@ export const Login = ({ setUserUID }: LoginProps) => {
         <input
           id="password"
           name="password"
-          // value={formData.password}
           className="sign-in__input"
           type="password"
           placeholder="Your password"
@@ -97,7 +102,7 @@ export const Login = ({ setUserUID }: LoginProps) => {
         <p className="sign-in__error-message">{formErrorMessage}</p>
       </form>
     </section>
-  )
-}
+  );
+};
 
 export default Login;
