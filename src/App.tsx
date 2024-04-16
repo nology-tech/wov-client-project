@@ -13,23 +13,28 @@ import { doc, setDoc } from "firebase/firestore";
 import { activeTasks } from "./mockData/mockActiveTasks";
 
 const App = async () => {
-  // const firestore = getFirestore(app);
+  const firestore = getFirestore(app);
 
-  // await setDoc(
-  //   doc(firestore, "test-tribe", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
-  //   tribeUsers[0]
-  // );
+  // tribeUsers.forEach(async (member, index) => {
+  //   if (index > 0) {
+  //     await setDoc(doc(firestore, "test-tribe", "test-user-" + index), member);
+  //   }
+  // });
+
+  // setDoc(doc(firestore, "test-active-tasks", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"), {
+  //   activeTasks: activeTasks,
+  // });
 
   // setDoc(
-  //   doc(firestore, "test-active-tickets", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
-  //   { completedTasks: activeTasks }
-  // );
-
-  // setDoc(
-  //   doc(firestore, "test-completed-tickets", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
+  //   doc(firestore, "test-completed-tasks", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
   //   { completedTasks: completedTasks }
   // );
 
+  // console.log({
+  //   activeTasks: activeTasks,
+  // });
+
+  // console.log({ completedTasks: completedTasks });
   return (
     <Routes>
       <Route path="/" element={<Home />} />
