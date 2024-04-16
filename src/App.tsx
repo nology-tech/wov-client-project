@@ -5,14 +5,65 @@ import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
 import { tribeUsers } from "./mockData/mockTribe";
 import ActiveTasks from "./pages/ActiveTasks/ActiveTasks";
-import { completedTasks } from "./mockData/mockCompletedTasks";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
+import { UserProfile } from "./mockData/mockTribe";
+import { app, db } from "./firebase";
+import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
+import { useEffect, useState } from "react";
+import { Dayjs } from "dayjs";
 
 const App = () => {
+  const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
+
+  const [date, setDate] = useState<Date>(new Date());
+  const [completedTaskArray, setCompletedTaskArray] = useState<
+    CompletedTaskType[]
+  >([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const tribeQuery = query(collection(db, "test-tribe"));
+      const tribeDocs = await getDocs(tribeQuery);
+      const tribeData: UserProfile[] = tribeDocs.docs.map(
+        (doc) => doc.data() as UserProfile
+      );
+      setFetchedTribe(tribeData);
+    };
+
+    fetchUsers();
+  }, []);
+
+  const changeDate = (value: Dayjs) => {
+    setDate(new Date(value.year(), value.month(), value.date()));
+  };
+
+  const getData = async () => {
+    try {
+      const db = getFirestore(app);
+      const completedTask = doc(
+        db,
+        "test-completed-tasks",
+        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
+      );
+      const completedTasksData = await getDoc(completedTask);
+      if (completedTasksData.exists()) {
+        const completedTaskArray = completedTasksData.data().completedTasks;
+        setCompletedTaskArray(completedTaskArray);
+      }
+    } catch {
+      console.log("Error: Could not locate Completed Tasks from database");
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <>
       <Routes>
@@ -20,11 +71,17 @@ const App = () => {
         <Route path="/tasks" element={<ActiveTasks />} />
         <Route
           path="/calendar"
-          element={<Calendar completedTasks={completedTasks} />}
+          element={
+            <Calendar
+              completedTasks={completedTaskArray}
+              changeDate={changeDate}
+              date={date}
+            />
+          }
         />
         <Route
           path="/leaderboard"
-          element={<Leaderboard users={tribeUsers} />}
+          element={<Leaderboard users={fetchedTribe} />}
         />
         <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
         <Route path="/auth" element={<Account />} />

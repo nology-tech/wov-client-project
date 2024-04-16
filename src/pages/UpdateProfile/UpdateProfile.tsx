@@ -4,11 +4,11 @@ import { UserProfile } from "../../mockData/mockTribe";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import TextField from "@mui/material/TextField";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 // import { Link } from "react-router-dom";
-import { doc, getFirestore, updateDoc } from "firebase/firestore";
-import { app } from "../../firebase";
-import { User, getAuth, updateEmail } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
+import { User, updateEmail } from "firebase/auth";
 
 const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
   const [user, setUser] = useState<UserProfile>(currentUser);
@@ -29,15 +29,17 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
     const newPassword = event.currentTarget.value;
     setConfirmPassword(newPassword);
   };
-  const updateDatabase = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const updateDatabase = async () => {
     try {
+      console.log(auth)
       if (password !== confirmPassword) {
         throw new Error("Passwords do not match. Try again.");
       }
+      if (email != currentUser.email) {
+        await updateEmail(auth.currentUser as User, email);
+        console.log("email");
+      }
       setPasswordMatchError("");
-      const auth = getAuth();
-      const db = getFirestore(app);
       await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
         name: name,
         bio: bio,
@@ -52,7 +54,7 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
       <Header subtitle="Profile" />
       <div className="profile">
         <img src={img} className="profile__img" alt="Profile" />
-        <form className="profile__info" onSubmit={updateDatabase}>
+        <form className="profile__info">
           <label htmlFor="name" className="profile__label">
             Name
           </label>
