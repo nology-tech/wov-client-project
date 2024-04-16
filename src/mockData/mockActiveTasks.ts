@@ -42,7 +42,7 @@ export const activeTasks: Task[] = [
   {
     id: "85z56",
     type: "daily",
-    taskHeading: "Example",
+    taskHeading: "20 minute run",
     category: "Fitness",
     points: 30,
   },
