@@ -12,13 +12,16 @@ import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
 import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
+import { app } from "../../firebase";
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
-type CalendarProps = {
-  completedTasks: CompletedTaskType[];
-};
 
-const Calendar = ({ completedTasks }: CalendarProps) => {
+const Calendar = () => {
   const [date, setDate] = React.useState<Date>(new Date());
+  const [completedTaskArray, setCompletedTaskArray] = React.useState<
+    CompletedTaskType[]
+  >([]);
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
     weekStart: 1,
@@ -27,7 +30,28 @@ const Calendar = ({ completedTasks }: CalendarProps) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
 
-  const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
+  const getData = async () => {
+    try {
+      const db = getFirestore(app);
+      const completedTask = doc(
+        db,
+        "test-completed-tasks",
+        "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
+      );
+      const completedTasksData = await getDoc(completedTask);
+      if (completedTasksData.exists()) {
+        const completedTaskArray = completedTasksData.data().completedTasks;
+        setCompletedTaskArray(completedTaskArray);
+      }
+    } catch {
+      console.log("Error: Could not locate Completed Tasks from database");
+    }
+  };
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  const filteredCompletedTasks = filterCompletedTasks(completedTaskArray, date);
 
   return (
     <div className="calendar">

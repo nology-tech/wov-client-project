@@ -17,16 +17,16 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tasks" element={<ActiveTasks />} />
+        <Route path="/calendar" element={<Calendar />} />
         <Route
-        path="/calendar"
-        element={<Calendar completedTasks={completedTasks} />}
-      />
-      <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
-      <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-      <Route path="*" element={<ErrorPage />} />
-      <Route path="/auth" element={<Account />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
+          path="/leaderboard"
+          element={<Leaderboard users={tribeUsers} />}
+        />
+        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+        <Route path="*" element={<ErrorPage />} />
+        <Route path="/auth" element={<Account />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </>
   );
 };
