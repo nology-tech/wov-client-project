@@ -81,7 +81,7 @@ export const Login = ({ setUserUID }: LoginProps) => {
           placeholder="you@example.com"
           onChange={handleChange}
         />
-        <label className="register__label" htmlFor="lastName">
+        <label className="sign-in__label" htmlFor="lastName">
           Password
         </label>
         <input
