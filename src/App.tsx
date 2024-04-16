@@ -16,7 +16,7 @@ import { activeTasks } from "./mockData/mockActiveTasks";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 
-const App =  () => {
+const App = () => {
   const firestore = getFirestore(app);
 
   // tribeUsers.forEach(async (member, index) => {
@@ -25,12 +25,17 @@ const App =  () => {
   //   }
   // });
 
-  // setDoc(doc(firestore, "test-active-tasks", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"), {
+  // setDoc(
+  //   doc(firestore, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+  //   tribeUsers[0]
+  // );
+
+  // setDoc(doc(firestore, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
   //   activeTasks: activeTasks,
   // });
 
   // setDoc(
-  //   doc(firestore, "test-completed-tasks", "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"),
+  //   doc(firestore, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
   //   { completedTasks: completedTasks }
   // );
 
@@ -45,15 +50,18 @@ const App =  () => {
         <Route path="/" element={<Home />} />
         <Route path="/tasks" element={<ActiveTasks />} />
         <Route
-        path="/calendar"
-        element={<Calendar completedTasks={completedTasks} />}
-      />
-      <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
-      <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-      <Route path="*" element={<ErrorPage />} />
-      <Route path="/auth" element={<Account />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
+          path="/calendar"
+          element={<Calendar completedTasks={completedTasks} />}
+        />
+        <Route
+          path="/leaderboard"
+          element={<Leaderboard users={tribeUsers} />}
+        />
+        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+        <Route path="*" element={<ErrorPage />} />
+        <Route path="/auth" element={<Account />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </>
   );
 };
