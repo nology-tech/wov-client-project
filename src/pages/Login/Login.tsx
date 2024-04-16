@@ -35,7 +35,8 @@ export const Login = ({ setUserUID }: LoginProps) => {
         formData.password
       );
       setUserUID(userCredential.user.uid);
-      localStorage.setItem("accessToken", JSON.stringify([userCredential.user.getIdToken()]))
+      const accessToken = await userCredential.user.getIdToken();
+      localStorage.setItem("accessToken", JSON.stringify(accessToken))
       navigate("/");
     } catch (error) {
       const errorCode = (error as AuthError).code
@@ -48,7 +49,8 @@ export const Login = ({ setUserUID }: LoginProps) => {
       }
     }
   };
-
+  
+  
   const handlePrevious = () => {
     navigate(-1);
   };
