@@ -55,18 +55,6 @@ const App = () => {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/auth" element={<Account />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/calendar"
-          element={<Calendar completedTasks={completedTasks} />}
-        />
-        <Route
-          path="/leaderboard"
-          element={<Leaderboard users={fetchedTribe} />}
-        />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-        <Route path="*" element={<ErrorPage />} />
-        <Route path="/auth" element={<Account />} />
-        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   );

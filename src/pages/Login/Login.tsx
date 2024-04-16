@@ -1,7 +1,7 @@
 import "./Login.scss";
 import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -20,17 +20,11 @@ export const Login = ({ setUserUID }: LoginProps) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(emptyFormData);
   const [formErrorMessage, setFormErrorMessage] = useState("");
-  const [accessToken, setAccessToken] = useState<string>("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  // Setting accessToken allows for easier login.
-  useEffect(() => {
-    localStorage.setItem("accessToken", JSON.stringify([accessToken]));
-  }, [accessToken]);
 
   const onLogin = async (e: FormEvent) => {
     e.preventDefault();
@@ -40,11 +34,8 @@ export const Login = ({ setUserUID }: LoginProps) => {
         formData.email,
         formData.password
       );
-      console.log(userCredential);
       setUserUID(userCredential.user.uid);
-      const userIDToken = await userCredential.user.getIdToken();
-      setAccessToken(userIDToken);
-      // Signed in
+      localStorage.setItem("accessToken", JSON.stringify([userCredential.user.getIdToken()]))
       navigate("/");
     } catch (error) {
       const errorCode = (error as AuthError).code
