@@ -10,23 +10,45 @@ import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
+import { getDocs, query, collection } from "firebase/firestore";
+import { db } from "./firebase";
+import { UserProfile } from "./mockData/mockTribe";
+import { useState, useEffect } from "react";
 
 const App = () => {
+  const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const tribeQuery = query(collection(db, "test-tribe"));
+      const tribeDocs = await getDocs(tribeQuery);
+      const tribeData: UserProfile[] = tribeDocs.docs.map(
+        (doc) => doc.data() as UserProfile
+      );
+      setFetchedTribe(tribeData);
+    };
+
+    fetchUsers();
+  }, []);
+
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tasks" element={<ActiveTasks />} />
         <Route
-        path="/calendar"
-        element={<Calendar completedTasks={completedTasks} />}
-      />
-      <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
-      <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-      <Route path="*" element={<ErrorPage />} />
-      <Route path="/auth" element={<Account />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
+          path="/calendar"
+          element={<Calendar completedTasks={completedTasks} />}
+        />
+        <Route
+          path="/leaderboard"
+          element={<Leaderboard users={fetchedTribe} />}
+        />
+        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+        <Route path="*" element={<ErrorPage />} />
+        <Route path="/auth" element={<Account />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </>
   );
 };
