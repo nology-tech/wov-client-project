@@ -28,7 +28,7 @@ const ActiveTasks = ({ activeTasks }: ActiveTasksProp) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
   };
 
-  const searchedTasks = taskArray.filter(
+  const searchedTasks = activeTasks.filter(
     (task) =>
       task.taskHeading.toLowerCase().includes(searchTerm) ||
       task.category?.toLowerCase().includes(searchTerm)
