@@ -19,6 +19,7 @@ import { Dayjs } from "dayjs";
 
 const App = () => {
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
+
   const [date, setDate] = useState<Date>(new Date());
   const [completedTaskArray, setCompletedTaskArray] = useState<
     CompletedTaskType[]
@@ -62,6 +63,7 @@ const App = () => {
   useEffect(() => {
     getData();
   }, []);
+  console.log(fetchedTribe);
 
   return (
     <>
