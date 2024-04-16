@@ -17,6 +17,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { useEffect, useState } from "react";
 import { Dayjs } from "dayjs";
+import { AuthProvider } from "./Provider/Provider";
+import PrivateRoute from "./Provider/PrivateRoute";
 
 const App = () => {
   const [userUID, setUserUID] = useState<null | string>(null)
@@ -76,29 +78,34 @@ const App = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/tasks" element={<ActiveTasks />} />
-        <Route
-          path="/calendar"
-          element={
-            <Calendar
-              completedTasks={completedTaskArray}
-              changeDate={changeDate}
-              date={date}
+      <AuthProvider>
+        <Routes>
+          <Route path="/auth" element={<Account />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/sign-in" element={<Login setUserUID={handleSetUserUID} />} />
+          <Route path="*" element={<ErrorPage />} />
+
+          <Route path="/" element={<PrivateRoute />} >
+            <Route path="/" element={<Home />} />
+            <Route path="/tasks" element={<ActiveTasks />} />
+            <Route
+              path="/calendar"
+              element={
+                <Calendar
+                  completedTasks={completedTaskArray}
+                  changeDate={changeDate}
+                  date={date}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/leaderboard"
-          element={<Leaderboard users={tribeUsers} />}
-        />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-        <Route path="/sign-in" element={<Login setUserUID={handleSetUserUID} />} />
-        <Route path="*" element={<ErrorPage />} />
-        <Route path="/auth" element={<Account />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+            <Route
+              path="/leaderboard"
+              element={<Leaderboard users={tribeUsers} />}
+            />
+            <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+          </Route>
+        </Routes>
+      </AuthProvider >
     </>
   );
 };
