@@ -17,16 +17,12 @@ import { Task } from "./mockData/mockActiveTasks";
 import { getDocs, query, collection } from "firebase/firestore";
 import { db } from "./firebase";
 import { UserProfile } from "./mockData/mockTribe";
-import { app } from "./firebase";
-import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
+
 import { useEffect, useState } from "react";
-import { Task } from "./mockData/mockActiveTasks";
 
 const App = () => {
   const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
-  const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
 
   useEffect(() => {
     const getTasks = async () => {
