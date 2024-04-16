@@ -3,7 +3,7 @@ import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { ChangeEvent, FormEvent, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, signInWithCustomToken } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
 import { Dispatch } from "react";
 
@@ -40,6 +40,7 @@ export const Login = ({ setUserUID }: LoginProps) => {
       .then((userCredential) => {
         console.log(userCredential)
         setUserUID(userCredential.user.uid)
+        setAccessToken(userCredential.user.getIdToken())
         // Signed in
         navigate("/")
       })
