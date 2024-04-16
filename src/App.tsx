@@ -29,7 +29,10 @@ const App = () => {
         <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
         <Route path="/auth" element={<Account />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/edit" element={<UpdateProfile user={tribeUsers[0]} />} />
+        <Route
+          path="/edit"
+          element={<UpdateProfile currentUser={tribeUsers[0]} />}
+        />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
