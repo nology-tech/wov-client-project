@@ -4,7 +4,7 @@ import Login from "./Login";
 
 describe("Should pass all login tests", () => {
   // This is a NOP function
-  const fakeSetState = (_: string) => null
+  const fakeSetState = () => null 
 
   it("should render welcome title on the page", () => {
     customRender(<Login setUserUID={fakeSetState} />);

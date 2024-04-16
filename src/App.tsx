@@ -15,6 +15,7 @@ import { useState } from "react";
 
 const App = () => {
   const [_userUID, setUserUID] = useState<null|string>(null)
+  console.log(_userUID)
 
   const handleSetUserUID = (userUID: string) => {
       setUserUID(userUID)

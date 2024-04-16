@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
+import { AuthError } from "firebase/auth";
 
 const emptyFormData = {
   email: "",
@@ -47,9 +48,8 @@ export const Login = ({ setUserUID }: LoginProps) => {
       setAccessToken(userIDToken);
       // Signed in
       navigate("/");
-      // eslint-disable-next-line no-explicit-any
-    } catch (error: any) {
-      const errorCode = error.code;
+    } catch (error) {
+      const errorCode = (error as AuthError).code
       if (errorCode === "auth/invalid-credential") {
         setFormErrorMessage("Invalid email/password");
       } else {
