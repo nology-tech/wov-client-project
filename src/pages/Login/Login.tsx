@@ -15,7 +15,7 @@ const emptyFormData = {
 const auth = getAuth(app);
 
 type LoginProps = {
-  setUserUID: Dispatch<SetStateAction<string | null>>
+  setUserUID: (arg0: string) => void
 }
 
 export const Login = ({ setUserUID }: LoginProps) => {
@@ -41,7 +41,6 @@ export const Login = ({ setUserUID }: LoginProps) => {
       console.log(userCredential)
       setUserUID(userCredential.user.uid)
       const userIDToken = await userCredential.user.getIdToken()
-      setAccessToken(userIDToken)
       // Signed in
       navigate("/")
     } catch (error: any) {

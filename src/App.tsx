@@ -16,6 +16,10 @@ import { useState } from "react";
 
 const App = () => {
   const [userUID, setUserUID] = useState<null|string>(null)
+
+  const handleSetUserUID = (userUID: string) => {
+      setUserUID(userUID)
+  }
   return (
     <>
       <Routes>
@@ -27,7 +31,7 @@ const App = () => {
       />
       <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} />} />
       <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-      <Route path="/sign-in" element={<Login setUserUID={setUserUID} />} />
+      <Route path="/sign-in" element={<Login setUserUID={handleSetUserUID} />} />
       <Route path="*" element={<ErrorPage />} />
       <Route path="/auth" element={<Account />} />
       <Route path="/register" element={<Register />} />
