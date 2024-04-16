@@ -13,10 +13,14 @@ import Account from "./pages/Account/Account";
 import { app } from "./firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { Task } from "./mockData/mockActiveTasks";
+import { getDocs, query, collection } from "firebase/firestore";
+import { db } from "./firebase";
+import { UserProfile } from "./mockData/mockTribe";
+import { useState, useEffect } from "react";
 
 const App = () => {
+  const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
   const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -33,6 +37,19 @@ const App = () => {
       }
     };
     getTasks();
+  });
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const tribeQuery = query(collection(db, "test-tribe"));
+      const tribeDocs = await getDocs(tribeQuery);
+      const tribeData: UserProfile[] = tribeDocs.docs.map(
+        (doc) => doc.data() as UserProfile
+      );
+      setFetchedTribe(tribeData);
+    };
+
+    fetchUsers();
   }, []);
 
   return (
@@ -49,7 +66,7 @@ const App = () => {
         />
         <Route
           path="/leaderboard"
-          element={<Leaderboard users={tribeUsers} />}
+          element={<Leaderboard users={fetchedTribe} />}
         />
         <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
         <Route path="*" element={<ErrorPage />} />
