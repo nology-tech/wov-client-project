@@ -1,6 +1,6 @@
 import Button from "../../components/Button/Button";
 import "./Profile.scss";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserProfile } from "../../Mockdata/mockTribe";;
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
@@ -18,11 +18,10 @@ const Profile = ({ user }: { user: UserProfile }) => {
       .then(() => {
         navigate ("/auth");
       })
-  // .catch((error) => {
-  //     // An error occurred during log out
-  //     console.error("Error logging out:", error);
-  // });
-};
+      .catch(() => {
+       navigate ("/ErrorPage");
+       });
+  };
 
   return (
     <div>
@@ -52,7 +51,7 @@ const Profile = ({ user }: { user: UserProfile }) => {
               onClick={() => console.log("edit")}
             />
           </Link>
-          <Button
+          <Button 
             label={"SIGN OUT"}
             variant={"secondary"}
             onClick={() => handleSignOut()}

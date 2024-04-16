@@ -39,10 +39,12 @@
   }
 
   &__buttons {
-    margin-top: 5rem;
+    margin-top: 1.2rem;
     display: flex;
     flex-direction: column;
     justify-self: flex-end;
     gap: 2.2rem;
+    margin-bottom: 2rem;
   }
+
 }
