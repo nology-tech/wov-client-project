@@ -1,11 +1,11 @@
 import Button from "../../components/Button/Button";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
-import { UserProfile } from "../../Mockdata/mockTribe";;
+import { UserProfile } from "../../mockData/mockTribe";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
-import {signOut} from "firebase/auth";
-import {auth} from "../../firebase";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
 const Profile = ({ user }: { user: UserProfile }) => {
@@ -14,13 +14,12 @@ const Profile = ({ user }: { user: UserProfile }) => {
 
   const handleSignOut = () => {
     signOut(auth)
-   
       .then(() => {
-        navigate ("/auth");
+        navigate("/auth");
       })
       .catch(() => {
-       navigate ("/ErrorPage");
-       });
+        navigate("/ErrorPage");
+      });
   };
 
   return (
@@ -51,7 +50,7 @@ const Profile = ({ user }: { user: UserProfile }) => {
               onClick={() => console.log("edit")}
             />
           </Link>
-          <Button 
+          <Button
             label={"SIGN OUT"}
             variant={"secondary"}
             onClick={() => handleSignOut()}
@@ -64,10 +63,3 @@ const Profile = ({ user }: { user: UserProfile }) => {
 };
 
 export default Profile;
-
-
-
-
-
-
-
