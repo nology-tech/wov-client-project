@@ -1,9 +1,11 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { app, auth } from "../../firebase";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
+import { v4 as uuidv4 } from "uuid";
+import { doc, getFirestore, setDoc } from "firebase/firestore"; 
 import "./Register.scss";
 
 const emptyFormData = {
@@ -53,6 +55,18 @@ const Register = () => {
       setPasswordMatchError((error as Error).message);
     }
   };
+
+  const addData = async () => {
+    try {
+      const db = getFirestore(app);
+      await setDoc(doc(db, "test-tribe", uuidv4()), {
+      });
+    } catch {
+      console.log("Error: Could not locate Completed Tasks from database");
+    }
+  };
+
+  
 
   return (
     <section className="register">

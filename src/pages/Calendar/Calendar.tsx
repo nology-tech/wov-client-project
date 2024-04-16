@@ -12,12 +12,6 @@ import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
 import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
 
-
-const Calendar = () => {
-  const [date, setDate] = React.useState<Date>(new Date());
-  const [completedTaskArray, setCompletedTaskArray] = React.useState<
-    CompletedTaskType[]
-  >([]);
 type CalendarProps = {
   completedTasks: CompletedTaskType[];
   changeDate?: (value: Dayjs) => void;
