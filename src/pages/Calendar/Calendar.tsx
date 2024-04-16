@@ -1,4 +1,3 @@
-import * as React from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
@@ -12,45 +11,20 @@ import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
 import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
-import { app } from "../../firebase";
-import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
 
-const Calendar = () => {
-  const [date, setDate] = React.useState<Date>(new Date());
-  const [completedTaskArray, setCompletedTaskArray] = React.useState<
-    CompletedTaskType[]
-  >([]);
+type CalendarProps = {
+  completedTasks: CompletedTaskType[];
+  changeDate?: (value: Dayjs) => void;
+  date: Date;
+};
+
+const Calendar = ({ completedTasks, changeDate, date }: CalendarProps) => {
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
     weekStart: 1,
   });
-  const changeDate = (value: Dayjs) => {
-    setDate(new Date(value.year(), value.month(), value.date()));
-  };
 
-  const getData = async () => {
-    try {
-      const db = getFirestore(app);
-      const completedTask = doc(
-        db,
-        "test-completed-tasks",
-        "qDjHyzko7ehZKSOSHe0uHJ0KEjR2"
-      );
-      const completedTasksData = await getDoc(completedTask);
-      if (completedTasksData.exists()) {
-        const completedTaskArray = completedTasksData.data().completedTasks;
-        setCompletedTaskArray(completedTaskArray);
-      }
-    } catch {
-      console.log("Error: Could not locate Completed Tasks from database");
-    }
-  };
-  React.useEffect(() => {
-    getData();
-  }, []);
-
-  const filteredCompletedTasks = filterCompletedTasks(completedTaskArray, date);
+  const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
 
   return (
     <div className="calendar">
