@@ -29,10 +29,7 @@ const App = () => {
       );
       const retrieveTasks = await getDoc(retrievalReference);
       if (retrieveTasks.exists()) {
-        console.log("Document data:", retrieveTasks.data());
         setActiveTasksList(retrieveTasks.data().activeTasks);
-      } else {
-        console.log("No such document!");
       }
     };
     getTasks();
