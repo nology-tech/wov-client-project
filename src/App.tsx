@@ -17,9 +17,14 @@ import { Task } from "./mockData/mockActiveTasks";
 import { getDocs, query, collection } from "firebase/firestore";
 import { db } from "./firebase";
 import { UserProfile } from "./mockData/mockTribe";
-import { useState, useEffect } from "react";
+import { app } from "./firebase";
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { Task } from "./mockData/mockActiveTasks";
 
 const App = () => {
+  const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
   const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
 
@@ -50,6 +55,25 @@ const App = () => {
     };
 
     fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const db = getFirestore(app);
+      const retrievalReference = doc(
+        db,
+        "test-active-tasks",
+        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
+      );
+      const retrieveTasks = await getDoc(retrievalReference);
+      if (retrieveTasks.exists()) {
+        console.log("Document data:", retrieveTasks.data());
+        setActiveTasksList(retrieveTasks.data().activeTasks);
+      } else {
+        console.log("No such document!");
+      }
+    };
+    getTasks();
   }, []);
 
   return (
