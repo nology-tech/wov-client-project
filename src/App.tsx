@@ -3,7 +3,7 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
-import { tribeUsers, UserProfile } from "./Mockdata/mockTribe";
+import { tribeUsers, UserProfile } from "./mockData/mockTribe";
 import ActiveTasks from "./pages/ActiveTasks/ActiveTasks";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
@@ -118,7 +118,10 @@ const App = () => {
           path="/leaderboard"
           element={<Leaderboard users={tribeUsers} />}
         />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} setUserUID = {setUserUID} />} />
+        <Route
+          path="/profile"
+          element={<Profile user={tribeUsers[0]} setUserUID={setUserUID} />}
+        />
         <Route
           path="/sign-in"
           element={<Login setUserUID={handleSetUserUID} />}
