@@ -10,11 +10,13 @@ import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
+import { doc, getDoc } from "firebase/firestore";
+import { Task } from "./mockData/mockActiveTasks";
+import { UserProfile } from "./mockData/mockTribe";
+import { useEffect, useState } from "react";
 import { app, db } from "./firebase";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
-import { useEffect, useState } from "react";
 import { Dayjs } from "dayjs";
 
 const App = () => {
@@ -22,6 +24,23 @@ const App = () => {
   // NOTE: this console.log is used to workaround an eslint warning
   // It should be deleted once userUID is used
   console.log(userUID);
+
+  const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const retrievalReference = doc(
+        db,
+        "test-active-tasks",
+        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
+      );
+      const retrieveTasks = await getDoc(retrievalReference);
+      if (retrieveTasks.exists()) {
+        setActiveTasksList(retrieveTasks.data().activeTasks);
+      }
+    };
+    getTasks();
+  }, []);
 
   const handleSetUserUID = (userUID: string) => {
     setUserUID(userUID);
@@ -76,7 +95,16 @@ const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/tasks" element={<ActiveTasks />} />
+        <Route
+          path="/tasks"
+          element={<ActiveTasks activeTasks={activeTasksList} />}
+        />
+
+        <Route
+          path="/leaderboard"
+          element={<Leaderboard users={fetchedTribe} />}
+        />
+        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
         <Route
           path="/calendar"
           element={
