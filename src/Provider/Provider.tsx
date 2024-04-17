@@ -22,9 +22,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userUID, setUserUID] = useState<string | null>(null)
 
-
-
-
   useEffect(() => {
     if (localStorage.getItem("userUID")) {
       setIsAuthenticated(true);
@@ -33,10 +30,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsAuthenticated(false);
     }
   }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) navigate("/");
-  }, [isAuthenticated]);
 
   const loginUser = async (
     email: string,

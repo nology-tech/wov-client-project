@@ -4,7 +4,12 @@ import { useAuth } from './Provider';
 
 const PrivateRoute = () => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Outlet /> : <Navigate to="/auth" replace />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 };
 
-export default PrivateRoute;
+const PublicRoute = () => {
+  const { isAuthenticated } = useAuth();
+  return !isAuthenticated ? <Outlet /> : <Navigate to="/auth" replace />;
+}
+
+export {PrivateRoute, PublicRoute}

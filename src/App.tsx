@@ -1,4 +1,4 @@
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
@@ -17,13 +17,15 @@ import { doc, getDoc } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { useEffect, useState } from "react";
 import { Dayjs } from "dayjs";
-import { AuthProvider } from "./Provider/Provider";
-import PrivateRoute from "./Provider/PrivateRoute";
+import { useAuth } from "./Provider/Provider";
+import { PrivateRoute, PublicRoute } from "./Provider/PrivateRoute";
 
 // TODO: REMOVE
 // import { signOut } from "firebase/auth";
 
 const App = () => {
+  const { isAuthenticated } = useAuth()
+
   // TODO: REMOVE
   // signOut(auth);
   // localStorage.clear();
@@ -36,20 +38,6 @@ const App = () => {
   const [completedTaskArray, setCompletedTaskArray] = useState<
     CompletedTaskType[]
   >([]);
-
-
-  // const [userUID, setUserUID] = useState<string | null>(null)
-  // //TODO: REMOVE WHEN userUID IS USED THX
-  // console.log(userUID)
-
-  
-    // const localStorageUID = localStorage.getItem("userUID")
-    // setUserUID(localStorageUID)
-
-
-  // useEffect(() => {
-  //   console.log("userUID", userUID)
-  // },[userUID])
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -91,13 +79,15 @@ const App = () => {
 
   return (
     <>
-      <AuthProvider>
-        <Routes>
-          <Route path="/auth" element={<Account />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/sign-in" element={<Login />} />
-          <Route path="*" element={<ErrorPage />} />
-
+      <Routes>
+        {!isAuthenticated ?
+          <Route path="/" element={<PublicRoute />}>
+            <Route path="/auth" element={<Account />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/sign-in" element={<Login />} />
+            <Route path="/" element={<ErrorPage />} />
+          </ Route>
+          :
           <Route path="/" element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />
             <Route path="/tasks" element={<ActiveTasks />} />
@@ -116,9 +106,11 @@ const App = () => {
               element={<Leaderboard users={tribeUsers} />}
             />
             <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+            <Route path="*" element={<ErrorPage />} />
           </Route>
-        </Routes>
-      </AuthProvider>
+        }
+
+      </Routes>
     </>
   );
 };
