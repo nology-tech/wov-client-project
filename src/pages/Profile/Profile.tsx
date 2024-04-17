@@ -24,7 +24,7 @@ const Profile = (
     try {signOut(auth);
         navigate("/auth");  
         setUserUID (null)
-      console.log(auth.currentUser)}
+  console.log(auth.currentUser)}
     catch (error) {  navigate("/ErrorPage")}
 
   };
