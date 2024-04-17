@@ -65,8 +65,10 @@ const App = () => {
     fetchUsers();
   }, []);
 
-  const currentUser:UserProfile = fetchedTribe.find((user)=>user.email==auth.currentUser?.email) as UserProfile
-
+  const currentUser: UserProfile = fetchedTribe.find(
+    (user) => user.email == auth.currentUser?.email
+  ) as UserProfile;
+  console.log(currentUser );
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
