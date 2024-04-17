@@ -8,7 +8,7 @@ import { ChangeEvent, useState } from "react";
 // import { Link } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
-import { User, updateEmail } from "firebase/auth";
+import { User, updatePassword } from "firebase/auth";
 
 const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
   const [user, setUser] = useState<UserProfile>(currentUser);
@@ -31,18 +31,28 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
   };
   const updateDatabase = async () => {
     try {
-      console.log(auth)
       if (password !== confirmPassword) {
         throw new Error("Passwords do not match. Try again.");
       }
-      if (email != currentUser.email) {
-        await updateEmail(auth.currentUser as User, email);
-        console.log("email");
-      }
+      await updatePassword(auth.currentUser as User, password)
+        .then(() => {
+          console.log("password changed");
+        })
+        .catch((error) => {
+          let errorMsg: string = error.toString();
+          errorMsg = errorMsg.slice(
+            errorMsg.lastIndexOf(":") + 1,
+            errorMsg.length - 1
+          );
+          errorMsg = errorMsg.slice(0, errorMsg.lastIndexOf("("));
+          errorMsg = errorMsg.trim();
+          throw new Error(errorMsg);
+        });
       setPasswordMatchError("");
       await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
         name: name,
         bio: bio,
+        email: email,
       });
     } catch (error) {
       setPasswordMatchError((error as Error).message);
@@ -83,7 +93,7 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
             autoComplete="none"
             value={email}
             variant="outlined"
-            onChange={handleChange}
+            disabled
           />
           <label htmlFor="password" className="profile__label">
             Password

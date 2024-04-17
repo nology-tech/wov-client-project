@@ -23,7 +23,6 @@ const App = () => {
   const [userUID, setUserUID] = useState<null | string>(null)
   // NOTE: this console.log is used to workaround an eslint warning
   // It should be deleted once userUID is used
-  console.log(userUID)
 
   const handleSetUserUID = (userUID: string) => {
     setUserUID(userUID)
