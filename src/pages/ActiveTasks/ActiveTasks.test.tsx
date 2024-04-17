@@ -6,21 +6,21 @@ import { activeTasks } from "../../mockData/mockActiveTasks";
 
 describe("ActiveTask page component", () => {
   it("should render the ActiveTask page", () => {
-    customRender(<ActiveTasks />);
+    customRender(<ActiveTasks activeTasks={activeTasks} />);
 
     const activeTask = screen.getByTestId("task-page");
     expect(activeTask).toBeInTheDocument();
   });
 
   it("should render the header component", () => {
-    customRender(<ActiveTasks />);
+    customRender(<ActiveTasks activeTasks={activeTasks} />);
 
     const header = screen.getByText("WAY OF THE VIKING");
     expect(header).toBeInTheDocument();
   });
 
   it("should render the navigation component", () => {
-    customRender(<ActiveTasks />);
+    customRender(<ActiveTasks activeTasks={activeTasks} />);
 
     const home = screen.getByText("Home");
     const tasks = screen.getByText("Tasks");
@@ -33,7 +33,7 @@ describe("ActiveTask page component", () => {
   });
 
   it("should check the initial state of the button", () => {
-    customRender(<ActiveTasks />);
+    customRender(<ActiveTasks activeTasks={activeTasks} />);
 
     const checkboxInitial = screen.getAllByRole("checkbox");
     checkboxInitial.forEach((checkbox) => {
@@ -42,7 +42,7 @@ describe("ActiveTask page component", () => {
   });
 
   it("should check the search input renders correct results", async () => {
-    customRender(<ActiveTasks />);
+    customRender(<ActiveTasks activeTasks={activeTasks} />);
 
     const searchInput = screen.getByRole("search");
     await userEvent.type(searchInput, "di");
