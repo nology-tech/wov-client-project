@@ -51,23 +51,35 @@ const Register = () => {
           formData.email,
           formData.password
         );
-      const uid = userCredential.user.uid; // retrieved UID
-      console.log(uid);
+      const uid = userCredential.user.uid; // retrieved UID#
+      await addUserData(uid);
     } catch (error) {
       setFormData(emptyFormData);
       setPasswordMatchError((error as Error).message);
     }
   };
 
-  // const addData = async () => {
-  //   try {
-  //     const db = getFirestore(app);
-  //     await setDoc(doc(db, "test-tribe", uuidv4()), {
-  //     });
-  //   } catch {
-  //     console.log("Error: Could not locate Completed Tasks from database");
-  //   }
-  // };
+  const addUserData = async (uid: string) => {
+    try {
+      const db = getFirestore(app);
+      await setDoc(doc(db, "test-tribe", uid), {
+        id: uid,
+        img: "",
+        totalScore: 0,
+        name: formData.firstName + " " + formData.lastName,
+        bio: "",
+        email: formData.email,
+      });
+      await setDoc(doc(db, "test-completed-tasks", uid), {
+        completedTasks: [],
+      });
+      await setDoc(doc(db, "test-active-tasks", uid), {
+        activeTasks: [],
+      });
+    } catch (error) {
+      console.log("Error adding user data to Firestore:", error);
+    }
+  };
 
   return (
     <section className="register">
