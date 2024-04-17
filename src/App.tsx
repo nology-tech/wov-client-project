@@ -136,6 +136,6 @@ const App = () => {
       </Routes>
     </>
   );
-};pu
+};
 
 export default App;
