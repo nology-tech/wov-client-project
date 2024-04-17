@@ -88,8 +88,8 @@ const App = () => {
           />
           <Route path="*" element={<ErrorPage />} />
 
-          <Route path="/" element={<PrivateRoute />}>
-            <Route path="/home" element={<Home />} />
+          <Route path="/" element={<PrivateRoute userUID={userUID} />}>
+            <Route path="/" element={<Home />} />
             <Route path="/tasks" element={<ActiveTasks />} />
             <Route
               path="/calendar"

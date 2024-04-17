@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { useEffect, createContext, useContext, useState, ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type AuthContextProps = {
   isAuthenticated: boolean;
@@ -8,8 +9,14 @@ type AuthContextProps = {
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+type AuthProviderProps = {
+  children: ReactNode;
+  userUID: string | null
+}
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children, userUID }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate()
 
   // const accessToken = localStorage
   // if(!accessToken) {
@@ -18,15 +25,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   //   setIsAuthenticated(true)
   // }
 
-  const loginUser = () => {
-    // Perform authentication logic
-    localStorage.getItem("accessToken")
-  };
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      setIsAuthenticated(true)
+    } else {
+      setIsAuthenticated(false)
+    }
+  }, [])
 
-  const logoutUser = () => {
-    // Perform logout logic
-    setIsAuthenticated(false);
-  };
+  useEffect(() => {
+    if (isAuthenticated) 
+    navigate("/")
+    }, [isAuthenticated])
+
+  const loginUser = () => {}
+  const logoutUser = () => {}
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser }}>

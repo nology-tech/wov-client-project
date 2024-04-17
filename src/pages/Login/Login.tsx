@@ -37,7 +37,9 @@ export const Login = ({ setUserUID }: LoginProps) => {
       setUserUID(userCredential.user.uid);
       const accessToken = await userCredential.user.getIdToken();
       localStorage.setItem("accessToken", JSON.stringify(accessToken))
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500)
     } catch (error) {
       const errorCode = (error as AuthError).code
       if (errorCode === "auth/invalid-credential") {
