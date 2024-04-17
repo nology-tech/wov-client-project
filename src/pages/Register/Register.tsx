@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
 import "./Register.scss";
+import { app, db } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const emptyFormData = {
   firstName: "",
@@ -12,13 +14,19 @@ const emptyFormData = {
   email: "",
   password: "",
   confirmPassword: "",
+  bio: "",
+  img: "",
+  tribe: "",
 };
 
 const Register = () => {
   const [formData, setFormData] = useState(emptyFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
+  const [selectedTribe, setSelectedTribe] = useState<string>("");
+  const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
   const navigate = useNavigate();
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -52,6 +60,16 @@ const Register = () => {
       setFormData(emptyFormData);
       setPasswordMatchError((error as Error).message);
     }
+    console.log(formData);
+  };
+
+  const handleTribeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleShowUploadPrompt = () => {
+    setShowUploadPrompt(!showUploadPrompt);
   };
 
   return (
@@ -64,7 +82,7 @@ const Register = () => {
           alt="Arrow Left Icon"
         />
       </div>
-      <h2 className="register__heading">Create Account</h2>
+      <h2 className="register__heading">Create An Account</h2>
 
       {!showSecondForm ? (
         <form onSubmit={handleSubmit} className="register__form" action="#">
@@ -87,12 +105,55 @@ const Register = () => {
             id="lastName"
             name="lastName"
             value={formData.lastName}
-            className="register__input register__input--margin-bottom"
+            className="register__input"
             type="text"
             placeholder="Smith"
             onChange={handleChange}
           />
-          <Button label="Next" onClick={handleNext} />
+          <label className="register__label" htmlFor="bio">
+            Bio
+          </label>
+          <input
+            id="bio"
+            name="bio"
+            value={formData.bio}
+            className="register__input "
+            type="text"
+            placeholder="Bio"
+            onChange={handleChange}
+          />
+          <label className="register__label" htmlFor="bio">
+            Tribe
+          </label>
+          <select
+            id="tribe"
+            name="tribe"
+            value={formData.tribe}
+            className="register__input register__input--margin-bottom"
+            onChange={handleTribeChange}
+          >
+            <option value="Tribe1">Tribe1</option>
+            <option value="Tribe2">Tribe2</option>
+          </select>
+          <label className="register__label" htmlFor="img"></label>
+          {showUploadPrompt ? (
+            <input
+              id="img"
+              name="img"
+              value={formData.img}
+              className="register__input register__input--img-upload"
+              type="file"
+              onChange={handleChange}
+            />
+          ) : (
+            <Button
+              label="ADD PROFILE IMAGE"
+              variant="light-grey"
+              onClick={handleShowUploadPrompt}
+            />
+          )}
+
+          <Button label="Next" variant="light-grey" onClick={handleNext} />
         </form>
       ) : (
         <form onSubmit={handleSubmit} className="register__form" action="#">
