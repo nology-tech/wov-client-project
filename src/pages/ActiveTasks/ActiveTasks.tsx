@@ -1,20 +1,24 @@
 import { useState, ChangeEvent } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Navigation from "../../components/Navigation/Navigation";
-import { activeTasks } from "../../mockData/mockActiveTasks";
+import { Task } from "../../mockData/mockActiveTasks";
 import "./ActiveTasks.scss";
 import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-type CompletedTasks = {
+type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
-const ActiveTasks = () => {
+type ActiveTasksProp = {
+  activeTasks: Task[];
+};
+
+const ActiveTasks = ({ activeTasks }: ActiveTasksProp) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [completedTasks, setCompletedTasks] = useState<CompletedTasks>({});
+  const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
@@ -53,22 +57,27 @@ const ActiveTasks = () => {
           }}
         />
       </div>
-      {searchedTasks.map((task, index) => (
-        <ActiveTaskTile
-          key={task.id}
-          id={task.id}
-          requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
-          category={task.category || ""}
-          points={task.points}
-          completed={!!completedTasks[task.id]}
-          onCompletionChange={handleTaskCompletionChange}
-          classModifier={
-            index === searchedTasks.length - 1 && searchedTasks.length > 4
-              ? "active-task active-task--last"
-              : "active-task"
-          }
-        />
-      ))}
+      {searchedTasks.length === 0 ? (
+        <p>There are no tasks to display</p>
+      ) : (
+        searchedTasks.map((task, index) => (
+          <ActiveTaskTile
+            key={task.id}
+            id={task.id}
+            requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
+            category={task.category || ""}
+            points={task.points}
+            completed={!!completedTasks[task.id]}
+            onCompletionChange={handleTaskCompletionChange}
+            classModifier={
+              index === searchedTasks.length - 1 && searchedTasks.length > 4
+                ? "active-task active-task--last"
+                : "active-task"
+            }
+          />
+        ))
+      )}
+
       <Navigation navActionIndex={1} />
     </div>
   );
