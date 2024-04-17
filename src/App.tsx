@@ -14,7 +14,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { Task } from "./mockData/mockActiveTasks";
 import { UserProfile } from "./mockData/mockTribe";
 import { useEffect, useState } from "react";
-import { app, db } from "./firebase";
+import { app, auth, db } from "./firebase";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { Dayjs } from "dayjs";
@@ -65,13 +65,14 @@ const App = () => {
     fetchUsers();
   }, []);
 
+  const currentUser:UserProfile = fetchedTribe.find((user)=>user.email==auth.currentUser?.email) as UserProfile
+
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
 
   const getData = async () => {
     try {
-      console.log("running");
       const db = getFirestore(app);
       const completedTask = doc(
         db,
@@ -90,7 +91,6 @@ const App = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(fetchedTribe);
 
   return (
     <>
@@ -105,7 +105,7 @@ const App = () => {
           path="/leaderboard"
           element={<Leaderboard users={fetchedTribe} />}
         />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+        <Route path="/profile" element={<Profile user={currentUser} />} />
         <Route
           path="/calendar"
           element={
@@ -116,11 +116,6 @@ const App = () => {
             />
           }
         />
-        <Route
-          path="/leaderboard"
-          element={<Leaderboard users={tribeUsers} />}
-        />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
         <Route
           path="/sign-in"
           element={<Login setUserUID={handleSetUserUID} />}
