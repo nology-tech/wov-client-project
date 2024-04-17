@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
@@ -21,14 +21,21 @@ import { AuthProvider } from "./Provider/Provider";
 import PrivateRoute from "./Provider/PrivateRoute";
 
 const App = () => {
+  const location = useLocation()
+  console.log("location state", location.state)
   const [userUID, setUserUID] = useState<null | string>(null);
   // NOTE: this console.log is used to workaround an eslint warning
   // It should be deleted once userUID is used
   console.log(userUID);
 
+  useEffect(() => {
+    setUserUID(localStorage.getItem("userUID"))
+  }, [])
+
   const handleSetUserUID = (userUID: string) => {
     setUserUID(userUID);
   };
+
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
 
   const [date, setDate] = useState<Date>(new Date());
@@ -84,7 +91,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route
             path="/sign-in"
-            element={<Login setUserUID={handleSetUserUID} />}
+            element={<Login setUserUID={setUserUID} />}
           />
           <Route path="*" element={<ErrorPage />} />
 
@@ -106,7 +113,6 @@ const App = () => {
               element={<Leaderboard users={tribeUsers} />}
             />
             <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-            <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
       </AuthProvider>

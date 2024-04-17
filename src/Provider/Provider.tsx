@@ -1,7 +1,6 @@
 import React, { useEffect, createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {auth} from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
 
 type AuthContextProps = {
   isAuthenticated: boolean;
@@ -14,8 +13,9 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+// export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // const accessToken = localStorage
   // if(!accessToken) {
@@ -23,11 +23,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // } else {
   //   setIsAuthenticated(true)
   // }
-  onAuthStateChanged(auth, async (user) => {
-    const IDToken = await user?.getIdToken()
-    setIsAuthenticated(IDToken)
-  })
-
   useEffect(() => {
     if (localStorage.getItem("userUID")) {
       setIsAuthenticated(true);

@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword, signInWithRedirect} from "firebase/auth";
 import { auth } from "../../firebase";
 import { AuthError } from "firebase/auth";
 import { AuthProvider } from "../../Provider/Provider";
+import { Navigate } from "react-router-dom";
 
 
 const emptyFormData = {
@@ -36,12 +37,13 @@ export const Login = ({ setUserUID }: LoginProps) => {
         formData.email,
         formData.password
       );
-      setUserUID(userCredential.user.uid);
       const accessToken = await userCredential.user.getIdToken();
-      const userUID = await userCredential.user.uid;
+      const userUID = userCredential.user.uid;
+      console.log(userCredential.user.uid)
+      setUserUID(userCredential.user.uid);
       localStorage.setItem("accessToken", JSON.stringify(accessToken))
       localStorage.setItem("userUID", JSON.stringify(userUID) )
-      window.location.reload();
+      navigate("/", {state: { userUID }});
      
     } catch (error) {
       const errorCode = (error as AuthError).code
