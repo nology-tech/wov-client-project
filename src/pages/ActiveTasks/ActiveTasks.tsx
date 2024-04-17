@@ -1,7 +1,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import { ChangeEvent, useState } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Header from "../../components/Header/Header";
@@ -27,11 +27,21 @@ type UserData = {
   totalScore: number;
 };
 
+type CompletedTaskData = {
+  category: string;
+  completed: string;
+  description: string;
+  id: string;
+  points: number;
+  taskHeading: string;
+  type: string;
+}
+
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<CompletedTasks>({});
   const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
-  const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false)
+  const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +64,7 @@ const ActiveTasks = () => {
         if (userRefDoc.exists()) {
           const userData: UserData = userRefDoc.data() as UserData;
           const updateScore = userData.totalScore + points;
-          console.log(updateScore);
+          console.log(userData);
 
           await updateDoc(
             doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
@@ -70,6 +80,28 @@ const ActiveTasks = () => {
         console.error("Error updating totalScore", error);
       }
 
+      try {
+        const userRef = doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+        const userRefDoc = await getDoc(userRef);
+        const completedTaskData: CompletedTaskData = userRefDoc.data() as CompletedTaskData;
+        console.log(userRefDoc);
+        
+        console.log(completedTaskData);
+        
+
+        await setDoc(
+          doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+          {
+            ...completedTaskData
+          }
+        );
+        
+
+      } catch (error) {
+        console.log("Error creating new blah", error);
+        
+      }
+
       // TODO: Hide when user presses outside the container/window.
     }
   };
@@ -79,6 +111,7 @@ const ActiveTasks = () => {
     setPopupAddMedia(!popupAddMedia)
   }
 
+  
   const searchedTasks = activeTasks.filter(
     (task) =>
       task.taskHeading.toLowerCase().includes(searchTerm) ||
