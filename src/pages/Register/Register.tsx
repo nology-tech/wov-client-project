@@ -17,7 +17,11 @@ const emptyFormData = {
   confirmPassword: "",
 };
 
-const Register = () => {
+type RegisterProps = {
+  handleSetUserID: (userID: string) => void;
+};
+
+const Register = ({ handleSetUserID }: RegisterProps) => {
   const [formData, setFormData] = useState(emptyFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
@@ -54,6 +58,7 @@ const Register = () => {
           formData.password
         );
       const uid = userCredential.user.uid;
+      handleSetUserID(uid);
       await addUserData(uid);
     } catch (error) {
       setFormData(emptyFormData);
