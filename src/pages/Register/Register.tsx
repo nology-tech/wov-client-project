@@ -1,11 +1,12 @@
 import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import { app, auth } from "../../firebase";
+import { auth } from "../../firebase";
+import { db } from "../../firebase";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import "./Register.scss";
 
 const emptyFormData = {
@@ -62,7 +63,6 @@ const Register = () => {
 
   const addUserData = async (uid: string) => {
     try {
-      const db = getFirestore(app);
       await setDoc(doc(db, "test-tribe", uid), {
         id: uid,
         img: "",
