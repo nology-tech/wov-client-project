@@ -27,20 +27,20 @@ const App = () => {
 
   const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
 
-  useEffect(() => {
-    const getTasks = async () => {
-      const retrievalReference = doc(
-        db,
-        "test-active-tasks",
-        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
-      );
-      const retrieveTasks = await getDoc(retrievalReference);
-      if (retrieveTasks.exists()) {
-        setActiveTasksList(retrieveTasks.data().activeTasks);
-      }
-    };
-    getTasks();
-  }, []);
+  // useEffect(() => {
+  //   const getTasks = async () => {
+  //     const retrievalReference = doc(
+  //       db,
+  //       "test-active-tasks",
+  //       "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
+  //     );
+  //     const retrieveTasks = await getDoc(retrievalReference);
+  //     if (retrieveTasks.exists()) {
+  //       setActiveTasksList(retrieveTasks.data().activeTasks);
+  //     }
+  //   };
+  //   getTasks();
+  // }, []);
 
   const handleSetUserUID = (userUID: string) => {
     setUserUID(userUID);
@@ -98,7 +98,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route
           path="/tasks"
-          element={<ActiveTasks activeTasks={activeTasksList} />}
+          element={<ActiveTasks  />}
         />
 
         <Route

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Navigation from "../../components/Navigation/Navigation";
 import { Task } from "../../mockData/mockActiveTasks";
@@ -7,18 +7,28 @@ import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { getActiveTasks } from "../../utils/dbUtils/dbUtils";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
-type ActiveTasksProp = {
-  activeTasks: Task[];
-};
-
-const ActiveTasks = ({ activeTasks }: ActiveTasksProp) => {
+const ActiveTasks = () => {
+  const [activeTasks, setActiveTasks] = useState<Task[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const tasks = await getActiveTasks();
+        setActiveTasks(tasks);
+      } catch (error) {
+        console.error("Error fetching active tasks:", error);
+      }
+    };
+    getData();
+  }, []);
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
