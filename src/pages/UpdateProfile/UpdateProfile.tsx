@@ -8,7 +8,11 @@ import { ChangeEvent, useState } from "react";
 // import { Link } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
-import { User, updatePassword } from "firebase/auth";
+import {
+  User,
+  signInWithEmailAndPassword,
+  updatePassword,
+} from "firebase/auth";
 
 const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
   const [user, setUser] = useState<UserProfile>(currentUser);
@@ -34,19 +38,28 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
       if (password !== confirmPassword) {
         throw new Error("Passwords do not match. Try again.");
       }
-      await updatePassword(auth.currentUser as User, password)
-        .then(() => {
-          console.log("password changed");
-        })
-        .catch((error) => {
-          let errorMsg: string = error.toString();
+      signInWithEmailAndPassword(auth, "divya@test.com", "123456")
+        .then(async() => {
+          console.log("Sign In SuccessFul!");
+          await updatePassword(auth.currentUser as User, password)
+            .then(() => {
+              console.log("password changed");
+            })
+            .catch((error) => {
+              console.log(auth.currentUser);
+              console.log(error);
+              /* let errorMsg: string = error.toString();
           errorMsg = errorMsg.slice(
             errorMsg.lastIndexOf(":") + 1,
             errorMsg.length - 1
           );
           errorMsg = errorMsg.slice(0, errorMsg.lastIndexOf("("));
-          errorMsg = errorMsg.trim();
-          throw new Error(errorMsg);
+          errorMsg = errorMsg.trim(); */
+              throw new Error(error.message);
+            });
+        })
+        .catch((error) => {
+          throw new Error(error.message);
         });
       setPasswordMatchError("");
       await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
