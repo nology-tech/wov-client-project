@@ -23,7 +23,7 @@ const Profile = (
   
     try {signOut(auth);
         navigate("/auth");
-        localStorage.removeItem("userData");
+        localStorage.removeItem("accessToken");
         setUserUID (null);
   }
     catch (error) {
