@@ -122,7 +122,10 @@ const App = () => {
         />
         <Route path="*" element={<ErrorPage />} />
         <Route path="/auth" element={<Account />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/register"
+          element={<Register setUserUID={handleSetUserUID} />}
+        />
       </Routes>
     </>
   );
