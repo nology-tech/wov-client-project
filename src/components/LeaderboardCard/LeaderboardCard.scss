@@ -35,15 +35,14 @@
     color: $primary-color;
   }
 }
+.leaderboard-card--current-user {
+  background-color: $light-grey-color;
+}
 .leaderboard-card--first {
   background-color: $primary-color;
   p {
     color: white;
   }
-}
-
-.leaderboard-card--current-user {
-  background-color: $light-grey-color;
 }
 
 @media screen and (min-width: $tablet-breakpoint) {

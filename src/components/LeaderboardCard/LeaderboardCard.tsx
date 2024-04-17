@@ -19,7 +19,7 @@ const LeaderboardCard = ({
   userID,
 }: LeaderboardCardProps) => {
   const myName = capitalisedFirstLetters(name);
-  console.log(`key: ${userID} \nCurrent User ID: ${userID} `);
+  console.log(`Currentscore: "${name}\nCurrent User ID: ${userID} `);
 
   return (
     <div

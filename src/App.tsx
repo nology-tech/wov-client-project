@@ -20,7 +20,7 @@ import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTask
 import { Dayjs } from "dayjs";
 
 const App = () => {
-  const [userUID, setUserUID] = useState<null | string>(null);
+  const [userUID, setUserUID] = useState<string>("1a38"); // Using Baheer as MOCK current user
   // NOTE: this console.log is used to workaround an eslint warning
   // It should be deleted once userUID is used
   console.log(userUID);
@@ -103,7 +103,7 @@ const App = () => {
 
         <Route
           path="/leaderboard"
-          element={<Leaderboard users={fetchedTribe} />}
+          element={<Leaderboard users={fetchedTribe} currentUserID={userUID} />}
         />
         <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
         <Route
@@ -118,7 +118,7 @@ const App = () => {
         />
         <Route
           path="/leaderboard"
-          element={<Leaderboard users={tribeUsers} />}
+          element={<Leaderboard users={tribeUsers} currentUserID={userUID} />}
         />
         <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
         <Route
