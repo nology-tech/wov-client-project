@@ -3,24 +3,24 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
-import { tribeUsers } from "./mockData/mockTribe";
 import ActiveTasks from "./pages/ActiveTasks/ActiveTasks";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
-import { doc, getDoc } from "firebase/firestore";
+import { DocumentData, doc, getDoc } from "firebase/firestore";
 import { Task } from "./mockData/mockActiveTasks";
 import { UserProfile } from "./mockData/mockTribe";
 import { useEffect, useState } from "react";
-import { app, auth, db } from "./firebase";
+import { app, db } from "./firebase";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { Dayjs } from "dayjs";
 
 const App = () => {
   const [userUID, setUserUID] = useState<null | string>(null);
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
   // NOTE: this console.log is used to workaround an eslint warning
   // It should be deleted once userUID is used
   console.log(userUID);
@@ -65,10 +65,25 @@ const App = () => {
     fetchUsers();
   }, []);
 
-  const currentUser: UserProfile = fetchedTribe.find(
-    (user) => user.email == auth.currentUser?.email
-  ) as UserProfile;
-  console.log(currentUser );
+  const fetchCurrentUser = async () => {
+    const userRef = doc(db, "test-tribe", "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1");
+    const userDocSnap = await getDoc(userRef);
+    const user = userDocSnap.data() as DocumentData;
+    const currentUser: UserProfile = {
+      id: user.id,
+      img: user.img,
+      totalScore: 0,
+      name: user.name,
+      bio: user.bio,
+      email: user.email,
+    };
+    setCurrentUser(currentUser);
+  };
+
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
+
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
@@ -107,7 +122,7 @@ const App = () => {
           path="/leaderboard"
           element={<Leaderboard users={fetchedTribe} />}
         />
-        <Route path="/profile" element={<Profile user={currentUser} />} />
+        <Route path="/profile" element={<Profile user={currentUser as UserProfile} />} />
         <Route
           path="/calendar"
           element={
