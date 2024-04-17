@@ -6,25 +6,26 @@ import Navigation from "../../components/Navigation/Navigation";
 import { tribeUsers } from "../../mockData/mockTribe";
 
 const Leaderboard = ({ users }: { users: UserProfile[] }) => {
-  users = tribeUsers
+  users = tribeUsers;
   const sortUserByScore = () => {
     const sortedUsers = [...users];
     const sortScore = sortedUsers.sort((a, b) => b.totalScore - a.totalScore);
     const sortScoreAndName = sortScore.sort((a, b) => {
       if (a.totalScore === b.totalScore) {
+        if (!a.name) return 1;
+        if (!b.name) return -1;
         return a.name.localeCompare(b.name);
       }
       return 0;
     });
     return sortScoreAndName;
   };
-  
 
   return (
     <div className="leaderboard">
       <Header subtitle="Leaderboard" />
       <div className="leaderboard__cards">
-        {sortUserByScore().map((user) => (
+        {sortUserByScore().map((user, index) => (
           <LeaderboardCard
             key={user.id}
             name={user.name}
@@ -32,6 +33,7 @@ const Leaderboard = ({ users }: { users: UserProfile[] }) => {
               user.img ?? "./assets/images/default-profile-image.png"
             }
             totalScore={user.totalScore}
+            isFirstCard={index === 0}
           />
         ))}
         ;
