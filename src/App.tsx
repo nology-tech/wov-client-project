@@ -98,12 +98,10 @@ const App = () => {
           path="/tasks"
           element={<ActiveTasks activeTasks={activeTasksList} />}
         />
-
         <Route
-          path="/leaderboard"
-          element={<Leaderboard users={fetchedTribe} />}
+          path="/profile"
+          element={<Profile user={tribeUsers[0]} setUserUID={setUserUID} />}
         />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} setUserUID={setUserUID}/>} />
         <Route
           path="/calendar"
           element={
@@ -117,10 +115,6 @@ const App = () => {
         <Route
           path="/leaderboard"
           element={<Leaderboard users={tribeUsers} />}
-        />
-        <Route
-          path="/profile"
-          element={<Profile user={tribeUsers[0]} setUserUID={setUserUID} />}
         />
         <Route
           path="/sign-in"
