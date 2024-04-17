@@ -114,7 +114,7 @@ const App = () => {
         />
         <Route
           path="/leaderboard"
-          element={<Leaderboard users={tribeUsers} />}
+          element={<Leaderboard users={fetchedTribe} />}
         />
         <Route
           path="/sign-in"
