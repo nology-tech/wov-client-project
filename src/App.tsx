@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
@@ -11,7 +11,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import { UserProfile } from "./mockData/mockTribe";
-import { app, auth, db } from "./firebase";
+import { app, db } from "./firebase";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
@@ -21,7 +21,7 @@ import { AuthProvider } from "./Provider/Provider";
 import PrivateRoute from "./Provider/PrivateRoute";
 
 // TODO: REMOVE
-import { signOut } from "firebase/auth";
+// import { signOut } from "firebase/auth";
 
 const App = () => {
   // TODO: REMOVE
@@ -29,11 +29,23 @@ const App = () => {
   // localStorage.clear();
 
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
+  //TODO: REMOVE WHEN fetchedTribe IS USED
+  console.log(fetchedTribe)
 
   const [date, setDate] = useState<Date>(new Date());
   const [completedTaskArray, setCompletedTaskArray] = useState<
     CompletedTaskType[]
   >([]);
+
+
+  const [userUID, setUserUID] = useState<string | null>(null)
+  //TODO: REMOVE WHEN userUID IS USED THX
+  console.log(userUID)
+
+  useEffect(()=> {
+    const localStorageUID = localStorage.getItem("userUID")
+    setUserUID(localStorageUID)
+  })
 
   useEffect(() => {
     const fetchUsers = async () => {

@@ -44,9 +44,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       const accessToken = await userCredential.user.getIdToken();
       const userUID = userCredential.user.uid;
-      localStorage.setItem("accessToken", JSON.stringify(accessToken));
-      localStorage.setItem("userUID", JSON.stringify(userUID));
+      localStorage.setItem("accessToken", (accessToken));
+      localStorage.setItem("userUID", (userUID));
       setIsAuthenticated(true);
+      navigate("/", {state: {userUID}})
     } catch (error) {
       const errorCode = (error as AuthError).code;
       if (errorCode === "auth/invalid-credential") {
