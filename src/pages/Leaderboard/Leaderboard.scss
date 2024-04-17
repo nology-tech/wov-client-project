@@ -2,26 +2,28 @@
 @use "../../styles/variables" as *;
 @use "../../styles/typography";
 
-.leaderboard{
-        background-color: white;
-    &__cards{
-        margin-top: 3rem;
-    }
-    
+.leaderboard {
+  background-color: white;
+  &__cards {
+    margin-top: 3rem;
+  }
+}
+.leaderboard-card--first {
+  background-color: $primary-color;
 }
 
 @media screen and (min-width: $large-desktop-breakpoint) {
-    .leaderboard{
-        &__cards{
-            margin-top: 5rem;
-        }
+  .leaderboard {
+    &__cards {
+      margin-top: 5rem;
     }
+  }
 }
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
-    .leaderboard{
-        &__cards{
-            margin-top: 9rem;
-        }
+  .leaderboard {
+    &__cards {
+      margin-top: 9rem;
     }
+  }
 }
