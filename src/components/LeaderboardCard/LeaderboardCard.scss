@@ -43,6 +43,10 @@
   }
 }
 
+.leaderboard-card--current-user {
+  background-color: green
+}
+
 @media screen and (min-width: $tablet-breakpoint) {
   .leaderboard-card {
     &__img-div {

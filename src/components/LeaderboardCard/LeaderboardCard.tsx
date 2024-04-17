@@ -6,6 +6,8 @@ type LeaderboardCardProps = {
   profileImage: string;
   totalScore: number;
   isFirstCard: boolean;
+  currentUserID: string;
+  key: string
 };
 
 const LeaderboardCard = ({
@@ -13,14 +15,19 @@ const LeaderboardCard = ({
   profileImage,
   totalScore,
   isFirstCard,
+  currentUserID,
+  key
 }: LeaderboardCardProps) => {
   const myName = capitalisedFirstLetters(name);
 
+  
   return (
     <div
       className={`leaderboard-card ${
         isFirstCard ? "leaderboard-card--first" : ""
-      }`}
+      } ${currentUserID === key ? "leaderboard-card--current-user" : ""}` 
+    
+    }
     >
       <div className="leaderboard-card__img-div">
         <img

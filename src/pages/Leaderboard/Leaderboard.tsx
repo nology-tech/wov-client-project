@@ -21,6 +21,8 @@ const Leaderboard = ({ users }: { users: UserProfile[] }) => {
     return sortScoreAndName;
   };
 
+  const currentUserID = "g234"
+
   return (
     <div className="leaderboard">
       <Header subtitle="Leaderboard" />
@@ -34,6 +36,7 @@ const Leaderboard = ({ users }: { users: UserProfile[] }) => {
             }
             totalScore={user.totalScore}
             isFirstCard={index === 0}
+            currentUserID = {currentUserID}
           />
         ))}
         ;
