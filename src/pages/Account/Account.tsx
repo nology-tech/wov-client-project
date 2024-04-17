@@ -16,7 +16,9 @@ const Account = () => {
         <Link to="/register">
           <Button label="CREATE AN ACCOUNT" />
         </Link>
-        <Button label="SIGN IN" variant="secondary" />
+        <Link to="/sign-in">
+          <Button label="SIGN IN" variant="secondary" />
+        </Link>
       </div>
     </section>
   );
