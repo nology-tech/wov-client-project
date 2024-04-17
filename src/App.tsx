@@ -88,7 +88,7 @@ const App = () => {
           />
           <Route path="*" element={<ErrorPage />} />
 
-          <Route path="/" element={<PrivateRoute userUID={userUID} />}>
+          <Route path="/" element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />
             <Route path="/tasks" element={<ActiveTasks />} />
             <Route
@@ -106,6 +106,7 @@ const App = () => {
               element={<Leaderboard users={tribeUsers} />}
             />
             <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+            <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
       </AuthProvider>

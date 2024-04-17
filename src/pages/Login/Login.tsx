@@ -3,9 +3,11 @@ import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithRedirect} from "firebase/auth";
 import { auth } from "../../firebase";
 import { AuthError } from "firebase/auth";
+import { AuthProvider } from "../../Provider/Provider";
+
 
 const emptyFormData = {
   email: "",
@@ -36,10 +38,11 @@ export const Login = ({ setUserUID }: LoginProps) => {
       );
       setUserUID(userCredential.user.uid);
       const accessToken = await userCredential.user.getIdToken();
+      const userUID = await userCredential.user.uid;
       localStorage.setItem("accessToken", JSON.stringify(accessToken))
-      setTimeout(() => {
-        navigate("/");
-      }, 1500)
+      localStorage.setItem("userUID", JSON.stringify(userUID) )
+      window.location.reload();
+     
     } catch (error) {
       const errorCode = (error as AuthError).code
       if (errorCode === "auth/invalid-credential") {
