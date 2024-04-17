@@ -71,7 +71,6 @@ const App = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(fetchedTribe);
 
   return (
     <>

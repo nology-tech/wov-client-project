@@ -20,12 +20,14 @@ const Profile = (
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
-  console.log(auth.currentUser)
+  
     try {signOut(auth);
-        navigate("/auth");  
-        setUserUID (null)
-  console.log(auth.currentUser)}
-    catch (error) {  navigate("/ErrorPage")}
+        navigate("/auth");
+        setUserUID (null);
+  }
+    catch (error) {
+    console.log("Problem logging out")
+    }
 
   };
 
