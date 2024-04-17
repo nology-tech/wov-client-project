@@ -1,4 +1,5 @@
 import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
+import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { app, auth } from "../../firebase";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -44,14 +45,14 @@ const Register = () => {
         throw new Error("Passwords do not match. Try again.");
       }
       setPasswordMatchError("");
-      // doing as a variable should still create it in the DB
+
       const userCredential: UserCredential =
         await createUserWithEmailAndPassword(
           auth,
           formData.email,
           formData.password
         );
-      const uid = userCredential.user.uid; // retrieved UID#
+      const uid = userCredential.user.uid;
       await addUserData(uid);
     } catch (error) {
       setFormData(emptyFormData);
@@ -66,7 +67,10 @@ const Register = () => {
         id: uid,
         img: "",
         totalScore: 0,
-        name: formData.firstName + " " + formData.lastName,
+        name:
+          capitalisedFirstLetters(formData.firstName) +
+          " " +
+          capitalisedFirstLetters(formData.lastName),
         bio: "",
         email: formData.email,
       });
