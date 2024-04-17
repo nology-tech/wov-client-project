@@ -16,8 +16,6 @@ const Leaderboard = ({ users }: { users: UserProfile[] }) => {
     });
     return sortScoreAndName;
   };
-  
-  const highestScoreUser = sortUserByScore()[0];
 
   return (
     <div className="leaderboard">
