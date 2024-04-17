@@ -38,14 +38,18 @@ const App = () => {
   >([]);
 
 
-  const [userUID, setUserUID] = useState<string | null>(null)
-  //TODO: REMOVE WHEN userUID IS USED THX
-  console.log(userUID)
+  // const [userUID, setUserUID] = useState<string | null>(null)
+  // //TODO: REMOVE WHEN userUID IS USED THX
+  // console.log(userUID)
 
-  useEffect(()=> {
-    const localStorageUID = localStorage.getItem("userUID")
-    setUserUID(localStorageUID)
-  })
+  
+    // const localStorageUID = localStorage.getItem("userUID")
+    // setUserUID(localStorageUID)
+
+
+  // useEffect(() => {
+  //   console.log("userUID", userUID)
+  // },[userUID])
 
   useEffect(() => {
     const fetchUsers = async () => {

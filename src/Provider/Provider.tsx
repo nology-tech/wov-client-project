@@ -10,6 +10,7 @@ type AuthContextProps = {
     password: string
   ) => Promise<{ error: null | string }>;
   logoutUser: () => void;
+  userUID: string | null;
 };
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -19,10 +20,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userUID, setUserUID] = useState<string | null>(null)
+
+
+
 
   useEffect(() => {
     if (localStorage.getItem("userUID")) {
       setIsAuthenticated(true);
+      setUserUID(localStorage.getItem("userUID"))
     } else {
       setIsAuthenticated(false);
     }
@@ -43,9 +49,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         password
       );
       const accessToken = await userCredential.user.getIdToken();
-      const userUID = userCredential.user.uid;
+      const userID = userCredential.user.uid;
+      setUserUID(userID);
       localStorage.setItem("accessToken", (accessToken));
-      localStorage.setItem("userUID", (userUID));
+      localStorage.setItem("userUID", (userID));
       setIsAuthenticated(true);
       navigate("/", {state: {userUID}})
     } catch (error) {
@@ -63,7 +70,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logoutUser = () => {};
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser, userUID }}>
       {children}
     </AuthContext.Provider>
   );
