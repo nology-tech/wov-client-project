@@ -1,23 +1,26 @@
-import { useState } from "react";
+
 import "./ActiveTaskTile.scss";
 type ActiveTaskTileProps = {
+  id: string;
   requirement: string;
   category: string;
   points: number;
+  completed: boolean;
+  onCompletionChange: (id: string, completed: boolean) => void;
+  classModifier: string;
 };
+
 const ActiveTaskTile = ({
+  id,
   requirement,
   category,
-  points
+  points,
+  completed,
+  onCompletionChange,
+  classModifier,
 }: ActiveTaskTileProps) => {
-  const [completedTasks, setCompletedTasks] = useState<boolean>(false);
-
-  const handleTaskCompletion = () => {
-    setCompletedTasks(!completedTasks)
-  }
-
   return (
-    <div className="active-task" data-testid="active-task">
+    <div className={classModifier} data-testid="active-task">
       <div className="active-task__content">
         <label htmlFor="input-field">
           <h4 className="active-task__requirement">{requirement}</h4>
@@ -25,13 +28,15 @@ const ActiveTaskTile = ({
           <p className="active-task__points">{points} points</p>
         </label>
       </div>
-      <input
-        className="active-task__inputs"
-        type="checkbox"
-        checked={completedTasks}
-        onChange={handleTaskCompletion}
-      />
+        <input
+          type="checkbox"
+          checked={completed}
+          onChange={() => onCompletionChange(id, !completed)}
+          className="active-task__inputs"
+        />
+      
     </div>
   );
 };
+
 export default ActiveTaskTile;
