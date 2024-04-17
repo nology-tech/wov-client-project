@@ -8,9 +8,9 @@
   text-transform: uppercase;
   color: $white-color;
   cursor: pointer;
-  padding: 0.625rem 1.25rem;
+  padding: 1rem 1.25rem;
+  width: 100%;
   max-width: 20.938rem;
-  min-width: 16.75rem;
 
   &--primary {
     background-color: $primary-color;
@@ -23,5 +23,11 @@
   &--light-grey {
     background-color: $light-grey-color;
     color: $slate-grey-color;
+  }
+}
+@media screen and (min-width: $tablet-breakpoint) {
+  .button {
+    max-width: 24rem;
+    min-width: 18rem;
   }
 }

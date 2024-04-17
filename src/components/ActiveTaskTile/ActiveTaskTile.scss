@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   max-width: 80%;
-  margin: 0 auto;
+  margin: 1.8rem auto 0;
   border-bottom: 2px solid $light-grey-color;
   padding-bottom: 1.2rem;
   align-items: flex-start;
@@ -38,3 +38,27 @@
     }
   }
 }
+
+.active-task--last {
+  border-bottom: none;
+}
+
+
+@media screen and (min-width: $tablet-breakpoint) {
+  .active-task{
+    &__inputs{
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .active-task{
+    &__inputs{
+      height: 35px;
+      width: 35px;
+    }
+  }
+}
+
