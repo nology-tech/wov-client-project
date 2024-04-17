@@ -16,6 +16,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { useEffect, useState } from "react";
 import { Dayjs } from "dayjs";
+import Test from "./pages/Test/Test";
 
 const App = () => {
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
@@ -88,6 +89,7 @@ const App = () => {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/auth" element={<Account />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </>
   );
