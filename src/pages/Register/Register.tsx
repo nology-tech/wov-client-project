@@ -1,11 +1,10 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { app, auth } from "../../firebase";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
-import { v4 as uuidv4 } from "uuid";
-import { doc, getFirestore, setDoc } from "firebase/firestore"; 
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 import "./Register.scss";
 
 const emptyFormData = {
@@ -45,28 +44,30 @@ const Register = () => {
         throw new Error("Passwords do not match. Try again.");
       }
       setPasswordMatchError("");
-      await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
+      // doing as a variable should still create it in the DB
+      const userCredential: UserCredential =
+        await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+      const uid = userCredential.user.uid; // retrieved UID
+      console.log(uid);
     } catch (error) {
       setFormData(emptyFormData);
       setPasswordMatchError((error as Error).message);
     }
   };
 
-  const addData = async () => {
-    try {
-      const db = getFirestore(app);
-      await setDoc(doc(db, "test-tribe", uuidv4()), {
-      });
-    } catch {
-      console.log("Error: Could not locate Completed Tasks from database");
-    }
-  };
-
-  
+  // const addData = async () => {
+  //   try {
+  //     const db = getFirestore(app);
+  //     await setDoc(doc(db, "test-tribe", uuidv4()), {
+  //     });
+  //   } catch {
+  //     console.log("Error: Could not locate Completed Tasks from database");
+  //   }
+  // };
 
   return (
     <section className="register">
