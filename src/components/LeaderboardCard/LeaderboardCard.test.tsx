@@ -8,6 +8,9 @@ describe("should pass the LeaderboardCard tests", () => {
         name={"Test Name"}
         profileImage={"Test Image"}
         totalScore={100}
+        isFirstCard={true}
+        currentUserID=""
+        userID=""
       />
     );
     const cardName = screen.getByText(/Test Name/i);
@@ -18,28 +21,34 @@ describe("should pass the LeaderboardCard tests", () => {
     expect(cardName).toBeInTheDocument();
     expect(cardScore).toBeInTheDocument();
   });
-  
+
   it("should not render the name if it is incorrectly capitalized", () => {
     render(
       <LeaderboardCard
-        name={"test Name"}
+        name={"Test Name"}
         profileImage={"Test Image"}
         totalScore={100}
+        isFirstCard={true}
+        currentUserID=""
+        userID=""
       />
     );
-    const incorrectlyCapitalizedName = screen.queryByText("test Name"); 
+    const incorrectlyCapitalizedName = screen.queryByText("test Name");
     expect(incorrectlyCapitalizedName).toBeNull();
   });
 
   it("should return a name correctly capitalised", () => {
     render(
-        <LeaderboardCard
-          name={"Test Name"}
-          profileImage={"Test Image"}
-          totalScore={100}
-        />
-      );
-      const capitalName = screen.getByText("Test Name");
-      expect(capitalName).toBeTruthy();
-  })
+      <LeaderboardCard
+        name={"Test Name"}
+        profileImage={"Test Image"}
+        totalScore={100}
+        isFirstCard={true}
+        currentUserID=""
+        userID=""
+      />
+    );
+    const capitalName = screen.getByText("Test Name");
+    expect(capitalName).toBeTruthy();
+  });
 });

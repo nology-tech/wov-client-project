@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import  Leaderboard from "./Leaderboard";
+import Leaderboard from "./Leaderboard";
 import { customRender } from "../../utils/testUtils";
 import { UserProfile } from "../../mockData/mockTribe";
 
@@ -13,7 +13,7 @@ describe("should pass the leaderboard tests", () => {
       bio: "Test Bio",
       email: "TestEmail@example.com",
     };
-    customRender(<Leaderboard users={[mockUser]} />);
+    customRender(<Leaderboard users={[mockUser]} currentUserID={""} />);
     const cardUser = screen.getByText("Test User");
     expect(cardUser).toBeInTheDocument();
   });
@@ -45,7 +45,7 @@ describe("should pass the leaderboard tests", () => {
         email: "TestEmail@example.com",
       },
     ];
-    customRender(<Leaderboard users={mockUsers} />);
+    customRender(<Leaderboard users={mockUsers} currentUserID={""} />);
     const sortUsersByScore = screen.getAllByTestId(
       "leaderboard__score"
     ) as HTMLParagraphElement[];
