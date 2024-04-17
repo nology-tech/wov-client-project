@@ -18,7 +18,7 @@ const emptyFormData = {
 };
 
 type RegisterProps = {
-  handleSetUserID: (userID: string) => void;
+  handleSetUserID?: (userID: string) => void;
 };
 
 const Register = ({ handleSetUserID }: RegisterProps) => {
@@ -58,7 +58,7 @@ const Register = ({ handleSetUserID }: RegisterProps) => {
           formData.password
         );
       const uid = userCredential.user.uid;
-      handleSetUserID(uid);
+      handleSetUserID && handleSetUserID(uid);
       await addUserData(uid);
     } catch (error) {
       setFormData(emptyFormData);
