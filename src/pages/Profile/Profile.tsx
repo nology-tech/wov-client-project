@@ -23,6 +23,7 @@ const Profile = (
   
     try {signOut(auth);
         navigate("/auth");
+        localStorage.removeItem("userData");
         setUserUID (null);
   }
     catch (error) {

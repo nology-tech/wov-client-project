@@ -12,7 +12,6 @@ import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import { doc, getDoc } from "firebase/firestore";
 import { Task } from "./mockData/mockActiveTasks";
-import { UserProfile } from "./mockData/mockTribe";
 import { useEffect, useState } from "react";
 import { app, db } from "./firebase";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
@@ -104,7 +103,7 @@ const App = () => {
           path="/leaderboard"
           element={<Leaderboard users={fetchedTribe} />}
         />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+        <Route path="/profile" element={<Profile user={tribeUsers[0]} setUserUID={setUserUID}/>} />
         <Route
           path="/calendar"
           element={
