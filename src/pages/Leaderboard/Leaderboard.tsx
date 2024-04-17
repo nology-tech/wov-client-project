@@ -3,8 +3,10 @@ import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
 import { UserProfile } from "../../mockData/mockTribe";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
+import { tribeUsers } from "../../mockData/mockTribe";
 
 const Leaderboard = ({ users }: { users: UserProfile[] }) => {
+  users = tribeUsers
   const sortUserByScore = () => {
     const sortedUsers = [...users];
     const sortScore = sortedUsers.sort((a, b) => b.totalScore - a.totalScore);
@@ -17,7 +19,6 @@ const Leaderboard = ({ users }: { users: UserProfile[] }) => {
     return sortScoreAndName;
   };
   
-  const highestScoreUser = sortUserByScore()[0];
 
   return (
     <div className="leaderboard">

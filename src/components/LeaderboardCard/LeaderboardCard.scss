@@ -11,6 +11,11 @@
   border: 1px $light-grey-color solid;
   border-radius: 10px;
   padding: 0.5rem 0.8rem;
+
+  // &.highlight {
+  //   background-color: green($color: #000000)
+  // }
+
   &__img-div {
     width: 2.5rem;
     height: 2.5rem;
@@ -20,6 +25,7 @@
       margin-right: 0.5rem;
     }
   }
+ 
   &__name {
     font-size: 0.85rem;
     width: 10rem;
