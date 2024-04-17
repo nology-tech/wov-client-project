@@ -129,7 +129,7 @@ const App = () => {
         <Route path="/auth" element={<Account />} />
         <Route
           path="/register"
-          element={<Register handleSetUserID={handleSetUserUID} />}
+          element={<Register setUserUID={handleSetUserUID} />}
         />
       </Routes>
     </>
