@@ -11,7 +11,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import { UserProfile } from "./mockData/mockTribe";
-import { app, db } from "./firebase";
+import { app, auth, db } from "./firebase";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
@@ -20,21 +20,13 @@ import { Dayjs } from "dayjs";
 import { AuthProvider } from "./Provider/Provider";
 import PrivateRoute from "./Provider/PrivateRoute";
 
+// TODO: REMOVE
+import { signOut } from "firebase/auth";
+
 const App = () => {
-  const location = useLocation()
-  console.log("location state", location.state)
-  const [userUID, setUserUID] = useState<null | string>(null);
-  // NOTE: this console.log is used to workaround an eslint warning
-  // It should be deleted once userUID is used
-  console.log(userUID);
-
-  useEffect(() => {
-    setUserUID(localStorage.getItem("userUID"))
-  }, [])
-
-  const handleSetUserUID = (userUID: string) => {
-    setUserUID(userUID);
-  };
+  // TODO: REMOVE
+  // signOut(auth);
+  // localStorage.clear();
 
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
 
@@ -62,7 +54,6 @@ const App = () => {
 
   const getData = async () => {
     try {
-      console.log("running");
       const db = getFirestore(app);
       const completedTask = doc(
         db,
@@ -81,7 +72,6 @@ const App = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(fetchedTribe);
 
   return (
     <>
@@ -89,10 +79,7 @@ const App = () => {
         <Routes>
           <Route path="/auth" element={<Account />} />
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/sign-in"
-            element={<Login setUserUID={setUserUID} />}
-          />
+          <Route path="/sign-in" element={<Login />} />
           <Route path="*" element={<ErrorPage />} />
 
           <Route path="/" element={<PrivateRoute />}>

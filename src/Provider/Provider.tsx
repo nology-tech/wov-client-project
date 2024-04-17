@@ -1,10 +1,14 @@
 import React, { useEffect, createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {auth} from "../firebase";
+import { auth } from "../firebase";
+import { AuthError, signInWithEmailAndPassword } from "firebase/auth";
 
 type AuthContextProps = {
   isAuthenticated: boolean;
-  loginUser: () => void;
+  loginUser: (
+    email: string,
+    password: string
+  ) => Promise<{ error: null | string }>;
   logoutUser: () => void;
 };
 
@@ -13,16 +17,9 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-// export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // const accessToken = localStorage
-  // if(!accessToken) {
-  // setIsAuthenticated(false)
-  // } else {
-  //   setIsAuthenticated(true)
-  // }
   useEffect(() => {
     if (localStorage.getItem("userUID")) {
       setIsAuthenticated(true);
@@ -35,7 +32,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (isAuthenticated) navigate("/");
   }, [isAuthenticated]);
 
-  const loginUser = () => {};
+  const loginUser = async (
+    email: string,
+    password: string
+  ): Promise<{ error: null | string }> => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const accessToken = await userCredential.user.getIdToken();
+      const userUID = userCredential.user.uid;
+      localStorage.setItem("accessToken", JSON.stringify(accessToken));
+      localStorage.setItem("userUID", JSON.stringify(userUID));
+      setIsAuthenticated(true);
+    } catch (error) {
+      const errorCode = (error as AuthError).code;
+      if (errorCode === "auth/invalid-credential") {
+        return { error: "Invalid email/password" };
+      } else {
+        return {
+          error: "Oops, something went wrong. Try again in a few minutes",
+        };
+      }
+    }
+    return { error: null };
+  };
   const logoutUser = () => {};
 
   return (

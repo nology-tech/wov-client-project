@@ -3,23 +3,15 @@ import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, signInWithRedirect} from "firebase/auth";
-import { auth } from "../../firebase";
-import { AuthError } from "firebase/auth";
-import { AuthProvider } from "../../Provider/Provider";
-import { Navigate } from "react-router-dom";
-
+import { useAuth } from "../../Provider/Provider";
 
 const emptyFormData = {
   email: "",
   password: "",
 };
 
-type LoginProps = {
-  setUserUID: (arg0: string) => void;
-};
-
-export const Login = ({ setUserUID }: LoginProps) => {
+export const Login = () => {
+  const { loginUser } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(emptyFormData);
   const [formErrorMessage, setFormErrorMessage] = useState("");
@@ -31,33 +23,12 @@ export const Login = ({ setUserUID }: LoginProps) => {
 
   const onLogin = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const accessToken = await userCredential.user.getIdToken();
-      const userUID = userCredential.user.uid;
-      console.log(userCredential.user.uid)
-      setUserUID(userCredential.user.uid);
-      localStorage.setItem("accessToken", JSON.stringify(accessToken))
-      localStorage.setItem("userUID", JSON.stringify(userUID) )
-      navigate("/", {state: { userUID }});
-     
-    } catch (error) {
-      const errorCode = (error as AuthError).code
-      if (errorCode === "auth/invalid-credential") {
-        setFormErrorMessage("Invalid email/password");
-      } else {
-        setFormErrorMessage(
-          "Oops, something went wrong. Try again in a few minutes"
-        );
-      }
+    const { error } = await loginUser(formData.email, formData.password);
+    if (error) {
+      setFormErrorMessage(error);
     }
   };
-  
-  
+
   const handlePrevious = () => {
     navigate(-1);
   };
