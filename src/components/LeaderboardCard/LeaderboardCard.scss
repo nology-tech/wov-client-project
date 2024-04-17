@@ -38,6 +38,9 @@
 }
 .leaderboard-card--first {
   background-color: $primary-color;
+  p {
+    color: white;
+  }
 }
 
 @media screen and (min-width: $tablet-breakpoint) {
