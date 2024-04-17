@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Navigation from "../../components/Navigation/Navigation";
-import { activeTasks } from "../../mockData/mockActiveTasks";
+import { activeTasks } from "../../Mockdata/mockActiveTasks";
 import "./ActiveTasks.scss";
 import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
