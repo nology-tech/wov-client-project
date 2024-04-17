@@ -16,10 +16,7 @@ import { UserProfile } from "./mockData/mockTribe";
 import { useEffect, useState } from "react";
 import { app, db } from "./firebase";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
-import {
-  CompletedTask as CompletedTaskType,
-  completedTasks,
-} from "./mockData/mockCompletedTasks";
+import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { Dayjs } from "dayjs";
 
 const App = () => {
@@ -32,7 +29,6 @@ const App = () => {
 
   useEffect(() => {
     const getTasks = async () => {
-      const db = getFirestore(app);
       const retrievalReference = doc(
         db,
         "test-active-tasks",
@@ -44,7 +40,7 @@ const App = () => {
       }
     };
     getTasks();
-  });
+  }, []);
 
   const handleSetUserUID = (userUID: string) => {
     setUserUID(userUID);
@@ -104,23 +100,22 @@ const App = () => {
           path="/tasks"
           element={<ActiveTasks activeTasks={activeTasksList} />}
         />
-        <Route
-          path="/calendar"
-          element={<Calendar completedTasks={completedTasks} date={date} />}
-        />
+
         <Route
           path="/leaderboard"
           element={<Leaderboard users={fetchedTribe} />}
         />
         <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-        path="/calendar" element=
-        {
-          <Calendar
-            completedTasks={completedTaskArray}
-            changeDate={changeDate}
-            date={date}
-          />
-        }
+        <Route
+          path="/calendar"
+          element={
+            <Calendar
+              completedTasks={completedTaskArray}
+              changeDate={changeDate}
+              date={date}
+            />
+          }
+        />
         <Route
           path="/leaderboard"
           element={<Leaderboard users={tribeUsers} />}
