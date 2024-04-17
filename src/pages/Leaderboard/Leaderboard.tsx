@@ -21,7 +21,7 @@ const Leaderboard = ({ users }: { users: UserProfile[] }) => {
     return sortScoreAndName;
   };
 
-  const currentUserID = "g234"
+  const currentUserID = "g234"; // MOCK CURRENT USER
 
   return (
     <div className="leaderboard">
@@ -36,7 +36,8 @@ const Leaderboard = ({ users }: { users: UserProfile[] }) => {
             }
             totalScore={user.totalScore}
             isFirstCard={index === 0}
-            currentUserID = {currentUserID}
+            currentUserID={currentUserID}
+            userID={user.id}
           />
         ))}
         ;
