@@ -33,10 +33,13 @@
     color: $primary-color;
   }
 }
+.leaderboard-card--first {
+  background-color: $primary-color;
+}
 
 @media screen and (min-width: $tablet-breakpoint) {
   .leaderboard-card {
-    &__img-div{
+    &__img-div {
       width: 3.2rem;
       height: 3.2rem;
     }
@@ -57,7 +60,7 @@
     border-radius: 15px;
     &__img-div {
       width: 4rem;
-      height: 4rem
+      height: 4rem;
     }
     &__name {
       font-size: 1.4rem;
@@ -93,7 +96,7 @@
     padding: 1.3rem 2.5rem;
     &__img-div {
       width: 8rem;
-     height: 8rem;
+      height: 8rem;
     }
     &__name {
       font-size: 3.5rem;
