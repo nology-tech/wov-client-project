@@ -18,6 +18,14 @@ const Profile = ({ setUserUID, user }: profileProps) => {
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
+  
+    try {signOut(auth);
+        navigate("/auth");
+        localStorage.removeItem("userData");
+        setUserUID (null);
+  }
+    catch (error) {
+    console.log("Problem logging out")
     try {
       signOut(auth);
       navigate("/auth");
