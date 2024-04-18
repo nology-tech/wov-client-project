@@ -10,73 +10,30 @@ import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
-import { UserProfile } from "./mockData/mockTribe";
-import { app, db } from "./firebase";
-import { collection, getDocs, getFirestore, query } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
-import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
-import { useEffect, useState } from "react";
-import { Dayjs } from "dayjs";
+import { useState } from "react";
 import { useAuth } from "./Provider/Provider";
 import { PrivateRoute } from "./Provider/PrivateRoute";
+import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 
 const App = () => {
-  const { isAuthenticated } = useAuth();
+  const {isAuthenticated} = useAuth()
+  const [userUID, setUserUID] = useState<null | string>(null);
+  // NOTE: this console.log is used to workaround an eslint warning
+  // It should be deleted once userUID is used
+  console.log(userUID);
 
-  const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
-  //TODO: REMOVE WHEN fetchedTribe IS USED
-  console.log(fetchedTribe);
-
-  const [date, setDate] = useState<Date>(new Date());
-  const [completedTaskArray, setCompletedTaskArray] = useState<
-    CompletedTaskType[]
-  >([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const tribeQuery = query(collection(db, "test-tribe"));
-      const tribeDocs = await getDocs(tribeQuery);
-      const tribeData: UserProfile[] = tribeDocs.docs.map(
-        (doc) => doc.data() as UserProfile
-      );
-      setFetchedTribe(tribeData);
-    };
-
-    fetchUsers();
-  }, []);
-
-  const changeDate = (value: Dayjs) => {
-    setDate(new Date(value.year(), value.month(), value.date()));
+  const handleSetUserUID = (userUID: string) => {
+    setUserUID(userUID);
   };
-
-  const getData = async () => {
-    try {
-      const db = getFirestore(app);
-      const completedTask = doc(
-        db,
-        "test-completed-tasks",
-        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
-      );
-      const completedTasksData = await getDoc(completedTask);
-      if (completedTasksData.exists()) {
-        const completedTaskArray = completedTasksData.data().completedTasks;
-        setCompletedTaskArray(completedTaskArray);
-      }
-    } catch {
-      console.log("Error: Could not locate Completed Tasks from database");
-    }
-  };
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <>
-      <Routes>
+      <FirestoreProvider>
+        <Routes>
         {!isAuthenticated ?
           <>
             <Route path="/auth" element={<Account />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<Register setUserUID={handleSetUserUID} />} />
             <Route path="/sign-in" element={<Login />} />
           </>
           :
@@ -90,23 +47,20 @@ const App = () => {
             <Route
               path="/calendar"
               element={
-                <Calendar
-                  completedTasks={completedTaskArray}
-                  changeDate={changeDate}
-                  date={date}
-                />
+                <Calendar />
               }
             />
             <Route
               path="/leaderboard"
-              element={<Leaderboard users={tribeUsers} />}
+              element={<Leaderboard />}
             />
             <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
           </Route>
           :
           <Route path="*" element={<ErrorPage />} />
         }
-      </Routes>
+        </Routes>
+      </FirestoreProvider>
     </>
   );
 };
