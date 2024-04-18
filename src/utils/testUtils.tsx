@@ -6,25 +6,40 @@ import {
 } from "../context/FirestoreProvider/FirestoreProvider";
 import { AuthContext, AuthContextProps } from "../context/AuthProvider/AuthProvider";
 
+type Options = {
+  useRouting?: boolean,
+  firestoreValue?: FirestoreContextProps,
+  useAuthProvider?: boolean,
+  isAuthenticated?: boolean,
+  userUID?: string | null
+}
+const defaultOptions: Options = {
+  useRouting: true,
+  firestoreValue: undefined,
+  useAuthProvider: true,
+  isAuthenticated: false,
+  userUID: null
+}
+// calendar
+// active tasks
+// leaderboard
 export const customRender = (
   ui: JSX.Element,
-  useRouting = true,
-  value?: FirestoreContextProps,
-  useAuthProvider = true,
+  options: Options = defaultOptions
 ) => {
   // wrap components in routing if requested
   let uiResult = ui;
 
-  if (value) {
-    uiResult = wrapWithFirestoreProvider(ui, value);
+  if (options.firestoreValue) {
+    uiResult = wrapWithFirestoreProvider(ui, options.firestoreValue);
   }
 
-  if (useRouting) {
+  if (options.useRouting) {
     uiResult = wrapWithRouting(uiResult);
   }
 
-  if (useAuthProvider) {
-    uiResult = wrapWithAuthProvider(uiResult)
+  if (options.useAuthProvider) {
+    uiResult = wrapWithAuthProvider(uiResult, options)
   }
 
   // use RTL's render function to return the test component
@@ -37,12 +52,13 @@ const wrapWithRouting = (ui: JSX.Element): JSX.Element => {
 
 const wrapWithAuthProvider = (
   ui: JSX.Element,
+  options: Options
 ): JSX.Element => {
   const defaultAuthContext: AuthContextProps = {
     loginUser: (_, __) => Promise.resolve({ error: null }),
     logoutUser: () => null,
-    isAuthenticated: false,
-    userUID: null,
+    isAuthenticated: options.isAuthenticated ?? false,
+    userUID: options.userUID ?? null,
   };
 
   return (
