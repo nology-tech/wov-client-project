@@ -1,8 +1,10 @@
 import "./Leaderboard.scss";
 import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
-import { UserProfile } from "../../mockData/mockTribe";
+import { UserProfile } from "../../types/User";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
+import { useState, useEffect } from "react";
+import { useFirestore } from "../../hooks/useFireStore";
 
 type LeaderboardProps = {
   users: UserProfile[];

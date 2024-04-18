@@ -3,24 +3,28 @@ import userEvent from "@testing-library/user-event";
 import ActiveTasks from "./ActiveTasks";
 import { customRender } from "../../utils/testUtils";
 import { activeTasks } from "../../mockData/mockActiveTasks";
+import { FirestoreContextProps } from "../../context/FirestoreProvider/FirestoreProvider";
 
 describe("ActiveTask page component", () => {
-  it("should render the ActiveTask page", () => {
-    customRender(<ActiveTasks activeTasks={activeTasks} />);
+  const mockFireStore = {
+    getActiveTasks: (_: string) => Promise.resolve(activeTasks),
+  } as FirestoreContextProps;
 
+  it("should render the ActiveTask page", () => {
+    customRender(<ActiveTasks />, true, mockFireStore);
     const activeTask = screen.getByTestId("task-page");
     expect(activeTask).toBeInTheDocument();
   });
 
   it("should render the header component", () => {
-    customRender(<ActiveTasks activeTasks={activeTasks} />);
+    customRender(<ActiveTasks />, true, mockFireStore);
 
     const header = screen.getByText("WAY OF THE VIKING");
     expect(header).toBeInTheDocument();
   });
 
   it("should render the navigation component", () => {
-    customRender(<ActiveTasks activeTasks={activeTasks} />);
+    customRender(<ActiveTasks />, true, mockFireStore);
 
     const home = screen.getByText("Home");
     const tasks = screen.getByText("Tasks");
@@ -32,17 +36,17 @@ describe("ActiveTask page component", () => {
     expect(leaderboard).toBeInTheDocument();
   });
 
-  it("should check the initial state of the button", () => {
-    customRender(<ActiveTasks activeTasks={activeTasks} />);
+  it("should check the initial state of the button", async () => {
+    customRender(<ActiveTasks />, true, mockFireStore);
 
-    const checkboxInitial = screen.getAllByRole("checkbox");
+    const checkboxInitial = await screen.findAllByRole("checkbox");
     checkboxInitial.forEach((checkbox) => {
       expect(checkbox).not.toBeChecked();
     });
   });
 
   it("should check the search input renders correct results", async () => {
-    customRender(<ActiveTasks activeTasks={activeTasks} />);
+    customRender(<ActiveTasks />, true, mockFireStore);
 
     const searchInput = screen.getByRole("search");
     await userEvent.type(searchInput, "di");
