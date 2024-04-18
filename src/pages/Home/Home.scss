@@ -66,22 +66,10 @@
 
   .home{
     padding: 2rem;
-    font-size: 1.3rem;
-  }
-} 
-
-@media screen and (min-width: $extra-large-desktop-breakpoint) {
-
-  .home{
-    padding: 2rem;
-    font-size: 2rem;
-  
-  &__daily-tasks-button {
-    margin-top: unset;
-    }
+    font-size: 1.6rem;
     &__header {
-      font-size: 3rem;
-      line-height: 3rem
+      font-size: 2.5rem;
+      line-height: 3rem;
     } 
     &__paragraph {
       line-height: $line-height-header;
@@ -89,6 +77,27 @@
     &__quote {
       line-height: $line-height-header;
       margin-top: 1.5rem;
+      margin-left: 6rem;
+      padding-left: 20px;
+    }
+  }
+} 
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+
+  .home{
+    padding: 2.2rem;
+    font-size: 2.8rem;
+    &__header {
+      font-size: 4rem;
+      line-height: 4rem;
+    } 
+    &__paragraph {
+      line-height: 3.2rem;
+    }
+    &__quote {
+      line-height: 3rem;
+      margin-top: 3rem;
       margin-left: 6rem;
       padding-left: 20px;
     }

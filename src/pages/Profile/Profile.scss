@@ -9,7 +9,8 @@
   align-items: center;
   justify-content: flex-start;
   padding: 3rem 0 0 0;
-  height: 100vh;
+  height: auto;
+  padding-bottom: 7rem;
   &__img {
     height: 9em;
     width: 9em;
@@ -50,7 +51,7 @@
 @media screen and (min-width: $desktop-breakpoint) {
   .profile {
     font-size: 1.4rem;
-    padding: 4rem 0 0 0;
+    padding-bottom: 8rem;
     &__score {
       font-size: 2.7rem;
     }
@@ -62,30 +63,32 @@
 }  
 @media screen and (min-width: $large-desktop-breakpoint) {
   .profile {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    padding-bottom: 10rem;
     &__score {
-      font-size: 3.5rem;
+      font-size: 3.6rem;
     }
     &__info {
       gap: 20px;
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
   }
 }  
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
   .profile {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     &__score {
-      font-size: 5rem;
+      font-size: 6rem;
+      padding-bottom: 3rem;
     }
     &__info {
-      gap: 25px;
-      font-size: 3rem;
+      gap: 50px;
+      font-size: 4rem;
     }
     &__buttons {
-      margin-top: 9rem;
-      gap: 2.6rem;
+      margin-top: 10rem;
+      gap: 2.9rem;
     }
   }
 }  
