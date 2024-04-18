@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getFirestore,
+  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -18,6 +19,7 @@ import { ActiveTask } from "../../types/Task";
 import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
+import dayjs from "dayjs";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -119,7 +121,10 @@ const ActiveTasks = () => {
     );
 
     // TODO: Add dynamic date
-    recentlyCompletedTask.completed = "12 April 2024 at 05:20:00 UTC+1";
+    const today = new Date();
+    recentlyCompletedTask.completed = dayjs(today).format(
+      "D MMMM YYYY [at] HH:mm:ss [UTC]Z"
+    );
 
     if (!recentlyCompletedTask) {
       console.error("Recently completed task does not exist.");
@@ -139,7 +144,9 @@ const ActiveTasks = () => {
       .completedTasks as CompletedTaskData[];
     const updatedCompleteTasks = [...completedTasksData, recentlyCompletedTask];
 
-    await setDoc(doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
+    await setDoc(
+      doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+      {
         completedTasks: updatedCompleteTasks,
       }
     );
@@ -147,7 +154,11 @@ const ActiveTasks = () => {
     removeActiveTask(id);
   };
 
-  const handleTaskCompletionChange = async (id: string, isCompleted: boolean, points: number) => {
+  const handleTaskCompletionChange = async (
+    id: string,
+    isCompleted: boolean,
+    points: number
+  ) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
     if (isCompleted) {
       setPopupTaskCompleted(!popupTaskCompleted);
