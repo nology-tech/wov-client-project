@@ -19,7 +19,9 @@ function Test() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = await getDownloadURL(ref(storage, "videos/rabbit320.webm"));
+        const url = await getDownloadURL(
+          ref(storage, "videos/file_example_MP4_480_1_5MG.mp4")
+        );
 
         const video = document.querySelector<HTMLVideoElement>("video");
 
@@ -36,23 +38,24 @@ function Test() {
     fetchData();
   }, []);
 
-  const uploadToDatabase = (url: string) => {
+  const uploadToDatabase = async (url: string) => {
     let docData = {
       mostRecentUploadURL: url,
-      username: "jasondubon",
+      username: "users",
     };
     const userRef = doc(db, "users", docData.username);
-    setDoc(userRef, docData, { merge: true })
-      .then(() => {
-        console.log("successfully updated DB");
-      })
-      .catch((error) => {
-        console.log(`${error} error`);
-      });
+
+    try {
+      await setDoc(userRef, docData, { merge: true });
+      console.log("successfully updated DB");
+    } catch (error) {
+      console.log(`${error} error`);
+    }
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (typeof file === "undefined") return;
+
     const fileRef = ref(storage, `videos/${file.name}`);
     const uploadTask = uploadBytesResumable(fileRef, file);
 
@@ -65,12 +68,15 @@ function Test() {
       (error) => {
         console.log(`${error} error`);
       },
-      () => {
+      async () => {
         console.log("success!!");
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          uploadToDatabase(downloadURL);
+        try {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           console.log(downloadURL);
-        });
+          await uploadToDatabase(downloadURL);
+        } catch (error) {
+          console.error(error);
+        }
       }
     );
   };
