@@ -12,13 +12,7 @@ import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
-import { doc, getDoc } from "firebase/firestore";
-import { UserProfile } from "./mockData/mockTribe";
-import { useEffect, useState } from "react";
-import { app, db } from "./firebase";
-import { collection, getDocs, getFirestore, query } from "firebase/firestore";
-import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
-import { Dayjs } from "dayjs";
+import { useState } from "react";
 
 const App = () => {
   const [userUID, setUserUID] = useState<null | string>(null);
@@ -29,50 +23,7 @@ const App = () => {
   const handleSetUserUID = (userUID: string) => {
     setUserUID(userUID);
   };
-  const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
 
-  const [date, setDate] = useState<Date>(new Date());
-  const [completedTaskArray, setCompletedTaskArray] = useState<
-    CompletedTaskType[]
-  >([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const tribeQuery = query(collection(db, "test-tribe"));
-      const tribeDocs = await getDocs(tribeQuery);
-      const tribeData: UserProfile[] = tribeDocs.docs.map(
-        (doc) => doc.data() as UserProfile
-      );
-      setFetchedTribe(tribeData);
-    };
-
-    fetchUsers();
-  }, []);
-
-  const changeDate = (value: Dayjs) => {
-    setDate(new Date(value.year(), value.month(), value.date()));
-  };
-
-  const getData = async () => {
-    try {
-      const db = getFirestore(app);
-      const completedTask = doc(
-        db,
-        "test-completed-tasks",
-        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
-      );
-      const completedTasksData = await getDoc(completedTask);
-      if (completedTasksData.exists()) {
-        const completedTaskArray = completedTasksData.data().completedTasks;
-        setCompletedTaskArray(completedTaskArray);
-      }
-    } catch {
-      console.log("Error: Could not locate Completed Tasks from database");
-    }
-  };
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <>

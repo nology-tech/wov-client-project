@@ -9,30 +9,43 @@ import { ChangeEvent, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import {
-  User,
   signInWithEmailAndPassword,
   updatePassword,
 } from "firebase/auth";
 
-const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
+type UpdateProfileProps = {
+  currentUser: UserProfile;
+  setCurrentUser?: () => {};
+};
+const UpdateProfile = ({ currentUser }: UpdateProfileProps) => {
   const [user, setUser] = useState<UserProfile>(currentUser);
-  const [password, setPassword] = useState<string>("123456");
+  const [password, setPassword] = useState<string>("");
+  const [currentPassword, setCurrentPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("123456");
   const { img, name, bio, email } = user;
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
     const value = event.currentTarget.value;
     setUser({ ...user, [key]: value });
   };
+
+  const handleCurrentPassword = (event: ChangeEvent<HTMLInputElement>) => {
+    const newPassword = event.currentTarget.value;
+    setCurrentPassword(newPassword);
+  };
+
   const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.currentTarget.value;
     setPassword(newPassword);
   };
+
   const handleConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.currentTarget.value;
     setConfirmPassword(newPassword);
   };
+
   const updateDatabase = async () => {
     try {
       await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
@@ -45,25 +58,33 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
     }
   };
 
-  const changePassword = () => {
+  const changePassword = async () => {
     try {
       if (password !== confirmPassword) {
         throw new Error("Passwords do not match. Try again.");
       }
-      signInWithEmailAndPassword(auth, "divya@test.com", "123456")
-        .then(async () => {
-          console.log("Sign In SuccessFul!");
-          await updatePassword(auth.currentUser as User, password)
-            .then(() => {
-              console.log("password changed");
-            })
-            .catch((error) => {
-              throw new Error(error.message);
-            });
-        })
-        .catch((error) => {
-          throw new Error(error.message);
-        });
+      const userPromise = await signInWithEmailAndPassword(
+        auth,
+        "divya@test.com",
+        currentPassword
+      );
+      await updatePassword(userPromise.user, password);
+
+      /*   .then(async () => {
+                  console.log("Sign In SuccessFul!");
+                  await updatePassword(auth.currentUser as User, password)
+                    .then(() => {
+                      console.log("password changed");
+                    })
+                    .catch(() => {
+                      setErrorMessage("Error in changing password");
+                    });
+                })
+                .catch(() => {
+                  setErrorMessage(
+                    "Error signing in. Please check the current password."
+                  );
+                }); */
       setErrorMessage("");
     } catch (error) {
       setErrorMessage((error as Error).message);
@@ -105,6 +126,16 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
             value={email}
             variant="outlined"
             disabled
+          />
+          <label htmlFor="current-password" className="profile__label">
+            Current Password
+          </label>
+          <TextField
+            id="current-password"
+            value={currentPassword}
+            variant="outlined"
+            onChange={handleCurrentPassword}
+            type="password"
           />
           <label htmlFor="password" className="profile__label">
             Password
