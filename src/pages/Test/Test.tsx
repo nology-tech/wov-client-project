@@ -9,44 +9,54 @@ import {
 
 import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
-
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
 
 function Test() {
   const [file, setFile] = useState<File | undefined>();
 
   const storage = getStorage();
-  let videoSrc = "";
-  getDownloadURL(ref(storage, "videos/rabbit320.webm"))
-    .then((url) => {
-      // `url` is the download URL for 'videos/rabbit320.webm'
 
-      //   // This can be downloaded directly:
-      //   const xhr = new XMLHttpRequest();
-      //   xhr.responseType = "blob";
-      //   xhr.onload = (event) => {
-      //     const blob = xhr.response;
-      //   };
-      //   xhr.open("GET", url);
-      //   xhr.send();
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const result = await getActiveTasks("OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+  //     setActiveTasks(result);
+  //   };
+  //   getData();
+  // }, [getActiveTasks]);
 
-      // Or inserted into an <img> element
-      //const img = document.getElementById("video");
-      //video.setAttribute("src", url);
+  useEffect(() => {
+    getDownloadURL(ref(storage, "videos/rabbit320.webm"))
+      .then((url) => {
+        // `url` is the download URL for 'videos/rabbit320.webm'
 
-      // save to videoSrc
-      videoSrc = url;
-    })
-    .catch((error) => {
-      // Handle any errors
-      console.log(error);
-    });
+        //   // This can be downloaded directly:
+        //   const xhr = new XMLHttpRequest();
+        //   xhr.responseType = "blob";
+        //   xhr.onload = (event) => {
+        //     const blob = xhr.response;
+        //   };
+        //   xhr.open("GET", url);
+        //   xhr.send();
+
+        //Or inserted into an <img> element
+        const video = document.querySelector<HTMLVideoElement>("video");
+
+        if (video === null) {
+          console.log("error with query selector");
+        } else {
+          video.setAttribute("src", url);
+        }
+
+        // save to videoSrc
+        let videoSrc = "";
+        videoSrc = url;
+        console.log("videoSrc", videoSrc);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.log(error);
+      });
+  }, []);
 
   const uploadToDatabase = (url: string) => {
     let docData = {
@@ -99,8 +109,8 @@ function Test() {
     <div>
       <input type="file" name="video" onChange={handleOnChange} />
       <button onClick={() => handleClick()}>Upload Button</button>
-      <video src={videoSrc} width="800" height="400" controls />
-      <Card sx={{ maxWidth: 345 }}>
+      <video src="" width="800" height="400" controls />
+      {/* <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           sx={{ height: 140 }}
           image="/static/images/cards/contemplative-reptile.jpg"
@@ -119,7 +129,7 @@ function Test() {
           <Button size="small">Share</Button>
           <Button size="small">Learn More</Button>
         </CardActions>
-      </Card>
+      </Card> */}
     </div>
   );
 }
