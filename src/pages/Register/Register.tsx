@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { auth } from "../../firebase";
-import { db } from "../../firebase";
+
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
@@ -89,15 +89,16 @@ const Register = ({ setUserUID }: RegisterProps) => {
     }
 
     const form = event.currentTarget;
-    const location = form.location;
-    const input = form[formData.img] as HTMLInputElement;
+    console.log(form);
+
+    const input = form["img"] as HTMLInputElement;
     if (!input.files) {
       alert("No files found :S");
       return;
     }
 
     const file = input.files[0];
-    const fileRef = ref(storage, `${location.value}/${file.name}`);
+    const fileRef = ref(storage, `${formData.firstName}/${file.name}`);
     const fileUpload = await uploadBytes(fileRef, file);
 
     const fileDownloadURL = await getDownloadURL(fileUpload.ref);
