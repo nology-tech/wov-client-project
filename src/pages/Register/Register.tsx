@@ -1,9 +1,12 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
+import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { auth } from "../../firebase";
+import { db } from "../../firebase";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
+import { doc, setDoc } from "firebase/firestore";
 import "./Register.scss";
 import { db, storage } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
@@ -19,7 +22,11 @@ const emptyFormData = {
   tribe: "",
 };
 
-const Register = () => {
+type RegisterProps = {
+  setUserUID: (userID: string) => void;
+};
+
+const Register = ({ setUserUID }: RegisterProps) => {
   const [formData, setFormData] = useState(emptyFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
@@ -52,11 +59,16 @@ const Register = () => {
         throw new Error("Passwords do not match. Try again.");
       }
       setPasswordMatchError("");
-      await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
+
+      const userCredential: UserCredential =
+        await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+      const uid = userCredential.user.uid;
+      setUserUID(uid);
+      await addUserData(uid);
     } catch (error) {
       setFormData(emptyFormData);
       setPasswordMatchError((error as Error).message);
@@ -99,6 +111,30 @@ const Register = () => {
 
   const handleShowUploadPrompt = () => {
     setShowUploadPrompt(!showUploadPrompt);
+  };
+
+  const addUserData = async (uid: string) => {
+    try {
+      await setDoc(doc(db, "test-tribe", uid), {
+        id: uid,
+        img: "",
+        totalScore: 0,
+        name:
+          capitalisedFirstLetters(formData.firstName) +
+          " " +
+          capitalisedFirstLetters(formData.lastName),
+        bio: "",
+        email: formData.email,
+      });
+      await setDoc(doc(db, "test-completed-tasks", uid), {
+        completedTasks: [],
+      });
+      await setDoc(doc(db, "test-active-tasks", uid), {
+        activeTasks: [],
+      });
+    } catch (error) {
+      console.log("Error adding user data to Firestore:", error);
+    }
   };
 
   return (
