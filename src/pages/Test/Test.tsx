@@ -7,7 +7,7 @@ import {
   getStorage,
 } from "firebase/storage";
 
-import { storage, db } from "../../firebase";
+import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 import * as React from "react";
@@ -45,6 +45,7 @@ function Test() {
     })
     .catch((error) => {
       // Handle any errors
+      console.log(error);
     });
 
   const uploadToDatabase = (url: string) => {
