@@ -10,15 +10,27 @@ import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
-import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
+import { CompletedTask as CompletedTaskType } from "../../types/Task";
+import { useFirestore } from "../../hooks/useFireStore";
 
-type CalendarProps = {
-  completedTasks: CompletedTaskType[];
-  changeDate?: (value: Dayjs) => void;
-  date: Date;
-};
+import { useEffect, useState } from "react";
 
-const Calendar = ({ completedTasks, changeDate, date }: CalendarProps) => {
+const Calendar = () => {
+  const { getCompletedTasks } = useFirestore();
+  const [completedTasks, setCompletedTasks] = useState<CompletedTaskType[]>([]);
+  const [date, setDate] = useState<Date>(new Date());
+  const changeDate = (value: Dayjs) => {
+    setDate(new Date(value.year(), value.month(), value.date()));
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      const result = await getCompletedTasks("OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+      setCompletedTasks(result);
+    };
+    getData();
+  }, [getCompletedTasks]);
+
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
     weekStart: 1,

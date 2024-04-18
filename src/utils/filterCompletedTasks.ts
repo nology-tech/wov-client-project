@@ -1,4 +1,4 @@
-import { CompletedTask } from "../mockData/mockCompletedTasks";
+import { CompletedTask } from "../types/Task";
 
 const filterCompletedTasks = (
   completedTasks: CompletedTask[],

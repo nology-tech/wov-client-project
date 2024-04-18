@@ -64,24 +64,28 @@
   .profile {
     font-size: 1.5rem;
     &__score {
-      font-size: 3rem;
+      font-size: 3.5rem;
     }
     &__info {
       gap: 20px;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
     }
   }
 }  
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
   .profile {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     &__score {
-      font-size: 4.5rem;
+      font-size: 5rem;
     }
     &__info {
-      font-size: 2.5rem;
+      gap: 25px;
+      font-size: 3rem;
     }
-  
+    &__buttons {
+      margin-top: 9rem;
+      gap: 2.6rem;
+    }
   }
 }  
