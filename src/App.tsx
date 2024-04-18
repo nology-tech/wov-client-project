@@ -32,7 +32,7 @@ const App = () => {
     setCurrentUser({ ...currentUser, ...updatedUser})
   }
 
-  const handleSetUserUID = (userUID: string) => {
+  const handleSetUserUID = (userUID: string | null) => {
     setUserUID(userUID);
   };
 
@@ -61,8 +61,10 @@ const App = () => {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route
             path="/profile"
-            element={<Profile user={currentUser} />}
-          />{" "}
+            element={
+              <Profile user={currentUser} setUserUID={handleSetUserUID} />
+            }
+          />
           <Route
             path="/sign-in"
             element={<Login setUserUID={handleSetUserUID} />}
