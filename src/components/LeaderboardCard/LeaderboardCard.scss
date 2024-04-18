@@ -40,7 +40,7 @@
 }
 .leaderboard-card--first {
   background-color: $primary-color;
-  p {
+  .leaderboard-card__name--first {
     color: white;
   }
 }

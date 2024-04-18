@@ -20,7 +20,7 @@ const App = () => {
   console.log(userUID);
 
   const handleSetUserUID = (userUID: string | null) => {
-    setUserUID(userUID);
+    setUserUID(userUID || "");
   };
 
   return (
@@ -30,7 +30,10 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/tasks" element={<ActiveTasks />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route
+            path="/leaderboard"
+            element={<Leaderboard users={tribeUsers} currentUserID={userUID} />}
+          />
           <Route
             path="/profile"
             element={

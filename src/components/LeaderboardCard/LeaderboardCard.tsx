@@ -25,6 +25,7 @@ const LeaderboardCard = ({
       className={`leaderboard-card ${
         isFirstCard ? "leaderboard-card--first" : ""
       } ${currentUserID === userID ? "leaderboard-card--current-user" : ""}`}
+      data-testid="leaderboard-card"
     >
       <div className="leaderboard-card__img-div">
         <img
@@ -32,14 +33,24 @@ const LeaderboardCard = ({
           className="leaderboard-card__img-div leaderboard-card__img-div--img"
         />
       </div>
-      <p className="leaderboard-card__name">{myName}</p>
+      <p
+        className={`leaderboard-card__name ${
+          isFirstCard ? "leaderboard-card__name--first" : ""
+        }`}
+      >
+        {myName}
+      </p>
       <div>
-        <p data-testid="leaderboard__score" className="leaderboard-card__score">
+        <p
+          data-testid="leaderboard__score"
+          className={`leaderboard-card__score ${
+            isFirstCard ? "leaderboard-card__name--first" : ""
+          }`}
+        >
           {totalScore}
         </p>
       </div>
     </div>
   );
 };
-
 export default LeaderboardCard;

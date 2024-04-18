@@ -51,4 +51,34 @@ describe("should pass the LeaderboardCard tests", () => {
     const capitalName = screen.getByText("Test Name");
     expect(capitalName).toBeTruthy();
   });
+
+  it("should apply 'leaderboard-card--first' class to the first card", () => {
+    render(
+      <LeaderboardCard
+        name={"Test Name"}
+        profileImage={"Test Image"}
+        totalScore={100}
+        isFirstCard={true}
+        currentUserID=""
+        userID=""
+      />
+    );
+    const leaderboardCard = screen.getByTestId("leaderboard-card");
+    expect(leaderboardCard).toHaveClass("leaderboard-card--first");
+  });
+
+  it("should apply 'leaderboard-card--current-user' class to the current user card", () => {
+    render(
+      <LeaderboardCard
+        name={"Test Name"}
+        profileImage={"Test Image"}
+        totalScore={100}
+        isFirstCard={false}
+        currentUserID="currentUserId123"
+        userID="currentUserId123"
+      />
+    );
+    const leaderboardCard = screen.getByTestId("leaderboard-card");
+    expect(leaderboardCard).toHaveClass("leaderboard-card--current-user");
+  });
 });
