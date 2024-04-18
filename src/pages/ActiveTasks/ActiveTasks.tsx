@@ -77,6 +77,33 @@ const ActiveTasks = () => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
   };
 
+  const removeActiveTask = async (id: string) => {
+    const updatedActiveTasks = activeTasks.filter((task) => task.id !== id);
+    setActiveTasks(updatedActiveTasks);
+
+    await setDoc(doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
+      activeTasks: updatedActiveTasks,
+    });
+  };
+
+  const updateUserScore = async (points: number) => {
+    const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+    const userRefDoc = await getDoc(userRef);
+
+    if (!userRefDoc.exists()) {
+      console.error("User document does not exist.");
+      return;
+    }
+
+    const userData: UserData = userRefDoc.data() as UserData;
+    const updateScore = userData.totalScore + points;
+
+    await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
+      ...userData,
+      totalScore: updateScore,
+    });
+  };
+
   const handleTaskCompletionChange = async (
     id: string,
     isCompleted: boolean,
@@ -122,18 +149,19 @@ const ActiveTasks = () => {
             }
           }
 
-          // Remove active task
-          const updatedActiveTasks = activeTasks.filter(
-            (task) => task.id !== id
-          );
-          setActiveTasks(updatedActiveTasks);
+          removeActiveTask(id);
+          // // Remove active task
+          // const updatedActiveTasks = activeTasks.filter(
+          //   (task) => task.id !== id
+          // );
+          // setActiveTasks(updatedActiveTasks);
 
-          await setDoc(
-            doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
-            {
-              activeTasks: updatedActiveTasks,
-            }
-          );
+          // await setDoc(
+          //   doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+          //   {
+          //     activeTasks: updatedActiveTasks,
+          //   }
+          // );
         }
 
         updateUserScore(points);
@@ -142,24 +170,6 @@ const ActiveTasks = () => {
         throw error;
       }
     }
-  };
-
-  const updateUserScore = async (points: number) => {
-    const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
-    const userRefDoc = await getDoc(userRef);
-
-    if (!userRefDoc.exists()) {
-      console.error("User document does not exist.");
-      return;
-    }
-
-    const userData: UserData = userRefDoc.data() as UserData;
-    const updateScore = userData.totalScore + points;
-
-    await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
-      ...userData,
-      totalScore: updateScore,
-    });
   };
 
   const handleGoToAddMediaPopup = () => {
