@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
 import "./Register.scss";
-import { app, db } from "../../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { addDoc, collection } from "firebase/firestore";
 
 const emptyFormData = {
   firstName: "",
@@ -23,7 +23,7 @@ const Register = () => {
   const [formData, setFormData] = useState(emptyFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
-  const [selectedTribe, setSelectedTribe] = useState<string>("");
+  //const [selectedTribe, setSelectedTribe] = useState<string>("");
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -56,11 +56,27 @@ const Register = () => {
         formData.email,
         formData.password
       );
+
+
     } catch (error) {
       setFormData(emptyFormData);
       setPasswordMatchError((error as Error).message);
     }
     console.log(formData);
+
+    try {                                   
+      const docRef = await addDoc(collection(db, "test-tribe"), 
+    {
+      Name : formData.firstName  + formData.lastName,
+      email: formData.email,
+      bio: formData.bio,
+      img: formData.img,
+      tribe: formData.tribe,
+      })
+      console.log("Document written with ID: ", docRef.id)
+    } catch (e) {
+      console.error("Error adding document", e)
+    }
   };
 
   const handleTribeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -132,7 +148,7 @@ const Register = () => {
             className="register__input register__input--margin-bottom"
             onChange={handleTribeChange}
           >
-            <option value="Tribe1">Tribe1</option>
+            <option value="test-tribe">test-tribe</option>
             <option value="Tribe2">Tribe2</option>
           </select>
           <label className="register__label" htmlFor="img"></label>
@@ -197,7 +213,9 @@ const Register = () => {
           )}
           {/* WHEN REGISTERING IS SUCCESSFUL -> LINK TO SIGN PAGE */}
           {/* ALSO, SHOW A MESSAGE TO THE USER WITH CONGRATULATIONS FOR CREATING AN ACCOUNT */}
-          <Button label="SIGN UP" />
+          <Button 
+          label="SIGN UP"
+         />
         </form>
       )}
     </section>
