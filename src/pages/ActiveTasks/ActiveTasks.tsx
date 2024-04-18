@@ -1,34 +1,31 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Navigation from "../../components/Navigation/Navigation";
-import { Task } from "../../mockData/mockActiveTasks";
+import { ActiveTask } from "../../types/Task";
 import "./ActiveTasks.scss";
 import Header from "../../components/Header/Header";
 import TextField from "@mui/material/TextField";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { getActiveTasks } from "../../utils/dbUtils/dbUtils";
+import { useFirestore } from "../../hooks/useFireStore";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
 const ActiveTasks = () => {
-  const [activeTasks, setActiveTasks] = useState<Task[]>([]);
+  const { getActiveTasks } = useFirestore();
+  const [activeTasks, setActiveTasks] = useState<ActiveTask[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        const tasks = await getActiveTasks();
-        setActiveTasks(tasks);
-      } catch (error) {
-        console.error("Error fetching active tasks:", error);
-      }
+      const result = await getActiveTasks("OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+      setActiveTasks(result);
     };
     getData();
-  }, []);
+  }, [getActiveTasks]);
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
