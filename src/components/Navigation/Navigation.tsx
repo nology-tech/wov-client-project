@@ -6,7 +6,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navigation.scss";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
 type NavProps = {
   navActionIndex: number;
