@@ -34,3 +34,52 @@
     color: $background-color;
   }
 }
+
+
+@media screen and (min-width: $tablet-breakpoint) {
+
+  .home{
+    padding: 1rem;
+  
+  &__daily-tasks-button {
+    margin-top: unset;
+   }
+  }
+} 
+
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+
+  .home{
+    padding: 2rem;
+    font-size: 1.3rem;
+  
+  &__daily-tasks-button {
+    margin-top: unset;
+    }
+  }
+} 
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+
+  .home{
+    padding: 2rem;
+    font-size: 2rem;
+  
+  &__daily-tasks-button {
+    margin-top: unset;
+    }
+    &__header {
+      font-size: 2.5rem;
+    } 
+    &__paragraph {
+      line-height: $line-height-header;
+    }
+    &__quote {
+      line-height: $line-height-header;
+      margin-top: 1.5rem;
+      margin-left: 6rem;
+      padding-left: 20px;
+    }
+  }
+} 
