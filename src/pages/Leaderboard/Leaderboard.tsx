@@ -13,7 +13,6 @@ const Leaderboard = () => {
   useEffect(() => {
     const getData = async () => {
       const data = await getLeaderboard("test-tribe");
-      console.log(data.map(user => user.name))
       setUsers(data);
     };
     getData();
