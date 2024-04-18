@@ -17,8 +17,8 @@ import { app } from "../../firebase";
 import { ActiveTask } from "../../types/Task";
 import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
-// import { completedTasks as tasks } from "../../mockData/mockCompletedTasks";
 import { useFirestore } from "../../hooks/useFireStore";
+import { activeTasks as tasks } from "../../mockData/mockActiveTasks";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -41,6 +41,7 @@ type ActiveTaskData = {
   points: number;
   taskHeading: string;
   type: string;
+  completed: string;
 };
 
 type ActiveTaskArray = ActiveTaskData[];
@@ -95,7 +96,8 @@ const ActiveTasks = () => {
           const recentlyCompletedTask = activeTaskArray.activeTasks.find(
             (task: ActiveTaskData) => task.id === id
           );
-          console.log(recentlyCompletedTask);
+          // TODO: Add dynamic date
+          recentlyCompletedTask.completed = "12 April 2024 at 05:20:00 UTC+1";
 
           if (recentlyCompletedTask) {
             const completedTasksDoc = await getDoc(
@@ -103,44 +105,35 @@ const ActiveTasks = () => {
             );
 
             if (completedTasksDoc.exists()) {
-              const completedTasksData =
-                completedTasksDoc.data() as CompletedTaskData[];
-              console.log(completedTasksData.completedTasks);
+              const completedTasksData = completedTasksDoc.data()
+                .completedTasks as CompletedTaskData[];
 
-              // const updatedCompleteTasks = [
-              //   ...completedTasksData,
-              //   recentlyCompletedTask,
-              // ];
+              const updatedCompleteTasks = [
+                ...completedTasksData,
+                recentlyCompletedTask,
+              ];
 
-              // await setDoc(
-              //   doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
-              //   {
-              //     completedTasks: updatedCompleteTasks,
-              //   }
-              // );
-            } else {
-              console.log("test-completed-task doc does not exist");
+              await setDoc(
+                doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+                {
+                  completedTasks: updatedCompleteTasks,
+                }
+              );
             }
-
-            // const completedTasksData = await getDoc(
-            //   doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
-            // );
-            // const completedTasks = completedTasksData.data().completedTasks;
-          } else {
-            console.log("Completed tasks not found in the active tasks");
           }
 
           // Remove active task
-          // const updatedActiveTask = activeTasks.filter(
-          //   (task) => task.id !== id
-          // );
+          const updatedActiveTasks = activeTasks.filter(
+            (task) => task.id !== id
+          );
+          setActiveTasks(updatedActiveTasks);
 
-          // await setDoc(
-          //   doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
-          //   updatedActiveTask
-          // );
-
-          // Remove the active task
+          await setDoc(
+            doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+            {
+              activeTasks: updatedActiveTasks,
+            }
+          );
         }
 
         const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
@@ -157,14 +150,11 @@ const ActiveTasks = () => {
               totalScore: updateScore,
             }
           );
-        } else {
-          console.log("User document does not exist.");
         }
       } catch (error) {
-        console.error("Error updating totalScore", error);
+        console.error("An error has occurred: ", error);
+        throw error;
       }
-
-      // TODO: Hide when user presses outside the container/window.
     }
   };
 
