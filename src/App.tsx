@@ -17,18 +17,11 @@ import { doc, getDoc } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { useEffect, useState } from "react";
 import { Dayjs } from "dayjs";
-// import { useAuth } from "./Provider/Provider";
-import PrivateRoute from "./Provider/PrivateRoute";
-
-// TODO: REMOVE
-// import { signOut } from "firebase/auth";
+import { useAuth } from "./Provider/Provider";
+import { PrivateRoute } from "./Provider/PrivateRoute";
 
 const App = () => {
-  // const { isAuthenticated } = useAuth();
-
-  // TODO: REMOVE
-  // signOut(auth);
-  // localStorage.clear();
+  const { isAuthenticated } = useAuth();
 
   const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
   //TODO: REMOVE WHEN fetchedTribe IS USED
@@ -80,30 +73,39 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/auth" element={<Account />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/sign-in" element={<Login />} />
-        <Route path="*" element={<ErrorPage />} />
+        {!isAuthenticated ?
+          <>
+            <Route path="/auth" element={<Account />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/sign-in" element={<Login />} />
+          </>
+          :
+          <Route path="*" element={<ErrorPage />} />
+        }
 
-        <Route path="/" element={<PrivateRoute />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/tasks" element={<ActiveTasks />} />
-          <Route
-            path="/calendar"
-            element={
-              <Calendar
-                completedTasks={completedTaskArray}
-                changeDate={changeDate}
-                date={date}
-              />
-            }
-          />
-          <Route
-            path="/leaderboard"
-            element={<Leaderboard users={tribeUsers} />}
-          />
-          <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-        </Route>
+        {isAuthenticated ?
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/tasks" element={<ActiveTasks />} />
+            <Route
+              path="/calendar"
+              element={
+                <Calendar
+                  completedTasks={completedTaskArray}
+                  changeDate={changeDate}
+                  date={date}
+                />
+              }
+            />
+            <Route
+              path="/leaderboard"
+              element={<Leaderboard users={tribeUsers} />}
+            />
+            <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+          </Route>
+          :
+          <Route path="*" element={<ErrorPage />} />
+        }
       </Routes>
     </>
   );
