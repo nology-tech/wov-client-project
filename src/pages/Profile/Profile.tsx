@@ -1,7 +1,7 @@
 import Button from "../../components/Button/Button";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
-import { UserProfile } from "../../mockData/mockTribe";
+import { UserProfile } from "../../types/User";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import { signOut } from "firebase/auth";
