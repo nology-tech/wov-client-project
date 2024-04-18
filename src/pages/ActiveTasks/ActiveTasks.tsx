@@ -104,66 +104,57 @@ const ActiveTasks = () => {
     });
   };
 
-  const handleTaskCompletionChange = async (
-    id: string,
-    isCompleted: boolean,
-    points: number
-  ) => {
+  const updateCompletedTask = async (id: string) => {
+    const activeTaskDoc = await getDoc(
+      doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
+    );
+    const activeTaskArray = activeTaskDoc.data() as ActiveTaskArray;
+
+    if (!activeTaskDoc.exists()) {
+      console.error("Active tasks document does not exist.");
+      return;
+    }
+
+    const recentlyCompletedTask = activeTaskArray.activeTasks.find(
+      (task: ActiveTaskData) => task.id === id
+    );
+
+    // TODO: Add dynamic date
+    recentlyCompletedTask.completed = "12 April 2024 at 05:20:00 UTC+1";
+
+    if (!recentlyCompletedTask) {
+      console.error("Recently completed task does not exist.");
+      return;
+    }
+
+    const completedTasksDoc = await getDoc(
+      doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
+    );
+
+    if (!completedTasksDoc.exists()) {
+      console.error("Completed tasks document does not exist.");
+      return;
+    }
+
+    const completedTasksData = completedTasksDoc.data()
+      .completedTasks as CompletedTaskData[];
+    const updatedCompleteTasks = [...completedTasksData, recentlyCompletedTask];
+
+    await setDoc(doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
+        completedTasks: updatedCompleteTasks,
+      }
+    );
+
+    removeActiveTask(id);
+  };
+
+  const handleTaskCompletionChange = async (id: string, isCompleted: boolean, points: number) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
     if (isCompleted) {
       setPopupTaskCompleted(!popupTaskCompleted);
 
       try {
-        const activeTaskDoc = await getDoc(
-          doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
-        );
-        const activeTaskArray = activeTaskDoc.data() as ActiveTaskArray;
-
-        if (activeTaskDoc.exists()) {
-          const recentlyCompletedTask = activeTaskArray.activeTasks.find(
-            (task: ActiveTaskData) => task.id === id
-          );
-          // TODO: Add dynamic date
-          recentlyCompletedTask.completed = "12 April 2024 at 05:20:00 UTC+1";
-
-          if (recentlyCompletedTask) {
-            const completedTasksDoc = await getDoc(
-              doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
-            );
-
-            if (completedTasksDoc.exists()) {
-              const completedTasksData = completedTasksDoc.data()
-                .completedTasks as CompletedTaskData[];
-
-              const updatedCompleteTasks = [
-                ...completedTasksData,
-                recentlyCompletedTask,
-              ];
-
-              await setDoc(
-                doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
-                {
-                  completedTasks: updatedCompleteTasks,
-                }
-              );
-            }
-          }
-
-          removeActiveTask(id);
-          // // Remove active task
-          // const updatedActiveTasks = activeTasks.filter(
-          //   (task) => task.id !== id
-          // );
-          // setActiveTasks(updatedActiveTasks);
-
-          // await setDoc(
-          //   doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
-          //   {
-          //     activeTasks: updatedActiveTasks,
-          //   }
-          // );
-        }
-
+        updateCompletedTask(id);
         updateUserScore(points);
       } catch (error) {
         console.error("An error has occurred: ", error);
