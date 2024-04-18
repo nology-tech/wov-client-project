@@ -13,8 +13,8 @@ import { DocumentData, doc, getDoc } from "firebase/firestore";
 import { Task } from "./mockData/mockActiveTasks";
 import { UserProfile } from "./mockData/mockTribe";
 import { useEffect, useState } from "react";
-import { app, db } from "./firebase";
-import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import { db } from "./firebase";
+import { collection, getDocs, query } from "firebase/firestore";
 import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
 import { Dayjs } from "dayjs";
 
