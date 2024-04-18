@@ -18,6 +18,8 @@ import { ActiveTask } from "../../types/Task";
 import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
+import dayjs from "dayjs";
+
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -43,7 +45,7 @@ type ActiveTaskData = {
   completed: string;
 };
 
-type ActiveTaskArray = ActiveTaskData[];
+// type ActiveTaskArray = ActiveTaskData[];
 
 type CompletedTaskData = {
   category: string;
@@ -63,6 +65,7 @@ const ActiveTasks = () => {
   const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const getData = async () => {
@@ -107,7 +110,8 @@ const ActiveTasks = () => {
     const activeTaskDoc = await getDoc(
       doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
     );
-   const activeTaskArray = activeTaskDoc.data()?.activeTasks as ActiveTaskData[];
+    const activeTaskArray = activeTaskDoc.data()
+      ?.activeTasks as ActiveTaskData[];
 
     if (!activeTaskDoc.exists()) {
       console.error("Active tasks document does not exist.");
@@ -118,20 +122,12 @@ const ActiveTasks = () => {
       (task: ActiveTaskData) => task.id === id
     );
 
-    console.log(recentlyCompletedTask);
-    console.log(activeTaskArray);
-    console.log(activeTaskArray.activeTasks);
-    console.log(typeof activeTaskArray);
-    
-    
-    
-    
-
-    // TODO: Add dynamic date
-    
-    recentlyCompletedTask.completed = "12 April 2024 at 05:20:00 UTC+1";
-    
-    
+    if (recentlyCompletedTask) {
+      const today = new Date();
+      recentlyCompletedTask.completed = dayjs(today).format(
+        "D MMMM YYYY [at] HH:mm:ss [UTC]Z"
+      );
+    }
 
     if (!recentlyCompletedTask) {
       console.error("Recently completed task does not exist.");
@@ -151,7 +147,9 @@ const ActiveTasks = () => {
       .completedTasks as CompletedTaskData[];
     const updatedCompleteTasks = [...completedTasksData, recentlyCompletedTask];
 
-    await setDoc(doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
+    await setDoc(
+      doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+      {
         completedTasks: updatedCompleteTasks,
       }
     );
@@ -159,7 +157,11 @@ const ActiveTasks = () => {
     removeActiveTask(id);
   };
 
-  const handleTaskCompletionChange = async (id: string, isCompleted: boolean, points: number) => {
+  const handleTaskCompletionChange = async (
+    id: string,
+    isCompleted: boolean,
+    points: number
+  ) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
     if (isCompleted) {
       setPopupTaskCompleted(!popupTaskCompleted);
