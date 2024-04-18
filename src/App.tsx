@@ -20,7 +20,12 @@ import { Dayjs } from "dayjs";
 
 const App = () => {
   const [userUID, setUserUID] = useState<null | string>(null);
-  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserProfile>({
+    id: "",
+    totalScore: 0,
+    name: "",
+    email: "",
+  });
   // NOTE: this console.log is used to workaround an eslint warning
   // It should be deleted once userUID is used
   console.log(userUID);
@@ -66,18 +71,22 @@ const App = () => {
   }, []);
 
   const fetchCurrentUser = async () => {
-    const userRef = doc(db, "test-tribe", "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1");
-    const userDocSnap = await getDoc(userRef);
-    const user = userDocSnap.data() as DocumentData;
-    const currentUser: UserProfile = {
-      id: user.id,
-      img: user.img,
-      totalScore: 0,
-      name: user.name,
-      bio: user.bio,
-      email: user.email,
-    };
-    setCurrentUser(currentUser);
+    try {
+      const userRef = doc(db, "test-tribe", "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1");
+      const userDocSnap = await getDoc(userRef);
+      const user = userDocSnap.data() as DocumentData;
+      const currentUser: UserProfile = {
+        id: user.id,
+        img: user.img,
+        totalScore: user.totalScore,
+        name: user.name,
+        bio: user.bio,
+        email: user.email,
+      };
+      setCurrentUser(currentUser);
+    } catch {
+      console.log("Error: Could not locate current user in the database");
+    }
   };
 
   useEffect(() => {
@@ -90,7 +99,6 @@ const App = () => {
 
   const getData = async () => {
     try {
-      const db = getFirestore(app);
       const completedTask = doc(
         db,
         "test-completed-tasks",
@@ -122,7 +130,10 @@ const App = () => {
           path="/leaderboard"
           element={<Leaderboard users={fetchedTribe} />}
         />
-        <Route path="/profile" element={<Profile user={currentUser as UserProfile} />} />
+        <Route
+          path="/profile"
+          element={<Profile user={currentUser as UserProfile} />}
+        />
         <Route
           path="/calendar"
           element={
