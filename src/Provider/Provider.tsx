@@ -60,7 +60,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return { error: null };
   };
-  const logoutUser = () => {};
+  const logoutUser = () => {
+    // TODO: Remove when implemented 
+    console.log("log out")
+  };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser, userUID }}>
