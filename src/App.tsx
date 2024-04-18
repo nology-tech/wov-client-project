@@ -11,17 +11,14 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import { useState } from "react";
-import { useAuth } from "./Provider/Provider";
-import { PrivateRoute } from "./Provider/PrivateRoute";
+import { useAuth } from "./hooks/useAuth";
+import { PrivateRoute } from "./context/AuthProvider/AuthProvider";
 import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 
 const App = () => {
   const {isAuthenticated} = useAuth()
-  const [userUID, setUserUID] = useState<null | string>(null);
-  // NOTE: this console.log is used to workaround an eslint warning
-  // It should be deleted once userUID is used
-  console.log(userUID);
-
+  const [_userUID, setUserUID] = useState<null | string>(null);
+  
   const handleSetUserUID = (userUID: string) => {
     setUserUID(userUID);
   };

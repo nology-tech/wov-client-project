@@ -3,7 +3,7 @@ import Button from "../../components/Button/Button";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../Provider/Provider";
+import { useAuth } from "../../hooks/useAuth";
 
 const emptyFormData = {
   email: "",

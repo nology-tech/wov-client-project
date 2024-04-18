@@ -13,6 +13,7 @@ const Leaderboard = () => {
   useEffect(() => {
     const getData = async () => {
       const data = await getLeaderboard("test-tribe");
+      console.log(data.map(user => user.name))
       setUsers(data);
     };
     getData();
@@ -20,9 +21,10 @@ const Leaderboard = () => {
 
   const sortUserByScore = () => {
     const sortedUsers = [...users];
-    const sortScore = sortedUsers.sort((a, b) => b.totalScore - a.totalScore);
+    const filterNoName = sortedUsers.filter((user) => user.name)
+    const sortScore = filterNoName.sort((a, b) => b.totalScore - a.totalScore);
     const sortScoreAndName = sortScore.sort((a, b) => {
-      if (a.totalScore === b.totalScore) {
+       if (a.totalScore === b.totalScore) {
         return a.name.localeCompare(b.name);
       }
       return 0;

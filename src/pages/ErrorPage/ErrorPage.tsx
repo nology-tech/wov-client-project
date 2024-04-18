@@ -2,7 +2,7 @@ import "./ErrorPage.scss";
 import Button from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 import ErrorSVG from "../../components/ErrorSVG/ErrorSVG";
-import { useAuth } from "../../Provider/Provider";
+import { useAuth } from "../../hooks/useAuth";
 
 const ErrorPage = () => {
   const { isAuthenticated } = useAuth();

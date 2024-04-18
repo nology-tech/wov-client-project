@@ -1,9 +1,11 @@
-import React, { useEffect, createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
 import { AuthError, signInWithEmailAndPassword } from "firebase/auth";
+import React, { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
+import { Outlet, Navigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
-type AuthContextProps = {
+export type AuthContextProps = {
   isAuthenticated: boolean;
   loginUser: (
     email: string,
@@ -13,19 +15,26 @@ type AuthContextProps = {
   userUID: string | null;
 };
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(
+  undefined
+);
+
+export const PrivateRoute = () => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <Outlet /> : <Navigate to="/error" replace />;
+};
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userUID, setUserUID] = useState<string | null>(null)
+  const [userUID, setUserUID] = useState<string | null>(null);
 
   useEffect(() => {
     if (localStorage.getItem("userUID")) {
       setIsAuthenticated(true);
-      setUserUID(localStorage.getItem("userUID"))
+      setUserUID(localStorage.getItem("userUID"));
     } else {
       setIsAuthenticated(false);
     }
@@ -44,10 +53,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const accessToken = await userCredential.user.getIdToken();
       const userID = userCredential.user.uid;
       setUserUID(userID);
-      localStorage.setItem("accessToken", (accessToken));
-      localStorage.setItem("userUID", (userID));
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("userUID", userID);
       setIsAuthenticated(true);
-      navigate("/", {state: {userUID}})
+      navigate("/", { state: { userUID } });
     } catch (error) {
       const errorCode = (error as AuthError).code;
       if (errorCode === "auth/invalid-credential") {
@@ -61,21 +70,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return { error: null };
   };
   const logoutUser = () => {
-    // TODO: Remove when implemented 
-    console.log("log out")
+    // TODO: Remove when implemented
+    console.log("log out");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser, userUID }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, loginUser, logoutUser, userUID }}
+    >
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = (): AuthContextProps => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
 };

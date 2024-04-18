@@ -1,12 +1,9 @@
 import "./Account.scss";
 import Button from "../../components/Button/Button";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../Provider/Provider";
+
 
 const Account = () => {
-  const { userUID } = useAuth()
-  console.log("userUID", userUID)
-
   return (
     <section className="account">
       <div className="account__info">
