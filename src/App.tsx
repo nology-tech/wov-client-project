@@ -12,7 +12,7 @@ import Account from "./pages/Account/Account";
 import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 import { useEffect, useState } from "react";
 import { UserProfile } from "./types/User";
-import { doc, getDoc, DocumentData } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 const App = () => {
@@ -35,16 +35,8 @@ const App = () => {
     try {
       const userRef = doc(db, "test-tribe", "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1");
       const userDocSnap = await getDoc(userRef);
-      const user = userDocSnap.data() as DocumentData;
-      const currentUser: UserProfile = {
-        id: user.id,
-        img: user.img,
-        totalScore: user.totalScore,
-        name: user.name,
-        bio: user.bio,
-        email: user.email,
-      };
-      setCurrentUser(currentUser);
+      const user = userDocSnap.data() as UserProfile;
+      setCurrentUser(user);
     } catch {
       console.log("Error: Could not locate current user in the database");
     }
@@ -64,8 +56,8 @@ const App = () => {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route
             path="/profile"
-            element={<Profile user={currentUser as UserProfile} />}
-          />{" "}
+            element={<Profile user={currentUser} />}
+          />
           <Route
             path="/sign-in"
             element={<Login setUserUID={handleSetUserUID} />}
