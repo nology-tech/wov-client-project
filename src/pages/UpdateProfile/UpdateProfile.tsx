@@ -17,7 +17,7 @@ import {
 const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
   const [user, setUser] = useState<UserProfile>(currentUser);
   const [password, setPassword] = useState<string>("123456");
-  const [passwordMatchError, setPasswordMatchError] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("123456");
   const { img, name, bio, email } = user;
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -25,50 +25,48 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
     const value = event.currentTarget.value;
     setUser({ ...user, [key]: value });
   };
-  const changePassword = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.currentTarget.value;
     setPassword(newPassword);
   };
-  const changeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.currentTarget.value;
     setConfirmPassword(newPassword);
   };
   const updateDatabase = async () => {
     try {
-      if (password !== confirmPassword) {
-        throw new Error("Passwords do not match. Try again.");
-      }
-      signInWithEmailAndPassword(auth, "divya@test.com", "123456")
-        .then(async() => {
-          console.log("Sign In SuccessFul!");
-          await updatePassword(auth.currentUser as User, password)
-            .then(() => {
-              console.log("password changed");
-            })
-            .catch((error) => {
-              console.log(auth.currentUser);
-              console.log(error);
-              /* let errorMsg: string = error.toString();
-          errorMsg = errorMsg.slice(
-            errorMsg.lastIndexOf(":") + 1,
-            errorMsg.length - 1
-          );
-          errorMsg = errorMsg.slice(0, errorMsg.lastIndexOf("("));
-          errorMsg = errorMsg.trim(); */
-              throw new Error(error.message);
-            });
-        })
-        .catch((error) => {
-          throw new Error(error.message);
-        });
-      setPasswordMatchError("");
       await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
         name: name,
         bio: bio,
         email: email,
       });
     } catch (error) {
-      setPasswordMatchError((error as Error).message);
+      setErrorMessage((error as Error).message);
+    }
+  };
+
+  const changePassword = () => {
+    try {
+      if (password !== confirmPassword) {
+        throw new Error("Passwords do not match. Try again.");
+      }
+      signInWithEmailAndPassword(auth, "divya@test.com", "123456")
+        .then(async () => {
+          console.log("Sign In SuccessFul!");
+          await updatePassword(auth.currentUser as User, password)
+            .then(() => {
+              console.log("password changed");
+            })
+            .catch((error) => {
+              throw new Error(error.message);
+            });
+        })
+        .catch((error) => {
+          throw new Error(error.message);
+        });
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage((error as Error).message);
     }
   };
 
@@ -115,7 +113,7 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
             id="password"
             value={password}
             variant="outlined"
-            onChange={changePassword}
+            onChange={handlePassword}
             type="password"
           />
           <label htmlFor="confirmPassword" className="profile__label">
@@ -126,12 +124,17 @@ const UpdateProfile = ({ currentUser }: { currentUser: UserProfile }) => {
             value={confirmPassword}
             variant="outlined"
             type="password"
-            onChange={changeConfirmPassword}
+            onChange={handleConfirmPassword}
           />
         </form>
-        {passwordMatchError && (
-          <p className="register__error-message">{passwordMatchError}</p>
+        {errorMessage && (
+          <p className="register__error-message">{errorMessage}</p>
         )}
+        <Button
+          label={"CHANGE PASSWORD"}
+          variant={"light-grey"}
+          onClick={changePassword}
+        />
         {/* <Link to="/profile"> */}
         <Button
           label={"UPDATE PROFILE"}
