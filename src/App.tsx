@@ -19,7 +19,7 @@ const App = () => {
   // It should be deleted once userUID is used
   console.log(userUID);
 
-  const handleSetUserUID = (userUID: string) => {
+  const handleSetUserUID = (userUID: string | null) => {
     setUserUID(userUID);
   };
 
@@ -31,7 +31,12 @@ const App = () => {
           <Route path="/tasks" element={<ActiveTasks />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile user={tribeUsers[0]} setUserUID={handleSetUserUID} />
+            }
+          />
           <Route
             path="/sign-in"
             element={<Login setUserUID={handleSetUserUID} />}
