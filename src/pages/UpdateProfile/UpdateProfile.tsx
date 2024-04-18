@@ -20,7 +20,7 @@ type UpdateProfileProps = {
   currentUser: UserProfile;
   setCurrentUser: (updatedUser: UserProfile) => void;
 };
-const UpdateProfile = ({ currentUser }: UpdateProfileProps) => {
+const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
   const [user, setUser] = useState<UserProfile>(currentUser);
   const [password, setPassword] = useState<string>("");
   const [currentPassword, setCurrentPassword] = useState<string>("");
@@ -61,7 +61,7 @@ const UpdateProfile = ({ currentUser }: UpdateProfileProps) => {
 
   const updateDatabase = async () => {
     try {
-      await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
+      await updateDoc(doc(db, "test-tribe", "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"), {
         name: name,
         bio: bio,
         email: email,
@@ -69,6 +69,9 @@ const UpdateProfile = ({ currentUser }: UpdateProfileProps) => {
     } catch (error) {
       setErrorMessage((error as Error).message);
     }
+
+          setCurrentUser({ ...currentUser, name: name, bio: bio, email: email });
+
   };
 
   const changePassword = async () => {
