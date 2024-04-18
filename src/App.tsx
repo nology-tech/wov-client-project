@@ -9,14 +9,11 @@ import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
-import { DocumentData, doc, getDoc } from "firebase/firestore";
-import { Task } from "./mockData/mockActiveTasks";
-import { UserProfile } from "./mockData/mockTribe";
+import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 import { useEffect, useState } from "react";
+import { UserProfile } from "./types/User";
+import { doc, getDoc, DocumentData } from "firebase/firestore";
 import { db } from "./firebase";
-import { collection, getDocs, query } from "firebase/firestore";
-import { CompletedTask as CompletedTaskType } from "./mockData/mockCompletedTasks";
-import { Dayjs } from "dayjs";
 
 const App = () => {
   const [userUID, setUserUID] = useState<null | string>(null);
@@ -30,45 +27,9 @@ const App = () => {
   // It should be deleted once userUID is used
   console.log(userUID);
 
-  const [activeTasksList, setActiveTasksList] = useState<Task[]>([]);
-
-  useEffect(() => {
-    const getTasks = async () => {
-      const retrievalReference = doc(
-        db,
-        "test-active-tasks",
-        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
-      );
-      const retrieveTasks = await getDoc(retrievalReference);
-      if (retrieveTasks.exists()) {
-        setActiveTasksList(retrieveTasks.data().activeTasks);
-      }
-    };
-    getTasks();
-  }, []);
-
   const handleSetUserUID = (userUID: string) => {
     setUserUID(userUID);
   };
-  const [fetchedTribe, setFetchedTribe] = useState<UserProfile[]>([]);
-
-  const [date, setDate] = useState<Date>(new Date());
-  const [completedTaskArray, setCompletedTaskArray] = useState<
-    CompletedTaskType[]
-  >([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const tribeQuery = query(collection(db, "test-tribe"));
-      const tribeDocs = await getDocs(tribeQuery);
-      const tribeData: UserProfile[] = tribeDocs.docs.map(
-        (doc) => doc.data() as UserProfile
-      );
-      setFetchedTribe(tribeData);
-    };
-
-    fetchUsers();
-  }, []);
 
   const fetchCurrentUser = async () => {
     try {
@@ -93,65 +54,30 @@ const App = () => {
     fetchCurrentUser();
   }, []);
 
-  const changeDate = (value: Dayjs) => {
-    setDate(new Date(value.year(), value.month(), value.date()));
-  };
-
-  const getData = async () => {
-    try {
-      const completedTask = doc(
-        db,
-        "test-completed-tasks",
-        "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
-      );
-      const completedTasksData = await getDoc(completedTask);
-      if (completedTasksData.exists()) {
-        const completedTaskArray = completedTasksData.data().completedTasks;
-        setCompletedTaskArray(completedTaskArray);
-      }
-    } catch {
-      console.log("Error: Could not locate Completed Tasks from database");
-    }
-  };
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/tasks"
-          element={<ActiveTasks activeTasks={activeTasksList} />}
-        />
-
-        <Route
-          path="/leaderboard"
-          element={<Leaderboard users={fetchedTribe} />}
-        />
-        <Route
-          path="/profile"
-          element={<Profile user={currentUser as UserProfile} />}
-        />
-        <Route
-          path="/calendar"
-          element={
-            <Calendar
-              completedTasks={completedTaskArray}
-              changeDate={changeDate}
-              date={date}
-            />
-          }
-        />
-        <Route
-          path="/sign-in"
-          element={<Login setUserUID={handleSetUserUID} />}
-        />
-        <Route path="*" element={<ErrorPage />} />
-        <Route path="/auth" element={<Account />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+      <FirestoreProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tasks" element={<ActiveTasks />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route
+            path="/profile"
+            element={<Profile user={currentUser as UserProfile} />}
+          />{" "}
+          <Route
+            path="/sign-in"
+            element={<Login setUserUID={handleSetUserUID} />}
+          />
+          <Route path="*" element={<ErrorPage />} />
+          <Route path="/auth" element={<Account />} />
+          <Route
+            path="/register"
+            element={<Register setUserUID={handleSetUserUID} />}
+          />
+        </Routes>
+      </FirestoreProvider>
     </>
   );
 };
