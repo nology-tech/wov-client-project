@@ -4,11 +4,13 @@ import {
   FirestoreContext,
   FirestoreContextProps,
 } from "../context/FirestoreProvider/FirestoreProvider";
+import { AuthContext, AuthContextProps } from "../context/AuthProvider/AuthProvider";
 
 export const customRender = (
   ui: JSX.Element,
   useRouting = true,
-  value?: FirestoreContextProps
+  value?: FirestoreContextProps,
+  useAuthProvider = true,
 ) => {
   // wrap components in routing if requested
   let uiResult = ui;
@@ -21,12 +23,35 @@ export const customRender = (
     uiResult = wrapWithRouting(uiResult);
   }
 
+  if (useAuthProvider) {
+    uiResult = wrapWithAuthProvider(uiResult)
+  }
+
   // use RTL's render function to return the test component
   return render(uiResult);
 };
 
 const wrapWithRouting = (ui: JSX.Element): JSX.Element => {
   return <Router>{ui}</Router>;
+};
+
+const wrapWithAuthProvider = (
+  ui: JSX.Element,
+): JSX.Element => {
+  const defaultAuthContext: AuthContextProps = {
+    loginUser: (_, __) => Promise.resolve({ error: null }),
+    logoutUser: () => null,
+    isAuthenticated: false,
+    userUID: null,
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{ ...defaultAuthContext, ...AuthContext }}
+    >
+      {ui}
+    </AuthContext.Provider>
+  );
 };
 
 const wrapWithFirestoreProvider = (
