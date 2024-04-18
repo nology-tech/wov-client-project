@@ -19,47 +19,36 @@ const App = () => {
   // It should be deleted once userUID is used
   console.log(userUID);
 
-  const handleSetUserUID = (userUID: string) => {
+  const handleSetUserUID = (userUID: string | null) => {
     setUserUID(userUID);
   };
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/tasks"
-          element={<ActiveTasks activeTasks={activeTasksList} />}
-        />
-
-        <Route
-          path="/leaderboard"
-          element={<Leaderboard users={fetchedTribe} currentUserID={userUID} />}
-        />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-        <Route
-          path="/calendar"
-          element={
-            <Calendar
-              completedTasks={completedTaskArray}
-              changeDate={changeDate}
-              date={date}
-            />
-          }
-        />
-        <Route
-          path="/leaderboard"
-          element={<Leaderboard users={tribeUsers} currentUserID={userUID} />}
-        />
-        <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
-        <Route
-          path="/sign-in"
-          element={<Login setUserUID={handleSetUserUID} />}
-        />
-        <Route path="*" element={<ErrorPage />} />
-        <Route path="/auth" element={<Account />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+      <FirestoreProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tasks" element={<ActiveTasks />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile user={tribeUsers[0]} setUserUID={handleSetUserUID} />
+            }
+          />
+          <Route
+            path="/sign-in"
+            element={<Login setUserUID={handleSetUserUID} />}
+          />
+          <Route path="*" element={<ErrorPage />} />
+          <Route path="/auth" element={<Account />} />
+          <Route
+            path="/register"
+            element={<Register setUserUID={handleSetUserUID} />}
+          />
+        </Routes>
+      </FirestoreProvider>
     </>
   );
 };
