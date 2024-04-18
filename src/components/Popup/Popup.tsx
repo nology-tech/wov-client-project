@@ -24,13 +24,13 @@ const Popup = ({
 
 
   return (
-    <div className="popup">
+    <div className="popup" data-testid="popup">
       <form className="popup__container" onSubmit={handleSubmit}>
         <h2 className="popup__heading">{heading}</h2>
         {descriptionShown && (
           <>
             <div className="popup__description">
-              <label htmlFor="popup__input" className="popup__label">
+              <label htmlFor="popup__input" className="popup__label" data-testid="description-label">
                 Description:{" "}
               </label>
               <input
@@ -42,18 +42,6 @@ const Popup = ({
             </div>
           </>
         )}
-        {/* <label htmlFor="image-upload">
-          <Input
-            id="image-upload"
-            name="image-upload"
-            type="file"
-            required={true}
-            inputProps={{ accept: "image/png, image/jpeg" }}
-          />
-          <Button variant="contained" component="span" color="primary">
-            Upload Image
-          </Button>
-        </label> */}
         {!descriptionShown && (
           <Button
             label={labelButtonOne}

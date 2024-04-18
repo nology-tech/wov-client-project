@@ -33,6 +33,7 @@ const ActiveTaskTile = ({
         checked={completed}
         onChange={() => onCompletionChange(id, !completed, points)}
         className="active-task__inputs"
+        data-testid="check-button"
       />
     </div>
   );

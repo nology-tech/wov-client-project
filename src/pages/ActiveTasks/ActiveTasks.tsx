@@ -18,7 +18,6 @@ import { ActiveTask } from "../../types/Task";
 import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
-import { activeTasks as tasks } from "../../mockData/mockActiveTasks";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
