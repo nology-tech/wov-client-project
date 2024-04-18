@@ -9,12 +9,7 @@ import { ChangeEvent, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
+import { Dialog, DialogContent, DialogActions } from "@mui/material";
 
 type UpdateProfileProps = {
   currentUser: UserProfile;
@@ -27,15 +22,15 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
+  const [openPasswordPopup, setOpenPasswordPopup] = useState<boolean>(false);
   const { img, name, bio, email } = user;
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpenPasswordPopup = () => {
+    setOpenPasswordPopup(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleClosePasswordPopup = () => {
+    setOpenPasswordPopup(false);
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,18 +65,17 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
       setErrorMessage((error as Error).message);
     }
 
-          setCurrentUser({ ...currentUser, name: name, bio: bio, email: email });
-
+    setCurrentUser({ ...currentUser, name: name, bio: bio, email: email });
   };
 
   const changePassword = async () => {
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match. Try again.");
+    }else{
     try {
-      if (password !== confirmPassword) {
-        throw new Error("Passwords do not match. Try again.");
-      }
       const userPromise = await signInWithEmailAndPassword(
         auth,
-        "divya@test.com",
+        currentUser.email,
         currentPassword
       );
       await updatePassword(userPromise.user, password);
@@ -89,8 +83,8 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
       setSuccessMessage("Password successfully changed");
     } catch (error) {
       setErrorMessage((error as Error).message);
-    }
-    handleClose();
+    }}
+    handleClosePasswordPopup();
     setPassword("");
     setConfirmPassword("");
     setCurrentPassword("");
@@ -101,6 +95,7 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
       <Header subtitle="Profile" />
       <div className="profile-update">
         <img src={img} className="profile-update__img" alt="Profile" />
+        
         <form className="profile-update__info">
           <label htmlFor="name" className="profile-update__label">
             Name
@@ -137,11 +132,13 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
           />
         </form>
 
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle className="profile-update__popup-heading">
-            Change Password
-          </DialogTitle>
+        <Dialog
+          open={openPasswordPopup}
+          onClose={handleClosePasswordPopup}
+          className="profile-update__popup"
+        >
           <DialogContent>
+            <p className="profile-update__popup-heading">UPDATE PASSWORD</p>
             <form className="profile-update__popup-form">
               <label
                 htmlFor="current-password"
@@ -202,7 +199,7 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
         <Button
           label={"CHANGE PASSWORD"}
           variant={"light-grey"}
-          onClick={handleClickOpen}
+          onClick={handleClickOpenPasswordPopup}
         />
         {/* <Link to="/profile"> */}
         <Button
