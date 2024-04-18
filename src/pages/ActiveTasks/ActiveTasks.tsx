@@ -1,7 +1,13 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { ChangeEvent, useState } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Header from "../../components/Header/Header";
@@ -11,6 +17,7 @@ import { app } from "../../firebase";
 import { activeTasks } from "../../mockData/mockActiveTasks";
 import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
+// import { completedTasks as tasks } from "../../mockData/mockCompletedTasks";
 
 type CompletedTasks = {
   [key: string]: boolean;
@@ -27,6 +34,16 @@ type UserData = {
   totalScore: number;
 };
 
+type ActiveTaskData = {
+  category: string;
+  id: string;
+  points: number;
+  taskHeading: string;
+  type: string;
+};
+
+type ActiveTaskArray = ActiveTaskData[];
+
 type CompletedTaskData = {
   category: string;
   completed: string;
@@ -35,7 +52,7 @@ type CompletedTaskData = {
   points: number;
   taskHeading: string;
   type: string;
-}
+};
 
 const ActiveTasks = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -58,13 +75,69 @@ const ActiveTasks = () => {
       setPopupTaskCompleted(!popupTaskCompleted);
 
       try {
+        const activeTaskDoc = await getDoc(
+          doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
+        );
+        const activeTaskArray = activeTaskDoc.data() as ActiveTaskArray;
+
+        if (activeTaskDoc.exists()) {
+          const recentlyCompletedTask = activeTaskArray.activeTasks.find(
+            (task: ActiveTaskData) => task.id === id
+          );
+          console.log(recentlyCompletedTask);
+
+          if (recentlyCompletedTask) {
+            const completedTasksDoc = await getDoc(
+              doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
+            );
+
+            if (completedTasksDoc.exists()) {
+              const completedTasksData =
+                completedTasksDoc.data() as CompletedTaskData[];
+              console.log(completedTasksData.completedTasks);
+
+              // const updatedCompleteTasks = [
+              //   ...completedTasksData,
+              //   recentlyCompletedTask,
+              // ];
+
+              // await setDoc(
+              //   doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+              //   {
+              //     completedTasks: updatedCompleteTasks,
+              //   }
+              // );
+            } else {
+              console.log("test-completed-task doc does not exist");
+            }
+
+            // const completedTasksData = await getDoc(
+            //   doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
+            // );
+            // const completedTasks = completedTasksData.data().completedTasks;
+          } else {
+            console.log("Completed tasks not found in the active tasks");
+          }
+
+          // Remove active task
+          // const updatedActiveTask = activeTasks.filter(
+          //   (task) => task.id !== id
+          // );
+
+          // await setDoc(
+          //   doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
+          //   updatedActiveTask
+          // );
+
+          // Remove the active task
+        }
+
         const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
         const userRefDoc = await getDoc(userRef);
 
         if (userRefDoc.exists()) {
           const userData: UserData = userRefDoc.data() as UserData;
           const updateScore = userData.totalScore + points;
-          console.log(userData);
 
           await updateDoc(
             doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
@@ -80,38 +153,15 @@ const ActiveTasks = () => {
         console.error("Error updating totalScore", error);
       }
 
-      try {
-        const userRef = doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
-        const userRefDoc = await getDoc(userRef);
-        const completedTaskData: CompletedTaskData = userRefDoc.data() as CompletedTaskData;
-        console.log(userRefDoc);
-        
-        console.log(completedTaskData);
-        
-
-        await setDoc(
-          doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
-          {
-            ...completedTaskData
-          }
-        );
-        
-
-      } catch (error) {
-        console.log("Error creating new blah", error);
-        
-      }
-
       // TODO: Hide when user presses outside the container/window.
     }
   };
 
   const handleGoToAddMediaPopup = () => {
     setPopupTaskCompleted(!popupTaskCompleted);
-    setPopupAddMedia(!popupAddMedia)
-  }
+    setPopupAddMedia(!popupAddMedia);
+  };
 
-  
   const searchedTasks = activeTasks.filter(
     (task) =>
       task.taskHeading.toLowerCase().includes(searchTerm) ||
@@ -163,7 +213,7 @@ const ActiveTasks = () => {
           labelButtonOne="ADD MEDIA"
           labelButtonTwo="VIEW LEADERBOARD"
           onButtonOne={handleGoToAddMediaPopup}
-          onButtonTwo={() => navigate('/leaderboard')}
+          onButtonTwo={() => navigate("/leaderboard")}
           descriptionShown={false}
         />
       )}
