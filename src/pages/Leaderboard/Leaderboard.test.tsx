@@ -1,7 +1,9 @@
 import { screen } from "@testing-library/react";
 import Leaderboard from "./Leaderboard";
+import Leaderboard from "./Leaderboard";
 import { customRender } from "../../utils/testUtils";
-import { UserProfile } from "../../mockData/mockTribe";
+import { UserProfile } from "../../types/User";
+import { FirestoreContextProps } from "../../context/FirestoreProvider/FirestoreProvider";
 
 describe("should pass the leaderboard tests", () => {
   it("should render leaderboard with default props", () => {
@@ -48,7 +50,7 @@ describe("should pass the leaderboard tests", () => {
     customRender(<Leaderboard users={mockUsers} currentUserID={""} />);
     const sortUsersByScore = screen.getAllByTestId(
       "leaderboard__score"
-    ) as HTMLParagraphElement[];
+    )) as HTMLParagraphElement[];
     const sortedScores = ["600", "450", "350", "300", "200"];
     for (let i = 0; i < mockUsers.length; i++) {
       expect(sortUsersByScore[i].textContent === sortedScores[i]);
