@@ -34,10 +34,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   >([]);
   const [leaderBoardCache, setLeaderBoardCache] = useState<UserProfile[]>([]);
 
-  const getActiveTasks = async (
-    userId: string,
-    updateCache: boolean = false
-  ) => {
+  const getActiveTasks = async (userId: string, updateCache = false) => {
     if (activeTasksCache.length != 0 && !updateCache) {
       return activeTasksCache;
     }
@@ -55,10 +52,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return activeTasksCache;
   };
 
-  const getCompletedTasks = async (
-    userId: string,
-    updateCache: boolean = false
-  ) => {
+  const getCompletedTasks = async (userId: string, updateCache = false) => {
     if (completedTasksCache.length !== 0 && !updateCache) {
       return completedTasksCache;
     }
@@ -76,10 +70,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return completedTasksCache;
   };
 
-  const getLeaderboard = async (
-    tribe: string,
-    updateCache: boolean = false
-  ) => {
+  const getLeaderboard = async (tribe: string, updateCache = false) => {
     if (leaderBoardCache.length != 0 && !updateCache) {
       return leaderBoardCache;
     }
