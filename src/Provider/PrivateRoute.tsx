@@ -7,6 +7,4 @@ const PrivateRoute = () => {
   return isAuthenticated ? <Outlet /> : <Navigate to="/error" replace  />;
 };
 
-
-
 export default PrivateRoute
