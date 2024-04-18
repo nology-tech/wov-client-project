@@ -23,7 +23,6 @@ const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
     });
     return sortScoreAndName;
   };
-  console.log(users);
 
   return (
     <div className="leaderboard">
