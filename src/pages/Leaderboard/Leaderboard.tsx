@@ -24,8 +24,6 @@ const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
     return sortScoreAndName;
   };
 
-  console.log("Users: " + users);
-
   return (
     <div className="leaderboard">
       <Header subtitle="Leaderboard" />
