@@ -107,19 +107,31 @@ const ActiveTasks = () => {
     const activeTaskDoc = await getDoc(
       doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
     );
-    const activeTaskArray = activeTaskDoc.data() as ActiveTaskArray;
+   const activeTaskArray = activeTaskDoc.data()?.activeTasks as ActiveTaskData[];
 
     if (!activeTaskDoc.exists()) {
       console.error("Active tasks document does not exist.");
       return;
     }
 
-    const recentlyCompletedTask = activeTaskArray.activeTasks.find(
+    const recentlyCompletedTask = activeTaskArray.find(
       (task: ActiveTaskData) => task.id === id
     );
 
+    console.log(recentlyCompletedTask);
+    console.log(activeTaskArray);
+    console.log(activeTaskArray.activeTasks);
+    console.log(typeof activeTaskArray);
+    
+    
+    
+    
+
     // TODO: Add dynamic date
+    
     recentlyCompletedTask.completed = "12 April 2024 at 05:20:00 UTC+1";
+    
+    
 
     if (!recentlyCompletedTask) {
       console.error("Recently completed task does not exist.");
