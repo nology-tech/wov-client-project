@@ -29,6 +29,7 @@ type RegisterProps = {
 const Register = ({ setUserUID }: RegisterProps) => {
   const [formData, setFormData] = useState(emptyFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string>("");
+  const [missingFieldsError, setMissingFieldsError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
   //const [selectedTribe, setSelectedTribe] = useState<string>("");
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
@@ -42,8 +43,26 @@ const Register = ({ setUserUID }: RegisterProps) => {
 
   const handleNext = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (formData.firstName && formData.lastName) {
+    if (
+      formData.firstName &&
+      formData.lastName &&
+      formData.bio &&
+      formData.tribe
+    ) {
       setShowSecondFrom(true);
+    }
+    try {
+      if (
+        !formData.firstName ||
+        !formData.lastName ||
+        !formData.bio ||
+        !formData.tribe
+      ) {
+        throw new Error("Please fill all required fields.");
+      }
+    } catch (error) {
+      setMissingFieldsError((error as Error).message);
+      console.log((error as Error).message);
     }
   };
 
@@ -58,6 +77,7 @@ const Register = ({ setUserUID }: RegisterProps) => {
       if (formData.password !== formData.confirmPassword) {
         throw new Error("Passwords do not match. Try again.");
       }
+
       setPasswordMatchError("");
 
       const userCredential: UserCredential =
@@ -74,7 +94,6 @@ const Register = ({ setUserUID }: RegisterProps) => {
       setPasswordMatchError((error as Error).message);
     }
     console.log(formData);
-
     try {
       const docRef = await addDoc(collection(db, "test-tribe"), {
         Name: formData.firstName + formData.lastName,
@@ -87,20 +106,17 @@ const Register = ({ setUserUID }: RegisterProps) => {
     } catch (e) {
       console.error("Error adding document", e);
     }
-
     const form = event.currentTarget;
+    console.log(event.currentTarget);
     console.log(form);
-
     const input = form["img"] as HTMLInputElement;
     if (!input.files) {
       alert("No files found :S");
       return;
     }
-
     const file = input.files[0];
-    const fileRef = ref(storage, `${formData.firstName}/${file.name}`);
+    const fileRef = ref(storage, `profile/${file.name}`);
     const fileUpload = await uploadBytes(fileRef, file);
-
     const fileDownloadURL = await getDownloadURL(fileUpload.ref);
     setRecentUploadImg(fileDownloadURL);
   };
@@ -153,7 +169,7 @@ const Register = ({ setUserUID }: RegisterProps) => {
       {!showSecondForm ? (
         <form onSubmit={handleSubmit} className="register__form" action="#">
           <label className="register__label" htmlFor="firstName">
-            First Name
+            First Name*
           </label>
           <input
             id="firstName"
@@ -165,7 +181,7 @@ const Register = ({ setUserUID }: RegisterProps) => {
             onChange={handleChange}
           />
           <label className="register__label" htmlFor="lastName">
-            Last Name
+            Last Name*
           </label>
           <input
             id="lastName"
@@ -177,7 +193,7 @@ const Register = ({ setUserUID }: RegisterProps) => {
             onChange={handleChange}
           />
           <label className="register__label" htmlFor="bio">
-            Bio
+            Bio*
           </label>
           <input
             id="bio"
@@ -189,7 +205,7 @@ const Register = ({ setUserUID }: RegisterProps) => {
             onChange={handleChange}
           />
           <label className="register__label" htmlFor="bio">
-            Tribe
+            Tribe*
           </label>
           <select
             id="tribe"
@@ -201,6 +217,9 @@ const Register = ({ setUserUID }: RegisterProps) => {
             <option value="test-tribe">test-tribe</option>
             <option value="Tribe2">Tribe2</option>
           </select>
+          {missingFieldsError && (
+            <p className="register__error-message">{missingFieldsError}</p>
+          )}
           <label className="register__label" htmlFor="img"></label>
           {showUploadPrompt ? (
             <input
