@@ -20,7 +20,6 @@ import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
 import dayjs from "dayjs";
 
-
 type ActiveTasksItem = {
   [key: string]: boolean;
 };
@@ -45,8 +44,6 @@ type ActiveTaskData = {
   completed: string;
 };
 
-// type ActiveTaskArray = ActiveTaskData[];
-
 type CompletedTaskData = {
   category: string;
   completed: string;
@@ -65,7 +62,6 @@ const ActiveTasks = () => {
   const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const getData = async () => {

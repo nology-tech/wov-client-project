@@ -19,10 +19,8 @@ const Popup = ({
   descriptionShown,
   onButtonOne,
   onButtonTwo,
-  handleSubmit
+  handleSubmit,
 }: PopupProps) => {
-
-
   return (
     <div className="popup" data-testid="popup">
       <form className="popup__container" onSubmit={handleSubmit}>
@@ -30,7 +28,11 @@ const Popup = ({
         {descriptionShown && (
           <>
             <div className="popup__description">
-              <label htmlFor="popup__input" className="popup__label" data-testid="description-label">
+              <label
+                htmlFor="popup__input"
+                className="popup__label"
+                data-testid="description-label"
+              >
                 Description:{" "}
               </label>
               <input
@@ -60,7 +62,6 @@ const Popup = ({
             />
             ADD MEDIA
           </label>
-          
         )}
         <Button
           label={labelButtonTwo}

@@ -44,7 +44,7 @@
       max-width: 20.938rem;
       background-color: $light-grey-color;
       text-align: center;
-  }
+    }
   }
 
   &__heading {
@@ -61,7 +61,6 @@
     width: 100%;
     height: 75px;
     margin-top: -20px;
-    
   }
   &__label {
     align-self: flex-start;
@@ -80,6 +79,4 @@
       color: $light-grey-color;
     }
   }
-  
-  
 }
