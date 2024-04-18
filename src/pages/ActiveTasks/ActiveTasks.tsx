@@ -136,26 +136,30 @@ const ActiveTasks = () => {
           );
         }
 
-        const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
-        const userRefDoc = await getDoc(userRef);
-
-        if (userRefDoc.exists()) {
-          const userData: UserData = userRefDoc.data() as UserData;
-          const updateScore = userData.totalScore + points;
-
-          await updateDoc(
-            doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
-            {
-              ...userData,
-              totalScore: updateScore,
-            }
-          );
-        }
+        updateUserScore(points);
       } catch (error) {
         console.error("An error has occurred: ", error);
         throw error;
       }
     }
+  };
+
+  const updateUserScore = async (points: number) => {
+    const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+    const userRefDoc = await getDoc(userRef);
+
+    if (!userRefDoc.exists()) {
+      console.error("User document does not exist.");
+      return;
+    }
+
+    const userData: UserData = userRefDoc.data() as UserData;
+    const updateScore = userData.totalScore + points;
+
+    await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
+      ...userData,
+      totalScore: updateScore,
+    });
   };
 
   const handleGoToAddMediaPopup = () => {
