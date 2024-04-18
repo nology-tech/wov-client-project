@@ -8,18 +8,19 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import Popup from "../../components/Popup/Popup";
 import { app } from "../../firebase";
-import { activeTasks } from "../../mockData/mockActiveTasks";
+import { ActiveTask } from "../../types/Task";
 import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
 // import { completedTasks as tasks } from "../../mockData/mockCompletedTasks";
+import { useFirestore } from "../../hooks/useFireStore";
 
-type CompletedTasks = {
+type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
@@ -55,11 +56,21 @@ type CompletedTaskData = {
 };
 
 const ActiveTasks = () => {
+  const { getActiveTasks } = useFirestore();
+  const [activeTasks, setActiveTasks] = useState<ActiveTask[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [completedTasks, setCompletedTasks] = useState<CompletedTasks>({});
+  const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
   const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getData = async () => {
+      const result = await getActiveTasks("OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+      setActiveTasks(result);
+    };
+    getData();
+  }, [getActiveTasks]);
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
@@ -191,22 +202,27 @@ const ActiveTasks = () => {
           }}
         />
       </div>
-      {searchedTasks.map((task, index) => (
-        <ActiveTaskTile
-          key={task.id}
-          id={task.id}
-          requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
-          category={task.category || ""}
-          points={task.points}
-          completed={!!completedTasks[task.id]}
-          onCompletionChange={handleTaskCompletionChange}
-          classModifier={
-            index === searchedTasks.length - 1 && searchedTasks.length > 4
-              ? "active-task active-task--last"
-              : "active-task"
-          }
-        />
-      ))}
+      {searchedTasks.length === 0 ? (
+        <p>There are no tasks to display</p>
+      ) : (
+        searchedTasks.map((task, index) => (
+          <ActiveTaskTile
+            key={task.id}
+            id={task.id}
+            requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
+            category={task.category || ""}
+            points={task.points}
+            completed={!!completedTasks[task.id]}
+            onCompletionChange={handleTaskCompletionChange}
+            classModifier={
+              index === searchedTasks.length - 1 && searchedTasks.length > 4
+                ? "active-task active-task--last"
+                : "active-task"
+            }
+          />
+        ))
+      )}
+
       {popupTaskCompleted && (
         <Popup
           heading="Task Completed"

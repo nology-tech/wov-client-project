@@ -1,4 +1,3 @@
-import * as React from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
@@ -11,21 +10,31 @@ import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
-import { CompletedTask as CompletedTaskType } from "../../mockData/mockCompletedTasks";
+import { CompletedTask as CompletedTaskType } from "../../types/Task";
+import { useFirestore } from "../../hooks/useFireStore";
 
-type CalendarProps = {
-  completedTasks: CompletedTaskType[];
-};
+import { useEffect, useState } from "react";
 
-const Calendar = ({ completedTasks }: CalendarProps) => {
-  const [date, setDate] = React.useState<Date>(new Date());
+const Calendar = () => {
+  const { getCompletedTasks } = useFirestore();
+  const [completedTasks, setCompletedTasks] = useState<CompletedTaskType[]>([]);
+  const [date, setDate] = useState<Date>(new Date());
+  const changeDate = (value: Dayjs) => {
+    setDate(new Date(value.year(), value.month(), value.date()));
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      const result = await getCompletedTasks("OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
+      setCompletedTasks(result);
+    };
+    getData();
+  }, [getCompletedTasks]);
+
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
     weekStart: 1,
   });
-  const changeDate = (value: Dayjs) => {
-    setDate(new Date(value.year(), value.month(), value.date()));
-  };
 
   const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
 
