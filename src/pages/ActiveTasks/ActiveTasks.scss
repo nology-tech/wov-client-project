@@ -43,3 +43,14 @@
     color: #3b5165;
   }
 }
+
+
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+
+  .task-page__input {
+    font-size: 3.5rem; 
+  }
+
+  
+} 

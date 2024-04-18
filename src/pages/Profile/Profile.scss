@@ -46,3 +46,42 @@
     gap: 2.2rem;
   }
 }
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .profile {
+    font-size: 1.4rem;
+    padding: 4rem 0 0 0;
+    &__score {
+      font-size: 2.7rem;
+    }
+    &__info {
+      gap: 20px;
+      font-size: 1.5rem;
+    }
+  }
+}  
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .profile {
+    font-size: 1.5rem;
+    &__score {
+      font-size: 3rem;
+    }
+    &__info {
+      gap: 20px;
+      font-size: 1.5rem;
+    }
+  }
+}  
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .profile {
+    font-size: 2.2rem;
+    &__score {
+      font-size: 4.5rem;
+    }
+    &__info {
+      font-size: 2.5rem;
+    }
+  
+  }
+}  
