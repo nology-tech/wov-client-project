@@ -16,10 +16,10 @@ import { PrivateRoute } from "./context/AuthProvider/AuthProvider";
 import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 
 const App = () => {
-  const {isAuthenticated} = useAuth()
+  const { isAuthenticated } = useAuth()
   const [_userUID, setUserUID] = useState<null | string>(null);
-  
-  const handleSetUserUID = (userUID: string) => {
+
+  const handleSetUserUID = (userUID: string | null) => {
     setUserUID(userUID);
   };
 
@@ -51,7 +51,7 @@ const App = () => {
               path="/leaderboard"
               element={<Leaderboard />}
             />
-            <Route path="/profile" element={<Profile user={tribeUsers[0]} />} />
+            <Route path="/profile" element={<Profile user={tribeUsers[0]} setUserUID={setUserUID} />} />
           </Route>
           :
           <Route path="*" element={<ErrorPage />} />

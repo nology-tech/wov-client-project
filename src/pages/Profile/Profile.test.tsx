@@ -14,8 +14,10 @@ const mockData: UserProfile = {
 };
 
 describe("Profile component", () => {
+  const fakeSetState = () => null;
+
   it("renders navigation items correctly", () => {
-    customRender(<Profile user={mockData} />);
+    customRender(<Profile user={mockData} setUserUID={fakeSetState} />);
     const nameText = screen.getByText(/Name/i);
     const bioText = screen.getByText(/Bio/i);
     const emailText = screen.getByText(/Email/i);
@@ -34,13 +36,17 @@ describe("Profile component", () => {
   });
 
   it("redirects to edit profile page when 'EDIT PROFILE' button is clicked", async () => {
-    const { getByText } = customRender(<Profile user={mockData} />);
+    const { getByText } = customRender(
+      <Profile user={mockData} setUserUID={fakeSetState} />
+    );
     const editProfileButton = getByText("EDIT PROFILE");
     await userEvent.click(editProfileButton);
     expect(window.location.pathname).toEqual("/edit");
   });
   it("represents the user's password as asterisks", () => {
-    const { getByText } = customRender(<Profile user={mockData} />);
+    const { getByText } = customRender(
+      <Profile user={mockData} setUserUID={fakeSetState} />
+    );
     const passwordElement = getByText(/password/i);
 
     if (passwordElement && passwordElement.textContent) {
