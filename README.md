@@ -55,6 +55,7 @@
 - The buttons allow the user to edit their profile data and sign out.
 
 ### Leaderboard Page
+
 - The Leaderboard page contains each users score, ranking them in order from high to low.
 - It allows for users to see how many points other users have.
 - The user can also navigate to the leaderboard page.
@@ -67,11 +68,28 @@
 ### Tasks Page
 
 - The task page displays the current tasks the user must complete.
-- It displays the: 
+- It displays the:
   - The task
   - The task category
   - The points for completion
 - It enables the user to:
   - Search through through the tasks by name and category
   - Check the tasks they've completed
+
+### Register Page
+
+- Given a new user successfully creates an account, When the account creation process is complete,
+  Then three specific documents should be created in the following collections test-tribe, test-completed-tasks, and test-active-tasks in Firestore.
+
+- Given a new user successfully creates an account and is assigned a unique UUID, When the collections are created, Then each collection document should have the UUID of the user as its unique identifier.
+
+- Given a new user successfully creates an account and is assigned a unique UUID, When the test-tribe document gets created, then the document should match the example given.
+
+### Firestore Provider
+
+The `<FirestoreProvider/>`, is as a central state management context for caching data fetched from Firestore, Firebase's NoSQL database. The provider initializes three state variables `activeTasksCache`, `completedTasksCache`, and `leaderBoardCache`, each representing cached data for different pages data respectively. The context provides functions like `getActiveTasks`, `getCompletedTasks`, and `getLeaderboard` to asynchronously fetch data from Firestore, it utilizing the cache to minimize unnecessary requests. By encapsulating this logic within the context, it enables efficient data management and sharing across the application's components.
+
+#### useFirestore
+
+This hook utilizes React's useContext hook to access the Firestore context (FirestoreContext) provided by the `<FirestoreProvider/>`. It then returns the context, which includes the state variables and functions defined in the FirestoreProvider.
 
