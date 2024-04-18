@@ -4,47 +4,45 @@ import { customRender } from "../../utils/testUtils";
 import { CompletedTask } from "../../mockData/mockCompletedTasks";
 import dayjs from "dayjs";
 import updateLocale from "dayjs/plugin/updateLocale";
+import { FirestoreContextProps } from "../../context/FirestoreProvider/FirestoreProvider";
 
 describe("Calendar page", () => {
-  let mockData: CompletedTask[] = [];
-
-  beforeAll(() => {
-    dayjs.extend(updateLocale);
-    dayjs.updateLocale("en", {
-      weekStart: 1,
-    });
-
-    const today = new Date();
-    const yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1);
-
-    mockData = [
-      {
-        id: "k2321",
-        type: "daily",
-        taskHeading: "5am wake up",
-        category: "Routine",
-        points: 5,
-        completed: dayjs(today).format("D MMMM YYYY [at] HH:mm:ss [UTC]Z"),
-        description: "Example description",
-      },
-      {
-        id: "8l213",
-        type: "weekly",
-        taskHeading: "Walk 70,000 steps",
-        category: "Fitness",
-        points: 30,
-        completed: dayjs(yesterday).format("D MMMM YYYY [at] HH:mm:ss [UTC]Z"),
-        description: "Example description",
-      },
-    ];
+  dayjs.extend(updateLocale);
+  dayjs.updateLocale("en", {
+    weekStart: 1,
   });
 
+  const today = new Date();
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
+
+  const mockData: CompletedTask[] = [
+    {
+      id: "k2321",
+      type: "daily",
+      taskHeading: "5am wake up",
+      category: "Routine",
+      points: 5,
+      completed: dayjs(today).format("D MMMM YYYY [at] HH:mm:ss [UTC]Z"),
+      description: "Example description",
+    },
+    {
+      id: "8l213",
+      type: "weekly",
+      taskHeading: "Walk 70,000 steps",
+      category: "Fitness",
+      points: 30,
+      completed: dayjs(yesterday).format("D MMMM YYYY [at] HH:mm:ss [UTC]Z"),
+      description: "Example description",
+    },
+  ];
+
+  const mockFireStore = {
+    getCompletedTasks: (_: string) => Promise.resolve(mockData),
+  } as FirestoreContextProps;
+
   it("should render the calender with the current date highlighted", () => {
-    // const changeDate = (value: Dayjs) => {
-    //   setDate(new Date(value.year(), value.month(), value.date()));
-    // };
-    customRender(<Calendar completedTasks={mockData} date={new Date()} />);
+    customRender(<Calendar />, true, mockFireStore);
     const cal = screen.queryByTestId("calendarComponent");
     expect(cal).toBeInTheDocument();
     const today: number = new Date().getDate();
@@ -54,7 +52,7 @@ describe("Calendar page", () => {
   });
 
   it("should render the current date completed tasks only", async () => {
-    customRender(<Calendar completedTasks={mockData} date={new Date()} />);
+    customRender(<Calendar />, true, mockFireStore);
     const currentDateCompletedTaskHeading = await screen.findByText(
       /5am wake up/i
     );
