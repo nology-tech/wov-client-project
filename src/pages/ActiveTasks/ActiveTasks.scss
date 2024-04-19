@@ -45,12 +45,18 @@
 }
 
 
-
-@media screen and (min-width: $large-desktop-breakpoint) {
-
-  .task-page__input {
-    font-size: 3.5rem; 
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .task-page {
+   
+    
+    .task-page__input {
+      width: 37%;
+      transform: scale(2.4);
+      margin-top: 4rem;
+      margin-bottom: 5rem;
+    }
+    .search-icon {
+      font-size: 2rem;
+    }
   }
-
-  
-} 
+}

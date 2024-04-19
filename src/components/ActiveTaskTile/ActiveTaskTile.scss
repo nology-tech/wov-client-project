@@ -43,21 +43,60 @@
   border-bottom: none;
 }
 
-
 @media screen and (min-width: $tablet-breakpoint) {
-  .active-task{
-    &__inputs{
+  .active-task {
+    &__inputs {
       height: 30px;
       width: 30px;
     }
   }
 }
 
+
 @media screen and (min-width: $desktop-breakpoint) {
   .active-task{
-    &__inputs{
+    &__inputs {
       height: 35px;
       width: 35px;
+    }
+    &__requirement {
+      padding-top: 1rem;
+      font-size: 1.4rem;
+    }
+
+    &__category,
+    &__points {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .active-task{
+    &__requirement {
+      font-size: 1.6rem;
+      padding-bottom: 1rem;
+    }
+
+    &__category,
+    &__points {
+      font-size: 1.4rem;
+      padding-bottom: 0.8rem;
+    }
+  }
+}
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .active-task{
+    &__requirement {
+      font-size: 3rem;
+      padding-bottom: 2.2rem;
+    }
+
+    &__category,
+    &__points {
+      font-size: 2.8rem;
+      padding-bottom: 2.1rem;
     }
   }
 }
