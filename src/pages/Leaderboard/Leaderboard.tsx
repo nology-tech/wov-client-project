@@ -6,7 +6,7 @@ import Navigation from "../../components/Navigation/Navigation";
 
 type LeaderboardProps = {
   users: UserProfile[];
-  currentUserID: string;
+  currentUserID: string | null;
 };
 
 const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
@@ -14,13 +14,9 @@ const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
     const sortedUsers = [...users];
     const sortScore = sortedUsers.sort((a, b) => b.totalScore - a.totalScore);
     const sortScoreAndName = sortScore.sort((a, b) => {
-<<<<<<< HEAD
-       if (a.totalScore === b.totalScore) {
-=======
       if (a.totalScore === b.totalScore) {
         if (!a.name) return 1;
         if (!b.name) return -1;
->>>>>>> 6c2fc6c9c7e3a23076a181f823ad71f3549d39a1
         return a.name.localeCompare(b.name);
       }
       return 0;
@@ -41,7 +37,7 @@ const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
             }
             totalScore={user.totalScore}
             isFirstCard={index === 0}
-            currentUserID={currentUserID}
+            currentUserID ={currentUserID }
             userID={user.id}
           />
         ))}

@@ -6,7 +6,7 @@ type LeaderboardCardProps = {
   profileImage: string;
   totalScore: number;
   isFirstCard: boolean;
-  currentUserID: string;
+  currentUserID: string | null;
   userID: string;
 };
 

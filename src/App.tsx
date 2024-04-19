@@ -16,15 +16,8 @@ import { PrivateRoute } from "./components/AuthProvider/AuthProvider";
 import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 
 const App = () => {
-<<<<<<< HEAD
   const { isAuthenticated } = useAuth();
-  const [_userUID, setUserUID] = useState<null | string>(null);
-=======
-  const [userUID, setUserUID] = useState<string>("1a38"); // Using Baheer as MOCK current user
-  // NOTE: this console.log is used to workaround an eslint warning
-  // It should be deleted once userUID is used
-  console.log(userUID);
->>>>>>> 6c2fc6c9c7e3a23076a181f823ad71f3549d39a1
+  const [userUID, setUserUID] = useState<null | string>(null);
 
   const handleSetUserUID = (userUID: string | null) => {
     setUserUID(userUID || "");
@@ -34,13 +27,12 @@ const App = () => {
     <>
       <FirestoreProvider>
         <Routes>
-<<<<<<< HEAD
           {isAuthenticated ? (
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
               <Route path="/tasks" element={<ActiveTasks />} />
               <Route path="/calendar" element={<Calendar />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/leaderboard" element={<Leaderboard users={tribeUsers} currentUserID={userUID} />} />
               <Route
                 path="/profile"
                 element={
@@ -59,25 +51,6 @@ const App = () => {
             </>
           )}
 
-=======
-          <Route path="/" element={<Home />} />
-          <Route path="/tasks" element={<ActiveTasks />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route
-            path="/leaderboard"
-            element={<Leaderboard users={tribeUsers} currentUserID={userUID} />}
-          />
-          <Route
-            path="/profile"
-            element={
-              <Profile user={tribeUsers[0]} setUserUID={handleSetUserUID} />
-            }
-          />
-          <Route
-            path="/sign-in"
-            element={<Login setUserUID={handleSetUserUID} />}
-          />
->>>>>>> 6c2fc6c9c7e3a23076a181f823ad71f3549d39a1
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </FirestoreProvider>
