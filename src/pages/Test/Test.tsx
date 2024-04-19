@@ -37,7 +37,7 @@ function Test() {
   }, []);
 
   const uploadToDatabase = (url: string) => {
-    let docData = {
+    const docData = {
       mostRecentUploadURL: url,
       username: "jasondubon",
     };
@@ -59,7 +59,8 @@ function Test() {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log(progress);
       },
       (error) => {
