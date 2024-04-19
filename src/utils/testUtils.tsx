@@ -28,21 +28,26 @@ const defaultOptions: Options = {
 // leaderboard
 export const customRender = (
   ui: JSX.Element,
-  options: Options = defaultOptions
+  { useRouting,
+    firestoreValue,
+    useAuthProvider,
+    isAuthenticated,
+    userUID
+  }: Options = defaultOptions
 ) => {
   // wrap components in routing if requested
   let uiResult = ui;
 
-  if (options.firestoreValue) {
-    uiResult = wrapWithFirestoreProvider(ui, options.firestoreValue);
+  if (firestoreValue) {
+    uiResult = wrapWithFirestoreProvider(ui, firestoreValue);
   }
 
-  if (options.useRouting) {
+  if (useRouting) {
     uiResult = wrapWithRouting(uiResult);
   }
 
-  if (options.useAuthProvider) {
-    uiResult = wrapWithAuthProvider(uiResult, options);
+  if (useAuthProvider) {
+    uiResult = wrapWithAuthProvider(uiResult, {isAuthenticated, userUID});
   }
 
   // use RTL's render function to return the test component
@@ -53,15 +58,20 @@ const wrapWithRouting = (ui: JSX.Element): JSX.Element => {
   return <Router>{ui}</Router>;
 };
 
+type AuthProviderOptions = {
+  isAuthenticated?: boolean,
+  userUID?: string | null
+}
+
 const wrapWithAuthProvider = (
   ui: JSX.Element,
-  options: Options
+  { isAuthenticated, userUID }: AuthProviderOptions
 ): JSX.Element => {
   const defaultAuthContext: AuthContextProps = {
     loginUser: (_, __) => Promise.resolve({ error: null }),
     logoutUser: () => null,
-    isAuthenticated: options.isAuthenticated ?? false,
-    userUID: options.userUID ?? null,
+    isAuthenticated: isAuthenticated ?? false,
+    userUID: userUID ?? null,
   };
 
   return (
