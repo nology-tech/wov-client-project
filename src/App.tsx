@@ -38,13 +38,13 @@ const App = () => {
 
   const fetchCurrentUser = async () => {
     try {
-      const userRef = getDocumentFromFirestoreCollection(
+      const userRef = await getDocumentFromFirestoreCollection(
         "test-tribe",
         "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"
       );
-      userRef.then((userData) => {
-        setCurrentUser(userData as UserProfile);
-      });
+      if (userRef) {
+        setCurrentUser(userRef as UserProfile);
+      }
     } catch {
       console.log("Error: Could not locate current user in the database");
     }
@@ -59,7 +59,7 @@ const App = () => {
       <FirestoreProvider>
         <Routes>
           {isAuthenticated ? (
-              <Route path="/" element={<PrivateRoute />} >
+            <Route path="/" element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
               <Route path="/tasks" element={<ActiveTasks />} />
               <Route path="/calendar" element={<Calendar />} />
