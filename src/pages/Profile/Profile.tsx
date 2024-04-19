@@ -7,6 +7,8 @@ import Navigation from "../../components/Navigation/Navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { useState } from "react";
 
 type profileProps = {
   setUserUID: (userUID: string | null) => void;
@@ -19,10 +21,12 @@ const Profile = ({ setUserUID, user }: profileProps) => {
 
   const handleSignOut = async () => {
     try {
-      signOut(auth);
-      navigate("/auth");
+      await signOut(auth);
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("userUID")
       setUserUID(null);
+      setTimeout(()=> navigate("/auth"), 100);
+      
     } catch (error) {
       console.log("Problem logging out");
     }
