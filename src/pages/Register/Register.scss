@@ -59,7 +59,10 @@
       background-color: $white-color;
     }
     &--img-upload {
-      color: $off-white-color;
+      color: $slate-grey-color;
+      padding: 1rem 0;
+      padding-left: 1rem;
+      background-color: $light-grey-color;
     }
     ::placeholder {
       color: $light-grey-color;
