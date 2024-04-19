@@ -2,8 +2,7 @@ import { AuthError, signInWithEmailAndPassword } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
-import { Outlet, Navigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+
 
 type PromiseObjectNullString = Promise<{ error: null | string }>
 
@@ -21,10 +20,7 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
   undefined
 );
 
-export const PrivateRoute = () => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Outlet /> : <Navigate to="/error" replace />;
-};
+
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

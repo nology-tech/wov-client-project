@@ -7,7 +7,7 @@ import {
 import {
   AuthContext,
   AuthContextProps,
-} from "../components/AuthProvider/AuthProvider";
+} from "../context/AuthProvider/AuthProvider";
 
 type Options = {
   useRouting?: boolean;
@@ -27,11 +27,12 @@ const defaultOptions: Options = {
 
 export const customRender = (
   ui: JSX.Element,
-  { useRouting = true,
+  {
+    useRouting = true,
     firestoreValue = undefined,
     useAuthProvider = true,
     isAuthenticated = false,
-    userUID = null
+    userUID = null,
   }: Options = defaultOptions
 ) => {
   // wrap components in routing if requested
@@ -46,7 +47,7 @@ export const customRender = (
   }
 
   if (useAuthProvider) {
-    uiResult = wrapWithAuthProvider(uiResult, {isAuthenticated, userUID});
+    uiResult = wrapWithAuthProvider(uiResult, { isAuthenticated, userUID });
   }
 
   // use RTL's render function to return the test component
@@ -58,9 +59,9 @@ const wrapWithRouting = (ui: JSX.Element): JSX.Element => {
 };
 
 type AuthProviderOptions = {
-  isAuthenticated?: boolean,
-  userUID?: string | null
-}
+  isAuthenticated?: boolean;
+  userUID?: string | null;
+};
 
 const wrapWithAuthProvider = (
   ui: JSX.Element,

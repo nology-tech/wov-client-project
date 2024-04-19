@@ -16,7 +16,7 @@ import { UserProfile } from "./types/User";
 import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
 import { tribeUsers } from "./mockData/mockTribe";
 import { useAuth } from "./hooks/useAuth";
-import { PrivateRoute } from "./components/AuthProvider/AuthProvider";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
