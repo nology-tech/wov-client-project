@@ -44,6 +44,15 @@ const Calendar = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
           className="calendar__calendar"
+          sx={{
+            "@media (min-width: 1440px)": {
+              transform: "scale(1.3)",
+            },
+            "@media (min-width: 2560px)": {
+              transform: "scale(2.1)",
+              "margin-top": "120px",
+            },
+          }}
           disableFuture
           views={["day"]}
           onChange={changeDate}
@@ -61,6 +70,16 @@ const Calendar = () => {
       <Stack
         spacing={2}
         divider={<Divider flexItem />}
+        sx={{
+          "@media (min-width: 1440px)": {
+            "margin-top": "60px",
+            "font-size": "1.25rem",
+          },
+          "@media (min-width: 2560px)": {
+            "margin-top": "200px",
+            "font-size": "2.2rem",
+          },
+        }}
         className="calendar__task-container"
       >
         {filteredCompletedTasks.length > 0 ? (
