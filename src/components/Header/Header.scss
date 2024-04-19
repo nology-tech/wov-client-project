@@ -36,11 +36,8 @@
 
 @media screen and (min-width: $tablet-breakpoint) {
   .header {
-    padding: 3rem;
-    padding-bottom: 0;
-
     &__image-div {
-      width: 3.5rem;
+      width: 2.5rem;
     }
     &__title-div {
       &--title {
@@ -55,11 +52,8 @@
 
 @media screen and (min-width: $desktop-breakpoint) {
   .header {
-    padding: 4rem;
-    padding-bottom: 0;
-
     &__image-div {
-      width: 4rem;
+      width: 2.5rem;
     }
     &__title-div {
       &--title {
@@ -74,11 +68,8 @@
 
 @media screen and (min-width: $large-desktop-breakpoint) {
   .header {
-    padding: 4rem;
-    padding-bottom: 0;
-
     &__image-div {
-      width: 4rem;
+      width: 3rem;
     }
     &__title-div {
       &--title {
@@ -93,10 +84,9 @@
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
   .header {
-    padding: 8rem;
-    padding-bottom: 0;
+    padding: 2rem;
     &__image-div {
-      width: 9.5rem;
+      width: 5rem;
     }
     &__title-div {
       &--title {
