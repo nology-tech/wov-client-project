@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useFirestore } from "../../hooks/useFireStore";
+import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -72,11 +73,7 @@ const ActiveTasks = () => {
             key={task.id}
             id={task.id}
             requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
-            category={`${task.category || ""} | ${
-              task.type
-                ? task.type?.charAt(0).toUpperCase() + task.type.slice(1)
-                : undefined
-            }`}
+            category={`${task.category || ""} | ${task.type ? capitalisedFirstLetters(task.type) : undefined}`}
             points={task.points}
             completed={!!completedTasks[task.id]}
             onCompletionChange={handleTaskCompletionChange}
