@@ -1,7 +1,10 @@
 ## Quickstart
 
 1. Install the dependencies with `npm install`
-2. Run the application with `npm run dev`
+2. Run `rm -rf node_modules/.vite/deps` on a git terminal
+3. Create a .env file on the project base folder
+4. Add the firebase token to the .env file.
+5. Run the application with `npm run dev`
 
 ## File Structure 🗂️
 
@@ -53,6 +56,16 @@
 
 - The player's password is starred out.
 - The buttons allow the user to edit their profile data and sign out.
+
+### Update Profile Page
+
+- The Profile page allows the user to update their personal information and change their password.
+- The following fields can be chaned
+  - Name
+  - Bio
+  - Password
+- The player's password is starred out.
+
 
 ### Leaderboard Page
 
