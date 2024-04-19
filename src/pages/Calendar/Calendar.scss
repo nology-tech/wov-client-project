@@ -57,9 +57,3 @@
     text-align: center;
   }
 }
-
-@media screen and (min-width: $extra-large-desktop-breakpoint) {
-  .MuiDateCalendar-root {
-    max-width: 2000px;
-  }
-}
