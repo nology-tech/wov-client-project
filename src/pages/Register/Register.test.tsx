@@ -8,7 +8,7 @@ describe("Register Component", () => {
   it("should render the heading", () => {
     customRender(<Register setUserUID={mockSetState} />);
     const heading = screen.getByRole("heading", {
-      name: /create account/i,
+      name: /create an account/i,
     });
     expect(heading).toBeInTheDocument();
   });
@@ -25,7 +25,7 @@ describe("Register Component", () => {
     customRender(<Register setUserUID={mockSetState} />);
 
     expect(screen.getByText(/next/i)).toBeInTheDocument();
-    expect(screen.getByText(/next/i)).toHaveClass("button--primary");
+    expect(screen.getByText(/next/i)).toHaveClass("button--light-grey");
   });
   it("should render the image from the assets folder with the correct file name", () => {
     customRender(<Register setUserUID={mockSetState} />);
@@ -35,15 +35,27 @@ describe("Register Component", () => {
   });
   it("should show an error message when passwords don't match", async () => {
     customRender(<Register setUserUID={mockSetState} />);
-    fireEvent.change(screen.getByLabelText("First Name"), {
+
+    fireEvent.change(screen.getByLabelText("First Name*"), {
       target: { value: "John" },
     });
-    fireEvent.change(screen.getByLabelText("Last Name"), {
+    fireEvent.change(screen.getByLabelText("Last Name*"), {
       target: { value: "Doe" },
     });
-    fireEvent.click(screen.getByText(/NEXT/i));
+    fireEvent.change(screen.getByLabelText("Bio*"), {
+      target: { value: "Whatever" },
+    });
+    fireEvent.select(screen.getByLabelText("Tribe*"), {
+      target: { value: "test-tribe" },
+    });
+    fireEvent.click(screen.getByText(/next/i));
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Email Address")).toBeInTheDocument();
+    });
+
     fireEvent.change(screen.getByLabelText("Email Address"), {
-      target: { value: "test@example.com" },
+      target: { value: "test@email.com" },
     });
     fireEvent.change(screen.getByLabelText("Password"), {
       target: { value: "password" },
