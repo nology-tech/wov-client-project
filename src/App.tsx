@@ -15,12 +15,12 @@ import { useEffect, useState } from "react";
 import { UserProfile } from "./types/User";
 import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
 import { tribeUsers } from "./mockData/mockTribe";
+import { useAuth } from "./hooks/useAuth";
+import { PrivateRoute } from "./components/AuthProvider/AuthProvider";
 
 const App = () => {
-  const [userUID, setUserUID] = useState<string>("1a38"); // Using Baheer as MOCK current user
-  // NOTE: this console.log is used to workaround an eslint warning
-  // It should be deleted once userUID is used
-  console.log(userUID);
+  const { isAuthenticated } = useAuth();
+  const [userUID, setUserUID] = useState<null | string>(null);
   const [currentUser, setCurrentUser] = useState<UserProfile>({
     id: "",
     totalScore: 0,
@@ -58,38 +58,44 @@ const App = () => {
     <>
       <FirestoreProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tasks" element={<ActiveTasks />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route
-            path="/leaderboard"
-            element={<Leaderboard users={tribeUsers} currentUserID={userUID} />}
-          />
-          <Route
-            path="/profile"
-            element={
-              <Profile user={currentUser} setUserUID={handleSetUserUID} />
-            }
-          />
-          <Route
-            path="/sign-in"
-            element={<Login setUserUID={handleSetUserUID} />}
-          />
-          <Route path="*" element={<ErrorPage />} />
-          <Route path="/auth" element={<Account />} />
-          <Route
-            path="/register"
-            element={<Register setUserUID={handleSetUserUID} />}
-          />
-          <Route
-            path="/edit"
-            element={
-              <UpdateProfile
-                currentUser={currentUser}
-                setCurrentUser={handleSetCurrentUser}
+          {isAuthenticated ? (
+              <Route path="/" element={<PrivateRoute />} >
+              <Route path="/" element={<Home />} />
+              <Route path="/tasks" element={<ActiveTasks />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route
+                path="/leaderboard"
+                element={
+                  <Leaderboard users={tribeUsers} currentUserID={userUID} />
+                }
               />
-            }
-          />
+              <Route
+                path="/profile"
+                element={
+                  <Profile user={currentUser} setUserUID={handleSetUserUID} />
+                }
+              />
+              <Route
+                path="/edit"
+                element={
+                  <UpdateProfile
+                    currentUser={currentUser}
+                    setCurrentUser={handleSetCurrentUser}
+                  />
+                }
+              />
+            </Route>
+          ) : (
+            <>
+              <Route path="/auth" element={<Account />} />
+              <Route
+                path="/register"
+                element={<Register setUserUID={handleSetUserUID} />}
+              />
+              <Route path="/sign-in" element={<Login />} />
+            </>
+          )}
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </FirestoreProvider>
     </>

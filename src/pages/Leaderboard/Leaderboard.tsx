@@ -6,7 +6,7 @@ import Navigation from "../../components/Navigation/Navigation";
 
 type LeaderboardProps = {
   users: UserProfile[];
-  currentUserID: string;
+  currentUserID: string | null;
 };
 
 const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
@@ -37,7 +37,7 @@ const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
             }
             totalScore={user.totalScore}
             isFirstCard={index === 0}
-            currentUserID={currentUserID}
+            currentUserID ={currentUserID }
             userID={user.id}
           />
         ))}
