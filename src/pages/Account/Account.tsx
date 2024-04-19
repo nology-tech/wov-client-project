@@ -6,7 +6,7 @@ const Account = () => {
   return (
     <section className="account">
       <div className="account__info">
-        <h2 className="account__info--heading">Way Of The Viking</h2>
+        <h2 className="account__info--heading">Way Of The&nbsp;Viking</h2>
         <p className="account__info--text">CHANGE YOUR MINDSET</p>
       </div>
 
