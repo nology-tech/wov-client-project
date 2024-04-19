@@ -8,7 +8,7 @@ describe("Register Component", () => {
   it("should render the heading", () => {
     customRender(<Register setUserUID={mockSetState} />);
     const heading = screen.getByRole("heading", {
-      name: /create account/i,
+      name: /create an account/i,
     });
     expect(heading).toBeInTheDocument();
   });
@@ -25,7 +25,7 @@ describe("Register Component", () => {
     customRender(<Register setUserUID={mockSetState} />);
 
     expect(screen.getByText(/next/i)).toBeInTheDocument();
-    expect(screen.getByText(/next/i)).toHaveClass("button--primary");
+    expect(screen.getByText(/next/i)).toHaveClass("button--light-grey");
   });
   it("should render the image from the assets folder with the correct file name", () => {
     customRender(<Register setUserUID={mockSetState} />);
@@ -35,23 +35,58 @@ describe("Register Component", () => {
   });
   it("should show an error message when passwords don't match", async () => {
     customRender(<Register setUserUID={mockSetState} />);
-    fireEvent.change(screen.getByLabelText("First Name"), {
+
+    const firstName = screen.getByRole("textbox", {
+      name: /first name\*/i,
+    });
+
+    const lastName = screen.getByRole("textbox", {
+      name: /last name\*/i,
+    });
+
+    const bio = screen.getByRole("textbox", {
+      name: /bio\*/i,
+    });
+
+    const tribe = screen.getByRole("combobox", {
+      name: /tribe\*/i,
+    });
+
+    fireEvent.change(firstName, {
       target: { value: "John" },
     });
-    fireEvent.change(screen.getByLabelText("Last Name"), {
+    fireEvent.change(lastName, {
       target: { value: "Doe" },
     });
-    fireEvent.click(screen.getByText(/NEXT/i));
-    fireEvent.change(screen.getByLabelText("Email Address"), {
-      target: { value: "test@example.com" },
+    fireEvent.change(bio, {
+      target: { value: "Whatever" },
     });
-    fireEvent.change(screen.getByLabelText("Password"), {
+    fireEvent.change(tribe, {
+      target: { value: "test-tribe" },
+    });
+
+    fireEvent.click(screen.getByText(/next/i));
+
+    const email = await screen.getByRole("textbox", {
+      name: /email address/i,
+    });
+
+    fireEvent.change(email, {
+      target: { value: "test@email.com" },
+    });
+
+    const password = screen.getByLabelText("Password");
+    fireEvent.change(password, {
       target: { value: "password" },
     });
-    fireEvent.change(screen.getByLabelText("Confirm Password"), {
+
+    const confirmPassword = screen.getByLabelText("Password");
+    fireEvent.change(confirmPassword, {
       target: { value: "password1" },
     });
+
     fireEvent.click(screen.getByText("SIGN UP"));
+
     await waitFor(() => {
       expect(
         screen.getByText("Passwords do not match. Try again.")

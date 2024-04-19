@@ -4,7 +4,7 @@
   max-width: 30rem;
   padding: 0 2rem;
   margin: 0 auto;
-  margin-top: -5rem;
+  margin-top: -2rem;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -17,7 +17,7 @@
     border: solid 1px $black-color;
     border-radius: 50%;
     padding: 3px;
-    margin-bottom: 3.5rem;
+    margin-bottom: 1rem;
     margin-top: 5rem;
     transform: translateY(10px);
   }
@@ -27,7 +27,7 @@
 
   &__heading {
     text-align: left;
-    font-size: 8.7vw;
+    font-size: 8.5vw;
     color: $black-color;
   }
 
@@ -54,7 +54,15 @@
     border-radius: 0.5rem;
 
     &--margin-bottom {
-      margin-bottom: 2.5rem;
+      margin-bottom: 0;
+      border: 1px solid $grey-color;
+      background-color: $white-color;
+    }
+    &--img-upload {
+      color: $slate-grey-color;
+      padding: 1rem 0;
+      padding-left: 1rem;
+      background-color: $light-grey-color;
     }
     ::placeholder {
       color: $light-grey-color;
@@ -64,6 +72,14 @@
     color: $color-error;
     margin-top: 2rem;
     text-align: left;
+    &--file-name {
+      margin: 0;
+      color: green;
+    }
+    &--missing-fields {
+      color: red;
+      margin: 0;
+    }
   }
 }
 
