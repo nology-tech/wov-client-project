@@ -27,6 +27,12 @@
     width: 100%;
   }
 
+  &__no-task-message {
+    color: $pure-black-color;
+    text-align: center;
+    margin-top: 4rem;
+  }
+
   .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
     border-radius: 30px;
   }

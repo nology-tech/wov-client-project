@@ -12,8 +12,8 @@
   align-items: center;
   text-align: center;
   &__icon--arrow {
-    width: 30px;
-    height: 30px;
+    width: 2rem;
+    height: 2rem;
     border: solid 1px $black-color;
     border-radius: 50%;
     padding: 3px;
@@ -37,7 +37,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    gap: 10px;
+    gap: 1rem;
     margin: 1.4rem 0;
     font-size: 0.813rem;
   }
@@ -51,7 +51,7 @@
     outline: none;
     border: none;
     background-color: $off-white-color;
-    border-radius: 5px;
+    border-radius: 0.5rem;
 
     &--margin-bottom {
       margin-bottom: 0;
@@ -90,10 +90,11 @@
     margin: 0 auto;
 
     &__icon--arrow {
-      width: 60px;
-      height: 60px;
+      width: 3.5rem;
+      height: 3.5rem;
       border: solid 2px $black-color;
-      padding: 7px;
+      padding: 0.6rem;
+      margin-top: 0px;
     }
     &__icon--container {
       margin-top: 0;
@@ -105,7 +106,7 @@
     }
 
     &__form {
-      gap: 15px;
+      gap: 1rem;
       font-size: 1rem;
     }
     &__input {

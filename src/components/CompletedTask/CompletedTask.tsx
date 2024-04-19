@@ -35,11 +35,13 @@ const CompletedTask = ({
     setExpanded(!expanded);
   };
 
+const showArrow = (description || image ) 
+
   return (
     <Card className="completed-task">
       <CardHeader
         className="completed-task__header"
-        action={
+        action={showArrow &&
           <ExpandMoreIcon
             className={expandIconClass}
             onClick={handleExpandClick}
