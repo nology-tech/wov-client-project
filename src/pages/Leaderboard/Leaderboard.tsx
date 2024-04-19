@@ -24,8 +24,6 @@ const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
     return sortScoreAndName;
   };
 
-  const currentUserID = "g234"; // MOCK CURRENT USER
-
   return (
     <div className="leaderboard">
       <Header subtitle="Leaderboard" />
