@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import {
   doc,
   getDoc,
-  getFirestore,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -13,26 +12,16 @@ import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import Popup from "../../components/Popup/Popup";
-import { app } from "../../firebase";
 import { ActiveTask } from "../../types/Task";
 import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
 import dayjs from "dayjs";
+import { db } from "../../firebase";
+import { UserProfile } from "../../types/User";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
-};
-
-const db = getFirestore(app);
-
-type UserData = {
-  bio: string;
-  email: string;
-  id: string;
-  img: string;
-  name: string;
-  totalScore: number;
 };
 
 type ActiveTaskData = {
@@ -93,7 +82,7 @@ const ActiveTasks = () => {
       return;
     }
 
-    const userData: UserData = userRefDoc.data() as UserData;
+    const userData: UserProfile = userRefDoc.data() as UserProfile;
     const updateScore = userData.totalScore + points;
 
     await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {

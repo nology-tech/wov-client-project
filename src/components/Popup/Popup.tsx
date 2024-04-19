@@ -33,7 +33,7 @@ const Popup = ({
                 className="popup__label"
                 data-testid="description-label"
               >
-                Description:{" "}
+                Description:
               </label>
               <input
                 type="text"
