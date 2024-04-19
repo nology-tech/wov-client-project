@@ -1,12 +1,12 @@
-
 import "./ActiveTaskTile.scss";
+
 type ActiveTaskTileProps = {
   id: string;
   requirement: string;
   category: string;
   points: number;
   completed: boolean;
-  onCompletionChange: (id: string, completed: boolean) => void;
+  onCompletionChange: (id: string, completed: boolean, points: number) => void;
   classModifier: string;
 };
 
@@ -28,13 +28,13 @@ const ActiveTaskTile = ({
           <p className="active-task__points">{points} points</p>
         </label>
       </div>
-        <input
-          type="checkbox"
-          checked={completed}
-          onChange={() => onCompletionChange(id, !completed)}
-          className="active-task__inputs"
-        />
-      
+      <input
+        type="checkbox"
+        checked={completed}
+        onChange={() => onCompletionChange(id, !completed, points)}
+        className="active-task__inputs"
+        data-testid="check-button"
+      />
     </div>
   );
 };

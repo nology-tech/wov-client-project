@@ -5,6 +5,7 @@ export type UserProfile = {
   name: string;
   bio: string;
   email: string;
+  
 };
 
 export const tribeUsers: UserProfile[] = [
