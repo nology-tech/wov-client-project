@@ -49,8 +49,8 @@ const Calendar = () => {
               transform: "scale(1.3)",
             },
             "@media (min-width: 2560px)": {
-              transform: "scale(2.1)",
-              "margin-top": "120px",
+              transform: "scale(2.6)",
+              "margin-top": "220px",
             },
           }}
           disableFuture
@@ -76,8 +76,8 @@ const Calendar = () => {
             "font-size": "1.25rem",
           },
           "@media (min-width: 2560px)": {
-            "margin-top": "200px",
-            "font-size": "2.2rem",
+            "margin-top": "280px",
+            "font-size": "2.6rem",
           },
         }}
         className="calendar__task-container"
