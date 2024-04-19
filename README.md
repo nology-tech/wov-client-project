@@ -106,3 +106,10 @@ The `<FirestoreProvider/>`, is as a central state management context for caching
 
 This hook utilizes React's useContext hook to access the Firestore context (FirestoreContext) provided by the `<FirestoreProvider/>`. It then returns the context, which includes the state variables and functions defined in the FirestoreProvider.
 
+### Private Routing
+
+Private routing allows authenticated users to access the main application, including the the tasks, profile, calender, leaderboard, and home pages. If authenticated users are on the error page, when they click the home button, they would be redirected back to the homepage. 
+
+Unautheticated users would not be able to access the main application, even if they URL is manipulated; it would redirect the user to an error page. When the home button is clicked on the error page, the unauthenticated user would be redirected back to the splash page where they can create and account or sign in
+
+UserUID and isAuthenticated can be retrieved from useAuth.tsx in the hooks folder
