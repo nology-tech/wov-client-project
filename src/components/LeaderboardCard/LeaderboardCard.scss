@@ -11,6 +11,7 @@
   border: 1px $light-grey-color solid;
   border-radius: 10px;
   padding: 0.5rem 0.8rem;
+
   &__img-div {
     width: 2.5rem;
     height: 2.5rem;
@@ -20,6 +21,7 @@
       margin-right: 0.5rem;
     }
   }
+
   &__name {
     font-size: 0.85rem;
     width: 10rem;
@@ -33,10 +35,19 @@
     color: $primary-color;
   }
 }
+.leaderboard-card--current-user {
+  background-color: $light-grey-color;
+}
+.leaderboard-card--first {
+  background-color: $primary-color;
+  .leaderboard-card__name--first {
+    color: white;
+  }
+}
 
 @media screen and (min-width: $tablet-breakpoint) {
   .leaderboard-card {
-    &__img-div{
+    &__img-div {
       width: 3.2rem;
       height: 3.2rem;
     }
@@ -57,7 +68,7 @@
     border-radius: 15px;
     &__img-div {
       width: 4rem;
-      height: 4rem
+      height: 4rem;
     }
     &__name {
       font-size: 1.4rem;
@@ -93,7 +104,7 @@
     padding: 1.3rem 2.5rem;
     &__img-div {
       width: 8rem;
-     height: 8rem;
+      height: 8rem;
     }
     &__name {
       font-size: 3.5rem;
