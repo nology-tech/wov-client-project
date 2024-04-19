@@ -12,7 +12,6 @@ import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
 import { CompletedTask as CompletedTaskType } from "../../types/Task";
 import { useFirestore } from "../../hooks/useFireStore";
-
 import { useEffect, useState } from "react";
 
 const Calendar = () => {
