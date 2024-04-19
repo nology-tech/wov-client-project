@@ -12,11 +12,11 @@ import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import { useState } from "react";
 import { useAuth } from "./hooks/useAuth";
-import { PrivateRoute } from "./context/AuthProvider/AuthProvider";
+import { PrivateRoute } from "./components/AuthProvider/AuthProvider";
 import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 
 const App = () => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth();
   const [_userUID, setUserUID] = useState<null | string>(null);
 
   const handleSetUserUID = (userUID: string | null) => {
@@ -27,35 +27,31 @@ const App = () => {
     <>
       <FirestoreProvider>
         <Routes>
-        {!isAuthenticated ?
-          <>
-            <Route path="/auth" element={<Account />} />
-            <Route path="/register" element={<Register setUserUID={handleSetUserUID} />} />
-            <Route path="/sign-in" element={<Login />} />
-          </>
-          :
-          <Route path="*" element={<ErrorPage />} />
-        }
+          {isAuthenticated ? (
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/tasks" element={<ActiveTasks />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route
+                path="/profile"
+                element={
+                  <Profile user={tribeUsers[0]} setUserUID={setUserUID} />
+                }
+              />
+            </Route>
+          ) : (
+            <>
+              <Route path="/auth" element={<Account />} />
+              <Route
+                path="/register"
+                element={<Register setUserUID={handleSetUserUID} />}
+              />
+              <Route path="/sign-in" element={<Login />} />
+            </>
+          )}
 
-        {isAuthenticated ?
-          <Route path="/" element={<PrivateRoute />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/tasks" element={<ActiveTasks />} />
-            <Route
-              path="/calendar"
-              element={
-                <Calendar />
-              }
-            />
-            <Route
-              path="/leaderboard"
-              element={<Leaderboard />}
-            />
-            <Route path="/profile" element={<Profile user={tribeUsers[0]} setUserUID={setUserUID} />} />
-          </Route>
-          :
           <Route path="*" element={<ErrorPage />} />
-        }
         </Routes>
       </FirestoreProvider>
     </>

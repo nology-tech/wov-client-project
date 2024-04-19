@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App.tsx";
-import { AuthProvider } from "./context/AuthProvider/AuthProvider.tsx";
+import { AuthProvider } from "./components/AuthProvider/AuthProvider.tsx";
 import "@fontsource/poppins/300.css";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";

@@ -4,22 +4,25 @@ import {
   FirestoreContext,
   FirestoreContextProps,
 } from "../context/FirestoreProvider/FirestoreProvider";
-import { AuthContext, AuthContextProps } from "../context/AuthProvider/AuthProvider";
+import {
+  AuthContext,
+  AuthContextProps,
+} from "../components/AuthProvider/AuthProvider";
 
 type Options = {
-  useRouting?: boolean,
-  firestoreValue?: FirestoreContextProps,
-  useAuthProvider?: boolean,
-  isAuthenticated?: boolean,
-  userUID?: string | null
-}
+  useRouting?: boolean;
+  firestoreValue?: FirestoreContextProps;
+  useAuthProvider?: boolean;
+  isAuthenticated?: boolean;
+  userUID?: string | null;
+};
 const defaultOptions: Options = {
   useRouting: true,
   firestoreValue: undefined,
   useAuthProvider: true,
   isAuthenticated: false,
-  userUID: null
-}
+  userUID: null,
+};
 // calendar
 // active tasks
 // leaderboard
@@ -39,7 +42,7 @@ export const customRender = (
   }
 
   if (options.useAuthProvider) {
-    uiResult = wrapWithAuthProvider(uiResult, options)
+    uiResult = wrapWithAuthProvider(uiResult, options);
   }
 
   // use RTL's render function to return the test component
@@ -62,9 +65,7 @@ const wrapWithAuthProvider = (
   };
 
   return (
-    <AuthContext.Provider
-      value={{ ...defaultAuthContext, ...AuthContext }}
-    >
+    <AuthContext.Provider value={{ ...defaultAuthContext, ...AuthContext }}>
       {ui}
     </AuthContext.Provider>
   );
