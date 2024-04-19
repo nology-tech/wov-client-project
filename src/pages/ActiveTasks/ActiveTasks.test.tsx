@@ -71,7 +71,10 @@ describe("ActiveTask page component", () => {
   });
 
   it('displays "Task Completed" popup', async () => {
-    customRender(<ActiveTasks />, true, mockFireStore);
+    customRender(<ActiveTasks />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
 
     await waitFor(() => screen.getAllByTestId("active-task"));
 
@@ -84,7 +87,10 @@ describe("ActiveTask page component", () => {
   });
 
   it('displays "Add Media" popup after opening first popup and clicking add media', async () => {
-    customRender(<ActiveTasks />, true, mockFireStore);
+    customRender(<ActiveTasks />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
     await waitFor(() => screen.getAllByTestId("active-task"));
 
     const checkButtons = await screen.findAllByTestId("check-button");
