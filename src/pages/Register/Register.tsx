@@ -7,7 +7,7 @@ import Button from "../../components/Button/Button";
 import "./Register.scss";
 import { db, storage, auth } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 
 const emptyFormData = {
   firstName: "",
@@ -28,7 +28,6 @@ const Register = ({ setUserUID }: RegisterProps) => {
   const [missingFieldsError, setMissingFieldsError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
-  const [recentUploadImg, setRecentUploadImg] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
@@ -57,19 +56,6 @@ const Register = ({ setUserUID }: RegisterProps) => {
       }
     } catch (error) {
       setMissingFieldsError((error as Error).message);
-    }
-    if (selectedFile) {
-      try {
-        const fileRef = ref(
-          storage,
-          `${formData.firstName} ${formData.lastName}/images/profile`
-        );
-        const fileUpload = await uploadBytes(fileRef, selectedFile);
-        const fileDownloadURL = await getDownloadURL(fileUpload.ref);
-        setRecentUploadImg(fileDownloadURL);
-      } catch (error) {
-        console.log("Error uploading picture");
-      }
     }
   };
   const handlePrevious = () => {
@@ -128,6 +114,17 @@ const Register = ({ setUserUID }: RegisterProps) => {
       });
     } catch (error) {
       console.log("Error adding user data to Firestore:", error);
+    }
+    if (selectedFile) {
+      try {
+        const fileRef = ref(
+          storage,
+          `${uid}(${formData.firstName} ${formData.lastName})/images/profile`
+        );
+        await uploadBytes(fileRef, selectedFile);
+      } catch (error) {
+        console.log("Error uploading picture");
+      }
     }
   };
   return (
