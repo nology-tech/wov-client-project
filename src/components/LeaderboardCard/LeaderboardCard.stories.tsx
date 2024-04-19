@@ -18,20 +18,23 @@ export default meta;
 
 type Story = StoryObj<typeof LeaderboardCard>;
 
-
 export const WithAllComponents: Story = {
   args: {
     name: "Sam Joyce",
-    profileImage: "https://www.path.cam.ac.uk/sites/www.path.cam.ac.uk/files/media/profile_image_placeholder_41.png" ,
-    totalScore: 200
+    profileImage:
+      "https://www.path.cam.ac.uk/sites/www.path.cam.ac.uk/files/media/profile_image_placeholder_41.png",
+    totalScore: 200,
+    isFirstCard: true,
+    currentUserID: "currentUserId123",
+    userID: "userId456",
   },
 
-
-parameters: {
-  docs: {
-    description: {
-      story: "Contains the profile picture, name and total score that can be reused to display and render for each user.",
-      }
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Contains the profile picture, name and total score that can be reused to display and render for each user.",
+      },
     },
   },
 };

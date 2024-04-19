@@ -1,7 +1,10 @@
 ## Quickstart
 
 1. Install the dependencies with `npm install`
-2. Run the application with `npm run dev`
+2. Run `rm -rf node_modules/.vite/deps` on a git terminal
+3. Create a .env file on the project base folder
+4. Add the firebase token to the .env file.
+5. Run the application with `npm run dev`
 
 ## File Structure 🗂️
 
@@ -54,6 +57,16 @@
 - The player's password is starred out.
 - The buttons allow the user to edit their profile data and sign out.
 
+### Update Profile Page
+
+- The Profile page allows the user to update their personal information and change their password.
+- The following fields can be chaned
+  - Name
+  - Bio
+  - Password
+- The player's password is starred out.
+
+
 ### Leaderboard Page
 
 - The Leaderboard page contains each users score, ranking them in order from high to low.
@@ -93,3 +106,10 @@ The `<FirestoreProvider/>`, is as a central state management context for caching
 
 This hook utilizes React's useContext hook to access the Firestore context (FirestoreContext) provided by the `<FirestoreProvider/>`. It then returns the context, which includes the state variables and functions defined in the FirestoreProvider.
 
+### Private Routing
+
+Private routing allows authenticated users to access the main application, including the the tasks, profile, calender, leaderboard, and home pages. If authenticated users are on the error page, when they click the home button, they would be redirected back to the homepage. 
+
+Unautheticated users would not be able to access the main application, even if they URL is manipulated; it would redirect the user to an error page. When the home button is clicked on the error page, the unauthenticated user would be redirected back to the splash page where they can create and account or sign in
+
+UserUID and isAuthenticated can be retrieved from useAuth.tsx in the hooks folder

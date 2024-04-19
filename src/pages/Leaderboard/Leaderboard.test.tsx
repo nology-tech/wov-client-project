@@ -36,13 +36,13 @@ describe("should pass the leaderboard tests", () => {
   } as FirestoreContextProps;
 
   it("should render leaderboard with default props", async () => {
-    customRender(<Leaderboard />, true, mockFireStore);
+    customRender(<Leaderboard users={mockUsers} currentUserID={""} />, {useRouting: true, firestoreValue: mockFireStore});
     const cardUser = await screen.findByText("Test User");
     expect(cardUser).toBeInTheDocument();
   });
 
   it("should sort users by score from highest to lowest", async () => {
-    customRender(<Leaderboard />, true, mockFireStore);
+    customRender(<Leaderboard users={mockUsers} currentUserID={""} />, {useRouting: true, firestoreValue: mockFireStore});
     const sortUsersByScore = (await screen.findAllByTestId(
       "leaderboard__score"
     )) as HTMLParagraphElement[];

@@ -16,6 +16,7 @@ import { ActiveTask } from "../../types/Task";
 import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
+import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import dayjs from "dayjs";
 import { db } from "../../firebase";
 import { UserProfile } from "../../types/User";
@@ -203,7 +204,7 @@ const ActiveTasks = () => {
             key={task.id}
             id={task.id}
             requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
-            category={task.category || ""}
+            category={`${task.category || ""} | ${task.type ? capitalisedFirstLetters(task.type) : ""}`}
             points={task.points}
             completed={!!completedTasks[task.id]}
             onCompletionChange={handleTaskCompletionChange}
