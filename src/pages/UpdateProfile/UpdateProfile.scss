@@ -1,0 +1,60 @@
+@use "../../styles/variables" as *;
+
+.profile-update {
+  font-family: "poppins";
+  font-size: 1.125rem;
+  background-color: $off-white-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3rem 2rem 4rem 2rem;
+
+  &__img {
+    height: 9em;
+    width: 9em;
+    border-radius: 50%;
+    border: 3px solid $black-color;
+  }
+
+  &__info,
+  &__popup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    color: $black-color;
+    font-size: 1rem;
+  }
+
+  &__popup-heading {
+    width: 100%;
+    text-align: center;
+    font-family: $font-family-modern-header;
+    font-weight: bold;
+    color: $black-color;
+    font-size: 1.25rem;
+  }
+
+  &__popup {
+    padding: 1rem;
+
+    Button {
+      margin: 1rem;
+      margin-top: 0;
+    }
+  }
+
+  Button {
+    margin-top: 1rem;
+  }
+
+  &__error-message {
+    color: $color-error;
+    text-align: center;
+  }
+  &__success-message {
+    color: $primary-color;
+    text-align: center;
+  }
+}

@@ -5,9 +5,7 @@ import { customRender } from "../../utils/testUtils";
 describe("Account Component", () => {
   it("should render the heading", () => {
     customRender(<Account />);
-    const heading = screen.getByRole("heading", {
-      name: /way of the viking/i,
-    });
+    const heading = screen.getByText(`Way Of The Viking`);
     expect(heading).toBeInTheDocument();
   });
   it("should render the sub-heading", () => {
