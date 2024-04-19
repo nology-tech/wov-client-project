@@ -1,0 +1,82 @@
+@use "../../styles/variables" as *;
+
+.popup {
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  &__container {
+    width: 100%;
+    max-width: 22.5rem;
+    background-color: #fff;
+    margin: 35px;
+    min-height: 35%;
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .add-media {
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: $slate-grey-color;
+      cursor: pointer;
+      padding: 1rem 1.25rem;
+      width: 100%;
+      max-width: 20.938rem;
+      background-color: $light-grey-color;
+      text-align: center;
+    }
+  }
+
+  &__heading {
+    text-align: center;
+    color: $black-color;
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $black-color;
+    width: 100%;
+    height: 75px;
+    margin-top: -20px;
+  }
+  &__label {
+    align-self: flex-start;
+    font: bold 0.813rem;
+  }
+
+  &__input {
+    padding: 5px;
+    width: 95%;
+    height: 50px;
+    align-self: center;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      color: $light-grey-color;
+    }
+  }
+}

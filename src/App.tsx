@@ -3,25 +3,56 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
 import "./styles/main.scss";
 import Calendar from "./pages/Calendar/Calendar";
-import { tribeUsers } from "./mockData/mockTribe";
 import ActiveTasks from "./pages/ActiveTasks/ActiveTasks";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
-import { useState } from "react";
+import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
+import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
+import { useEffect, useState } from "react";
+import { UserProfile } from "./types/User";
+import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
+import { tribeUsers } from "./mockData/mockTribe";
 import { useAuth } from "./hooks/useAuth";
 import { PrivateRoute } from "./components/AuthProvider/AuthProvider";
-import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
   const [userUID, setUserUID] = useState<null | string>(null);
+  const [currentUser, setCurrentUser] = useState<UserProfile>({
+    id: "",
+    totalScore: 0,
+    name: "",
+    email: "",
+  });
+
+  const handleSetCurrentUser = (updatedUser: UserProfile) => {
+    setCurrentUser({ ...currentUser, ...updatedUser });
+  };
 
   const handleSetUserUID = (userUID: string | null) => {
     setUserUID(userUID || "");
   };
+
+  const fetchCurrentUser = async () => {
+    try {
+      const userRef = await getDocumentFromFirestoreCollection(
+        "test-tribe",
+        "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"
+      );
+      if (userRef) {
+        setCurrentUser(userRef as UserProfile);
+      }
+    } catch {
+      console.log("Error: Could not locate current user in the database");
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
 
   return (
     <>
@@ -41,7 +72,16 @@ const App = () => {
               <Route
                 path="/profile"
                 element={
-                  <Profile user={tribeUsers[0]} setUserUID={setUserUID} />
+                  <Profile user={currentUser} setUserUID={handleSetUserUID} />
+                }
+              />
+              <Route
+                path="/edit"
+                element={
+                  <UpdateProfile
+                    currentUser={currentUser}
+                    setCurrentUser={handleSetCurrentUser}
+                  />
                 }
               />
             </Route>
@@ -55,7 +95,6 @@ const App = () => {
               <Route path="/sign-in" element={<Login />} />
             </>
           )}
-
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </FirestoreProvider>
