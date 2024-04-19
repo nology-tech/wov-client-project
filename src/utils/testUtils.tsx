@@ -17,6 +17,14 @@ type Options = {
   userUID?: string | null;
 };
 
+const defaultOptions: Options = {
+  useRouting: true,
+  firestoreValue: undefined,
+  useAuthProvider: true,
+  isAuthenticated: false,
+  userUID: null,
+};
+
 export const customRender = (
   ui: JSX.Element,
   { useRouting = true,
@@ -24,7 +32,7 @@ export const customRender = (
     useAuthProvider = true,
     isAuthenticated = false,
     userUID = null
-  }: Options
+  }: Options = defaultOptions
 ) => {
   // wrap components in routing if requested
   let uiResult = ui;
@@ -38,7 +46,7 @@ export const customRender = (
   }
 
   if (useAuthProvider) {
-    uiResult = wrapWithAuthProvider(uiResult, { isAuthenticated, userUID });
+    uiResult = wrapWithAuthProvider(uiResult, {isAuthenticated, userUID});
   }
 
   // use RTL's render function to return the test component
