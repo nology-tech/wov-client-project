@@ -5,12 +5,14 @@ import { auth } from "../../firebase";
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
+type PromiseObjectNullString = Promise<{ error: null | string }>
+
 export type AuthContextProps = {
   isAuthenticated: boolean;
   loginUser: (
     email: string,
     password: string
-  ) => Promise<{ error: null | string }>;
+  ) => PromiseObjectNullString;
   logoutUser: () => void;
   userUID: string | null;
 };
@@ -43,7 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const loginUser = async (
     email: string,
     password: string
-  ): Promise<{ error: null | string }> => {
+  ): PromiseObjectNullString => {
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
