@@ -73,7 +73,7 @@ const ActiveTasks = () => {
             key={task.id}
             id={task.id}
             requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
-            category={`${task.category || ""} | ${task.type ? capitalisedFirstLetters(task.type) : undefined}`}
+            category={`${task.category || ""} | ${task.type ? capitalisedFirstLetters(task.type) : ""}`}
             points={task.points}
             completed={!!completedTasks[task.id]}
             onCompletionChange={handleTaskCompletionChange}
