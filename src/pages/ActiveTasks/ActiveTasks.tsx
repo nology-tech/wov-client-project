@@ -113,6 +113,7 @@ const ActiveTasks = () => {
       recentlyCompletedTask.completed = dayjs(today).format(
         "D MMMM YYYY [at] HH:mm:ss [UTC]Z"
       );
+      recentlyCompletedTask.id = id + Date.now();
     }
 
     if (!recentlyCompletedTask) {
