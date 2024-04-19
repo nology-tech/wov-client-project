@@ -44,18 +44,8 @@ const Register = ({ setUserUID }: RegisterProps) => {
       formData.tribe
     ) {
       setShowSecondFrom(true);
-    }
-    try {
-      if (
-        !formData.firstName ||
-        !formData.lastName ||
-        !formData.bio ||
-        !formData.tribe
-      ) {
-        throw new Error("Please fill all required fields.");
-      }
-    } catch (error) {
-      setMissingFieldsError((error as Error).message);
+    } else {
+      setMissingFieldsError("Please fill all required fields.");
     }
   };
   const handlePrevious = () => {
