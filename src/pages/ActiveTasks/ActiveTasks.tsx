@@ -66,14 +66,18 @@ const ActiveTasks = () => {
         />
       </div>
       {searchedTasks.length === 0 ? (
-        <p>There are no tasks to display</p>
+        <p className="task-page__no-task-message">
+          There are no tasks that fit your search.
+        </p>
       ) : (
         searchedTasks.map((task, index) => (
           <ActiveTaskTile
             key={task.id}
             id={task.id}
             requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
-            category={`${task.category || ""} | ${task.type ? capitalisedFirstLetters(task.type) : ""}`}
+            category={`${task.category || ""} | ${
+              task.type ? capitalisedFirstLetters(task.type) : ""
+            }`}
             points={task.points}
             completed={!!completedTasks[task.id]}
             onCompletionChange={handleTaskCompletionChange}
