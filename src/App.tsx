@@ -14,6 +14,7 @@ import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { useEffect, useState } from "react";
 import { UserProfile } from "./types/User";
 import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
+import { tribeUsers } from "./mockData/mockTribe";
 
 const App = () => {
   const [userUID, setUserUID] = useState<string>("1a38"); // Using Baheer as MOCK current user
