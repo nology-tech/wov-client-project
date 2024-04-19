@@ -33,8 +33,6 @@ const Register = ({ setUserUID }: RegisterProps) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    console.log(event.target);
-
     setFormData({ ...formData, [name]: value });
   };
   const handleNext = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -92,8 +90,6 @@ const Register = ({ setUserUID }: RegisterProps) => {
   const handleTribeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.currentTarget;
     setFormData({ ...formData, [name]: value });
-    //console.dir(event.currentTarget);
-    console.log(event.target.options[1].value);
   };
   const handleShowUploadPrompt = () => {
     setShowUploadPrompt(!showUploadPrompt);
@@ -181,7 +177,7 @@ const Register = ({ setUserUID }: RegisterProps) => {
             placeholder="Bio"
             onChange={handleChange}
           />
-          <label className="register__label" htmlFor="bio">
+          <label className="register__label" htmlFor="tribe">
             Tribe*
           </label>
           <select

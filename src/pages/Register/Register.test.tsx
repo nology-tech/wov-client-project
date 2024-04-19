@@ -36,34 +36,57 @@ describe("Register Component", () => {
   it("should show an error message when passwords don't match", async () => {
     customRender(<Register setUserUID={mockSetState} />);
 
-    fireEvent.change(screen.getByLabelText("First Name*"), {
+    const firstName = screen.getByRole("textbox", {
+      name: /first name\*/i,
+    });
+
+    const lastName = screen.getByRole("textbox", {
+      name: /last name\*/i,
+    });
+
+    const bio = screen.getByRole("textbox", {
+      name: /bio\*/i,
+    });
+
+    const tribe = screen.getByRole("combobox", {
+      name: /tribe\*/i,
+    });
+
+    fireEvent.change(firstName, {
       target: { value: "John" },
     });
-    fireEvent.change(screen.getByLabelText("Last Name*"), {
+    fireEvent.change(lastName, {
       target: { value: "Doe" },
     });
-    fireEvent.change(screen.getByLabelText("Bio*"), {
+    fireEvent.change(bio, {
       target: { value: "Whatever" },
     });
-    fireEvent.select(screen.getByLabelText("Tribe*"), {
+    fireEvent.change(tribe, {
       target: { value: "test-tribe" },
     });
+
     fireEvent.click(screen.getByText(/next/i));
 
-    await waitFor(() => {
-      expect(screen.getByLabelText("Email Address")).toBeInTheDocument();
+    const email = await screen.getByRole("textbox", {
+      name: /email address/i,
     });
 
-    fireEvent.change(screen.getByLabelText("Email Address"), {
+    fireEvent.change(email, {
       target: { value: "test@email.com" },
     });
-    fireEvent.change(screen.getByLabelText("Password"), {
+
+    const password = screen.getByLabelText("Password");
+    fireEvent.change(password, {
       target: { value: "password" },
     });
-    fireEvent.change(screen.getByLabelText("Confirm Password"), {
+
+    const confirmPassword = screen.getByLabelText("Password");
+    fireEvent.change(confirmPassword, {
       target: { value: "password1" },
     });
+
     fireEvent.click(screen.getByText("SIGN UP"));
+
     await waitFor(() => {
       expect(
         screen.getByText("Passwords do not match. Try again.")
