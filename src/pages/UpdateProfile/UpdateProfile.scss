@@ -39,9 +39,9 @@
   &__popup {
     padding: 1rem;
 
-    Button{
+    Button {
       margin: 1rem;
-      margin-top:0;
+      margin-top: 0;
     }
   }
 
@@ -51,8 +51,10 @@
 
   &__error-message {
     color: $color-error;
+    text-align: center;
   }
   &__success-message {
     color: $primary-color;
+    text-align: center;
   }
 }

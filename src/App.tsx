@@ -13,8 +13,7 @@ import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { useEffect, useState } from "react";
 import { UserProfile } from "./types/User";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "./firebase";
+import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
 
 const App = () => {
   const [userUID, setUserUID] = useState<null | string>(null);
@@ -28,28 +27,31 @@ const App = () => {
     email: "",
   });
 
-  const handleSetCurrentUser = (updatedUser:UserProfile) =>{
-    setCurrentUser({ ...currentUser, ...updatedUser})
-  }
+  const handleSetCurrentUser = (updatedUser: UserProfile) => {
+    setCurrentUser({ ...currentUser, ...updatedUser });
+  };
 
   const handleSetUserUID = (userUID: string | null) => {
     setUserUID(userUID);
   };
 
-    const fetchCurrentUser = async () => {
-      try {
-        const userRef = doc(db, "test-tribe", "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1");
-        const userDocSnap = await getDoc(userRef);
-        const user = userDocSnap.data() as UserProfile;
-        setCurrentUser(user);
-      } catch {
-        console.log("Error: Could not locate current user in the database");
-      }
-    };
+  const fetchCurrentUser = async () => {
+    try {
+      const userRef = getDocumentFromFirestoreCollection(
+        "test-tribe",
+        "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"
+      );
+      userRef.then((userData) => {
+        setCurrentUser(userData as UserProfile);
+      });
+    } catch {
+      console.log("Error: Could not locate current user in the database");
+    }
+  };
 
-    useEffect(() => {
-      fetchCurrentUser();
-    }, []);
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
 
   return (
     <>
@@ -77,7 +79,12 @@ const App = () => {
           />
           <Route
             path="/edit"
-            element={<UpdateProfile currentUser={currentUser} setCurrentUser={handleSetCurrentUser} />}
+            element={
+              <UpdateProfile
+                currentUser={currentUser}
+                setCurrentUser={handleSetCurrentUser}
+              />
+            }
           />
         </Routes>
       </FirestoreProvider>

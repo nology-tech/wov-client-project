@@ -5,7 +5,6 @@ import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import TextField from "@mui/material/TextField";
 import { ChangeEvent, useState } from "react";
-// import { Link } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
@@ -17,9 +16,11 @@ type UpdateProfileProps = {
 };
 const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
   const [user, setUser] = useState<UserProfile>(currentUser);
-  const [password, setPassword] = useState<string>("");
-  const [currentPassword, setCurrentPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [password, setPassword] = useState<{
+    current: string;
+    new: string;
+    confirm: string;
+  }>({ current: "", new: "", confirm: "" });
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openPasswordPopup, setOpenPasswordPopup] = useState<boolean>(false);
@@ -39,19 +40,10 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
     setUser({ ...user, [key]: value });
   };
 
-  const handleCurrentPassword = (event: ChangeEvent<HTMLInputElement>) => {
-    const newPassword = event.currentTarget.value;
-    setCurrentPassword(newPassword);
-  };
-
-  const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
-    const newPassword = event.currentTarget.value;
-    setPassword(newPassword);
-  };
-
-  const handleConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
-    const newPassword = event.currentTarget.value;
-    setConfirmPassword(newPassword);
+  const handlePaswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const key = event.currentTarget.id;
+    const value = event.currentTarget.value;
+    setPassword({ ...password, [key]: value });
   };
 
   const updateDatabase = async () => {
@@ -61,33 +53,36 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
         bio: bio,
         email: email,
       });
+      setErrorMessage("");
+      setSuccessMessage("Profile Updated");
     } catch (error) {
       setErrorMessage((error as Error).message);
+      setSuccessMessage("");
     }
 
     setCurrentUser({ ...currentUser, name: name, bio: bio, email: email });
   };
 
   const changePassword = async () => {
-    if (password !== confirmPassword) {
+    if (password.new !== password.confirm) {
       setErrorMessage("Passwords do not match. Try again.");
-    }else{
-    try {
-      const userPromise = await signInWithEmailAndPassword(
-        auth,
-        currentUser.email,
-        currentPassword
-      );
-      await updatePassword(userPromise.user, password);
-      setErrorMessage("");
-      setSuccessMessage("Password successfully changed");
-    } catch (error) {
-      setErrorMessage((error as Error).message);
-    }}
+    } else {
+      try {
+        const userPromise = await signInWithEmailAndPassword(
+          auth,
+          currentUser.email,
+          password.current
+        );
+        await updatePassword(userPromise.user, password.new);
+        setErrorMessage("");
+        setSuccessMessage("Password successfully changed");
+      } catch (error) {
+        setErrorMessage((error as Error).message);
+        setSuccessMessage("");
+      }
+    }
     handleClosePasswordPopup();
-    setPassword("");
-    setConfirmPassword("");
-    setCurrentPassword("");
+    setPassword({ current: "", new: "", confirm: "" });
   };
 
   return (
@@ -95,7 +90,7 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
       <Header subtitle="Profile" />
       <div className="profile-update">
         <img src={img} className="profile-update__img" alt="Profile" />
-        
+
         <form className="profile-update__info">
           <label htmlFor="name" className="profile-update__label">
             Name
@@ -140,43 +135,37 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
           <DialogContent>
             <p className="profile-update__popup-heading">UPDATE PASSWORD</p>
             <form className="profile-update__popup-form">
-              <label
-                htmlFor="current-password"
-                className="profile-update__label"
-              >
+              <label htmlFor="current" className="profile-update__label">
                 Current Password
               </label>
               <TextField
-                id="current-password"
-                value={currentPassword}
+                id="current"
+                value={password.current}
                 variant="outlined"
-                onChange={handleCurrentPassword}
+                onChange={handlePaswordChange}
                 type="password"
                 className="profile-update__input"
               />
-              <label htmlFor="password" className="profile-update__label">
+              <label htmlFor="new" className="profile-update__label">
                 New Password
               </label>
               <TextField
-                id="password"
-                value={password}
+                id="new"
+                value={password.new}
                 variant="outlined"
-                onChange={handlePassword}
+                onChange={handlePaswordChange}
                 type="password"
                 className="profile-update__input"
               />
-              <label
-                htmlFor="confirmPassword"
-                className="profile-update__label"
-              >
+              <label htmlFor="confirm" className="profile-update__label">
                 Confirm Password
               </label>
               <TextField
-                id="confirmPassword"
-                value={confirmPassword}
+                id="confirm"
+                value={password.confirm}
                 variant="outlined"
                 type="password"
-                onChange={handleConfirmPassword}
+                onChange={handlePaswordChange}
                 className="profile-update__input"
               />
             </form>
@@ -201,13 +190,11 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
           variant={"light-grey"}
           onClick={handleClickOpenPasswordPopup}
         />
-        {/* <Link to="/profile"> */}
         <Button
           label={"UPDATE PROFILE"}
           variant={"light-grey"}
           onClick={updateDatabase}
         />
-        {/* </Link> */}
       </div>
       <Navigation navActionIndex={-1} />
     </div>
