@@ -4,29 +4,15 @@ import { Link } from "react-router-dom";
 import { UserProfile } from "../../types/User";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
-type profileProps = {
-  setUserUID: (userUID: string | null) => void;
+type ProfileProps = {
   user: UserProfile;
 };
 
-const Profile = ({ setUserUID, user }: profileProps) => {
+const Profile = ({ user }: ProfileProps) => {
   const { totalScore, img, name, bio, email } = user;
-  const navigate = useNavigate();
-
-  const handleSignOut = async () => {
-    try {
-      signOut(auth);
-      navigate("/auth");
-      localStorage.removeItem("accessToken");
-      setUserUID(null);
-    } catch (error) {
-      console.log("Problem logging out");
-    }
-  };
+  const { logoutUser } = useAuth();
 
   return (
     <div>
@@ -59,7 +45,7 @@ const Profile = ({ setUserUID, user }: profileProps) => {
           <Button
             label={"SIGN OUT"}
             variant={"secondary"}
-            onClick={handleSignOut}
+            onClick={logoutUser}
           />
         </section>
       </div>

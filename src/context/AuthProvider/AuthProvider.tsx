@@ -1,17 +1,13 @@
-import { AuthError, signInWithEmailAndPassword } from "firebase/auth";
+import { AuthError, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 
-
-type PromiseObjectNullString = Promise<{ error: null | string }>
+type PromiseObjectNullString = Promise<{ error: null | string }>;
 
 export type AuthContextProps = {
   isAuthenticated: boolean;
-  loginUser: (
-    email: string,
-    password: string
-  ) => PromiseObjectNullString;
+  loginUser: (email: string, password: string) => PromiseObjectNullString;
   logoutUser: () => void;
   userUID: string | null;
 };
@@ -19,8 +15,6 @@ export type AuthContextProps = {
 export const AuthContext = createContext<AuthContextProps | undefined>(
   undefined
 );
-
-
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -67,9 +61,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return { error: null };
   };
+
   const logoutUser = () => {
-    // TODO: Remove when implemented
-    console.log("log out");
+    signOut(auth);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userUID");
+    setIsAuthenticated(false);
+    setUserUID(null);
+    navigate("/auth");
   };
 
   return (
