@@ -16,7 +16,6 @@ import dayjs from "dayjs";
 import { db, storage } from "../../firebase";
 import { UserProfile } from "../../types/User";
 import { getDownloadURL, uploadBytesResumable, ref } from "firebase/storage";
-//import { activeTasks as activeTasksArray } from "../../mockData/mockActiveTasks";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -79,7 +78,6 @@ const ActiveTasks = ({ currentUserId }: ActiveTasksProps) => {
     await setDoc(doc(db, "test-active-tasks", currentUserId), {
       activeTasks: updatedActiveTasks,
     });
-    // active task removed but screen not updated
   };
 
   const updateUserScore = async (points: number) => {
@@ -147,8 +145,6 @@ const ActiveTasks = ({ currentUserId }: ActiveTasksProps) => {
       return;
     }
 
-    //console.log(completedTasksDoc.data().completedTasks);
-
     const completedTasksData = completedTasksDoc.data()
       .completedTasks as CompletedTaskData[];
 
@@ -170,20 +166,10 @@ const ActiveTasks = ({ currentUserId }: ActiveTasksProps) => {
     isCompleted: boolean,
     points: number
   ) => {
-    // pass id and score up from active task tile to state
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
     setScore(points);
     if (isCompleted) {
       setPopupTaskCompleted(!popupTaskCompleted);
-
-      // try {
-
-      //   updateCompletedTask(id);
-      //   updateUserScore(points);
-      // } catch (error) {
-      //   console.error("An error has occurred: ", error);
-      //   throw error;
-      // }
     }
   };
 
@@ -219,25 +205,6 @@ const ActiveTasks = ({ currentUserId }: ActiveTasksProps) => {
     setDescriptionText(e.target.value);
     console.log("description text:", e.target.value);
   };
-
-  // const uploadToDatabase = (url: string) => {
-  //   let docData = {
-  //     mostRecentUploadURL: url,
-  //     username: currentUserId,
-  //     taskId: completedTasks,
-  //     completedTaskDescription: descriptionText,
-  //   };
-  //   const userRef = doc(db, "test-completed-tasks", docData.username);
-  //   setDoc(userRef, docData, { merge: true })
-  //     .then(() => {
-  //       console.log("successfully updated DB");
-  //       console.log("docData", docData);
-  //       console.log("userRef", userRef);
-  //     })
-  //     .catch((error) => {
-  //       console.log(`${error} error`);
-  //     });
-  // };
 
   const submitTask = () => {
     if (typeof file === "undefined") return;
@@ -308,7 +275,6 @@ const ActiveTasks = ({ currentUserId }: ActiveTasksProps) => {
       {searchedTasks.length === 0 ? (
         <p className="task-page__no-task-message">
           There are no tasks that fit your search.
-          {`\n${currentUserId}`}
         </p>
       ) : (
         searchedTasks.map((task, index) => (
