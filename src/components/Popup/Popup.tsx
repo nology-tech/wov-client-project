@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+//import { FormEvent, useState } from "react";
 import Button from "../Button/Button";
 import "./Popup.scss";
 
@@ -9,7 +9,9 @@ type PopupProps = {
   descriptionShown: boolean;
   onButtonOne?: () => void;
   onButtonTwo?: () => void;
-  handleSubmit?: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleSubmit?: () => void;
+  fileAdd?: (e: React.FormEvent<HTMLInputElement>) => void;
+  addDescription?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Popup = ({
@@ -20,10 +22,12 @@ const Popup = ({
   onButtonOne,
   onButtonTwo,
   handleSubmit,
+  fileAdd,
+  addDescription,
 }: PopupProps) => {
   return (
     <div className="popup" data-testid="popup">
-      <form className="popup__container" onSubmit={handleSubmit}>
+      <div className="popup__container">
         <h2 className="popup__heading">{heading}</h2>
         {descriptionShown && (
           <>
@@ -40,6 +44,7 @@ const Popup = ({
                 name="popup__input"
                 className="popup__input"
                 placeholder="How did it go..."
+                onChange={addDescription}
               />
             </div>
           </>
@@ -59,6 +64,7 @@ const Popup = ({
               id="image-upload"
               accept="image/png, image/jpeg"
               className="custom"
+              onInput={fileAdd}
             />
             ADD MEDIA
           </label>
@@ -66,9 +72,9 @@ const Popup = ({
         <Button
           label={labelButtonTwo}
           variant="primary"
-          onClick={onButtonTwo}
+          onClick={handleSubmit}
         />
-      </form>
+      </div>
     </div>
   );
 };

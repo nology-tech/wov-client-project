@@ -13,7 +13,7 @@ import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { useEffect, useState } from "react";
 import { UserProfile } from "./types/User";
-import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
+//import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
 import { tribeUsers } from "./mockData/mockTribe";
 import { useAuth } from "./hooks/useAuth";
 import { PrivateRoute } from "./components/AuthProvider/AuthProvider";
@@ -36,22 +36,22 @@ const App = () => {
     setUserUID(userUID || "");
   };
 
-  const fetchCurrentUser = async () => {
-    try {
-      const userRef = await getDocumentFromFirestoreCollection(
-        "test-tribe",
-        "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"
-      );
-      if (userRef) {
-        setCurrentUser(userRef as UserProfile);
-      }
-    } catch {
-      console.log("Error: Could not locate current user in the database");
-    }
-  };
+  // const fetchCurrentUser = async () => {
+  //   try {
+  //     const userRef = await getDocumentFromFirestoreCollection(
+  //       "test-tribe",
+  //       "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"
+  //     );
+  //     if (userRef) {
+  //       setCurrentUser(userRef as UserProfile);
+  //     }
+  //   } catch {
+  //     console.log("Error: Could not locate current user in the database");
+  //   }
+  // };
 
   useEffect(() => {
-    fetchCurrentUser();
+    setCurrentUser(tribeUsers[0] as UserProfile);
   }, []);
 
   return (
@@ -61,7 +61,10 @@ const App = () => {
           {isAuthenticated ? (
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
-              <Route path="/tasks" element={<ActiveTasks />} />
+              <Route
+                path="/tasks"
+                element={<ActiveTasks currentUser={tribeUsers[0]} />}
+              />
               <Route path="/calendar" element={<Calendar />} />
               <Route
                 path="/leaderboard"
