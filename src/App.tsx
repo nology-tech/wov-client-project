@@ -13,7 +13,7 @@ import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { useEffect, useState } from "react";
 import { UserProfile } from "./types/User";
-//import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
+import { getDocumentFromFirestoreCollection } from "./utils/dbUtils";
 import { tribeUsers } from "./mockData/mockTribe";
 import { useAuth } from "./hooks/useAuth";
 import { PrivateRoute } from "./components/AuthProvider/AuthProvider";
@@ -36,22 +36,22 @@ const App = () => {
     setUserUID(userUID || "");
   };
 
-  // const fetchCurrentUser = async () => {
-  //   try {
-  //     const userRef = await getDocumentFromFirestoreCollection(
-  //       "test-tribe",
-  //       "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"
-  //     );
-  //     if (userRef) {
-  //       setCurrentUser(userRef as UserProfile);
-  //     }
-  //   } catch {
-  //     console.log("Error: Could not locate current user in the database");
-  //   }
-  // };
+  const fetchCurrentUser = async () => {
+    try {
+      const userRef = await getDocumentFromFirestoreCollection(
+        "test-tribe",
+        "JvJ1pa9WeAdoP4IIIpOisjO5mLl2"
+      );
+      if (userRef) {
+        setCurrentUser(userRef as UserProfile);
+      }
+    } catch {
+      console.log("Error: Could not locate current user in the database");
+    }
+  };
 
   useEffect(() => {
-    setCurrentUser(tribeUsers[0] as UserProfile);
+    fetchCurrentUser();
   }, []);
 
   return (
@@ -63,7 +63,9 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route
                 path="/tasks"
-                element={<ActiveTasks currentUser={tribeUsers[0]} />}
+                element={
+                  <ActiveTasks currentUserId={"JvJ1pa9WeAdoP4IIIpOisjO5mLl2"} />
+                }
               />
               <Route path="/calendar" element={<Calendar />} />
               <Route
