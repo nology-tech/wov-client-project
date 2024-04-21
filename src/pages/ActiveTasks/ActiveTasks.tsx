@@ -154,6 +154,7 @@ const ActiveTasks = ({ currentUser }: ActiveTasksProps) => {
     });
 
     removeActiveTask(id);
+    setCompletedTasks({});
   };
 
   const handleTaskCompletionChange = async (
