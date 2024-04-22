@@ -3,17 +3,16 @@ import Register from "./Register";
 import { customRender } from "../../utils/testUtils";
 
 describe("Register Component", () => {
-  const mockSetState = () => null;
 
   it("should render the heading", () => {
-    customRender(<Register setUserUID={mockSetState} />);
+    customRender(<Register />);
     const heading = screen.getByRole("heading", {
       name: /create an account/i,
     });
     expect(heading).toBeInTheDocument();
   });
   it("should render a form with the right labels", () => {
-    customRender(<Register setUserUID={mockSetState} />);
+    customRender(<Register />);
     const firstNameLabel = screen.getByText(/first name/i);
     const lastNameLabel = screen.getByText(/last name/i);
 
@@ -22,19 +21,19 @@ describe("Register Component", () => {
   });
 
   it("should render button with default props and correct text", () => {
-    customRender(<Register setUserUID={mockSetState} />);
+    customRender(<Register />);
 
     expect(screen.getByText(/next/i)).toBeInTheDocument();
     expect(screen.getByText(/next/i)).toHaveClass("button--light-grey");
   });
   it("should render the image from the assets folder with the correct file name", () => {
-    customRender(<Register setUserUID={mockSetState} />);
+    customRender(<Register />);
     const image = screen.getByAltText("Arrow Left Icon");
 
     expect(image).toBeInTheDocument();
   });
   it("should show an error message when passwords don't match", async () => {
-    customRender(<Register setUserUID={mockSetState} />);
+    customRender(<Register />);
 
     const firstName = screen.getByRole("textbox", {
       name: /first name\*/i,

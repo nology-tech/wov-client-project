@@ -8,7 +8,7 @@ import {
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
-import { NewUser, UserProfile } from "../../types/User";
+import { NewUser, UserLoading, UserProfile } from "../../types/User";
 import {
   createDocumentInFirestoreCollection,
   FirestoreCollections,
@@ -20,7 +20,7 @@ import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 
-type UserLoading = UserProfile & { loading: true };
+
 
 const userLoading: UserLoading = {
   id: "",

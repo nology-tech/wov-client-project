@@ -33,7 +33,6 @@ const Leaderboard = () => {
     return sortedUsers;
   };
 
-  console.log(user.totalScore);
 
   return (
     <div className="leaderboard">

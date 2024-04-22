@@ -18,3 +18,5 @@ export type NewUser = {
   img: string;
   tribe: string;
 };
+
+export type UserLoading = UserProfile & { loading: true };

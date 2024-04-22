@@ -38,11 +38,16 @@ describe("Calendar page", () => {
   ];
 
   const mockFireStore = {
-    getCompletedTasks: (_: string) => Promise.resolve(mockData),
+    getCompletedTasks: (_: string) => mockData,
   } as FirestoreContextProps;
 
   it("should render the calender with the current date highlighted", () => {
-    customRender(<Calendar />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<Calendar />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+      useAuthProvider: true,
+      isAuthenticated: true,
+    });
     const cal = screen.queryByTestId("calendarComponent");
     expect(cal).toBeInTheDocument();
     const today: number = new Date().getDate();
@@ -52,7 +57,10 @@ describe("Calendar page", () => {
   });
 
   it("should render the current date completed tasks only", async () => {
-    customRender(<Calendar />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<Calendar />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
     const currentDateCompletedTaskHeading = await screen.findByText(
       /5am wake up/i
     );
