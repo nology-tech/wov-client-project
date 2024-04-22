@@ -108,6 +108,7 @@ const ActiveTasks = () => {
       recentlyCompletedTask.completed = dayjs(today).format(
         "D MMMM YYYY [at] HH:mm:ss [UTC]Z"
       );
+      recentlyCompletedTask.id = id + Date.now();
     }
 
     if (!recentlyCompletedTask) {
@@ -192,7 +193,9 @@ const ActiveTasks = () => {
         />
       </div>
       {searchedTasks.length === 0 ? (
-        <p className="task-page__none">There are no tasks to display</p>
+        <p className="task-page__no-task-message">
+          There are no tasks that fit your search.
+        </p>
       ) : (
         searchedTasks.map((task, index) => (
           <ActiveTaskTile

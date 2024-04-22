@@ -2,7 +2,7 @@ import "./Header.scss";
 import { Link } from "react-router-dom";
 
 type HeaderProps = {
-  subtitle?: string;
+  subtitle: string;
   profileImage?: string;
 };
 

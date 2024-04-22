@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { CompletedTask } from "../types/Task";
 
 const filterCompletedTasks = (
@@ -5,25 +6,8 @@ const filterCompletedTasks = (
   date: Date
 ): CompletedTask[] => {
   return completedTasks.filter((task) => {
-    const months: string[] = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const newDateFormat = `${date.getDate()} ${
-      months[date.getMonth()]
-    } ${date.getFullYear()}`;
+    const newDateFormat = dayjs(date).format("D MMMM YYYY");
     const hasNewDateFormat = task.completed.includes(newDateFormat);
-
     return hasNewDateFormat;
   });
 };

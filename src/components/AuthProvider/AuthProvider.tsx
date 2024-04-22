@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { signOut } from "firebase/auth";
 
 type PromiseObjectNullString = Promise<{ error: null | string }>
 
@@ -71,9 +72,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return { error: null };
   };
-  const logoutUser = () => {
-    // TODO: Remove when implemented
-    console.log("log out");
+  const logoutUser = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userUID")
+      setUserUID(null);
+      setIsAuthenticated(false);
+      navigate("/auth")      
+    } catch (error) {
+      console.log("Problem logging out");
+    }
   };
 
   return (

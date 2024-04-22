@@ -1,13 +1,13 @@
 import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import { auth } from "../../firebase";
-import { db } from "../../firebase";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
-import { doc, setDoc } from "firebase/firestore";
 import "./Register.scss";
+import { db, storage, auth } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes } from "firebase/storage";
 
 const emptyFormData = {
   firstName: "",
@@ -15,42 +15,49 @@ const emptyFormData = {
   email: "",
   password: "",
   confirmPassword: "",
+  bio: "",
+  img: "",
+  tribe: "",
 };
-
 type RegisterProps = {
   setUserUID: (userID: string) => void;
 };
-
 const Register = ({ setUserUID }: RegisterProps) => {
   const [formData, setFormData] = useState(emptyFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string>("");
+  const [missingFieldsError, setMissingFieldsError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
+  const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const navigate = useNavigate();
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleNext = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleNext = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (formData.firstName && formData.lastName) {
+    if (
+      formData.firstName &&
+      formData.lastName &&
+      formData.bio &&
+      formData.tribe
+    ) {
       setShowSecondFrom(true);
+    } else {
+      setMissingFieldsError("Please fill all required fields.");
     }
   };
-
   const handlePrevious = () => {
     showSecondForm ? setShowSecondFrom(false) : navigate(-1);
   };
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     try {
       if (formData.password !== formData.confirmPassword) {
         throw new Error("Passwords do not match. Try again.");
       }
       setPasswordMatchError("");
-
       const userCredential: UserCredential =
         await createUserWithEmailAndPassword(
           auth,
@@ -65,19 +72,29 @@ const Register = ({ setUserUID }: RegisterProps) => {
       setPasswordMatchError((error as Error).message);
     }
   };
-
+  const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+  const handleTribeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = event.currentTarget;
+    setFormData({ ...formData, [name]: value });
+  };
+  const handleShowUploadPrompt = () => {
+    setShowUploadPrompt(!showUploadPrompt);
+  };
   const addUserData = async (uid: string) => {
     try {
       await setDoc(doc(db, "test-tribe", uid), {
         id: uid,
-        img: "",
         totalScore: 0,
-        name:
-          capitalisedFirstLetters(formData.firstName) +
-          " " +
-          capitalisedFirstLetters(formData.lastName),
-        bio: "",
+        name: `${capitalisedFirstLetters(
+          formData.firstName
+        )} ${capitalisedFirstLetters(formData.lastName)}`,
+        bio: formData.bio,
         email: formData.email,
+        tribe: formData.tribe,
       });
       await setDoc(doc(db, "test-completed-tasks", uid), {
         completedTasks: [],
@@ -88,8 +105,18 @@ const Register = ({ setUserUID }: RegisterProps) => {
     } catch (error) {
       console.log("Error adding user data to Firestore:", error);
     }
+    if (selectedFile) {
+      try {
+        const fileRef = ref(
+          storage,
+          `${uid}(${formData.firstName} ${formData.lastName})/images/profile`
+        );
+        await uploadBytes(fileRef, selectedFile);
+      } catch (error) {
+        console.log("Error uploading picture");
+      }
+    }
   };
-
   return (
     <section className="register">
       <div className="register__icon--container">
@@ -100,12 +127,12 @@ const Register = ({ setUserUID }: RegisterProps) => {
           alt="Arrow Left Icon"
         />
       </div>
-      <h2 className="register__heading">Create Account</h2>
+      <h2 className="register__heading">Create An Account</h2>
 
       {!showSecondForm ? (
         <form onSubmit={handleSubmit} className="register__form" action="#">
           <label className="register__label" htmlFor="firstName">
-            First Name
+            First Name*
           </label>
           <input
             id="firstName"
@@ -117,18 +144,70 @@ const Register = ({ setUserUID }: RegisterProps) => {
             onChange={handleChange}
           />
           <label className="register__label" htmlFor="lastName">
-            Last Name
+            Last Name*
           </label>
           <input
             id="lastName"
             name="lastName"
             value={formData.lastName}
-            className="register__input register__input--margin-bottom"
+            className="register__input"
             type="text"
             placeholder="Smith"
             onChange={handleChange}
           />
-          <Button label="Next" onClick={handleNext} />
+          <label className="register__label" htmlFor="bio">
+            Bio*
+          </label>
+          <input
+            id="bio"
+            name="bio"
+            value={formData.bio}
+            className="register__input "
+            type="text"
+            placeholder="Bio"
+            onChange={handleChange}
+          />
+          <label className="register__label" htmlFor="tribe">
+            Tribe*
+          </label>
+          <select
+            id="tribe"
+            name="tribe"
+            value={formData.tribe}
+            className="register__input register__input--margin-bottom"
+            onChange={handleTribeChange}
+          >
+            <option value=""></option>
+            <option value="test-tribe">test-tribe</option>
+          </select>
+          {missingFieldsError && (
+            <p className="register__error-message--missing-fields">
+              {missingFieldsError}
+            </p>
+          )}
+          <label className="register__label" htmlFor="img"></label>
+          {showUploadPrompt ? (
+            <input
+              id="img"
+              name="img"
+              value={formData.img}
+              className="register__input register__input--img-upload"
+              type="file"
+              onChange={handleFileInputChange}
+            />
+          ) : (
+            <Button
+              label="ADD PROFILE IMAGE"
+              variant="light-grey"
+              onClick={handleShowUploadPrompt}
+            />
+          )}
+          {selectedFile && (
+            <p className="register__error-message--file-name">
+              {selectedFile.name}
+            </p>
+          )}
+          <Button label="Next" variant="light-grey" onClick={handleNext} />
         </form>
       ) : (
         <form onSubmit={handleSubmit} className="register__form" action="#">
@@ -170,8 +249,6 @@ const Register = ({ setUserUID }: RegisterProps) => {
           {passwordMatchError && (
             <p className="register__error-message">{passwordMatchError}</p>
           )}
-          {/* WHEN REGISTERING IS SUCCESSFUL -> LINK TO SIGN PAGE */}
-          {/* ALSO, SHOW A MESSAGE TO THE USER WITH CONGRATULATIONS FOR CREATING AN ACCOUNT */}
           <Button label="SIGN UP" />
         </form>
       )}
