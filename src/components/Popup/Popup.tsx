@@ -1,6 +1,9 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import Button from "../Button/Button";
 import "./Popup.scss";
+import { doc, updateDoc, getDoc } from "firebase/firestore"
+import { db } from "../../firebase";
+
 
 type PopupProps = {
   heading: string;
@@ -9,7 +12,7 @@ type PopupProps = {
   descriptionShown: boolean;
   onButtonOne?: () => void;
   onButtonTwo?: () => void;
-  handleSubmit?: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleSubmit?: () => void;
 };
 
 const Popup = ({
@@ -21,6 +24,56 @@ const Popup = ({
   onButtonTwo,
   handleSubmit,
 }: PopupProps) => {
+  const [file, setFile] = useState<File | undefined>();
+  const [descriptionText, setDescriptionText] = useState<string>("");
+
+  const fileAdd = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement & {
+      files: FileList;
+    };
+    console.log("target", target.files);
+    setFile(target.files[0]);
+    console.log("target", target.files[0]);
+  };
+
+  const addDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescriptionText(e.target.value);
+    console.log("description text:", e.target.value);
+  };
+
+  // userId and taskId
+  onButtonTwo = async (userId: string, taskId: string) => {
+    const completedTasksDoc = await getDoc(
+      doc(db, "test-completed-tasks", userId)
+    );
+
+    if (!completedTasksDoc.exists()) {
+      console.error("Completed tasks document does not exist.");
+      return;
+    }
+
+    const mostRecent = completedTasksDoc.data.completedTasks.length-1
+    const taskToBeUpdated = completedTasksDoc.data().completedTasks[mostRecent]
+
+    if (file) {
+      taskToBeUpdated["mostRecentUrl"] = file.name
+    }
+
+    if (descriptionText) {
+      taskToBeUpdated["description"] = descriptionText
+    }
+
+    
+    await updateDoc(doc(db, "test-completed-tasks", `${userId}`), {
+      completedTasks[mostRecent]: taskToBeUpdated
+    })
+
+
+    
+
+
+  }
+
   return (
     <div className="popup" data-testid="popup">
       <form className="popup__container" onSubmit={handleSubmit}>
