@@ -3,7 +3,7 @@
 .active-task {
   display: flex;
   justify-content: space-between;
-  max-width: 80%;
+  max-width: 85%;
   margin: 1.8rem auto 0;
   border-bottom: 2px solid $light-grey-color;
   padding-bottom: 1.2rem;
@@ -52,9 +52,8 @@
   }
 }
 
-
 @media screen and (min-width: $desktop-breakpoint) {
-  .active-task{
+  .active-task {
     &__inputs {
       height: 35px;
       width: 35px;
@@ -72,7 +71,7 @@
 }
 
 @media screen and (min-width: $large-desktop-breakpoint) {
-  .active-task{
+  .active-task {
     &__requirement {
       font-size: 1.6rem;
       padding-bottom: 1rem;
@@ -87,7 +86,7 @@
 }
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
-  .active-task{
+  .active-task {
     &__requirement {
       font-size: 3rem;
       padding-bottom: 2.2rem;
@@ -100,4 +99,3 @@
     }
   }
 }
-
