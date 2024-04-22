@@ -5,7 +5,7 @@
 .header {
   width: 100%;
   padding: 1rem;
-  padding-bottom: 2rem;
+  padding-bottom: 0;
   background-color: $secondary-color;
   position: sticky;
   top: 0;
@@ -36,8 +36,11 @@
 
 @media screen and (min-width: $tablet-breakpoint) {
   .header {
+    padding: 3rem;
+    padding-bottom: 0;
+
     &__image-div {
-      width: 2.5rem;
+      width: 3.5rem;
     }
     &__title-div {
       &--title {
@@ -52,15 +55,20 @@
 
 @media screen and (min-width: $desktop-breakpoint) {
   .header {
+    padding: 1.5rem;
+    padding-bottom: 0;
+
     &__image-div {
       width: 2.5rem;
     }
     &__title-div {
+      margin-top: -1.5rem;
       &--title {
-        font-size: 1.5rem;
+        font-size: 1rem;
+        margin-bottom: 0.9rem;
       }
       &--subtitle {
-        font-size: 4rem;
+        font-size: 3rem;
       }
     }
   }
@@ -68,6 +76,9 @@
 
 @media screen and (min-width: $large-desktop-breakpoint) {
   .header {
+    padding: 2rem;
+    padding-bottom: 0;
+
     &__image-div {
       width: 3rem;
     }
@@ -79,14 +90,16 @@
         font-size: 4rem;
       }
     }
+    padding-left: 2.5rem;
   }
 }
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
   .header {
-    padding: 2rem;
+    padding: rem;
+    padding-bottom: 0;
     &__image-div {
-      width: 5rem;
+      width: 8rem;
     }
     &__title-div {
       &--title {
@@ -96,5 +109,6 @@
         font-size: 6.5rem;
       }
     }
+    padding-left: 5.5rem;
   }
 }

@@ -35,42 +35,38 @@
   }
 }
 
-
 @media screen and (min-width: $tablet-breakpoint) {
-
-  .home{
+  .home {
     padding: 1rem;
-  
-  &__daily-tasks-button {
-    margin-top: unset;
-   }
+
+    &__daily-tasks-button {
+      margin-top: unset;
+    }
   }
-} 
+}
 
 @media screen and (min-width: $desktop-breakpoint) {
-
-  .home{
+  .home {
     padding: 2rem;
     font-size: 1rem;
-  
-  &__daily-tasks-button {
-    margin-top: unset;
+
+    &__daily-tasks-button {
+      margin-top: unset;
     }
     &__header {
       font-size: 1.8rem;
-    } 
+    }
   }
-} 
+}
 
 @media screen and (min-width: $large-desktop-breakpoint) {
-
-  .home{
+  .home {
     padding: 2rem;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     &__header {
-      font-size: 2.3rem;
+      font-size: 2.1rem;
       line-height: 3rem;
-    } 
+    }
     &__paragraph {
       line-height: $line-height-header;
     }
@@ -81,19 +77,18 @@
       padding-left: 20px;
     }
   }
-} 
+}
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
-
-  .home{
+  .home {
     padding: 2.2rem;
-    font-size: 2.8rem;
+    font-size: 2.4rem;
     &__header {
-      font-size: 4rem;
+      font-size: 3.5rem;
       line-height: 4rem;
-    } 
+    }
     &__paragraph {
-      line-height: 3.2rem;
+      line-height: 4.6rem;
     }
     &__quote {
       line-height: 3rem;
@@ -102,4 +97,4 @@
       padding-left: 20px;
     }
   }
-} 
+}
