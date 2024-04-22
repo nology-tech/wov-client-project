@@ -80,6 +80,7 @@
 Component Map
 https://app.mural.co/t/nology9400/m/nology9400/1712658405121/2d9d2142e3b579857660bcc6d938068c9ba6de32?sender=05d9c88f-51ea-41bc-893d-3bf5dbf66498
 
+```
 ├── docs -- Developer documentation / research materials / conventions
 ├── public -- Assets for the live site go in here
 │ └── assets
@@ -118,6 +119,7 @@ https://app.mural.co/t/nology9400/m/nology9400/1712658405121/2d9d2142e3b57985766
 ├── styles -- This contains global styles
 ├── types -- This contains types for complex data
 └── utils -- This contains commonly used functions
+```
 
 # Features Left to Implement
 
