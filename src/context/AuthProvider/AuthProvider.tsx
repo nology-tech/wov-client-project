@@ -127,7 +127,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     const { error, updated } = await updateDocumentInFirestoreCollection(
-      "test-users",
+      FirestoreCollections.TRIBE,
       user.id,
       data
     );
@@ -174,13 +174,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         userProfile.img = fileDownloadUrl || "";
       }
 
-      await createDocumentInFirestoreCollection("test-users", uid, userProfile);
-      await createDocumentInFirestoreCollection("test-completed-tasks", uid, {
-        completedTasks: [],
-      });
-      await createDocumentInFirestoreCollection("test-active-tasks", uid, {
-        activeTasks: [],
-      });
+      await createDocumentInFirestoreCollection(
+        FirestoreCollections.TRIBE,
+        uid,
+        userProfile
+      );
+      await createDocumentInFirestoreCollection(
+        FirestoreCollections.COMPLETED_TASKS,
+        uid,
+        {
+          completedTasks: [],
+        }
+      );
+      await createDocumentInFirestoreCollection(
+        FirestoreCollections.ACTIVE_TASKS,
+        uid,
+        {
+          activeTasks: [],
+        }
+      );
 
       setUser(userProfile);
       navigate("/");
