@@ -7,7 +7,7 @@
     A Calendar where they can see previously completed tasks.
     A leaderboard where they can compare scores to other users.
 
-    The project uses Firebase to store user profiles, uploaded media , and lists of tasks.
+    The project uses Firebase to store user profiles, uploaded media , and lists of tasks as well as authenticate users.
     The project uses StoryBook to document components and styling within the project.
     The project uses Material UI for certain components.
 
@@ -131,9 +131,9 @@ https://app.mural.co/t/nology9400/m/nology9400/1712658405121/2d9d2142e3b57985766
 
      The majoirty of research materials can be be found in docs.
         To Add
-         Video upload research on branch setup-upload video -
+         Video upload and download - https://github.com/nology-tech/wov-client-project/tree/setup-upload-video/src/pages/Test
          Storybook Documentation - https://github.com/gordonmenzies/storybook_tutorial
-         Mui Documentation - Ask Baheer
+         Mui Documentation - https://github.com/bwardak/material-ui-waiheke/tree/master
 
 ### Known Issues & fixes
 
