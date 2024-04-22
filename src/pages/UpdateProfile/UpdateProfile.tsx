@@ -48,7 +48,7 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
 
   const updateDatabase = async () => {
     try {
-      await updateDoc(doc(db, "test-tribe", "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"), {
+      await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
         name: name,
         bio: bio,
         email: email,

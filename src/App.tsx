@@ -20,7 +20,9 @@ import { PrivateRoute } from "./components/AuthProvider/AuthProvider";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
-  const [userUID, setUserUID] = useState<null | string>(null);
+  const [userUID, setUserUID] = useState<null | string>(
+    "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"
+  );
   const [currentUser, setCurrentUser] = useState<UserProfile>({
     id: "",
     totalScore: 0,
@@ -40,7 +42,7 @@ const App = () => {
     try {
       const userRef = await getDocumentFromFirestoreCollection(
         "test-tribe",
-        "DrJZcEmb22Z5pG6fn2Fj2YYTHEy1"
+        userUID as string
       );
       if (userRef) {
         setCurrentUser(userRef as UserProfile);
