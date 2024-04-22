@@ -21,7 +21,7 @@ const Home = () => {
       <HeaderHome
         date={date}
         location="Malvern Hills"
-        image="../../../../public/assets/images/hills.png"
+        image="./assets/images/hills.png"
       />
 
       <section className="home" data-testid="container">
