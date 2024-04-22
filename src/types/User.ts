@@ -5,4 +5,16 @@ export type UserProfile = {
   name: string;
   bio?: string;
   email: string;
+  tribe: string;
+};
+
+export type NewUser = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  bio: string;
+  img: string;
+  tribe: string;
 };
