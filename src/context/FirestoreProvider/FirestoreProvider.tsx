@@ -2,19 +2,20 @@ import React, { createContext, useState } from "react";
 import {
   getDocumentFromFirestoreCollection,
   getCollectionFromFirestore,
+  updateDocumentInFirestoreCollection,
+  FirestoreCollections,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask } from "../../types/Task";
+import dayjs from "dayjs";
 
 export type FirestoreContextProps = {
-  getActiveTasks: (
-    userId: string,
-    updateCache?: boolean
-  ) => Promise<ActiveTask[]>;
-  getCompletedTasks: (
-    userId: string,
-    updateCache?: boolean
-  ) => Promise<CompletedTask[]>;
+  getActiveTasks: (userId: string, updateCache?: boolean) => ActiveTask[];
+  completeActiveTask: (
+    user: UserProfile,
+    completedActiveTask: ActiveTask
+  ) => Promise<void>;
+  getCompletedTasks: (userId: string, updateCache?: boolean) => CompletedTask[];
   getLeaderboard: (
     tribe: string,
     updateCache?: boolean
@@ -32,16 +33,16 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   const [completedTasksCache, setCompletedTasksCache] = useState<
     CompletedTask[]
   >([]);
-  const [leaderBoardCache, setLeaderBoardCache] = useState<UserProfile[]>([]);
 
-  const getActiveTasks = async (userId: string, updateCache = false) => {
-    if (activeTasksCache.length != 0 && !updateCache) {
-      return activeTasksCache;
+  const fetchActiveTasks = async (userId: string) => {
+    if (!userId) {
+      return;
     }
+
     try {
       const activeTaskDocument = await getDocumentFromFirestoreCollection<{
         activeTasks: ActiveTask[];
-      }>("test-active-tasks", userId);
+      }>(FirestoreCollections.ACTIVE_TASKS, userId);
       const activeTasks = activeTaskDocument
         ? activeTaskDocument.activeTasks
         : ([] as ActiveTask[]);
@@ -49,17 +50,67 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (error) {
       console.error("Error fetching active tasks:", error);
     }
-    return activeTasksCache;
   };
 
-  const getCompletedTasks = async (userId: string, updateCache = false) => {
-    if (completedTasksCache.length !== 0 && !updateCache) {
-      return completedTasksCache;
+  const getActiveTasks = (userId: string, updateCache = false) => {
+    if (activeTasksCache.length > 0 && !updateCache) {
+      return activeTasksCache;
+    } else {
+      fetchActiveTasks(userId);
     }
+    return activeTasksCache ?? ([] as ActiveTask[]);
+  };
+
+  const completeActiveTask = async (
+    user: UserProfile,
+    completedActiveTask: ActiveTask
+  ) => {
+    const today = new Date();
+    const completed = dayjs(today).format("D MMMM YYYY [at] HH:mm:ss [UTC]Z");
+    const completedTask: CompletedTask = {
+      ...completedActiveTask,
+      completed,
+      id: completedActiveTask.id + Date.now(),
+    };
+
+    await fetchCompletedTasks(user.id);
+
+    setCompletedTasksCache((completedTaskData) => [
+      ...completedTaskData,
+      completedTask,
+    ]);
+
+    const updatedCompleteTasks = [...completedTasksCache, completedTask];
+
+    updateDocumentInFirestoreCollection(FirestoreCollections.COMPLETED_TASKS, user.id, {
+      completedTasks: updatedCompleteTasks,
+    });
+
+    removeActiveTask(user.id, completedActiveTask.id);
+  };
+
+  const removeActiveTask = async (userId: string, completedTaskId: string) => {
+    if (!activeTasksCache) {
+      return;
+    }
+    const updatedActiveTasks = activeTasksCache.filter(
+      (task) => task.id !== completedTaskId
+    );
+    setActiveTasksCache(updatedActiveTasks);
+    updateDocumentInFirestoreCollection(FirestoreCollections.ACTIVE_TASKS, userId, {
+      activeTasks: updatedActiveTasks,
+    });
+  };
+
+  const fetchCompletedTasks = async (userId: string) => {
+    if (!userId) {
+      return;
+    }
+
     try {
       const completedTaskDocument = await getDocumentFromFirestoreCollection<{
         completedTasks: CompletedTask[];
-      }>("test-completed-tasks", userId);
+      }>(FirestoreCollections.COMPLETED_TASKS, userId);
       const completedTasks = completedTaskDocument
         ? completedTaskDocument.completedTasks
         : ([] as CompletedTask[]);
@@ -67,29 +118,44 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
     }
-    return completedTasksCache;
   };
 
-  const getLeaderboard = async (tribe: string, updateCache = false) => {
-    if (leaderBoardCache.length != 0 && !updateCache) {
-      return leaderBoardCache;
+  const getCompletedTasks = (userId: string, updateCache = false) => {
+    if (completedTasksCache.length > 0 && !updateCache) {
+      return completedTasksCache;
+    } else {
+      fetchCompletedTasks(userId);
+    }
+    return completedTasksCache ?? ([] as CompletedTask[]);
+  };
+
+  const getLeaderboard = async (tribe: string) => {
+    if (!tribe) {
+      return [] as UserProfile[];
     }
 
+    let result = [] as UserProfile[];
     try {
       const completedTaskDocument =
-        await getCollectionFromFirestore<UserProfile>(tribe);
+        await getCollectionFromFirestore<UserProfile>(FirestoreCollections.TRIBE);
       const userProfiles = completedTaskDocument ?? ([] as UserProfile[]);
-      setLeaderBoardCache(userProfiles);
+      const tribeUsers = userProfiles.filter((user) => user.tribe === tribe);
+      result = tribeUsers ?? ([] as UserProfile[]);
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
     }
 
-    return leaderBoardCache;
+    return result;
   };
 
   return (
     <FirestoreContext.Provider
-      value={{ getActiveTasks, getCompletedTasks, getLeaderboard }}
+      value={{
+        getActiveTasks,
+        completeActiveTask,
+        getCompletedTasks,
+        getLeaderboard,
+      }}
     >
       {children}
     </FirestoreContext.Provider>
