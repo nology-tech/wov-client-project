@@ -54,7 +54,7 @@ const App = () => {
 
   useEffect(() => {
     fetchCurrentUser();
-  }, []);
+  });
 
   return (
     <>
