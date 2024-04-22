@@ -4,6 +4,10 @@
   background-color: $white-color;
   height: 100%;
   margin-bottom: 56px;
+  &__none {
+    text-align: center;
+    color: rgb(172, 159, 159);
+  }
 
   &__label {
     // Visually hidding search box label but still screen reader accessible
@@ -44,11 +48,8 @@
   }
 }
 
-
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
   .task-page {
-   
-    
     .task-page__input {
       width: 37%;
       transform: scale(2.4);

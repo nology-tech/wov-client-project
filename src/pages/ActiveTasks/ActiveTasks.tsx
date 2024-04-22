@@ -1,12 +1,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { ChangeEvent, useEffect, useState } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Header from "../../components/Header/Header";
@@ -197,14 +192,16 @@ const ActiveTasks = () => {
         />
       </div>
       {searchedTasks.length === 0 ? (
-        <p>There are no tasks to display</p>
+        <p className="task-page__none">There are no tasks to display</p>
       ) : (
         searchedTasks.map((task, index) => (
           <ActiveTaskTile
             key={task.id}
             id={task.id}
             requirement={task.taskHeading === "" ? "N/A" : task.taskHeading}
-            category={`${task.category || ""} | ${task.type ? capitalisedFirstLetters(task.type) : ""}`}
+            category={`${task.category || ""} | ${
+              task.type ? capitalisedFirstLetters(task.type) : ""
+            }`}
             points={task.points}
             completed={!!completedTasks[task.id]}
             onCompletionChange={handleTaskCompletionChange}
