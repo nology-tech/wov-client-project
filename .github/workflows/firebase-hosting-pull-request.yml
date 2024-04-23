@@ -3,6 +3,9 @@
 
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
+env:
+  VITE_FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
+
 jobs:
   starts_tests:
     runs-on: ubuntu-latest
