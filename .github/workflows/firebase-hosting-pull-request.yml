@@ -4,7 +4,14 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
+  starts_tests:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+    - run: npm install && npm run lint && npm run test
+
   build_and_preview:
+    needs: starts_tests
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
