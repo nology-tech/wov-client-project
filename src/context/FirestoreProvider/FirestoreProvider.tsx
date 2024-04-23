@@ -11,16 +11,13 @@ import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 
 export type FirestoreContextProps = {
-  getActiveTasks: (userId: string, updateCache?: boolean) => ActiveTask[];
+  getActiveTasks: (userId: string) => ActiveTask[];
   completeActiveTask: (
     user: UserProfile,
     completedActiveTask: ActiveTask
   ) => Promise<void>;
-  getCompletedTasks: (userId: string, updateCache?: boolean) => CompletedTask[];
-  getLeaderboard: (
-    tribe: string,
-    updateCache?: boolean
-  ) => Promise<UserProfile[]>;
+  getCompletedTasks: (userId: string) => CompletedTask[];
+  getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -60,13 +57,10 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const getActiveTasks = (userId: string, updateCache = false) => {
+  const getActiveTasks = (userId: string) => {
     const now = new Date();
 
-    if (
-      hasFetchedInLastFiveMinutes(now, activeTasksCache.lastFetched) &&
-      !updateCache
-    ) {
+    if (hasFetchedInLastFiveMinutes(now, activeTasksCache.lastFetched)) {
       return activeTasksCache.data;
     } else {
       fetchActiveTasks(userId, now);
@@ -144,13 +138,10 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const getCompletedTasks = (userId: string, updateCache = false) => {
+  const getCompletedTasks = (userId: string) => {
     const now = new Date();
 
-    if (
-      !hasFetchedInLastFiveMinutes(now, completedTasksCache.lastFetched) &&
-      !updateCache
-    ) {
+    if (hasFetchedInLastFiveMinutes(now, completedTasksCache.lastFetched)) {
       return completedTasksCache.data;
     } else {
       fetchCompletedTasks(userId, now);
