@@ -7,24 +7,33 @@ import { FirestoreContextProps } from "../../context/FirestoreProvider/Firestore
 
 describe("ActiveTask page component", () => {
   const mockFireStore = {
-    getActiveTasks: (_: string) => Promise.resolve(activeTasks),
+    getActiveTasks: (_: string) => activeTasks,
   } as FirestoreContextProps;
 
   it("should render the ActiveTask page", () => {
-    customRender(<ActiveTasks />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<ActiveTasks />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
     const activeTask = screen.getByTestId("task-page");
     expect(activeTask).toBeInTheDocument();
   });
 
   it("should render the header component", () => {
-    customRender(<ActiveTasks />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<ActiveTasks />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
 
     const header = screen.getByText("WAY OF THE VIKING");
     expect(header).toBeInTheDocument();
   });
 
   it("should render the navigation component", () => {
-    customRender(<ActiveTasks />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<ActiveTasks />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
 
     const home = screen.getByText("Home");
     const tasks = screen.getByText("Tasks");
@@ -37,7 +46,10 @@ describe("ActiveTask page component", () => {
   });
 
   it("should check the initial state of the button", async () => {
-    customRender(<ActiveTasks />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<ActiveTasks />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
 
     const checkboxInitial = await screen.findAllByRole("checkbox");
     checkboxInitial.forEach((checkbox) => {
@@ -46,7 +58,10 @@ describe("ActiveTask page component", () => {
   });
 
   it("should check the search input renders correct results", async () => {
-    customRender(<ActiveTasks />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<ActiveTasks />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
 
     const searchInput = screen.getByRole("search");
     await userEvent.type(searchInput, "di");

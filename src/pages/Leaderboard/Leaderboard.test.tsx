@@ -13,6 +13,7 @@ describe("should pass the leaderboard tests", () => {
       name: "Test User",
       bio: "Test Bio",
       email: "TestEmail@example.com",
+      tribe: "test-tribe",
     },
     {
       id: "2",
@@ -21,6 +22,7 @@ describe("should pass the leaderboard tests", () => {
       name: "Test User2",
       bio: "Test Bio",
       email: "TestEmail@example.com",
+      tribe: "test-tribe",
     },
     {
       id: "3",
@@ -29,6 +31,7 @@ describe("should pass the leaderboard tests", () => {
       name: "Test User3",
       bio: "Test Bio",
       email: "TestEmail@example.com",
+      tribe: "test-tribe",
     },
   ];
   const mockFireStore = {
@@ -36,13 +39,19 @@ describe("should pass the leaderboard tests", () => {
   } as FirestoreContextProps;
 
   it("should render leaderboard with default props", async () => {
-    customRender(<Leaderboard users={mockUsers} currentUserID={""} />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<Leaderboard />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
     const cardUser = await screen.findByText("Test User");
     expect(cardUser).toBeInTheDocument();
   });
 
   it("should sort users by score from highest to lowest", async () => {
-    customRender(<Leaderboard users={mockUsers} currentUserID={""} />, {useRouting: true, firestoreValue: mockFireStore});
+    customRender(<Leaderboard />, {
+      useRouting: true,
+      firestoreValue: mockFireStore,
+    });
     const sortUsersByScore = (await screen.findAllByTestId(
       "leaderboard__score"
     )) as HTMLParagraphElement[];

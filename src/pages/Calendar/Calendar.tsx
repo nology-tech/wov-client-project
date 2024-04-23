@@ -10,25 +10,19 @@ import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
-import { CompletedTask as CompletedTaskType } from "../../types/Task";
 import { useFirestore } from "../../hooks/useFireStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 const Calendar = () => {
   const { getCompletedTasks } = useFirestore();
-  const [completedTasks, setCompletedTasks] = useState<CompletedTaskType[]>([]);
+  const { getUser } = useAuth();
+  const user = getUser();
+  const completedTasks = getCompletedTasks(user.id);
   const [date, setDate] = useState<Date>(new Date());
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
-
-  useEffect(() => {
-    const getData = async () => {
-      const result = await getCompletedTasks("OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
-      setCompletedTasks(result);
-    };
-    getData();
-  }, [getCompletedTasks]);
 
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
@@ -39,7 +33,7 @@ const Calendar = () => {
 
   return (
     <div className="calendar">
-      <Header subtitle={"Calendar"} />
+      <Header subtitle={"Calendar"} profileImage={user.img} />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
           className="calendar__calendar"

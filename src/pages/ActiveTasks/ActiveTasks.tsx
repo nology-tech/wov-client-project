@@ -1,142 +1,50 @@
+import "./ActiveTasks.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import Popup from "../../components/Popup/Popup";
-import { ActiveTask } from "../../types/Task";
-import "./ActiveTasks.scss";
 import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import dayjs from "dayjs";
-import { db } from "../../firebase";
-import { UserProfile } from "../../types/User";
+import { useAuth } from "../../hooks/useAuth";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
 };
 
-type ActiveTaskData = {
-  category: string;
-  id: string;
-  points: number;
-  taskHeading: string;
-  type: string;
-  completed: string;
-};
-
-type CompletedTaskData = {
-  category: string;
-  completed: string;
-  description: string;
-  id: string;
-  points: number;
-  taskHeading: string;
-  type: string;
-};
-
 const ActiveTasks = () => {
-  const { getActiveTasks } = useFirestore();
-  const [activeTasks, setActiveTasks] = useState<ActiveTask[]>([]);
+  const { getUser, updateUser } = useAuth();
+  const user = getUser();
+  const { getActiveTasks, completeActiveTask } = useFirestore();
+  const activeTasks = getActiveTasks(user.id);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
   const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getData = async () => {
-      const result = await getActiveTasks("OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
-      setActiveTasks(result);
-    };
-    getData();
-  }, [getActiveTasks]);
-
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value.toLowerCase());
   };
 
-  const removeActiveTask = async (id: string) => {
-    const updatedActiveTasks = activeTasks.filter((task) => task.id !== id);
-    setActiveTasks(updatedActiveTasks);
-
-    await setDoc(doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
-      activeTasks: updatedActiveTasks,
-    });
-  };
-
   const updateUserScore = async (points: number) => {
-    const userRef = doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
-    const userRefDoc = await getDoc(userRef);
-
-    if (!userRefDoc.exists()) {
-      console.error("User document does not exist.");
-      return;
-    }
-
-    const userData: UserProfile = userRefDoc.data() as UserProfile;
-    const updateScore = userData.totalScore + points;
-
-    await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
-      ...userData,
-      totalScore: updateScore,
-    });
+    const updateScore = Number(user.totalScore) + Number(points);
+    updateUser({ totalScore: updateScore });
   };
 
   const updateCompletedTask = async (id: string) => {
-    const activeTaskDoc = await getDoc(
-      doc(db, "test-active-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
-    );
-    const activeTaskArray = activeTaskDoc.data()
-      ?.activeTasks as ActiveTaskData[];
+    const completedActiveTask = activeTasks.find((task) => task.id === id);
 
-    if (!activeTaskDoc.exists()) {
-      console.error("Active tasks document does not exist.");
-      return;
-    }
-
-    const recentlyCompletedTask = activeTaskArray.find(
-      (task: ActiveTaskData) => task.id === id
-    );
-
-    if (recentlyCompletedTask) {
-      const today = new Date();
-      recentlyCompletedTask.completed = dayjs(today).format(
-        "D MMMM YYYY [at] HH:mm:ss [UTC]Z"
-      );
-      recentlyCompletedTask.id = id + Date.now();
-    }
-
-    if (!recentlyCompletedTask) {
+    if (!completedActiveTask) {
       console.error("Recently completed task does not exist.");
       return;
     }
 
-    const completedTasksDoc = await getDoc(
-      doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03")
-    );
-
-    if (!completedTasksDoc.exists()) {
-      console.error("Completed tasks document does not exist.");
-      return;
-    }
-
-    const completedTasksData = completedTasksDoc.data()
-      .completedTasks as CompletedTaskData[];
-    const updatedCompleteTasks = [...completedTasksData, recentlyCompletedTask];
-
-    await setDoc(
-      doc(db, "test-completed-tasks", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"),
-      {
-        completedTasks: updatedCompleteTasks,
-      }
-    );
-
-    removeActiveTask(id);
+    completeActiveTask(user, completedActiveTask);
   };
 
   const handleTaskCompletionChange = async (
@@ -171,7 +79,7 @@ const ActiveTasks = () => {
 
   return (
     <div className="task-page" data-testid="task-page">
-      <Header subtitle="Task" />
+      <Header subtitle="Task" profileImage={user.img} />
       <label htmlFor="task-search" className="task-page__label">
         Search Bar
       </label>

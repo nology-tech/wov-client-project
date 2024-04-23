@@ -4,8 +4,11 @@ import Button from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 import "./Home.scss";
 import Navigation from "../../components/Navigation/Navigation";
+import { useAuth } from "../../hooks/useAuth";
 
 const Home = () => {
+  const { getUser } = useAuth();
+  const user = getUser();
   // "today" shows current day, only used in the Home page.
   const today = new Date(),
     date =
@@ -17,7 +20,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header subtitle="Home" />
+      <Header subtitle="Home" profileImage={user.img} />
       <HeaderHome
         date={date}
         location="Malvern Hills"
