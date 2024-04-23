@@ -25,9 +25,26 @@
     color: $slate-grey-color;
   }
 }
+
 @media screen and (min-width: $tablet-breakpoint) {
   .button {
     max-width: 24rem;
     min-width: 18rem;
+  }
+}
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .button {
+    max-width: 35rem;
+    min-width: 25rem;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .button {
+    max-width: 35rem;
+    min-width: 40rem;
+    font-size: 1.6rem;
   }
 }

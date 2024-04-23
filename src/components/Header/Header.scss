@@ -36,11 +36,11 @@
 
 @media screen and (min-width: $tablet-breakpoint) {
   .header {
-    padding: 3rem;
+    padding: 1.5rem;
     padding-bottom: 0;
 
     &__image-div {
-      width: 3.5rem;
+      width: 2.6rem;
     }
     &__title-div {
       &--title {
@@ -55,18 +55,20 @@
 
 @media screen and (min-width: $desktop-breakpoint) {
   .header {
-    padding: 4rem;
+    padding: 1.5rem;
     padding-bottom: 0;
 
     &__image-div {
-      width: 4rem;
+      width: 2rem;
     }
     &__title-div {
+      margin-top: -1.5rem;
       &--title {
-        font-size: 1.5rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.9rem;
       }
       &--subtitle {
-        font-size: 4rem;
+        font-size: 2rem;
       }
     }
   }
@@ -74,37 +76,39 @@
 
 @media screen and (min-width: $large-desktop-breakpoint) {
   .header {
-    padding: 4rem;
+    padding: 2rem;
     padding-bottom: 0;
 
     &__image-div {
-      width: 4rem;
+      width: 3rem;
     }
     &__title-div {
       &--title {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
       }
       &--subtitle {
-        font-size: 4rem;
+        font-size: 3rem;
       }
     }
+    padding-left: 2.5rem;
   }
 }
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
   .header {
-    padding: 8rem;
+    padding: rem;
     padding-bottom: 0;
     &__image-div {
-      width: 9.5rem;
+      width: 5rem;
     }
     &__title-div {
       &--title {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
       }
       &--subtitle {
-        font-size: 6.5rem;
+        font-size: 5rem;
       }
     }
+    padding-left: 5.5rem;
   }
 }

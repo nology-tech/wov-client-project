@@ -28,6 +28,7 @@
   .header-home {
     font-size: 1.2rem;
     padding: 0 3rem;
+    padding-left: 1.8rem;
     &__div {
       &--img {
         width: 20rem;
@@ -42,6 +43,7 @@
     font-size: 1.5rem;
     padding: 0 4rem;
     padding-bottom: 5rem;
+    padding-left: 1.5rem;
     &__div {
       &--img {
         width: 24rem;
@@ -57,6 +59,7 @@
     font-size: 1.5rem;
     padding: 0 5rem;
     padding-bottom: 6rem;
+    padding-left: 2.8rem;
     background: linear-gradient(
       to bottom,
       $secondary-color 50%,
@@ -77,6 +80,7 @@
     font-size: 2.5rem;
     padding: 0 8rem;
     padding-bottom: 15rem;
+    padding-left: 6rem;
     &__div {
       &--img {
         width: 50rem;

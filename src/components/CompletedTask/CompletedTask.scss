@@ -42,3 +42,27 @@
     transition: transform 100ms ease-in-out;
   }
 }
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .completed-task {
+    .MuiTypography-root {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .completed-task {
+    .MuiTypography-root {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .completed-task {
+    .MuiTypography-root {
+      font-size: 2rem;
+    }
+  }
+}
