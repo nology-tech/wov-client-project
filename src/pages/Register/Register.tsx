@@ -1,15 +1,12 @@
-import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
-import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
 import "./Register.scss";
-import { db, storage, auth } from "../../firebase";
-import { doc, setDoc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { NewUser } from "../../types/User";
+import { useAuth } from "../../hooks/useAuth";
 
-const emptyFormData = {
+const emptyFormData: NewUser = {
   firstName: "",
   lastName: "",
   email: "",
@@ -19,11 +16,10 @@ const emptyFormData = {
   img: "",
   tribe: "",
 };
-type RegisterProps = {
-  setUserUID: (userID: string) => void;
-};
-const Register = ({ setUserUID }: RegisterProps) => {
-  const [formData, setFormData] = useState(emptyFormData);
+
+const Register = () => {
+  const { createUser } = useAuth();
+  const [formData, setFormData] = useState<NewUser>(emptyFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string>("");
   const [missingFieldsError, setMissingFieldsError] = useState<string>("");
   const [showSecondForm, setShowSecondFrom] = useState<boolean>(false);
@@ -35,6 +31,7 @@ const Register = ({ setUserUID }: RegisterProps) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleNext = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (
@@ -48,75 +45,48 @@ const Register = ({ setUserUID }: RegisterProps) => {
       setMissingFieldsError("Please fill all required fields.");
     }
   };
+
   const handlePrevious = () => {
     showSecondForm ? setShowSecondFrom(false) : navigate(-1);
   };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       if (formData.password !== formData.confirmPassword) {
         throw new Error("Passwords do not match. Try again.");
       }
-      setPasswordMatchError("");
-      const userCredential: UserCredential =
-        await createUserWithEmailAndPassword(
-          auth,
-          formData.email,
-          formData.password
-        );
-      const uid = userCredential.user.uid;
-      setUserUID(uid);
-      await addUserData(uid);
+
+      if (passwordMatchError) {
+        setPasswordMatchError("");
+      }
+
+      const { error } = await createUser(formData, selectedFile ?? undefined);
+
+      if (error) {
+        throw new Error(error);
+      }
+
     } catch (error) {
-      setFormData(emptyFormData);
       setPasswordMatchError((error as Error).message);
     }
   };
+
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFile(event.target.files[0]);
     }
   };
+
   const handleTribeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.currentTarget;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleShowUploadPrompt = () => {
     setShowUploadPrompt(!showUploadPrompt);
   };
-  const addUserData = async (uid: string) => {
-    try {
-      await setDoc(doc(db, "test-tribe", uid), {
-        id: uid,
-        totalScore: 0,
-        name: `${capitalisedFirstLetters(
-          formData.firstName
-        )} ${capitalisedFirstLetters(formData.lastName)}`,
-        bio: formData.bio,
-        email: formData.email,
-        tribe: formData.tribe,
-      });
-      await setDoc(doc(db, "test-completed-tasks", uid), {
-        completedTasks: [],
-      });
-      await setDoc(doc(db, "test-active-tasks", uid), {
-        activeTasks: [],
-      });
-    } catch (error) {
-      console.log("Error adding user data to Firestore:", error);
-    }
-    if (selectedFile) {
-      try {
-        const fileRef = ref(
-          storage,
-          `${uid}(${formData.firstName} ${formData.lastName})/images/profile`
-        );
-        await uploadBytes(fileRef, selectedFile);
-      } catch (error) {
-        console.log("Error uploading picture");
-      }
-    }
-  };
+
   return (
     <section className="register">
       <div className="register__icon--container">

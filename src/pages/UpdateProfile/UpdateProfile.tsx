@@ -5,26 +5,34 @@ import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import TextField from "@mui/material/TextField";
 import { ChangeEvent, useState } from "react";
-import { doc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
 import { Dialog, DialogContent, DialogActions } from "@mui/material";
+import { useAuth } from "../../hooks/useAuth";
 
-type UpdateProfileProps = {
-  currentUser: UserProfile;
-  setCurrentUser: (updatedUser: UserProfile) => void;
+type UpdatePasswordForm = {
+  current: string;
+  new: string;
+  confirm: string;
 };
-const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
-  const [user, setUser] = useState<UserProfile>(currentUser);
-  const [password, setPassword] = useState<{
-    current: string;
-    new: string;
-    confirm: string;
-  }>({ current: "", new: "", confirm: "" });
+
+const defaultUpdatePasswordForm = {
+  current: "",
+  new: "",
+  confirm: "",
+};
+
+const UpdateProfile = () => {
+  const { getUser, updateUser } = useAuth();
+  const user = getUser();
+  const [userUpdate, setUserUpdate] = useState<UserProfile>(user);
+  const [password, setPassword] = useState<UpdatePasswordForm>(
+    defaultUpdatePasswordForm
+  );
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openPasswordPopup, setOpenPasswordPopup] = useState<boolean>(false);
-  const { img, name, bio, email } = user;
+  const { img, name, bio, email } = userUpdate;
 
   const handleClickOpenPasswordPopup = () => {
     setOpenPasswordPopup(true);
@@ -37,7 +45,7 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
     const value = event.currentTarget.value;
-    setUser({ ...user, [key]: value });
+    setUserUpdate({ ...userUpdate, [key]: value });
   };
 
   const handlePaswordChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,20 +55,14 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
   };
 
   const updateDatabase = async () => {
-    try {
-      await updateDoc(doc(db, "test-tribe", "OuZ1eeH9c5ZosgoXUi6Iraq7oM03"), {
-        name: name,
-        bio: bio,
-        email: email,
-      });
+    const { error } = await updateUser({ name, bio, email });
+    if (error) {
+      setErrorMessage(error);
+      setSuccessMessage("");
+    } else {
       setErrorMessage("");
       setSuccessMessage("Profile Updated");
-    } catch (error) {
-      setErrorMessage((error as Error).message);
-      setSuccessMessage("");
     }
-
-    setCurrentUser({ ...currentUser, name: name, bio: bio, email: email });
   };
 
   const changePassword = async () => {
@@ -70,7 +72,7 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
       try {
         const userPromise = await signInWithEmailAndPassword(
           auth,
-          currentUser.email,
+          user.email,
           password.current
         );
         await updatePassword(userPromise.user, password.new);
@@ -87,7 +89,7 @@ const UpdateProfile = ({ currentUser, setCurrentUser }: UpdateProfileProps) => {
 
   return (
     <div>
-      <Header subtitle="Profile" />
+      <Header subtitle="Profile" profileImage={img} />
       <div className="profile-update">
         <img src={img} className="profile-update__img" alt="Profile" />
 
