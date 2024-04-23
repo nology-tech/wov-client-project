@@ -31,16 +31,12 @@ export const getDocumentFromFirestoreCollection = async <T>(
   userId: string
 ) => {
   const retrievalReference = doc(db, collectionName, userId);
-
   const retrieveTasks = await getDoc(retrievalReference);
-  // TODO: REMOVE LOGS
   if (!retrieveTasks.exists()) {
-    console.log("DOCUMENT DOES NOT EXIST");
     return null;
   }
 
   const data = retrieveTasks.data() as T;
-  console.log(data);
   return data;
 };
 
