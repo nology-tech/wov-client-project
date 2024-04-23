@@ -20,8 +20,6 @@ import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 
-
-
 const userLoading: UserLoading = {
   id: "",
   totalScore: 0,
@@ -93,7 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const updateAuthState = async (userCredential: UserCredential) => {
     const userID = userCredential.user.uid;
     localStorage.setItem("userUID", userID);
-    if (!user) {
+    if (!user || "loading" in user) {
       getUserFromFirestore(userID);
     }
     setIsAuthenticated(true);
