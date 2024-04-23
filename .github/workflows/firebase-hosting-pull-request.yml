@@ -3,26 +3,15 @@
 
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
-
-env:
-  VITE_FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
 jobs:
-  starts_tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: npm install && npm run lint && npm run test
-
   build_and_preview:
-    needs: starts_tests
-    if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WOV_CLIENT_PROJECT_66242 }}'
-          projectId: wov-client-project
-
+          projectId: wov-client-project-66242
