@@ -14,7 +14,7 @@ const Leaderboard = () => {
   const [users, setUsers] = useState<UserProfile[]>([]);
 
   const getData = useCallback(async () => {
-    const result = await getLeaderboard(user.tribe, true);
+    const result = await getLeaderboard(user.tribe);
     setUsers(result);
   }, [getLeaderboard, user]);
 
