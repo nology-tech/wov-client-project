@@ -7,6 +7,7 @@ import {
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask } from "../../types/Task";
+import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 
 export type FirestoreContextProps = {
@@ -26,15 +27,22 @@ export const FirestoreContext = createContext<
   FirestoreContextProps | undefined
 >(undefined);
 
+type CachedData<T> = {
+  data: T;
+  lastFetched: null | Date;
+};
+
 export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [activeTasksCache, setActiveTasksCache] = useState<ActiveTask[]>([]);
+  const [activeTasksCache, setActiveTasksCache] = useState<
+    CachedData<ActiveTask[]>
+  >({ data: [], lastFetched: null });
   const [completedTasksCache, setCompletedTasksCache] = useState<
-    CompletedTask[]
-  >([]);
+    CachedData<CompletedTask[]>
+  >({ data: [], lastFetched: null });
 
-  const fetchActiveTasks = async (userId: string) => {
+  const fetchActiveTasks = async (userId: string, date: Date) => {
     if (!userId) {
       return;
     }
@@ -46,19 +54,24 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
       const activeTasks = activeTaskDocument
         ? activeTaskDocument.activeTasks
         : ([] as ActiveTask[]);
-      setActiveTasksCache(activeTasks);
+      setActiveTasksCache({ data: activeTasks, lastFetched: date });
     } catch (error) {
       console.error("Error fetching active tasks:", error);
     }
   };
 
   const getActiveTasks = (userId: string, updateCache = false) => {
-    if (activeTasksCache.length > 0 && !updateCache) {
-      return activeTasksCache;
+    const now = new Date();
+
+    if (
+      hasFetchedInLastFiveMinutes(now, activeTasksCache.lastFetched) &&
+      !updateCache
+    ) {
+      return activeTasksCache.data;
     } else {
-      fetchActiveTasks(userId);
+      fetchActiveTasks(userId, now);
     }
-    return activeTasksCache ?? ([] as ActiveTask[]);
+    return activeTasksCache.data ?? ([] as ActiveTask[]);
   };
 
   const completeActiveTask = async (
@@ -73,18 +86,22 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
       id: completedActiveTask.id + Date.now(),
     };
 
-    await fetchCompletedTasks(user.id);
+    await fetchCompletedTasks(user.id, today);
 
-    setCompletedTasksCache((completedTaskData) => [
+    setCompletedTasksCache((completedTaskData) => ({
       ...completedTaskData,
-      completedTask,
-    ]);
+      data: [...completedTaskData.data, completedTask],
+    }));
 
-    const updatedCompleteTasks = [...completedTasksCache, completedTask];
+    const updatedCompleteTasks = [...completedTasksCache.data, completedTask];
 
-    updateDocumentInFirestoreCollection(FirestoreCollections.COMPLETED_TASKS, user.id, {
-      completedTasks: updatedCompleteTasks,
-    });
+    updateDocumentInFirestoreCollection(
+      FirestoreCollections.COMPLETED_TASKS,
+      user.id,
+      {
+        completedTasks: updatedCompleteTasks,
+      }
+    );
 
     removeActiveTask(user.id, completedActiveTask.id);
   };
@@ -93,16 +110,23 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!activeTasksCache) {
       return;
     }
-    const updatedActiveTasks = activeTasksCache.filter(
+    const updatedActiveTasks = activeTasksCache.data.filter(
       (task) => task.id !== completedTaskId
     );
-    setActiveTasksCache(updatedActiveTasks);
-    updateDocumentInFirestoreCollection(FirestoreCollections.ACTIVE_TASKS, userId, {
-      activeTasks: updatedActiveTasks,
-    });
+    setActiveTasksCache((updatedActiveTaskData) => ({
+      ...updatedActiveTaskData,
+      data: updatedActiveTasks,
+    }));
+    updateDocumentInFirestoreCollection(
+      FirestoreCollections.ACTIVE_TASKS,
+      userId,
+      {
+        activeTasks: updatedActiveTasks,
+      }
+    );
   };
 
-  const fetchCompletedTasks = async (userId: string) => {
+  const fetchCompletedTasks = async (userId: string, date: Date) => {
     if (!userId) {
       return;
     }
@@ -114,19 +138,24 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
       const completedTasks = completedTaskDocument
         ? completedTaskDocument.completedTasks
         : ([] as CompletedTask[]);
-      setCompletedTasksCache(completedTasks);
+      setCompletedTasksCache({ data: completedTasks, lastFetched: date });
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
     }
   };
 
   const getCompletedTasks = (userId: string, updateCache = false) => {
-    if (completedTasksCache.length > 0 && !updateCache) {
-      return completedTasksCache;
+    const now = new Date();
+
+    if (
+      !hasFetchedInLastFiveMinutes(now, completedTasksCache.lastFetched) &&
+      !updateCache
+    ) {
+      return completedTasksCache.data;
     } else {
-      fetchCompletedTasks(userId);
+      fetchCompletedTasks(userId, now);
     }
-    return completedTasksCache ?? ([] as CompletedTask[]);
+    return completedTasksCache.data ?? ([] as CompletedTask[]);
   };
 
   const getLeaderboard = async (tribe: string) => {
@@ -137,7 +166,9 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     let result = [] as UserProfile[];
     try {
       const completedTaskDocument =
-        await getCollectionFromFirestore<UserProfile>(FirestoreCollections.TRIBE);
+        await getCollectionFromFirestore<UserProfile>(
+          FirestoreCollections.TRIBE
+        );
       const userProfiles = completedTaskDocument ?? ([] as UserProfile[]);
       const tribeUsers = userProfiles.filter((user) => user.tribe === tribe);
       result = tribeUsers ?? ([] as UserProfile[]);
