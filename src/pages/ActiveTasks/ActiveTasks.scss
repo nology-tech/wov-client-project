@@ -3,7 +3,10 @@
 .task-page {
   background-color: $white-color;
   height: 100%;
-  margin-bottom: 56px;
+  &__none {
+    text-align: center;
+    color: rgb(172, 159, 159);
+  }
 
   &__label {
     // Visually hidding search box label but still screen reader accessible
@@ -25,6 +28,8 @@
     align-items: center;
     margin: 1.8rem auto 0;
     width: 100%;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
   }
 
   &__no-task-message {
@@ -45,5 +50,19 @@
   .search-icon {
     margin-left: 12px;
     color: #3b5165;
+  }
+}
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .task-page {
+    .task-page__input {
+      width: 37%;
+      transform: scale(2.4);
+      margin-top: 4rem;
+      margin-bottom: 5rem;
+    }
+    .search-icon {
+      font-size: 2rem;
+    }
   }
 }

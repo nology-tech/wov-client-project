@@ -10,12 +10,12 @@ import { getStorage } from "firebase/storage";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_TOKEN,
-  authDomain: "wov-client-project.firebaseapp.com",
-  projectId: "wov-client-project",
-  storageBucket: "wov-client-project.appspot.com",
-  messagingSenderId: "500736757552",
-  appId: "1:500736757552:web:2a7142e64715df07aec2f5",
-  measurementId: "G-CJVJ3K385S",
+  authDomain: "wov-client-project-66242.firebaseapp.com",
+  projectId: "wov-client-project-66242",
+  storageBucket: "wov-client-project-66242.appspot.com",
+  messagingSenderId: "1084549732009",
+  appId: "1:1084549732009:web:d75fd1c6e622b7b1187bb8",
+  measurementId: "G-L1F9662PYK",
 };
 
 // Initialize Firebase

@@ -10,26 +10,19 @@ import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
 import filterCompletedTasks from "../../utils/filterCompletedTasks";
-import { CompletedTask as CompletedTaskType } from "../../types/Task";
 import { useFirestore } from "../../hooks/useFireStore";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 const Calendar = () => {
   const { getCompletedTasks } = useFirestore();
-  const [completedTasks, setCompletedTasks] = useState<CompletedTaskType[]>([]);
+  const { getUser } = useAuth();
+  const user = getUser();
+  const completedTasks = getCompletedTasks(user.id);
   const [date, setDate] = useState<Date>(new Date());
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
-
-  useEffect(() => {
-    const getData = async () => {
-      const result = await getCompletedTasks("OuZ1eeH9c5ZosgoXUi6Iraq7oM03");
-      setCompletedTasks(result);
-    };
-    getData();
-  }, [getCompletedTasks]);
 
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
@@ -40,10 +33,19 @@ const Calendar = () => {
 
   return (
     <div className="calendar">
-      <Header subtitle={"Calendar"} />
+      <Header subtitle={"Calendar"} profileImage={user.img} />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
           className="calendar__calendar"
+          sx={{
+            "@media (min-width: 1440px)": {
+              transform: "scale(1.3)",
+            },
+            "@media (min-width: 2560px)": {
+              transform: "scale(2.6)",
+              "margin-top": "220px",
+            },
+          }}
           disableFuture
           views={["day"]}
           onChange={changeDate}
@@ -61,6 +63,16 @@ const Calendar = () => {
       <Stack
         spacing={2}
         divider={<Divider flexItem />}
+        sx={{
+          "@media (min-width: 1440px)": {
+            "margin-top": "60px",
+            "font-size": "1.25rem",
+          },
+          "@media (min-width: 2560px)": {
+            "margin-top": "280px",
+            "font-size": "2.6rem",
+          },
+        }}
         className="calendar__task-container"
       >
         {filteredCompletedTasks.length > 0 ? (

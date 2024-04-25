@@ -7,14 +7,24 @@ import {
 import {
   AuthContext,
   AuthContextProps,
-} from "../components/AuthProvider/AuthProvider";
+} from "../context/AuthProvider/AuthProvider";
+import { UserLoading, UserProfile } from "../types/User";
+import { ActiveTask } from "../types/Task";
 
 type Options = {
   useRouting?: boolean;
   firestoreValue?: FirestoreContextProps;
   useAuthProvider?: boolean;
   isAuthenticated?: boolean;
-  userUID?: string | null;
+  user?: UserProfile | UserLoading;
+};
+
+const testUser: UserProfile = {
+  id: "OuZ1eeH9c5ZosgoXUi6Iraq7oM03",
+  totalScore: 0,
+  name: "Test Account",
+  email: "test@example.com",
+  tribe: "test-tribe",
 };
 
 const defaultOptions: Options = {
@@ -22,16 +32,17 @@ const defaultOptions: Options = {
   firestoreValue: undefined,
   useAuthProvider: true,
   isAuthenticated: false,
-  userUID: null,
+  user: testUser,
 };
 
 export const customRender = (
   ui: JSX.Element,
-  { useRouting = true,
+  {
+    useRouting = true,
     firestoreValue = undefined,
     useAuthProvider = true,
     isAuthenticated = false,
-    userUID = null
+    user,
   }: Options = defaultOptions
 ) => {
   // wrap components in routing if requested
@@ -46,7 +57,10 @@ export const customRender = (
   }
 
   if (useAuthProvider) {
-    uiResult = wrapWithAuthProvider(uiResult, {isAuthenticated, userUID});
+    uiResult = wrapWithAuthProvider(uiResult, {
+      isAuthenticated,
+      user: user || testUser,
+    });
   }
 
   // use RTL's render function to return the test component
@@ -58,19 +72,21 @@ const wrapWithRouting = (ui: JSX.Element): JSX.Element => {
 };
 
 type AuthProviderOptions = {
-  isAuthenticated?: boolean,
-  userUID?: string | null
-}
+  isAuthenticated?: boolean;
+  user: UserProfile | UserLoading;
+};
 
 const wrapWithAuthProvider = (
   ui: JSX.Element,
-  { isAuthenticated, userUID }: AuthProviderOptions
+  { isAuthenticated, user }: AuthProviderOptions
 ): JSX.Element => {
   const defaultAuthContext: AuthContextProps = {
+    createUser: (_, __) => Promise.resolve({ error: null }),
+    updateUser: (_) => Promise.resolve({ error: null }),
     loginUser: (_, __) => Promise.resolve({ error: null }),
     logoutUser: () => null,
     isAuthenticated: isAuthenticated ?? false,
-    userUID: userUID ?? null,
+    getUser: () => user,
   };
 
   return (
@@ -88,6 +104,7 @@ const wrapWithFirestoreProvider = (
     getActiveTasks: (_: string) => Promise.resolve([]),
     getCompletedTasks: (_: string) => Promise.resolve([]),
     getLeaderboard: (_: string) => Promise.resolve([]),
+    completeActiveTask: (_: UserProfile, __: ActiveTask) => Promise.resolve(),
   };
 
   return (

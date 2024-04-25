@@ -3,42 +3,52 @@ import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
 import { UserProfile } from "../../types/User";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
+import { useFirestore } from "../../hooks/useFireStore";
+import { useAuth } from "../../hooks/useAuth";
+import { useCallback, useEffect, useState } from "react";
 
-type LeaderboardProps = {
-  users: UserProfile[];
-  currentUserID: string | null;
-};
+const Leaderboard = () => {
+  const { getUser } = useAuth();
+  const user = getUser();
+  const { getLeaderboard } = useFirestore();
+  const [users, setUsers] = useState<UserProfile[]>([]);
 
-const Leaderboard = ({ users, currentUserID }: LeaderboardProps) => {
+  const getData = useCallback(async () => {
+    const result = await getLeaderboard(user.tribe);
+    setUsers(result);
+  }, [getLeaderboard, user]);
+
+  useEffect(() => {
+    getData();
+  }, [getData, user]);
+
   const sortUserByScore = () => {
-    const sortedUsers = [...users];
-    const sortScore = sortedUsers.sort((a, b) => b.totalScore - a.totalScore);
-    const sortScoreAndName = sortScore.sort((a, b) => {
-      if (a.totalScore === b.totalScore) {
-        if (!a.name) return 1;
-        if (!b.name) return -1;
-        return a.name.localeCompare(b.name);
+    const sortedUsers = [...users.map((user) => ({ ...user }))].sort((a, b) => {
+      if (b.totalScore !== a.totalScore) {
+        return b.totalScore - a.totalScore;
       }
-      return 0;
+
+      return (a.name || "").localeCompare(b.name || "");
     });
-    return sortScoreAndName;
+    return sortedUsers;
   };
+
 
   return (
     <div className="leaderboard">
-      <Header subtitle="Leaderboard" />
+      <Header subtitle="Leaderboard" profileImage={user.img} />
       <div className="leaderboard__cards">
-        {sortUserByScore().map((user, index) => (
+        {sortUserByScore().map((sortedUser, index) => (
           <LeaderboardCard
-            key={user.id}
-            name={user.name}
+            key={sortedUser.id + sortedUser.name}
+            name={sortedUser.name}
             profileImage={
-              user.img ?? "./assets/images/default-profile-image.png"
+              sortedUser.img ?? "./assets/images/default-profile-image.png"
             }
-            totalScore={user.totalScore}
+            totalScore={sortedUser.totalScore}
             isFirstCard={index === 0}
-            currentUserID ={currentUserID }
-            userID={user.id}
+            userID={sortedUser.id}
+            currentUserID={user.id}
           />
         ))}
         ;
