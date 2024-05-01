@@ -16,9 +16,15 @@ points: "",
 
 export const CreateTask = ({buttonLabel}:CreateTaskProps) => {
 const [formData, setFormData] = useState(emptyFormData)
+const [missingFieldsError, setMissingFieldsError] = useState<string>("");
 
 const handleCreateTask = () => {
-    console.log(formData)
+    if (formData.name && formData.date && formData.category && formData.description && formData.points) {
+        setMissingFieldsError("")
+        console.log(formData)
+    } else {
+        setMissingFieldsError("Please fill all required fields.");
+    }
 }
 
 const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,11 +37,16 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         <section className="create-task">
             <div className="create-task__form">
                 <form action="">
-                    <label>Name</label><input name="name" type="text" onChange={handleChange} placeholder={formData.name}/>
-                    <label>Date</label><input name="date" type="Date" onChange={handleChange}/>
+                    <label>Name</label><input name="name" type="text" onChange={handleChange}/>
+                    <label>Date</label><input name="date" type="Date" onChange={handleChange} min={new Date().toISOString().split('T')[0]}/>
                     <label>Category</label><input name="category" type="text" onChange={handleChange}/>
                     <label>Description</label><input name="description" type="text" onChange={handleChange}/>
                     <label>Points</label><input name="points" type="text" onChange={handleChange}/>
+                    {missingFieldsError && (
+                    <p>
+                        {missingFieldsError}
+                    </p>
+                    )}
                     </form>
             <Button variant="secondary" label={buttonLabel} onClick={handleCreateTask}></Button>
             </div>
