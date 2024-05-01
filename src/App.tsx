@@ -20,6 +20,8 @@ const App = () => {
   const { isAuthenticated } = useAuth();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
+  setIsAdmin(true)
+
   return (
     <>
       <FirestoreProvider>

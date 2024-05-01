@@ -1,6 +1,6 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';import MapIcon from "@mui/icons-material/Map";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
