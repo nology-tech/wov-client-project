@@ -112,7 +112,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem("userUID");
     setIsAuthenticated(false);
     setUser(userLoading);
-    navigate("/auth");
+    navigate("/");
   };
 
   const updateUser = async (
