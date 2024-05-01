@@ -15,22 +15,20 @@ import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import { useState, useEffect } from 'react';
+import LoadingFix from "./pages/ErrorPage/LoadingFix";
 
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // This effect will run when isAuthenticated changes
-    // Set loading to false once authentication status is determined
-    setLoading(false);
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, [isAuthenticated]);
 
-  // While loading, don't render anything or render a loading spinner
-  if (loading) {
-    return null;
-  }
+  // if (loading) {
+  //   return null;
+  // }
 
   return (
     <>
@@ -61,6 +59,7 @@ const App = () => {
             </>
           )}
           {!loading && <Route path="*" element={<ErrorPage />} />}
+          <LoadingFix loading={loading} isAuthenticated={isAuthenticated} setLoading={setLoading}/>
         </Routes>
       </FirestoreProvider>
     </>
