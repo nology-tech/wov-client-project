@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "./Home.scss";
 import Navigation from "../../components/Navigation/Navigation";
 import { useAuth } from "../../hooks/useAuth";
+import createTask from "../../components/CreateTask/CreateTask";
 
 const Home = () => {
   const { getUser } = useAuth();
