@@ -14,6 +14,7 @@ import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import LeaderboardAdmin from "./pages/LeaderboardAdmin/LeaderboardAdmin"
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -27,6 +28,7 @@ const App = () => {
               {isAdmin ? (
                 <>
                   <Route path="/" element={<AdminDashboard />} />
+                  <Route path="/leaderboard-admin" element={<LeaderboardAdmin/>}/>
                 </>
               ) : (
                 <>
