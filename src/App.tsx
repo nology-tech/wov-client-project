@@ -20,8 +20,7 @@ const App = () => {
 
   return (
     <>
-    <TaskTile id={"1"} name={"5 am wake up"} requirement={"Daily"} category={"Routine"} points={5}/>
-      {/* <FirestoreProvider>
+      <FirestoreProvider>
         <Routes>
           {isAuthenticated ? (
             <Route path="/" element={<PrivateRoute />}>
@@ -41,7 +40,7 @@ const App = () => {
           )}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-      </FirestoreProvider> */}
+      </FirestoreProvider>
     </>
   );
 };
