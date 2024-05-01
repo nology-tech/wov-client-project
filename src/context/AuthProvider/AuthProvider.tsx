@@ -46,13 +46,32 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
   undefined
 );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<UserProfile | null>(null);
-
+  // const [admin, setAdmin] = useState<UserAdmin | null>(null);
+   // const [isAdmin, setIsAdmin] = useState<boolean>(false); - once this is flipped to true, then setAdmin is updated
+ 
   useEffect(() => {
     const localStorageUID = localStorage.getItem("userUID");
     if (localStorageUID) {
@@ -72,7 +91,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         auth,
         email,
         password
+        // additional parameter needed for user profile e.g. some sort of 'admin or not' token. 
+        // Need a boolean flag 'isAdmin' and need a key token to check if the token says 'user' | 'admin' on it
+        // this then gets passed to updateAuthState 
       );
+      // when this finishes the waiting - it should run another function to check if the user is an admin or not
       updateAuthState(userCredential);
       navigate("/");
     } catch (error) {
@@ -89,6 +112,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const updateAuthState = async (userCredential: UserCredential) => {
+    // might need additional check here for whether they are admin or not 
     const userID = userCredential.user.uid;
     localStorage.setItem("userUID", userID);
     if (!user || "loading" in user) {
