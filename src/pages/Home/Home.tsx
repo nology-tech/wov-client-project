@@ -6,6 +6,7 @@ import "./Home.scss";
 import Navigation from "../../components/Navigation/Navigation";
 import { useAuth } from "../../hooks/useAuth";
 
+
 const Home = () => {
   const { getUser } = useAuth();
   const user = getUser();
