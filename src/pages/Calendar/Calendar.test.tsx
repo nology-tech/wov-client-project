@@ -51,7 +51,7 @@ describe("Calendar page", () => {
     const cal = screen.queryByTestId("calendarComponent");
     expect(cal).toBeInTheDocument();
     const today: number = new Date().getDate();
-    const todayButton = screen.queryByText(`${today}`);
+    const todayButton = screen.queryAllByText(`${today}`)[0];
     expect(todayButton).toHaveClass("MuiPickersDay-today");
     expect(todayButton).toHaveClass("Mui-selected");
   });
