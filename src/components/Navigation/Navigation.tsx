@@ -59,6 +59,13 @@ const Navigation = ({ navActionIndex = 0 }: NavProps) => {
           component={Link}
           to="/leaderboard"
         />
+          <BottomNavigationAction
+          className="bottom-navigation__item"
+          label="Create"
+          icon={<LeaderboardIcon />}
+          component={Link}
+          to="/create"
+        />
       </BottomNavigation>
     </Box>
   );
