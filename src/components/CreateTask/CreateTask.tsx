@@ -1,6 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../Button/Button";
+import "./CreateTask.scss";
 
+type CreateTaskProps = {
+    buttonLabel: string;
+}
 
 const emptyFormData = {
 name: "",
@@ -10,7 +14,7 @@ description: "",
 points: "",
 }
 
-export const createTask = () => {
+export const CreateTask = ({buttonLabel}:CreateTaskProps) => {
 const [formData, setFormData] = useState(emptyFormData)
 
 const handleCreateTask = () => {
@@ -27,17 +31,17 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         <section className="create-task">
             <div className="create-task__form">
                 <form action="">
-                    <label htmlFor="name">Name</label><input type="text" />
-                    <label htmlFor="date">Date</label><input type="text" />
-                    <label htmlFor="category">Category</label><input type="text" />
-                    <label htmlFor="description">Description</label><input type="text" />
-                    <label htmlFor="points"></label>Points<input type="text" />
+                    <label>Name</label><input name="name" type="text" onChange={handleChange} placeholder={formData.name}/>
+                    <label>Date</label><input name="date" type="text" onChange={handleChange}/>
+                    <label>Category</label><input name="category" type="text" onChange={handleChange}/>
+                    <label>Description</label><input name="description" type="text" onChange={handleChange}/>
+                    <label>Points</label><input name="points" type="text" onChange={handleChange}/>
                     </form>
-            <Button variant="secondary" label="Create" onClick={handleCreateTask}></Button>
+            <Button variant="secondary" label={buttonLabel} onClick={handleCreateTask}></Button>
             </div>
 
         </section>
     )
 }
 
-export default createTask;
+export default CreateTask;
