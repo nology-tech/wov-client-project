@@ -1,5 +1,5 @@
 import Button from "../../components/Button/Button";
-// import Navigation from "../../components/Navigation/Navigation";
+import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 import { useAuth } from "../../hooks/useAuth";
 
 const AdminDashboard = () => {
@@ -13,7 +13,6 @@ const AdminDashboard = () => {
         <Button label={"SIGN OUT"} variant={"secondary"} onClick={logoutUser} />
         <NavigationAdmin navActionIndex={0}/>
       </div>
-      {/* <Navigation /> */}
     </div>
   );
 };

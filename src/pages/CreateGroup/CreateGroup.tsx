@@ -1,6 +1,6 @@
 // import { CardMedia } from "@mui/material";
 import Button from "../../components/Button/Button";
-import Navigation from "../../components/Navigation/Navigation";
+import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 
 const CreateGroup = () => {
 
@@ -30,7 +30,7 @@ const CreateGroup = () => {
       label="Create"
       variant="secondary"
       />
-      <Navigation navActionIndex={4}/>
+      <NavigationAdmin navActionIndex={2}/>
     </div>
   );
 };
