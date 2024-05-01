@@ -11,6 +11,7 @@ const AdminDashboard = () => {
       <p>This is the admin dashboard</p>
       <div>
         <Button label={"SIGN OUT"} variant={"secondary"} onClick={logoutUser} />
+        <NavigationAdmin navActionIndex={0}/>
       </div>
       {/* <Navigation /> */}
     </div>
