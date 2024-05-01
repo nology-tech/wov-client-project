@@ -26,6 +26,7 @@
   &__editButton {
     position: absolute;
     align-self: flex-end;
+    margin: 3px;
     padding: 6px;
     border: none;
     border-radius: 10px;
@@ -39,11 +40,6 @@
         transform: scale(1.2);
     }
   }
-}
-
-
-.active-task--last {
-  border-bottom: none;
 }
 
 @media screen and (min-width: $tablet-breakpoint) {
