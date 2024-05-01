@@ -31,6 +31,7 @@ const userLoading: UserLoading = {
 
 export type AuthContextProps = {
   isAuthenticated: boolean;
+  isAdmin: boolean;
   loginUser: (email: string, password: string) => PromiseObjectNullString;
   logoutUser: () => void;
   getUser: () => UserProfile | UserLoading;
@@ -52,16 +53,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const localStorageUID = localStorage.getItem("userUID");
     if (localStorageUID) {
       setIsAuthenticated(true);
       getUserFromFirestore(localStorageUID);
+      checkAdminStatus(localStorageUID);
     } else {
       setIsAuthenticated(false);
     }
   }, []);
+
+  const checkAdminStatus = async (userID: string) => {
+    const adminDoc = await getDocumentFromFirestoreCollection(
+      FirestoreCollections.ADMIN,
+      userID
+    );
+    setIsAdmin(adminDoc !== null);
+  };
 
   const loginUser = async (
     email: string,
@@ -94,6 +105,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!user || "loading" in user) {
       getUserFromFirestore(userID);
     }
+    checkAdminStatus(userID);
     setIsAuthenticated(true);
   };
 
@@ -110,6 +122,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logoutUser = () => {
     signOut(auth);
     localStorage.removeItem("userUID");
+    setIsAdmin(false);
     setIsAuthenticated(false);
     setUser(userLoading);
     navigate("/auth");
@@ -213,6 +226,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         getUser,
         isAuthenticated,
+        isAdmin,
         loginUser,
         logoutUser,
         createUser,

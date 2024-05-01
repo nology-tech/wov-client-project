@@ -74,11 +74,12 @@ const wrapWithRouting = (ui: JSX.Element): JSX.Element => {
 type AuthProviderOptions = {
   isAuthenticated?: boolean;
   user: UserProfile | UserLoading;
+  isAdmin?: boolean;
 };
 
 const wrapWithAuthProvider = (
   ui: JSX.Element,
-  { isAuthenticated, user }: AuthProviderOptions
+  { isAuthenticated, user, isAdmin }: AuthProviderOptions
 ): JSX.Element => {
   const defaultAuthContext: AuthContextProps = {
     createUser: (_, __) => Promise.resolve({ error: null }),
@@ -86,6 +87,7 @@ const wrapWithAuthProvider = (
     loginUser: (_, __) => Promise.resolve({ error: null }),
     logoutUser: () => null,
     isAuthenticated: isAuthenticated ?? false,
+    isAdmin: isAdmin ?? false,
     getUser: () => user,
   };
 

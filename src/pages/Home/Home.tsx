@@ -5,13 +5,9 @@ import { Link } from "react-router-dom";
 import "./Home.scss";
 import Navigation from "../../components/Navigation/Navigation";
 import { useAuth } from "../../hooks/useAuth";
-import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 
-type HomeProps = {
-  isAdmin: boolean;
-}
 
-const Home = ({isAdmin} : HomeProps) => {
+const Home = () => {
   const { getUser } = useAuth();
   const user = getUser();
   // "today" shows current day, only used in the Home page.
@@ -65,8 +61,7 @@ const Home = ({isAdmin} : HomeProps) => {
           Could you become the next Most Valuable Viking?
         </p>
       </section>
-      {isAdmin && <NavigationAdmin navActionIndex={0} />}
-      {!isAdmin && <Navigation navActionIndex={0} />}
+      {<Navigation navActionIndex={0} />}
     </div>
   );
 };
