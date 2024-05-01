@@ -14,6 +14,7 @@ import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import { useState } from "react";
+import IsAdminPage from "./pages/IsAdminPage/IsAdminPage";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
@@ -31,6 +32,8 @@ const App = () => {
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/edit" element={<UpdateProfile />} />
+              {isAdmin ? (<Route path="/isAdminUser" element={<IsAdminPage/>}/>) :
+              (<Route path="/" element={<Home isAdmin={isAdmin}/>}/>)}
             </Route>
           ) : (
             <>
