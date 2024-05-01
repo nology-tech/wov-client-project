@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <>
-    <TaskTile id={"1"} name={"Sam wake up"} requirement={"Daily"} category={"Routine"} points={5}/>
+    <TaskTile id={"1"} name={"5am wake up"} requirement={"Daily"} category={"Routine"} points={5}/>
       {/* <FirestoreProvider>
         <Routes>
           {isAuthenticated ? (

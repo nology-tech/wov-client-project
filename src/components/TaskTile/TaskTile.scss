@@ -3,7 +3,6 @@
 .task-tile {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   max-width: 85%;
   margin: 1.8rem auto 0;
   color: $black-color;
@@ -11,19 +10,37 @@
   padding-bottom: 1.2rem;
   align-items: flex-start;
 
-  &__requirement {
-    font: $font-h4 $font-family-modern-content;
-    color: $black-color;
-    margin: 0;
-  }
-
-  &__category,
-  &__points {
+  &__category {
     font: $font-subText/$line-height-subtext $font-family-modern-content;
     margin: 0;
     color: $slate-grey-color;
   }
+
+  &__points {
+    font: $font-subText/$line-height-subtext $font-family-modern-content;
+    margin: 0;
+    color: $slate-grey-color;
+    padding-top: 10px;
+  }
+
+  &__editButton {
+    position: absolute;
+    align-self: flex-end;
+    padding: 6px;
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: transform .2s; 
+
+    &:hover {
+        border-bottom: 3px solid black;
+        border-radius: 0px;
+        transform: scale(1.2);
+    }
+  }
 }
+
 
 .active-task--last {
   border-bottom: none;
