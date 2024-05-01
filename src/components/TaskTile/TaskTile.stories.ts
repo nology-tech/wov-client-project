@@ -35,9 +35,3 @@ const meta: Meta<typeof TaskTile> = {
       points: 5,
     },
   };
-
-//   export const Button: Story = {
-//     args: {
-
-//     },
-//   };
