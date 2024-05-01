@@ -24,6 +24,11 @@
     background-color: $light-grey-color;
     color: $slate-grey-color;
   }
+    &--light-grey-lighter {
+      background-color: $light-grey-color;
+      color: $slate-grey-color;
+      font-weight: lighter;
+    }
 }
 
 @media screen and (min-width: $tablet-breakpoint) {

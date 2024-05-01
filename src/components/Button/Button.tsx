@@ -3,7 +3,7 @@ import "./Button.scss";
 
 export type ButtonProps = {
   label: string;
-  variant?: "primary" | "secondary" | "light-grey";
+  variant?: "primary" | "secondary" | "light-grey"| "light-grey-lighter";
   onClick?: MouseEventHandler;
 };
 
