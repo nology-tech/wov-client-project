@@ -32,8 +32,7 @@ const App = () => {
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/edit" element={<UpdateProfile />} />
-              {isAdmin ? (<Route path="/isAdminUser" element={<IsAdminPage/>}/>) :
-              (<Route path="/" element={<Home isAdmin={isAdmin}/>}/>)}
+              {isAdmin ? (<Route path="/isAdminUser" element={<IsAdminPage/>}/>) : (<Route path="/" element={<Home isAdmin={isAdmin}/>}/>)}
             </Route>
           ) : (
             <>
