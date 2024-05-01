@@ -61,7 +61,7 @@ const Home = () => {
           Could you become the next Most Valuable Viking?
         </p>
       </section>
-      {<Navigation navActionIndex={0} />}
+      <Navigation navActionIndex={0} />
     </div>
   );
 };
