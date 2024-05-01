@@ -32,7 +32,7 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
             <div className="create-task__form">
                 <form action="">
                     <label>Name</label><input name="name" type="text" onChange={handleChange} placeholder={formData.name}/>
-                    <label>Date</label><input name="date" type="text" onChange={handleChange}/>
+                    <label>Date</label><input name="date" type="Date" onChange={handleChange}/>
                     <label>Category</label><input name="category" type="text" onChange={handleChange}/>
                     <label>Description</label><input name="description" type="text" onChange={handleChange}/>
                     <label>Points</label><input name="points" type="text" onChange={handleChange}/>
