@@ -13,9 +13,11 @@ import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import { useState } from "react";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   return (
     <>
@@ -23,7 +25,7 @@ const App = () => {
         <Routes>
           {isAuthenticated ? (
             <Route path="/" element={<PrivateRoute />}>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home isAdmin={isAdmin}/>} />
               <Route path="/tasks" element={<ActiveTasks />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
