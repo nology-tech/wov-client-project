@@ -1,19 +1,21 @@
 import React,{useEffect} from 'react'
 
-type LoadingFixProps = {
+type LoadingProps = {
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     isAuthenticated: boolean
 }
 
-const LoadingFix = ({loading, setLoading, isAuthenticated}: LoadingFixProps) => {
+const Loading = ({loading, setLoading, isAuthenticated}: LoadingProps) => {
+
     useEffect(() => {
+        
         setLoading(false);
         }, [isAuthenticated]);
 
-        if (loading) {
-        return null;
-        }
+    if (loading) {
+    return null;
+    }
 
     return (
         <div>
@@ -22,4 +24,4 @@ const LoadingFix = ({loading, setLoading, isAuthenticated}: LoadingFixProps) => 
     )
 }
 
-export default LoadingFix
+export default Loading

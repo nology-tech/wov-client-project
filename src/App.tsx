@@ -14,25 +14,18 @@ import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
-import { useState, useEffect } from 'react';
-import LoadingFix from "./pages/ErrorPage/LoadingFix";
+import { useState} from 'react';
+import Loading from "./components/Loading/Loading";
 
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   setLoading(false);
-  // }, [isAuthenticated]);
-
-  // if (loading) {
-  //   return null;
-  // }
-
   return (
     <>
       <FirestoreProvider>
+      <Loading loading={loading} isAuthenticated={isAuthenticated} setLoading={setLoading}/>
         <Routes>
           {isAuthenticated ? (
             <Route path="/" element={<PrivateRoute />}>
@@ -59,7 +52,6 @@ const App = () => {
             </>
           )}
           {!loading && <Route path="*" element={<ErrorPage />} />}
-          <LoadingFix loading={loading} isAuthenticated={isAuthenticated} setLoading={setLoading}/>
         </Routes>
       </FirestoreProvider>
     </>
