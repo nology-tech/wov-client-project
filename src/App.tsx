@@ -13,7 +13,6 @@ import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
-import Create from "./pages/Create/Create";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
@@ -30,7 +29,6 @@ const App = () => {
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/edit" element={<UpdateProfile />} />
-              <Route path="/create" element={<Create/>}/>
             </Route>
           ) : (
             <>

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import CreateTask from "./CreateTask";
 
 describe("Create Task Component", () => {
@@ -16,6 +16,20 @@ describe("Create Task Component", () => {
         expect(category).toBeInTheDocument();
         expect(description).toBeInTheDocument();
         expect(points).toBeInTheDocument();
+    })
+
+    it ("should throw error message if any input is missing", async () => {
+        render(<CreateTask buttonLabel="Create"/>)
+
+        const name = screen.getByTestId('name-input')
+
+        fireEvent.change(name, {target: {value: "Bench Press"}})
+
+        fireEvent.click(screen.getByText("Create"))
+
+        await waitFor(() => {
+            expect(screen.getByText("Please fill all required fields.")).toBeInTheDocument();
+        })
     })
 
 })

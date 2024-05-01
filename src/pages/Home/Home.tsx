@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import "./Home.scss";
 import Navigation from "../../components/Navigation/Navigation";
 import { useAuth } from "../../hooks/useAuth";
-import CreateTask from "../../components/CreateTask/CreateTask";
 
 const Home = () => {
   const { getUser } = useAuth();
@@ -61,7 +60,6 @@ const Home = () => {
           Could you become the next Most Valuable Viking?
         </p>
       </section>
-      <CreateTask buttonLabel="Create"/>
       <Navigation navActionIndex={0} />
     </div>
   );

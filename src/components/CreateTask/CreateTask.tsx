@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Button from "../Button/Button";
 import "./CreateTask.scss";
 
@@ -37,7 +37,7 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         <section className="create-task">
             <div className="create-task__form">
                 <form action="">
-                    <label>Name</label><input name="name" type="text" onChange={handleChange}/>
+                    <label>Name</label><input name="name" type="text" onChange={handleChange} data-testid = "name-input"/>
                     <label>Date</label><input name="date" type="Date" onChange={handleChange} min={new Date().toISOString().split('T')[0]}/>
                     <label>Category</label><input name="category" type="text" onChange={handleChange}/>
                     <label>Description</label><input name="description" type="text" onChange={handleChange}/>
