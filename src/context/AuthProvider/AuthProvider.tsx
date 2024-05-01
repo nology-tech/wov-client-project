@@ -17,9 +17,7 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-
 type PromiseObjectNullString = Promise<{ error: null | string }>;
-
 const userLoading: UserLoading = {
   id: "",
   totalScore: 0,
@@ -28,7 +26,6 @@ const userLoading: UserLoading = {
   tribe: "",
   loading: true,
 };
-
 export type AuthContextProps = {
   isAuthenticated: boolean;
   isAdmin: boolean;
@@ -42,18 +39,16 @@ export type AuthContextProps = {
       | Pick<UserProfile, "totalScore">
   ) => PromiseObjectNullString;
 };
-
 export const AuthContext = createContext<AuthContextProps | undefined>(
   undefined
 );
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<UserProfile | null>(null);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const localStorageUID = localStorage.getItem("userUID");
     if (localStorageUID) {
@@ -64,7 +59,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsAuthenticated(false);
     }
   }, []);
-
   const checkAdminStatus = async (userID: string) => {
     const adminDoc = await getDocumentFromFirestoreCollection(
       FirestoreCollections.ADMIN,
@@ -72,7 +66,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     );
     setIsAdmin(adminDoc !== null);
   };
-
   const loginUser = async (
     email: string,
     password: string
@@ -82,11 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         auth,
         email,
         password
-        // additional parameter needed for user profile e.g. some sort of 'admin or not' token. 
-        // Need a boolean flag 'isAdmin' and need a key token to check if the token says 'user' | 'admin' on it
-        // this then gets passed to updateAuthState 
       );
-      // when this finishes the waiting - it should run another function to check if the user is an admin or not
       updateAuthState(userCredential);
       navigate("/");
     } catch (error) {
@@ -101,9 +90,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return { error: null };
   };
-
   const updateAuthState = async (userCredential: UserCredential) => {
-    // might need additional check here for whether they are admin or not 
     const userID = userCredential.user.uid;
     localStorage.setItem("userUID", userID);
     if (!user || "loading" in user) {
@@ -112,7 +99,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     checkAdminStatus(userID);
     setIsAuthenticated(true);
   };
-
   const getUserFromFirestore = async (userID: string) => {
     const storedUser = await getDocumentFromFirestoreCollection<UserProfile>(
       FirestoreCollections.TRIBE,
@@ -122,7 +108,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setUser(storedUser);
     }
   };
-
   const logoutUser = () => {
     signOut(auth);
     localStorage.removeItem("userUID");
@@ -131,7 +116,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(userLoading);
     navigate("/auth");
   };
-
   const updateUser = async (
     data:
       | Pick<UserProfile, "bio" | "name" | "email">
@@ -140,19 +124,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (user === null) {
       return { error: "No user stored" };
     }
-
     const { error, updated } = await updateDocumentInFirestoreCollection(
       FirestoreCollections.TRIBE,
       user.id,
       data
     );
-
     if (updated) {
       setUser({ ...user, ...data });
     }
     return { error };
   };
-
   const createUser = async (
     { email, password, firstName, lastName, bio, tribe }: NewUser,
     profileFile?: File
@@ -161,9 +142,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const userCredential: UserCredential =
         await createUserWithEmailAndPassword(auth, email, password);
       updateAuthState(userCredential);
-
       const uid = userCredential.user.uid;
-
       const userProfile = {
         id: uid,
         totalScore: 0,
@@ -175,7 +154,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         tribe,
         img: "",
       };
-
       if (profileFile) {
         const filePath = `${uid}(${firstName}-${lastName})/images/profile`;
         const { fileDownloadUrl, error } = await saveFileAndRetrieveDownloadUrl(
@@ -188,7 +166,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         }
         userProfile.img = fileDownloadUrl || "";
       }
-
       await createDocumentInFirestoreCollection(
         FirestoreCollections.TRIBE,
         uid,
@@ -208,7 +185,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           activeTasks: [],
         }
       );
-
       setUser(userProfile);
       navigate("/");
       return { error: null };
@@ -216,7 +192,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return { error: (error as Error).message };
     }
   };
-
   const getUser = () => {
     if (user) {
       return user;
@@ -224,7 +199,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return userLoading;
     }
   };
-
   return (
     <AuthContext.Provider
       value={{
