@@ -13,13 +13,15 @@ import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import TaskTile from "./components/TaskTile/TaskTile";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
 
   return (
     <>
-      <FirestoreProvider>
+    <TaskTile id={"1"} name={"Sam wake up"} requirement={"Daily"} category={"Routine"} points={5}/>
+      {/* <FirestoreProvider>
         <Routes>
           {isAuthenticated ? (
             <Route path="/" element={<PrivateRoute />}>
@@ -39,7 +41,7 @@ const App = () => {
           )}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-      </FirestoreProvider>
+      </FirestoreProvider> */}
     </>
   );
 };
