@@ -2,8 +2,9 @@
 
 .user-tile {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     max-width: 85%;
+    text-align: center;
     margin: 2rem auto 0;
     color: $black-color;
     border-bottom: 2px solid $light-grey-color;
@@ -11,8 +12,12 @@
     align-items: flex-start;
 
     &__image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
         border-radius: 50%;
         padding: 4px;
+        margin-bottom: 20px;
         border: 1px solid black;
         max-width: 5rem;
 
@@ -22,8 +27,9 @@
     }
 
     &__info {
-        flex-direction: column;
-        margin: -0.5rem 2rem;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
         padding: 4px;
         color: $black-color;
     }
@@ -31,7 +37,7 @@
     &__name {
         margin-bottom: -0.5rem;        
     }
-    
+
     &__points,
     &__tribe {
         font: $font-subText/$line-height-subtext $font-family-modern-content;
@@ -40,10 +46,48 @@
     }
 
     &__memberSince {
-        flex-direction: column;
-        align-self: flex-end;
+        padding-top: 20px;
         color: rgb(175, 175, 175);
         font: $font-subText/$line-height-subtext $font-family-modern-content;
-        text-align: end;
     }
 }
+
+
+@media screen and (min-width: $tablet-breakpoint) {
+    .user-tile {
+        display: flex;
+        flex-direction: row;
+        max-width: 85%;
+        text-align: start;
+        margin: 2rem auto 0;
+        color: $black-color;
+        border-bottom: 2px solid $light-grey-color;
+        padding-bottom: 1.2rem;
+        align-items: flex-start;
+    
+        &__image {
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid black;
+            max-width: 5rem;
+        }
+    
+        &__info {
+            flex-direction: column;
+            margin: -0.5rem 2rem;
+            padding: 4px;
+            color: $black-color;
+        }
+    
+        &__name {
+            margin-bottom: -0.5rem;        
+        }
+        
+        &__memberSince {
+            flex-direction: column;
+            padding-bottom: 20px;
+            align-self: flex-end;
+            text-align: end;
+        }
+    }
+  }
