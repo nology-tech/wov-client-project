@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 type LoadingProps = {
   loading: boolean;
@@ -15,7 +17,11 @@ const Loading = ({ loading, setLoading, isAuthenticated }: LoadingProps) => {
   );
 
   if (loading) {
-    return null;
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return;
