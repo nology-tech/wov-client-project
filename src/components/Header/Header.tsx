@@ -13,7 +13,12 @@ const Header = ({ subtitle, profileImage }: HeaderProps) => {
         <Link to="/profile">
           <img
             className="header__image-div header__image-div--image"
-            src={profileImage ?? "./assets/images/default-profile-image.png"}
+            src={
+              profileImage
+                ? profileImage
+                : "../../assets/images/default-profile-image.png"
+            }
+            aria-label="profile picture link"
           />
         </Link>
       </div>
