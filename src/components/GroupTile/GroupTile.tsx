@@ -1,3 +1,4 @@
+import "./GroupTile.scss"
 
 type GroupTileProps = {
     tribeName: string; 
@@ -11,11 +12,11 @@ const GroupTile = ({tribeName, numberOfMembers, totalPoints, dateGroupStarted}:G
     const date = dateGroupStarted.toString()
 
   return (
-    <div>
-      <h1>{tribeName}</h1>
-      <p>{numberOfMembers}</p>
-      <h3>{totalPoints}</h3>
-      <p>{date}</p>
+    <div className="group-tile">
+      <h3 className="group-tile__name">{tribeName}</h3>
+      <p className="group-tile__members">Members: {numberOfMembers}</p>
+      <h4 className="group-tile__points">Total Points:  {totalPoints}</h4>
+      <p className="group-tile__date">Date created: {date}</p>
     </div>
   )
 }
