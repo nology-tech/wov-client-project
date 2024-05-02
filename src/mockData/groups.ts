@@ -1,4 +1,4 @@
-export type Groups = {
+export type GroupData = {
   tribeName: string;
   numberOfMembers: number;
   totalPoints: number;
@@ -6,7 +6,7 @@ export type Groups = {
 };
 
 
-const groups: Groups [] = [
+const groups: GroupData[] = [
 
 {
  tribeName: "Yuma",
