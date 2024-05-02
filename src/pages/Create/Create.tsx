@@ -1,4 +1,4 @@
-import "./Create.scss"
+import "./Create.scss";
 import Button from "../../components/Button/Button";
 import CreateTask from "../../components/CreateTask/CreateTask";
 import { useState } from "react";
@@ -33,7 +33,7 @@ const Create = () => {
       <div className="create">
         <Button
           label="New Group"
-          variant={showCreateGroup ? "secondary" : "light-grey"} 
+          variant={showCreateGroup ? "secondary" : "light-grey"}
           onClick={handleGroupButtonClick}
         />
         <Button
@@ -53,4 +53,4 @@ const Create = () => {
   );
 };
 
-export default Create
+export default Create;

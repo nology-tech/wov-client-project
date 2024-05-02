@@ -38,11 +38,7 @@ const CreateGroup = () => {
 
   const handleCreateGroup = async () => {
     setErrorMessage("");
-
-    if (new Date(startDate) > new Date(endDate)) {
-      setErrorMessage("Start date cannot be after end date.");
-      return;
-    }
+    setsuccessMessage("");
 
     const missingFields = checkMissingFields();
     if (missingFields.length > 0) {
@@ -90,6 +86,13 @@ const CreateGroup = () => {
     setEndDate("");
   };
 
+  const handleInputChange =
+    (setter: (value: string) => void) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setter(e.target.value);
+      setErrorMessage("");
+      setsuccessMessage("");
+    };
 
   return (
     <div className="create-group-container">
@@ -101,11 +104,14 @@ const CreateGroup = () => {
         {errorMessage && errorMessage.includes("Group Name") && (
           <p className="create-group__error">{errorMessage}</p>
         )}
+        {errorMessage && errorMessage.includes("This group") && (
+          <p className="create-group__error">{errorMessage}</p>
+        )}
         <input
           type="text"
           id="Group Name"
           value={groupName}
-          onChange={(e) => setGroupName(e.target.value)}
+          onChange={handleInputChange(setGroupName)}
         />
       </div>
 
@@ -121,7 +127,7 @@ const CreateGroup = () => {
             type="date"
             id="Start Date"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            onChange={handleInputChange(setStartDate)}
             min={today}
             max={endDate}
           />
@@ -136,7 +142,7 @@ const CreateGroup = () => {
             type="date"
             id="endDate"
             value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            onChange={handleInputChange(setEndDate)}
             min={startDate || today}
           />
         </div>
