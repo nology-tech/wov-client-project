@@ -36,7 +36,7 @@ describe("ActiveTask page component", () => {
     });
 
     const home = screen.getByText("Home");
-    const tasks = screen.getByText("Tasks");
+    const tasks = screen.getByText("Task");
     const calendar = screen.getByText("Calendar");
     const leaderboard = screen.getByText("Leaderboard");
     expect(home).toBeInTheDocument();
