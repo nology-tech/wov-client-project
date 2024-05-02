@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
+import ButtonContainer from "../../containers/ButtonContainer/ButtonContainer";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -79,10 +80,12 @@ const ActiveTasks = () => {
 
   return (
     <div className="task-page" data-testid="task-page">
+
       <Header subtitle="Task" profileImage={user.img} />
       <label htmlFor="task-search" className="task-page__label">
         Search Bar
       </label>
+      <ButtonContainer/>
       <div className="task-page__search-container">
         <TextField
           className="task-page__input"
@@ -144,6 +147,7 @@ const ActiveTasks = () => {
         />
       )}
       <Navigation navActionIndex={1} />
+
     </div>
   );
 };
