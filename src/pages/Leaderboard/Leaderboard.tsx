@@ -43,7 +43,7 @@ const Leaderboard = () => {
             key={sortedUser.id + sortedUser.name}
             name={sortedUser.name}
             profileImage={
-              sortedUser.img ?? "./assets/images/default-profile-image.png"
+              sortedUser.img ? sortedUser.img : "./assets/images/default-profile-image.png"
             }
             totalScore={sortedUser.totalScore}
             isFirstCard={index === 0}
