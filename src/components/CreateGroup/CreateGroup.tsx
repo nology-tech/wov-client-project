@@ -2,7 +2,7 @@ import "./CreateGroup.scss";
 import Button from "../Button/Button";
 import camera from "../../assets/images/camera-placeholder.png";
 import { useFirestore } from "../../hooks/useFireStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   FirestoreCollections,
   getDocumentFromFirestoreCollection,
