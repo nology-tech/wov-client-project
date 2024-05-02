@@ -28,6 +28,7 @@ const App = () => {
               {isAdmin ? (
                 <>
                   <Route path="/" element={<AdminDashboard />} />
+                  <Route path="/create" element={<Create/>}/>
                 </>
               ) : (
                 <>
@@ -37,7 +38,6 @@ const App = () => {
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/edit" element={<UpdateProfile />} />
-                  <Route path="/create" element={<Create/>}/>
                 </>
               )}
             </Route>
