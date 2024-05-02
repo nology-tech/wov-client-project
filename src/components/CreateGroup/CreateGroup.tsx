@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import camera from "../../assets/images/camera-placeholder.png"
 import { useFirestore } from "../../hooks/useFireStore";
 import { useState } from "react";
+import { FirestoreCollections, getDocumentFromFirestoreCollection } from "../../utils/dbUtils";
 
 const CreateGroup = () => {
     const { createGroup } = useFirestore();
@@ -31,37 +32,56 @@ const CreateGroup = () => {
       return missingFields;
     };
 
-    const missingFields = checkMissingFields();
-  
     const handleCreateGroup = async () => {
-      if (groupName.trim() && missingFields.length === 0) {
-        const groupData = {
-          name: groupName,
-          "start-date": startDate,
-          "end-date": endDate,
-        };
-        setsuccessMessage("Your new tribe has been created!");
+      setErrorMessage("");
   
-        try {
-          await createGroup(groupData);
-        } catch (error) {
-          setErrorMessage("Error creating a group");
+      const missingFields = checkMissingFields();
+      if (missingFields.length > 0) {
+        setErrorMessage(
+          `Please fill in all required fields: ${missingFields.join(", ")}`
+        );
+        return;
+      }
+  
+      
+      const existingGroup = await getDocumentFromFirestoreCollection(
+        FirestoreCollections.TRIBELIST,
+        groupName.trim() 
+      );
+  
+      if (existingGroup) {
+        setErrorMessage(
+          "This group already exists. Please choose a different name."
+        );
+        return;
+      }
+  
+      const groupData = {
+        name: groupName,
+        "start-date": startDate,
+        "end-date": endDate,
+      };
+  
+      try {
+        const result = await createGroup(groupData);
+  
+        if (result.created) {
+          setsuccessMessage("Your new tribe has been created!")
+          clearInputValues(); 
+        } else {
+          setErrorMessage(result.error || "Error creating the group");
         }
-      } else {
-        setErrorMessage("Please fill in all required fields.");
+      } catch (error) {
+        setErrorMessage("Error creating the group");
       }
     };
+    
 
     const clearInputValues = () => {
       setGroupName("");
       setStartDate("");
       setEndDate("");
     };
-
-    if (successMessage) {
-      clearInputValues()
-    }
-    
 
   return (
     <div className="create-group">
@@ -118,7 +138,3 @@ const CreateGroup = () => {
   );
 };
 export default CreateGroup;
-
-
-// validate end date so end date can't be BEFOREEEEE the start date
-// get the page to clear when success message pops up
