@@ -14,13 +14,10 @@ import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
-<<<<<<< HEAD
 import { useState} from 'react';
 import Loading from "./components/Loading/Loading";
 
-=======
 import LeaderboardAdmin from "./pages/LeaderboardAdmin/LeaderboardAdmin"
->>>>>>> 9d3941c298ba44132a07f2909a528f72736fbecd
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
