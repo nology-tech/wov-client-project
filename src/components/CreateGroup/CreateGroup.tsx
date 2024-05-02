@@ -6,7 +6,6 @@ import camera from "../../assets/images/camera-placeholder.png"
 
 const CreateGroup = () => {
 
-
   return (
     <div className="create-group">
       <div className="create-group__new-group">
