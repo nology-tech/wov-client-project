@@ -29,17 +29,26 @@ const ButtonContainer = () => {
 
   return (
     <div className="buttons-container">
-      <button className="buttons-container__group">
-         <Button  label={"groups"}  variant={groupClick ? "secondary" : "light-grey-lighter"} onClick={handleGroupClick} /> 
-      </button>
+      <Button
+        label={"groups"}
+        variant={groupClick ? "secondary" : "light-grey-lighter"}
+        onClick={handleGroupClick}
+        size="small"
+      />
 
-      <button className="buttons-container__users">
-      <Button label={"users"}  variant={userClick ? "secondary" : "light-grey-lighter"} onClick={handleUserClick} /> 
-      </button>
+        <Button
+          label={"users"}
+          variant={userClick ? "secondary" : "light-grey-lighter"}
+          onClick={handleUserClick}
+          size="small"
+        />
 
-      <button className="buttons-container__tasks">
-        <Button  label={"tasks"}  variant={taskClick ? "secondary" : "light-grey-lighter"} onClick={handleTaskClick} /> 
-      </button>
+        <Button
+          label={"tasks"}
+          variant={taskClick ? "secondary" : "light-grey-lighter"}
+          onClick={handleTaskClick}
+          size="small"
+        />
     </div>
   );
 }
