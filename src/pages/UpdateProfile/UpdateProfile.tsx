@@ -47,12 +47,18 @@ const UpdateProfile = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
+    console.log("key:", key)
     const value = event.currentTarget.value;
+    console.log("value:", value)
+
         if (event.target.files && event.target.files.length > 0) {
           setSelectedFile(event.target.files[0]);
         }
     setUserUpdate({ ...userUpdate, [key]: value });
   };
+
+  console.log("userUpdate:", userUpdate)
+  console.log("selectedFile:", selectedFile)
 
   const handlePaswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
@@ -97,9 +103,18 @@ const UpdateProfile = () => {
     setShowUploadPrompt(!showUploadPrompt);
   };
 
-  // const handlePictureChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlePictureChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const key = event.currentTarget.id;
+    console.log("key:", key)
+    const value = event.currentTarget.value
+    console.log("value:", value)
 
-  // };
+        if (event.target.files && event.target.files.length > 0) {
+          setSelectedFile(event.target.files[0]);
+        }
+    setUserUpdate({ ...userUpdate, [key]: value });
+  };
+
 
   return (
     <div>
@@ -203,14 +218,17 @@ const UpdateProfile = () => {
         )}
 
         {showUploadPrompt ? (
-          <input
-            id="img"
-            name="img"
-            value={img}
-            className=""
-            type="file"
-            onChange={handleChange}
-          />
+          <>
+            <input
+              id="img"
+              name="img"
+              className=""
+              value={userUpdate.img}
+              type="file"
+              onChange={handlePictureChange}
+            />
+            {selectedFile && <span>{selectedFile.name}</span>}
+          </>
         ) : (
           <Button
             label={"CHANGE PICTURE"}
@@ -218,8 +236,9 @@ const UpdateProfile = () => {
             onClick={handleShowUploadPrompt}
           />
         )}
+
         {selectedFile && (
-          <p className="">
+          <p className="register__error-message--file-name">
             {selectedFile.name}
           </p>
         )}
