@@ -3,6 +3,8 @@ import Button from "../Button/Button";
 import "./CreateTask.scss";
 import { createDocumentInFirestoreCollection } from "../../utils/dbUtils";
 import { FirestoreCollections } from "../../utils/dbUtils";
+import { addDoc, collection } from "firebase/firestore"
+import { db } from "../../firebase";
 
 type CreateTaskProps = {
     buttonLabel: string;
@@ -21,10 +23,12 @@ const [formData, setFormData] = useState(emptyFormData)
 const [missingFieldsError, setMissingFieldsError] = useState<string>("");
 const localStorageUID = localStorage.getItem("userUID");
 
+
 const handleCreateTask = async () => {
     if (formData.name && formData.date && formData.category && formData.description && formData.points && localStorageUID) {
         setMissingFieldsError("")
-        await createDocumentInFirestoreCollection(FirestoreCollections.TASKS, localStorageUID, formData)
+        const docRef = await addDoc(collection(db, "test-tasks"), formData);
+        await createDocumentInFirestoreCollection(FirestoreCollections.TASKS, docRef.id, formData)
         await setFormData(emptyFormData)
     } else {
         setMissingFieldsError("Please fill all required fields.");
