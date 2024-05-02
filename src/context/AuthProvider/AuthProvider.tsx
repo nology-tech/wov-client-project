@@ -38,7 +38,7 @@ export type AuthContextProps = {
   createUser: (newUser: NewUser, profilePic?: File) => PromiseObjectNullString;
   updateUser: (
     data:
-      | Pick<UserProfile, "bio" | "name" | "email">
+      | Pick<UserProfile, "bio" | "name" | "email" | "img">
       | Pick<UserProfile, "totalScore">
   ) => PromiseObjectNullString;
 };

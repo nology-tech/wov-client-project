@@ -33,6 +33,9 @@ const UpdateProfile = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openPasswordPopup, setOpenPasswordPopup] = useState<boolean>(false);
   const { img, name, bio, email } = userUpdate;
+  const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [userImage, setUserImage] = useState<string | (() => string | null) | undefined>(user.img);
 
   const handleClickOpenPasswordPopup = () => {
     setOpenPasswordPopup(true);
@@ -45,6 +48,9 @@ const UpdateProfile = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
     const value = event.currentTarget.value;
+        if (event.target.files && event.target.files.length > 0) {
+          setSelectedFile(event.target.files[0]);
+        }
     setUserUpdate({ ...userUpdate, [key]: value });
   };
 
@@ -55,7 +61,7 @@ const UpdateProfile = () => {
   };
 
   const updateDatabase = async () => {
-    const { error } = await updateUser({ name, bio, email });
+    const { error } = await updateUser({ name, bio, email, img});
     if (error) {
       setErrorMessage(error);
       setSuccessMessage("");
@@ -86,6 +92,14 @@ const UpdateProfile = () => {
     handleClosePasswordPopup();
     setPassword({ current: "", new: "", confirm: "" });
   };
+
+  const handleShowUploadPrompt = () => {
+    setShowUploadPrompt(!showUploadPrompt);
+  };
+
+  // const handlePictureChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+  // };
 
   return (
     <div>
@@ -186,6 +200,28 @@ const UpdateProfile = () => {
         )}
         {successMessage && (
           <p className="profile-update__success-message">{successMessage}</p>
+        )}
+
+        {showUploadPrompt ? (
+          <input
+            id="img"
+            name="img"
+            value={img}
+            className=""
+            type="file"
+            onChange={handleChange}
+          />
+        ) : (
+          <Button
+            label={"CHANGE PICTURE"}
+            variant={"light-grey"}
+            onClick={handleShowUploadPrompt}
+          />
+        )}
+        {selectedFile && (
+          <p className="">
+            {selectedFile.name}
+          </p>
         )}
         <Button
           label={"CHANGE PASSWORD"}
