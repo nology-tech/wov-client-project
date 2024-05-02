@@ -7,7 +7,6 @@ const ButtonContainer = () => {
     const [groupClick, setGroupClick]= useState<boolean>(false)
     const [userClick, setUserClick]= useState<boolean>(false)
     const [taskClick, setTaskClick]= useState<boolean>(false)
-    //const [fontWeight, setFontWeight]= useState<string>("lighter")
 
 
     const handleGroupClick = () =>  {
@@ -29,32 +28,21 @@ const ButtonContainer = () => {
     }
 
   return (
-   <div className="buttons-container">
+    <div className="buttons-container">
+      <button className="buttons-container__group">
+         <Button  label={"groups"}  variant={groupClick ? "secondary" : "light-grey-lighter"} onClick={handleGroupClick} /> 
+      </button>
 
-    <button className="buttons-container__group">
-        {groupClick === true ? 
-        <Button label={"Groups"} variant="secondary" onClick={handleGroupClick} /> :
-        <Button label={"Groups"} variant="light-grey-lighter" onClick={handleGroupClick}/> 
-         } 
-    </button> 
+      <button className="buttons-container__users">
+      <Button label={"users"}  variant={userClick ? "secondary" : "light-grey-lighter"} onClick={handleUserClick} /> 
+      </button>
 
-    <button className="buttons-container__users">
-        {userClick === true ?
-        <Button label={"Users"} variant="secondary" onClick={handleUserClick}/> :
-        <Button label={"Users"} variant="light-grey-lighter" onClick={handleUserClick} /> 
-        }
-    </button>
-
-    <button className="buttons-container__tasks">
-        {taskClick === true ? 
-        <Button label={"Tasks"} variant="secondary" onClick={handleTaskClick}/> :
-        <Button label={"Tasks"} variant="light-grey-lighter" onClick={handleTaskClick}/>
-        }
-    </button>
-   </div>
-  )
+      <button className="buttons-container__tasks">
+        <Button  label={"tasks"}  variant={taskClick ? "secondary" : "light-grey-lighter"} onClick={handleTaskClick} /> 
+      </button>
+    </div>
+  );
 }
 
 export default ButtonContainer
-
 
