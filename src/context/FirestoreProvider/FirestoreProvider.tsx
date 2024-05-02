@@ -18,6 +18,7 @@ export type FirestoreContextProps = {
   ) => Promise<void>;
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
+  getTribes: () => Promise<TribeName[]>
 };
 
 export const FirestoreContext = createContext<
@@ -170,6 +171,21 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
+  const getTribes = async () => {
+    let result = [] as TribeName[]
+    try{
+      const tribes = 
+        await getCollectionFromFireStore<TribeName[]>(
+          FirestoreCollections.TRIBELIST
+        );
+      result = tribes ?? ([] as TribeName[])
+    }
+    catch (error){
+      console.error("Error fetching list of Tribes:", error)
+    }
+    return result;
+  }
+
   return (
     <FirestoreContext.Provider
       value={{
@@ -177,6 +193,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         completeActiveTask,
         getCompletedTasks,
         getLeaderboard,
+        getTribes
       }}
     >
       {children}

@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 const Leaderboard = () => {
   const { getUser } = useAuth();
   const user = getUser();
+  // takes a string where we can differentiate on tribes 
   const { getLeaderboard } = useFirestore();
   const [users, setUsers] = useState<UserProfile[]>([]);
 
