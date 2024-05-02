@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    align-items: center;
+}
+hr {
+    margin-top: 50px;
+    margin-left: 10vw;
+    width: 80vw;
+}
+.create {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px auto;
+    width: 90vw;
+
+    Button {
+        min-width: 135px;
+        font-size: 15px;
+        width: 30%;
+        justify-self: center;
+        margin-top: 30px;
+      }
+}

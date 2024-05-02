@@ -37,21 +37,21 @@ const NavigationAdmin = ({ navActionIndex = 0 }: NavAdminProps) => {
           label="Dashboard"
           icon={<HomeOutlinedIcon/>}
           component={Link}
-          to="/Dashboard"
+          to="/dashboard"
         />
         <BottomNavigationAction
           className="bottom-navigation__item"
           label="Create"
           icon={<AddOutlinedIcon/>}
           component={Link}
-          to="/Create"
+          to="/create"
         />
         <BottomNavigationAction
           className="bottom-navigation__item"
           label="Reporting"
           icon={<TimelineOutlinedIcon/>}
           component={Link}
-          to="/Reporting"
+          to="/reporting"
         />
         <BottomNavigationAction
           className="bottom-navigation__item"
