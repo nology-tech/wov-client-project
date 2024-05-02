@@ -3,7 +3,7 @@ import Button from "../../components/Button/Button";
 import CreateTask from "../../components/CreateTask/CreateTask";
 import { useState } from "react";
 import Header from "../../components/Header/Header";
-import Navigation from "../../components/Navigation/Navigation";
+import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 
 const Create = () => {
 const [isTaskShowing, setIsTaskShowing] = useState<boolean>(true)
@@ -35,7 +35,7 @@ const handleFormChange = async (event: React.MouseEvent<HTMLButtonElement>) => {
             </>
           )
         }
-        <Navigation navActionIndex={1}/>
+        <NavigationAdmin navActionIndex={1}/>
     </div>
   )
 }

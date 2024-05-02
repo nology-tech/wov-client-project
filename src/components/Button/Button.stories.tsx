@@ -34,6 +34,9 @@ export const Secondary: Story = () => {
 export const LightGrey: Story = () => {
   return <Button label="Light Grey Button" variant="light-grey" />;
 };
+export const LightGreyLighter: Story = () => {
+  return <Button label="Light Grey Lighter Button" variant="light-grey-lighter" />;
+};
 
 export const WithOneClick: Story = () => {
   const handleClick = () => {
@@ -68,6 +71,14 @@ LightGrey.parameters = {
   docs: {
     description: {
       story: "A light-grey button with a defined label and variant.",
+    },
+  },
+};
+
+LightGreyLighter.parameters = {
+  docs: {
+    description: {
+      story: "A light-grey button with a defined label, a variant and lighter font.",
     },
   },
 };
