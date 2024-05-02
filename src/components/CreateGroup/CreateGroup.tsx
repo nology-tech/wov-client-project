@@ -5,6 +5,8 @@ import NavigationAdmin from "../NavigationAdmin/NavigationAdmin";
 import camera from "../../assets/images/camera-placeholder.png"
 
 const CreateGroup = () => {
+
+
   return (
     <div className="create-group">
       <div className="create-group__new-group">
@@ -16,17 +18,20 @@ const CreateGroup = () => {
 
       {/* underline here */}
       <div className="create-group__name text-field">
-        <label htmlFor="">Name</label>
+        <label htmlFor="Name">Name</label>
         <input type="text" />
       </div>
+
       <section className="create-group__dates">
       <div className="create-group__start text-field">
-        <label htmlFor="">Start Date</label>
-        <input type="text" />
+        <label htmlFor="Start Date">Start Date</label>
+        <input 
+        type="date"
+        />
       </div>
       <div className="create-group__end text-field">
-        <label htmlFor="">End Date</label>
-        <input type="text" />
+        <label htmlFor="End Date">End Date</label>
+        <input type="date" />
       </div>
       </section>
 
