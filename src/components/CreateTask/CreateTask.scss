@@ -1,18 +1,22 @@
 @use "../../styles/variables" as *;
 
 .create-task {
+  width: 100%;
+  Button {
+    min-width: auto;
+    max-width: 200px;
+    justify-self: center;
+    margin-top: 30px;
+  }
     display: flex;
     justify-content: center;
     &__form {
       margin: 0px;
-      padding: 20px;
-      width: 90vw;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
+      padding: 10px;
+      width: 95vw;
   
       label {
-        padding-top: 50px;
+        padding-top: 40px;
         color: black;
         display: block;
         margin-bottom: 5px;
@@ -21,7 +25,6 @@
       input {
         width: 90%;
         padding: 8px;
-        margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         box-sizing: border-box;
@@ -30,11 +33,6 @@
           outline: none;
           border-color: #007bff;
         }
-      }
-      Button {
-        width: 100%;
-        justify-self: center;
-        margin-top: 5px;
       }
       p {
         max-width: 90%;
@@ -46,7 +44,7 @@
 
   @media screen and (min-width: $mobile-breakpoint) {
     .create-task__form {
-      width: 80vw;
+      width: 95vw;
     }
   }
 

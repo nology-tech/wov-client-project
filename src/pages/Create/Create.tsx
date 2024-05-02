@@ -18,17 +18,19 @@ const handleFormChange = async (event: React.MouseEvent<HTMLButtonElement>) => {
           isTaskShowing ? (
             <>
             <div className="create">
-              <Button label="task" variant="secondary"></Button>
-              <Button label="group" variant="light-grey" onClick={handleFormChange}></Button>
+            <Button label="New Group" variant="light-grey" onClick={handleFormChange}></Button>
+              <Button label="New Task" variant="secondary"></Button>
             </div>
+            <hr/>
               <CreateTask buttonLabel="create"/>
             </>
           ) : (
             <>        
             <div className="create">
-              <Button label="task" variant="light-grey" onClick={handleFormChange}></Button>
-              <Button label="group" variant="secondary"></Button>
+            <Button label="New Group" variant="secondary"></Button>
+              <Button label="New Task" variant="light-grey" onClick={handleFormChange}></Button>
             </div>
+            <hr/>
               <CreateTask buttonLabel="create"/>
             </>
           )

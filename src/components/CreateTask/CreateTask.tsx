@@ -21,7 +21,6 @@ const [missingFieldsError, setMissingFieldsError] = useState<string>("");
 const handleCreateTask = () => {
     if (formData.name && formData.date && formData.category && formData.description && formData.points) {
         setMissingFieldsError("")
-        console.log(formData)
     } else {
         setMissingFieldsError("Please fill all required fields.");
     }
