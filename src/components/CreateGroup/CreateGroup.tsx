@@ -2,7 +2,7 @@ import "./CreateGroup.scss";
 import Button from "../Button/Button";
 import camera from "../../assets/images/camera-placeholder.png";
 import { useFirestore } from "../../hooks/useFireStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FirestoreCollections,
   getDocumentFromFirestoreCollection,
@@ -90,7 +90,9 @@ const CreateGroup = () => {
     setEndDate("");
   };
 
+
   return (
+    <div className="create-group-container">
     <div className="create-group">
       <div className="create-group__new-group"></div>
 
@@ -115,6 +117,7 @@ const CreateGroup = () => {
           )}
 
           <input
+          className="date"
             type="date"
             id="Start Date"
             value={startDate}
@@ -129,6 +132,7 @@ const CreateGroup = () => {
             <p className="create-group__error">{errorMessage}</p>
           )}
           <input
+          className="date"
             type="date"
             id="endDate"
             value={endDate}
@@ -152,6 +156,7 @@ const CreateGroup = () => {
           onClick={handleCreateGroup}
         />
       </div>
+    </div>
     </div>
   );
 };

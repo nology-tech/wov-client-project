@@ -17,7 +17,7 @@
   
       label {
         padding-top: 40px;
-        color: black;
+        color: $black-color;
         display: block;
         margin-bottom: 5px;
       }
@@ -25,7 +25,7 @@
       input {
         width: 90%;
         padding: 8px;
-        border: 1px solid #ccc;
+        border: 1px solid $grey-color;
         border-radius: 5px;
         box-sizing: border-box;
         font-size: 16px;
