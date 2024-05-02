@@ -42,9 +42,7 @@ const CreateGroup = () => {
 
     const missingFields = checkMissingFields();
     if (missingFields.length > 0) {
-      setErrorMessage(
-        `Please fill in missing fields: ${missingFields.join(", ")}`
-      );
+      setErrorMessage("This is a required field");
       return;
     }
 
@@ -101,10 +99,7 @@ const CreateGroup = () => {
 
       <div className="create-group__name text-field">
         <label htmlFor="Group Name">Name</label>
-        {errorMessage && errorMessage.includes("Group Name") && (
-          <p className="create-group__error">{errorMessage}</p>
-        )}
-        {errorMessage && errorMessage.includes("This group") && (
+        {errorMessage && (
           <p className="create-group__error">{errorMessage}</p>
         )}
         <input
@@ -118,7 +113,7 @@ const CreateGroup = () => {
       <section className="create-group__dates">
         <div className="create-group__start text-field">
           <label htmlFor="Start Date">Start Date</label>
-          {errorMessage && errorMessage.includes("Start Date") && (
+          {errorMessage && (
             <p className="create-group__error">{errorMessage}</p>
           )}
 
@@ -134,7 +129,7 @@ const CreateGroup = () => {
         </div>
         <div className="create-group__end text-field">
           <label htmlFor="End Date">End Date</label>
-          {errorMessage && errorMessage.includes("End Date") && (
+          {errorMessage && (
             <p className="create-group__error">{errorMessage}</p>
           )}
           <input
