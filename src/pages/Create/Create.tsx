@@ -4,40 +4,53 @@ import CreateTask from "../../components/CreateTask/CreateTask";
 import { useState } from "react";
 import Header from "../../components/Header/Header";
 import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
+import CreateGroup from "../../components/CreateGroup/CreateGroup";
 
 const Create = () => {
-const [isTaskShowing, setIsTaskShowing] = useState<boolean>(true)
-const handleFormChange = async (event: React.MouseEvent<HTMLButtonElement>) => {
-  event.preventDefault();
-  setIsTaskShowing(!isTaskShowing)
-}
+  const [showCreateGroup, setShowCreateGroup] = useState<boolean>(false);
+  const [showCreateTask, setShowCreateTask] = useState<boolean>(true);
+
+  const handleGroupButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    setShowCreateGroup(true);
+    setShowCreateTask(false);
+  };
+
+  const handleTaskButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    setShowCreateGroup(false);
+    setShowCreateTask(true);
+  };
+
   return (
     <div>
-      <Header subtitle="Create"/>
-        {
-          isTaskShowing ? (
-            <>
-            <div className="create">
-            <Button label="New Group" variant="light-grey" onClick={handleFormChange}></Button>
-              <Button label="New Task" variant="secondary"></Button>
-            </div>
-            <hr/>
-              <CreateTask buttonLabel="create"/>
-            </>
-          ) : (
-            <>        
-            <div className="create">
-            <Button label="New Group" variant="secondary"></Button>
-              <Button label="New Task" variant="light-grey" onClick={handleFormChange}></Button>
-            </div>
-            <hr/>
-              <CreateTask buttonLabel="create"/>
-            </>
-          )
-        }
-        <NavigationAdmin navActionIndex={1}/>
+      <Header subtitle="Create" />
+
+      <div className="create">
+        <Button
+          label="New Group"
+          variant={showCreateGroup ? "secondary" : "light-grey"} 
+          onClick={handleGroupButtonClick}
+        />
+        <Button
+          label="New Task"
+          variant={showCreateTask ? "secondary" : "light-grey"}
+          onClick={handleTaskButtonClick}
+        />
+      </div>
+
+      <hr />
+
+      {showCreateGroup && <CreateGroup />}
+      {showCreateTask && <CreateTask buttonLabel="create" />}
+
+      <NavigationAdmin navActionIndex={1} />
     </div>
-  )
-}
+  );
+};
 
 export default Create
