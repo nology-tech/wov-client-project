@@ -25,7 +25,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
 
   const handleCreateTask = async () => {
     const taskRef = collection(db, "test-tasks")
-    let storedData: any[] = [];
+    const storedData: any[] = [];
     const q = query(taskRef, where("name", "==", `${formData.name}`));
     const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
