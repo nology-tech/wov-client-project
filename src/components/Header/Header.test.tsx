@@ -28,12 +28,10 @@ describe("should pass Header component tests", () => {
     customRender(
       <Header
         subtitle={""}
-
       />
     );
 
     const profileImg = screen.getByLabelText("profile picture link");
-    console.log(profileImg)
 
     expect(profileImg).toBeInTheDocument();
     expect(profileImg).toHaveAttribute("src", "../../assets/images/default-profile-image.png")
