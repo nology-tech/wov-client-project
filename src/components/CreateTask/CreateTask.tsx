@@ -3,14 +3,12 @@ import Button from "../Button/Button";
 import "./CreateTask.scss";
 import { createDocumentInFirestoreCollection } from "../../utils/dbUtils";
 import { FirestoreCollections } from "../../utils/dbUtils";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
 type CreateTaskProps = {
   buttonLabel: string;
 };
-
-const [isNameNotPresent, setIsNameNotPresent] = useState<boolean>(true)
 
 
 const emptyFormData = {
@@ -26,15 +24,24 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   const [missingFieldsError, setMissingFieldsError] = useState<string>("");
 
   const handleCreateTask = async () => {
-    const docRef = await addDoc(collection(db, "test-tasks"), formData);
+    const taskRef = collection(db, "test-tasks")
+    let storedData: any[] = [];
+    const q = query(taskRef, where("name", "==", `${formData.name}`));
+    const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        storedData.push(doc.data) 
+});
     if (
       formData.name &&
       formData.date &&
       formData.category &&
       formData.description &&
       formData.points &&
+      storedData.length == 0
     ) {
       setMissingFieldsError("");
+      const docRef = await addDoc(collection(db, "test-tasks"), formData);
       await createDocumentInFirestoreCollection(
         FirestoreCollections.TASKS,
         docRef.id,
@@ -89,7 +96,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
           <label>Points</label>
           <input
             name="points"
-            type="text"
+            type="number"
             onChange={handleChange}
             value={formData.points}
           />
