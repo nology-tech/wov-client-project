@@ -9,7 +9,7 @@ describe("should pass Header component tests", () => {
     expect(headerTitle).toBeInTheDocument();
   });
 
-  it("should user profile image if one exists", () => {
+  it("should render user profile image if one exists", () => {
     customRender(
       <Header
         subtitle={""}
@@ -21,10 +21,10 @@ describe("should pass Header component tests", () => {
     
 
     expect(profileImg).toBeInTheDocument();
-    expect(profileImg).toHaveProperty("src", "../../assets/images/arrow-left.png")
+    expect(profileImg).toHaveAttribute("src", "../../assets/images/arrow-left.png")
   });
 
-  it("should user profile image if one exists", () => {
+  it("should render default image if user profile image is not given", () => {
     customRender(
       <Header
         subtitle={""}
@@ -36,6 +36,6 @@ describe("should pass Header component tests", () => {
     console.log(profileImg)
 
     expect(profileImg).toBeInTheDocument();
-    expect(profileImg).toHaveProperty("src", "../../assets/images/default-profile-image.png")
+    expect(profileImg).toHaveAttribute("src", "../../assets/images/default-profile-image.png")
   });
 });
