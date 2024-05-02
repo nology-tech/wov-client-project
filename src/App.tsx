@@ -15,6 +15,7 @@ import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 
+
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
 
@@ -36,6 +37,7 @@ const App = () => {
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/edit" element={<UpdateProfile />} />
+                  
                 </>
               )}
             </Route>
