@@ -40,6 +40,7 @@ const CreateGroup = () => {
   const handleCreateGroup = async () => {
     setErrorMessage("");
     setsuccessMessage("");
+    setErrorExistingGroup("");
 
     const missingFields = checkMissingFields();
     if (missingFields.length > 0) {
@@ -91,6 +92,7 @@ const CreateGroup = () => {
       setter(e.target.value);
       setErrorMessage("");
       setsuccessMessage("");
+      setErrorExistingGroup("");
     };
 
   return (
