@@ -7,15 +7,18 @@ type LoadingProps = {
 };
 
 const Loading = ({ loading, setLoading, isAuthenticated }: LoadingProps) => {
-  useEffect(() => {
-    setLoading(false);
-  }, [isAuthenticated, setLoading]);
+  useEffect(
+    () => {
+      setLoading(false);
+    },// eslint-disable-next-line
+    [isAuthenticated]
+  );
 
   if (loading) {
     return null;
   }
 
-  return <div></div>;
+  return;
 };
 
 export default Loading;
