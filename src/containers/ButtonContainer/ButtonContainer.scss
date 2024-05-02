@@ -1,0 +1,22 @@
+@use "../../styles/variables" as *;
+
+.buttons-container{
+    padding: 10px ;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+  
+
+    button{
+        border-radius: 10px;
+        border: none;
+        text-transform: capitalize;
+    }
+    
+ 
+
+}
+
+
+
