@@ -1,6 +1,6 @@
 import Button from "../../components/Button/Button";
-import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 import { useAuth } from "../../hooks/useAuth";
+import TaskTile from "../../components/TaskTile/TaskTile";
 
 const AdminDashboard = () => {
   const { logoutUser } = useAuth();
@@ -11,10 +11,11 @@ const AdminDashboard = () => {
       <p>This is the admin dashboard</p>
       <div>
         <Button label={"SIGN OUT"} variant={"secondary"} onClick={logoutUser} />
-        <NavigationAdmin navActionIndex={0}/>
       </div>
     </div>
   );
+
+
 };
 
 export default AdminDashboard;
