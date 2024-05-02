@@ -32,7 +32,11 @@ const UpdateProfile = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openPasswordPopup, setOpenPasswordPopup] = useState<boolean>(false);
+
   const { img, name, bio, email } = userUpdate;
+  console.log("img:", img)
+  console.log("name:", name)
+  
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [userImage, setUserImage] = useState<string | (() => string | null) | undefined>(user.img);
@@ -104,15 +108,11 @@ const UpdateProfile = () => {
   };
 
   const handlePictureChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const key = event.currentTarget.id;
-    console.log("key:", key)
-    const value = event.currentTarget.value
-    console.log("value:", value)
-
-        if (event.target.files && event.target.files.length > 0) {
-          setSelectedFile(event.target.files[0]);
-        }
-    setUserUpdate({ ...userUpdate, [key]: value });
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0] as File;
+      setSelectedFile(file);
+      setUserUpdate({ ...userUpdate, img: file.name });
+    }
   };
 
 
@@ -223,7 +223,6 @@ const UpdateProfile = () => {
               id="img"
               name="img"
               className=""
-              value={userUpdate.img}
               type="file"
               onChange={handlePictureChange}
             />
