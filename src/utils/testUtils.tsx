@@ -10,7 +10,6 @@ import {
 } from "../context/AuthProvider/AuthProvider";
 import { UserLoading, UserProfile } from "../types/User";
 import { ActiveTask } from "../types/Task";
-
 type Options = {
   useRouting?: boolean;
   firestoreValue?: FirestoreContextProps;
@@ -18,7 +17,6 @@ type Options = {
   isAuthenticated?: boolean;
   user?: UserProfile | UserLoading;
 };
-
 const testUser: UserProfile = {
   id: "OuZ1eeH9c5ZosgoXUi6Iraq7oM03",
   totalScore: 0,
@@ -26,7 +24,6 @@ const testUser: UserProfile = {
   email: "test@example.com",
   tribe: "test-tribe",
 };
-
 const defaultOptions: Options = {
   useRouting: true,
   firestoreValue: undefined,
@@ -34,7 +31,6 @@ const defaultOptions: Options = {
   isAuthenticated: false,
   user: testUser,
 };
-
 export const customRender = (
   ui: JSX.Element,
   {
@@ -47,36 +43,29 @@ export const customRender = (
 ) => {
   // wrap components in routing if requested
   let uiResult = ui;
-
   if (firestoreValue) {
     uiResult = wrapWithFirestoreProvider(ui, firestoreValue);
   }
-
   if (useRouting) {
     uiResult = wrapWithRouting(uiResult);
   }
-
   if (useAuthProvider) {
     uiResult = wrapWithAuthProvider(uiResult, {
       isAuthenticated,
       user: user || testUser,
     });
   }
-
   // use RTL's render function to return the test component
   return render(uiResult);
 };
-
 const wrapWithRouting = (ui: JSX.Element): JSX.Element => {
   return <Router>{ui}</Router>;
 };
-
 type AuthProviderOptions = {
   isAuthenticated?: boolean;
   user: UserProfile | UserLoading;
   isAdmin?: boolean;
 };
-
 const wrapWithAuthProvider = (
   ui: JSX.Element,
   { isAuthenticated, user, isAdmin }: AuthProviderOptions
@@ -90,14 +79,12 @@ const wrapWithAuthProvider = (
     isAdmin: isAdmin ?? false,
     getUser: () => user,
   };
-
   return (
     <AuthContext.Provider value={{ ...AuthContext, ...defaultAuthContext }}>
       {ui}
     </AuthContext.Provider>
   );
 };
-
 const wrapWithFirestoreProvider = (
   ui: JSX.Element,
   firestoreContext: FirestoreContextProps
@@ -108,7 +95,6 @@ const wrapWithFirestoreProvider = (
     getLeaderboard: (_: string) => Promise.resolve([]),
     completeActiveTask: (_: UserProfile, __: ActiveTask) => Promise.resolve(),
   };
-
   return (
     <FirestoreContext.Provider
       value={{ ...defaultFireStoreContext, ...firestoreContext }}
@@ -117,3 +103,15 @@ const wrapWithFirestoreProvider = (
     </FirestoreContext.Provider>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+

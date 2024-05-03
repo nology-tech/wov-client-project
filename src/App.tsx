@@ -16,7 +16,9 @@ import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import { useState} from 'react';
 import Loading from "./components/Loading/Loading";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
+
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -33,6 +35,7 @@ const App = () => {
                 <>
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/create" element={<Create/>}/>
+                  <Route path="/dashboard" element={<Dashboard/>}/>
                 </>
               ) : (
                 <>
@@ -42,6 +45,7 @@ const App = () => {
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/edit" element={<UpdateProfile />} />
+                  
                 </>
               )}
             </Route>

@@ -13,10 +13,12 @@ import {
 } from "firebase/firestore";
 
 export enum FirestoreCollections {
+  TASKS = "test-tasks",
   ACTIVE_TASKS = "test-active-tasks",
   COMPLETED_TASKS = "test-completed-tasks",
   TRIBE = "test-tribe",
   ADMIN = "admin",
+  TRIBELIST = "tribes",
 }
 
 /**
