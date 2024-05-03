@@ -162,36 +162,34 @@ const ActiveTasks = () => {
         />
       )}
 
-      <div onClick={handlePopupVideo}>
-        Add Video
+      <div>
+        <button onClick={handlePopupVideo}>Add Video</button>
         {popupAddVideo && (
           <>
-              <input 
+
+
+              {/* <input 
               type="file" 
               // onChange={handleFileInputChange}  
-            />
+            /> */}
 
-            {/* <Popup
+            <Popup
               heading=""
               labelButtonOne="ADD A VIDEO"
               labelButtonTwo="CANCEL"
               onButtonOne={() => handleShowUploadPrompt}
-              // onButtonTwo={setpopupAddVideo(!popupAddVideo)}
-              descriptionShown={false}
-            /> */}
+              onButtonTwo={handlePopupVideo}
+              descriptionShown={true}
+            />
           </>
         )}
-        {/* <div>
+        <div>
           {showUploadPrompt && 
-            // <input 
-            //   type="file" 
-            //   // onChange={handleFileInputChange}  
-            // />}
-        {selectedFile && (
-          <p>{selectedFile.name}hello</p>
-        )
-        }
-        </div> */}
+            <input 
+              type="file" 
+              // onChange={handleFileInputChange}  
+            />}
+        </div>
       </div>
       <Navigation navActionIndex={1} />
     </div>
