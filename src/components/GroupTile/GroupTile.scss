@@ -1,0 +1,8 @@
+@use "../../styles/variables" as *;
+
+.group-tile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: $pure-black-color;
+}
