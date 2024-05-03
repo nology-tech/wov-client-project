@@ -66,7 +66,7 @@ const UpdateProfile = () => {
     let img: string | undefined = user.img
   
   
-    if (showUploadPrompt && selectedFile) {
+    if (selectedFile) {
       const filePath = `${user.id}/images/profile`;
       const { fileDownloadUrl, error: uploadError } =
         await saveFileAndRetrieveDownloadUrl(filePath, selectedFile, false);
@@ -131,11 +131,32 @@ const UpdateProfile = () => {
     }
   };
 
+  console.log("file:", selectedFile)
+
   return (
     <div>
       <Header subtitle="Profile" profileImage={img} />
       <div className="profile-update">
-        <img src={img} className="profile-update__img" alt="Profile" />
+      <input
+        id="img"
+        name="img"
+        className=""
+        type="file"
+        onChange={handlePictureChange}
+        style={{ display: "none" }}
+      />
+      {/* Label associated with the input element */}
+      <label htmlFor="img">
+        <img
+          src={img}
+          className="profile-update__img"
+          alt="Profile"
+          style={{ cursor: 'pointer' }}
+        />
+      </label>
+
+      
+
 
         <form className="profile-update__info">
           <label htmlFor="name" className="profile-update__label">
