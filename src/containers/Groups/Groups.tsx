@@ -1,4 +1,6 @@
+import GroupTile from "../../components/GroupTile/GroupTile";
 import { GroupData } from "../../mockData/groups"
+import "./Groups.scss"
 
 type GroupsProps = {
     groups: GroupData[];
@@ -6,9 +8,9 @@ type GroupsProps = {
 
 const Groups = ({groups}: GroupsProps) => {
   return (
-    <div>
+    <div className="group-tile__container">
         {groups.map((group) => (
-            <h1>{group.tribeName}</h1>
+            <GroupTile tribeName={group.tribeName} numberOfMembers={group.numberOfMembers} totalPoints={group.totalPoints} dateGroupStarted={group.dateGroupStarted}/>
         ))};
     </div>
   )
