@@ -1,13 +1,11 @@
 import Button from "../../components/Button/Button";
 import { useAuth } from "../../hooks/useAuth";
 import TaskTile from "../../components/TaskTile/TaskTile";
-import { Task } from "../../mockData/mockActiveTasks";
+import { activeTasks } from "../..//mockData/mockActiveTasks";
+import "./AdminDashboard.scss"
 
-type TasksProp = {
-  tasks: Task[];
-}
 
-const AdminDashboard = ({ tasks } : TasksProp) => {
+const AdminDashboard = () => {
   const { logoutUser } = useAuth();
 
   return (
@@ -18,7 +16,7 @@ const AdminDashboard = ({ tasks } : TasksProp) => {
         <Button label={"SIGN OUT"} variant={"secondary"} onClick={logoutUser} />
       </div>
       <div className="task-tile__Tasks">
-        {tasks.map((task) => (
+        {activeTasks.map((task) => (
           <TaskTile 
           id={task.id} 
           name={task.taskHeading} 

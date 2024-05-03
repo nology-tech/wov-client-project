@@ -16,7 +16,6 @@ import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Create from "./pages/Create/Create";
 
-
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
 
@@ -28,7 +27,7 @@ const App = () => {
             <Route path="/" element={<PrivateRoute />}>
               {isAdmin ? (
                 <>
-                  <Route path="/" element={<AdminDashboard tasks={[]} />} />
+                  <Route path="/" element={<AdminDashboard />} />
                   <Route path="/create" element={<Create/>}/>
                 </>
               ) : (
