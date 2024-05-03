@@ -17,7 +17,7 @@ import { SetTask } from "../../types/Task";
 
 const CalendarAdmin = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [currentTasks, setCurrentTasks] = useState<SetTask[]>([])  // remember to add a new type for set tasks
+  const [currentTasks, setCurrentTasks] = useState<SetTask[]>([])
   const { getUser } = useAuth();
   const user = getUser();
   const [date, setDate] = useState<Date>(new Date());
@@ -37,7 +37,6 @@ const CalendarAdmin = () => {
       )
       if(setTasks === null){
         setErrorMessage("No set tasks have been found")
-        errorMessage; // remember to render this in the return for the admin to actually see it
         return;
       }
       setCurrentTasks(setTasks)
@@ -47,17 +46,13 @@ const CalendarAdmin = () => {
       
     } catch(error) {
       setErrorMessage("Error fetching tasks");
-      errorMessage; // remember to render this in the return for the admin to actually see it
     }
   }
-    
 
-  // getSetTasks();
-
-
-  // useEffect(()=> {
-  //   getSetTasks();
-  // })
+  useEffect(()=> {
+    getSetTasks();
+  }, [])
+  // should i have use effect?
 
 
   return (
@@ -120,7 +115,7 @@ const CalendarAdmin = () => {
           ))
         ) : (
           <p className="calendar__no-tasks-message">
-            No set tasks to display.
+            {errorMessage}
           </p>
         )}
       </Stack>

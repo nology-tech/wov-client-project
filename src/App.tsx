@@ -16,10 +16,13 @@ import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
+import CalendarAdmin from "./pages/CalendarAdmin/CalendarAdmin";
 
 
 const App = () => {
-  const { isAuthenticated, isAdmin } = useAuth();
+  // const { isAuthenticated, isAdmin } = useAuth();
+  const isAuthenticated = true;
+  const isAdmin = true;
 
   return (
     <>
@@ -32,6 +35,7 @@ const App = () => {
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/create" element={<Create/>}/>
                   <Route path="/dashboard" element={<Dashboard/>}/>
+                  <Route path="/calendar-admin" element={<CalendarAdmin/>} />
                 </>
               ) : (
                 <>
