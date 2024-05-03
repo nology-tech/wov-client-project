@@ -24,6 +24,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   const [missingFieldsError, setMissingFieldsError] = useState<string>("");
 
   const handleCreateTask = async () => {
+    setMissingFieldsError("");
     const taskRef = collection(db, "test-tasks")
     const storedData = [];
     const q = query(taskRef, where("name", "==", `${formData.name}`));
@@ -49,7 +50,10 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
       );
       await setFormData(emptyFormData);
       window.alert("Task Created Successfully");
-    } else {
+    } else if ( storedData.length > 0){
+      setMissingFieldsError("Task with this name already exists.")
+    } 
+    else {
       setMissingFieldsError("Please fill all required fields.");
     }
   };
