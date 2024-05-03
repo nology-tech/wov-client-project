@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../Button/Button";
 import "./CreateTask.scss";
 import { createDocumentInFirestoreCollection } from "../../utils/dbUtils";
@@ -23,49 +23,47 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   const [missingFieldsError, setMissingFieldsError] = useState<string>("");
   const [taskPassedMessage, setTaskPassedMessage] = useState<string>("");
 
-  const handleCreateTask = async () => {
+  const handleCreateTask = async (e: FormEvent) => {
+    e.preventDefault();
     setMissingFieldsError("");
     setTaskPassedMessage("");
-    const taskRef = collection(db, "test-tasks");
-    const storedData = [];
-    const q = query(taskRef, where("name", "==", `${formData.name}`));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      storedData.push(doc.data);
-    });
+
     if (
       formData.name &&
       formData.date &&
       formData.category &&
       formData.description &&
-      formData.points &&
-      storedData.length == 0
+      formData.points
     ) {
-      setMissingFieldsError("");
-      const docRef = await addDoc(collection(db, "test-tasks"), formData);
-      await createDocumentInFirestoreCollection(
-        FirestoreCollections.TASKS,
-        docRef.id,
-        formData
-      );
-      await setFormData(emptyFormData);
-      setTaskPassedMessage("Task Successfully Created");
-    } else if (storedData.length > 0) {
-      setMissingFieldsError("Task with this name already exists.");
+      const taskRef = collection(db, "test-tasks");
+      const q = query(taskRef, where("name", "==", formData.name));
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        const docRef = await addDoc(collection(db, "test-tasks"), formData);
+        await createDocumentInFirestoreCollection(
+          FirestoreCollections.TASKS,
+          docRef.id,
+          formData
+        );
+        await setFormData(emptyFormData);
+        setTaskPassedMessage("Task Successfully Created");
+      } else {
+        setMissingFieldsError("Task with this name already exists.");
+      }
     } else {
       setMissingFieldsError("Please fill all required fields.");
     }
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   return (
     <section className="create-task">
       <div className="create-task__form">
-        <form action="">
+        <form onSubmit={(e: FormEvent) => {handleCreateTask(e)}}>
           <label>Name</label>
           <input
             name="name"
@@ -77,7 +75,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
           <label>Date</label>
           <input
             name="date"
-            type="Date"
+            type="date"
             onChange={handleChange}
             min={new Date().toISOString().split("T")[0]}
             value={formData.date}
@@ -109,12 +107,11 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
           {taskPassedMessage && (
             <p className="success--message">{taskPassedMessage}</p>
           )}
+          <Button
+            variant="secondary"
+            label={buttonLabel}
+          />
         </form>
-        <Button
-          variant="secondary"
-          label={buttonLabel}
-          onClick={handleCreateTask}
-        ></Button>
       </div>
     </section>
   );

@@ -38,6 +38,7 @@ const CreateGroup = () => {
   const today = new Date().toISOString().split("T")[0];
 
   const handleCreateGroup = async () => {
+    console.log("running")
     setErrorMessage("");
     setsuccessMessage("");
     setErrorExistingGroup("");
