@@ -10,7 +10,7 @@ const Groups = ({groups}: GroupsProps) => {
   return (
     <div className="group-tile__container">
         {groups.map((group) => (
-            <GroupTile tribeName={group.tribeName} numberOfMembers={group.numberOfMembers} totalPoints={group.totalPoints} dateGroupStarted={group.dateGroupStarted}/>
+            <GroupTile key={group.tribeName} tribeName={group.tribeName} numberOfMembers={group.numberOfMembers} totalPoints={group.totalPoints} dateGroupStarted={group.dateGroupStarted}/>
         ))};
     </div>
   )
