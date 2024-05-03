@@ -10,7 +10,6 @@ type CreateTaskProps = {
   buttonLabel: string;
 };
 
-
 const emptyFormData = {
   name: "",
   date: "",
@@ -27,14 +26,14 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   const handleCreateTask = async () => {
     setMissingFieldsError("");
     setTaskPassedMessage("");
-    const taskRef = collection(db, "test-tasks")
+    const taskRef = collection(db, "test-tasks");
     const storedData = [];
     const q = query(taskRef, where("name", "==", `${formData.name}`));
     const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        storedData.push(doc.data) 
-});
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+      storedData.push(doc.data);
+    });
     if (
       formData.name &&
       formData.date &&
@@ -51,11 +50,10 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
         formData
       );
       await setFormData(emptyFormData);
-      setTaskPassedMessage("Task Succesfully Stored");
-    } else if ( storedData.length > 0){
-      setMissingFieldsError("Task with this name already exists.")
-    } 
-    else {
+      setTaskPassedMessage("Task Successfully Created");
+    } else if (storedData.length > 0) {
+      setMissingFieldsError("Task with this name already exists.");
+    } else {
       setMissingFieldsError("Please fill all required fields.");
     }
   };
@@ -106,8 +104,12 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
             onChange={handleChange}
             value={formData.points}
           />
-          {missingFieldsError && <p className="error--message">{missingFieldsError}</p>}
-          {taskPassedMessage && <p className="success--message">{taskPassedMessage}</p>}
+          {missingFieldsError && (
+            <p className="error--message">{missingFieldsError}</p>
+          )}
+          {taskPassedMessage && (
+            <p className="success--message">{taskPassedMessage}</p>
+          )}
         </form>
         <Button
           variant="secondary"
