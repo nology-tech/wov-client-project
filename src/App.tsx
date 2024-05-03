@@ -29,13 +29,21 @@ const App = () => {
   return (
     <>
       <FirestoreProvider>
-      <Loading loading={loading} isAuthenticated={isAuthenticated} setLoading={setLoading}/>
+        <Loading
+          loading={loading}
+          isAuthenticated={isAuthenticated}
+          setLoading={setLoading}
+        />
         <Routes>
           {isAuthenticated ? (
             <Route path="/" element={<PrivateRoute />}>
               {isAdmin ? (
                 <>
                   <Route path="/" element={<AdminDashboard />} />
+                  <Route
+                    path="/leaderboard-admin"
+                    element={<LeaderboardAdmin />}
+                  />
                 </>
               ) : (
                 <>
@@ -45,7 +53,6 @@ const App = () => {
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/edit" element={<UpdateProfile />} />
-                  
                 </>
               )}
             </Route>
