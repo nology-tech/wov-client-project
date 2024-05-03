@@ -22,9 +22,11 @@ const emptyFormData = {
 export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   const [formData, setFormData] = useState(emptyFormData);
   const [missingFieldsError, setMissingFieldsError] = useState<string>("");
+  const [taskPassedMessage, setTaskPassedMessage] = useState<string>("");
 
   const handleCreateTask = async () => {
     setMissingFieldsError("");
+    setTaskPassedMessage("");
     const taskRef = collection(db, "test-tasks")
     const storedData = [];
     const q = query(taskRef, where("name", "==", `${formData.name}`));
@@ -49,7 +51,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
         formData
       );
       await setFormData(emptyFormData);
-      window.alert("Task Created Successfully");
+      setTaskPassedMessage("Task Succesfully Stored");
     } else if ( storedData.length > 0){
       setMissingFieldsError("Task with this name already exists.")
     } 
@@ -104,7 +106,8 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
             onChange={handleChange}
             value={formData.points}
           />
-          {missingFieldsError && <p>{missingFieldsError}</p>}
+          {missingFieldsError && <p className="error--message">{missingFieldsError}</p>}
+          {taskPassedMessage && <p className="success--message">{taskPassedMessage}</p>}
         </form>
         <Button
           variant="secondary"

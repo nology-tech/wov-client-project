@@ -34,10 +34,15 @@
           border-color: #007bff;
         }
       }
-      p {
+      .error--message {
         max-width: 90%;
         margin-bottom: -20px;
         color: #ff0000;
+      }
+      .success--message {
+        max-width: 90%;
+        margin-bottom: -20px;
+        color: #25ec13;
       }
     }
   }
