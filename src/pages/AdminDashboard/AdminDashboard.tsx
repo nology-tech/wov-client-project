@@ -4,9 +4,9 @@ import TaskTile from "../../components/TaskTile/TaskTile";
 import { activeTasks } from "../..//mockData/mockActiveTasks";
 import "./AdminDashboard.scss"
 
-
 const AdminDashboard = () => {
   const { logoutUser } = useAuth();
+  // const { getActiveTasks, completeActiveTask } = useFirestore();
 
   return (
     <div>
