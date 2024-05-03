@@ -1,6 +1,6 @@
 import "./styles/main.scss";
 import { Route, Routes } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth";
+// import { useAuth } from "./hooks/useAuth";
 import { FirestoreProvider } from "./context/FirestoreProvider/FirestoreProvider";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Home from "./pages/Home/Home";
@@ -20,9 +20,9 @@ import Create from "./pages/Create/Create";
 const App = () => {
   // const { isAuthenticated, isAdmin } = useAuth();
 
-  isAuthenticated = true;
+  const isAuthenticated = true;
 
-  isAdmin = true;
+  const isAdmin = true;
 
   return (
     <>
