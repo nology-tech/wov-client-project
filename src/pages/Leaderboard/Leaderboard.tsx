@@ -54,7 +54,7 @@ const Leaderboard = () => {
         ;
       </div>
       <div className="leaderboard__navigation">
-        <Navigation navActionIndex={3} />
+        <Navigation navActionIndex={4} />
       </div>
     </div>
   );
