@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 
 export enum FirestoreCollections {
+  TASKS = "test-tasks",
   ACTIVE_TASKS = "test-active-tasks",
   TEST_TASKS = "test-tasks",
   COMPLETED_TASKS = "test-completed-tasks",
