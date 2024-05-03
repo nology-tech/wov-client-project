@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
-import ButtonContainer from "../../containers/ButtonContainer/ButtonContainer";
+
+
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -85,7 +86,6 @@ const ActiveTasks = () => {
       <label htmlFor="task-search" className="task-page__label">
         Search Bar
       </label>
-      <ButtonContainer/>
       <div className="task-page__search-container">
         <TextField
           className="task-page__input"
