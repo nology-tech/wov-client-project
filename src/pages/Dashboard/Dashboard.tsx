@@ -15,7 +15,7 @@ const Dashboard = () => {
         <Header subtitle={"Dashboard"}/>
         <ButtonContainer/>
         <div className="search-bar">
-          <TextField  
+          <TextField fullWidth  
           InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -33,25 +33,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard
-/*
-<div className="task-page__search-container">
-        <TextField
-          className="task-page__input"
-          id="task-search"
-          placeholder="Search by task, category"
-          variant="outlined"
-          role="search"
-          onChange={handleTaskSearchChange}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon className="search-icon" />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </div>
-
-      sx={{borderRadius: '30px' , border: '1px solid black'}}
-
-*/
