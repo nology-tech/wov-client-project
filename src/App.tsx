@@ -14,6 +14,7 @@ import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import Create from "./pages/Create/Create";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
               {isAdmin ? (
                 <>
                   <Route path="/" element={<AdminDashboard />} />
+                  <Route path="/create" element={<Create/>}/>
                 </>
               ) : (
                 <>
