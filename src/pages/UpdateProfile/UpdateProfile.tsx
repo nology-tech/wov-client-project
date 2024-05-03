@@ -63,30 +63,40 @@ const UpdateProfile = () => {
   };
 
   const updateDatabase = async () => {
-    
-
+    let img: string | undefined = user.img
+  
+  
+    if (showUploadPrompt && selectedFile) {
       const filePath = `${user.id}/images/profile`;
       const { fileDownloadUrl, error: uploadError } =
         await saveFileAndRetrieveDownloadUrl(filePath, selectedFile, false);
-        if (uploadError) {
-          throw new Error(uploadError);
-        }
-        const img = fileDownloadUrl || user.img || undefined;
-      
-      const { error } = await updateUser({ name, bio, email, img });
+  
+      if (uploadError) {
+        throw new Error(uploadError);
+      }
+  
+      img = fileDownloadUrl || img || undefined; 
+    }
+    const { error } = await updateUser({ name, bio, email, img });
+    console.log("errorUser:", error)
+    
+    console.log("did we get here!")
 
     if (error) {
       setErrorMessage(error);
       setSuccessMessage("");
+      console.error("error occurred:", error)
     } else {
       setErrorMessage("");
       setSuccessMessage("Profile Updated");
-    }  
+    }
+  
     setTimeout(() => {
-      navigate("/profile")
+      navigate("/profile");
     }, 2000);
-    
   };
+  
+  
 
   const changePassword = async () => {
     if (password.new !== password.confirm) {
