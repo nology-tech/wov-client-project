@@ -1,0 +1,93 @@
+@use "../../styles/variables" as *;
+
+.task-tile {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  margin: 1.8rem auto 0;
+  color: $black-color;
+  border-bottom: 2px solid $light-grey-color;
+  padding-bottom: 1.2rem;
+  align-items: flex-start;
+
+  &__name {
+    margin-bottom: 0rem;        
+  }
+
+  &__category,
+  &__points {
+    font: $font-subText/$line-height-subtext $font-family-modern-content;
+    margin: 0;
+    color: $slate-grey-color;
+  }
+
+  &__editButton {
+    position: absolute;
+    align-self: flex-end;
+    margin: 3px;
+    padding: 6px;
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: transform .2s; 
+
+    &:hover {
+        border-bottom: 3px solid black;
+        border-radius: 0px;
+        transform: scale(1.2);
+    }
+  }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .task-tile {
+    &__name {
+      font-size: 1.3rem;        
+    }
+    
+    &__requirement {
+      padding-top: 1rem;
+      font-size: 1.4rem;      
+    }
+
+    &__category,
+    &__points {
+      padding-top: 1rem;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .task-tile {
+    &__name {
+      font-size: 1.6rem;    
+    }
+    
+    &__requirement {
+      font-size: 1.6rem;
+      padding-bottom: 1rem;
+    }
+
+    &__category,
+    &__points {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .task-tile {
+    &__requirement {
+      font-size: 3rem;
+      padding-bottom: 2.2rem;
+    }
+
+    &__category,
+    &__points {
+      font-size: 2.8rem;
+      padding-bottom: 2.1rem;
+    }
+  }
+}

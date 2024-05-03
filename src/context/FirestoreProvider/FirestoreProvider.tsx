@@ -4,11 +4,13 @@ import {
   getCollectionFromFirestore,
   updateDocumentInFirestoreCollection,
   FirestoreCollections,
+  createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
+import { GroupData, CreateDocumentResult } from "../../types/Groups";
 
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
@@ -18,6 +20,7 @@ export type FirestoreContextProps = {
   ) => Promise<void>;
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
+  createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
 };
 
 export const FirestoreContext = createContext<
@@ -170,6 +173,20 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
+  const createGroup = async (groupData: GroupData) => {
+    try {
+      const { name } = groupData;
+      await createDocumentInFirestoreCollection(
+        FirestoreCollections.TRIBELIST,
+        name,
+        groupData
+      );
+      return { error: null, created: true };
+    } catch (error) {
+      return { error: (error as Error).message, created: false };
+    }
+  };
+
   return (
     <FirestoreContext.Provider
       value={{
@@ -177,6 +194,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         completeActiveTask,
         getCompletedTasks,
         getLeaderboard,
+        createGroup,
       }}
     >
       {children}
