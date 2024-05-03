@@ -22,7 +22,7 @@ import CalendarAdmin from "./pages/CalendarAdmin/CalendarAdmin";
 const App = () => {
   // const { isAuthenticated, isAdmin } = useAuth();
   const isAuthenticated = true;
-  const isAdmin = true;
+  const isAdmin = false;
 
   return (
     <>

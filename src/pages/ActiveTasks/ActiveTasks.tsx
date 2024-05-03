@@ -12,8 +12,6 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
 
-
-
 type ActiveTasksItem = {
   [key: string]: boolean;
 };
@@ -27,6 +25,9 @@ const ActiveTasks = () => {
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
   const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
+  const [popupAddVideo, setpopupAddVideo] = useState<boolean>(false);
+  const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +74,21 @@ const ActiveTasks = () => {
     setPopupAddMedia(!popupAddMedia);
   };
 
+  const handlePopupVideo = () => {
+    setpopupAddVideo(!popupAddVideo);
+  };
+
+
+  const handleShowUploadPrompt = () => {
+    setShowUploadPrompt(prevState => !prevState);
+  };
+
+  const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
   const searchedTasks = activeTasks.filter(
     (task) =>
       task.taskHeading.toLowerCase().includes(searchTerm) ||
@@ -81,7 +97,6 @@ const ActiveTasks = () => {
 
   return (
     <div className="task-page" data-testid="task-page">
-
       <Header subtitle="Task" profileImage={user.img} />
       <label htmlFor="task-search" className="task-page__label">
         Search Bar
@@ -146,8 +161,39 @@ const ActiveTasks = () => {
           descriptionShown={true}
         />
       )}
-      <Navigation navActionIndex={1} />
 
+      <div onClick={handlePopupVideo}>
+        Add Video
+        {popupAddVideo && (
+          <>
+              <input 
+              type="file" 
+              // onChange={handleFileInputChange}  
+            />
+
+            {/* <Popup
+              heading=""
+              labelButtonOne="ADD A VIDEO"
+              labelButtonTwo="CANCEL"
+              onButtonOne={() => handleShowUploadPrompt}
+              // onButtonTwo={setpopupAddVideo(!popupAddVideo)}
+              descriptionShown={false}
+            /> */}
+          </>
+        )}
+        {/* <div>
+          {showUploadPrompt && 
+            // <input 
+            //   type="file" 
+            //   // onChange={handleFileInputChange}  
+            // />}
+        {selectedFile && (
+          <p>{selectedFile.name}hello</p>
+        )
+        }
+        </div> */}
+      </div>
+      <Navigation navActionIndex={1} />
     </div>
   );
 };
