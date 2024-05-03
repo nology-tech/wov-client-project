@@ -4,12 +4,13 @@ import { UserProfile } from "../../types/User";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import TextField from "@mui/material/TextField";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
 import { Dialog, DialogContent, DialogActions } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 import { saveFileAndRetrieveDownloadUrl } from "../../utils/dbUtils";
+import { useNavigate } from "react-router-dom";
 
 type UpdatePasswordForm = {
   current: string;
@@ -33,15 +34,10 @@ const UpdateProfile = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openPasswordPopup, setOpenPasswordPopup] = useState<boolean>(false);
-
   const { img, name, bio, email } = userUpdate;
-  console.log("img:", img);
-  console.log("name:", name);
-
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  console.log("selectedFile:", selectedFile);
-
+  const navigate = useNavigate();
   const handleClickOpenPasswordPopup = () => {
     setOpenPasswordPopup(true);
   };
@@ -67,16 +63,17 @@ const UpdateProfile = () => {
   };
 
   const updateDatabase = async () => {
-    // updateUser.img =
-    const filePath = `${user.id}/images/profile`;
-    const { fileDownloadUrl, error: uploadError } =
-      await saveFileAndRetrieveDownloadUrl(filePath, selectedFile, false);
-      if (uploadError) {
-        throw new Error(uploadError);
-      }
-    const img = fileDownloadUrl || undefined;
-    const { error } = await updateUser({ name, bio, email, img });
-    console.log({ img });
+    
+
+      const filePath = `${user.id}/images/profile`;
+      const { fileDownloadUrl, error: uploadError } =
+        await saveFileAndRetrieveDownloadUrl(filePath, selectedFile, false);
+        if (uploadError) {
+          throw new Error(uploadError);
+        }
+        const img = fileDownloadUrl || user.img || undefined;
+      
+      const { error } = await updateUser({ name, bio, email, img });
 
     if (error) {
       setErrorMessage(error);
@@ -84,8 +81,11 @@ const UpdateProfile = () => {
     } else {
       setErrorMessage("");
       setSuccessMessage("Profile Updated");
-    }
-
+    }  
+    setTimeout(() => {
+      navigate("/profile")
+    }, 2000);
+    
   };
 
   const changePassword = async () => {
@@ -118,14 +118,6 @@ const UpdateProfile = () => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0] as File;
       setSelectedFile(file);
-      // const filePath = `${user.id}/images/profile`;
-      // const { fileDownloadUrl, error: uploadError } = await saveFileAndRetrieveDownloadUrl(
-      //   filePath,
-      //   file,
-      //   false)
-
-      // const img = fileDownloadUrl;
-      // setUserUpdate({ ...userUpdate, img: fileDownloadUrl });
     }
   };
 
