@@ -9,6 +9,7 @@ import { auth } from "../../firebase";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
 import { Dialog, DialogContent, DialogActions } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
+import { saveFileAndRetrieveDownloadUrl } from "../../utils/dbUtils";
 
 type UpdatePasswordForm = {
   current: string;
@@ -71,6 +72,7 @@ const UpdateProfile = () => {
   };
 
   const updateDatabase = async () => {
+    // updateUser.img = 
     const { error } = await updateUser({ name, bio, email, img});
     if (error) {
       setErrorMessage(error);
@@ -107,11 +109,18 @@ const UpdateProfile = () => {
     setShowUploadPrompt(!showUploadPrompt);
   };
 
-  const handlePictureChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlePictureChange = async (event: ChangeEvent<HTMLInputElement>,  profileFile?: File
+    ) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0] as File;
+      const filePath = `${user.id}/images/profile`;
+      const { fileDownloadUrl, error: uploadError } = await saveFileAndRetrieveDownloadUrl(
+        filePath,
+        profileFile,
+        false)
+
       setSelectedFile(file);
-      setUserUpdate({ ...userUpdate, img: file.name });
+      setUserUpdate({ ...userUpdate, img: fileDownloadUrl });
     }
   };
 

@@ -9,12 +9,14 @@ const Profile = () => {
   const navigate = useNavigate();
   const { logoutUser, getUser } = useAuth();
   const { totalScore, img, name, bio, email } = getUser();
+  console.log("img:", img)
 
   return (
     <div>
       <Header subtitle="Profile" profileImage={img} />
       <div className="profile">
         <img src={img} className="profile__img" alt="Profile" />
+        
         <h1 className="profile__score">{totalScore}</h1>
         <section className="profile__info">
           <p>
