@@ -95,6 +95,11 @@ const CreateGroup = () => {
       setErrorExistingGroup("");
     };
 
+  const handleUpload = (event: HTMLInputElement) => {
+    const userImage = event.files;
+    console.log(userImage);
+  };
+
   return (
     <div className="create-group-container">
       <div className="create-group">
@@ -148,13 +153,14 @@ const CreateGroup = () => {
             />
           </div>
         </section>
-            <label htmlFor="file-input" className="labelToClick">
         <div className="create-group__media">
-          <img src={camera} alt="Media" />
-          <p>Media</p>
+          <label htmlFor="file-input" className="create-group__upload">
+            <img src={camera} alt="Media" />
+            <p>Media</p>
+          </label>
+          <input id="file-input" type="file" onSubmit={handleUpload()} />
         </div>
-        </label>
-        <input className="file-input" type="file"/>
+
         {successMessage && (
           <p className="create-group__success">{successMessage}</p>
         )}

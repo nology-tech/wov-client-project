@@ -1,92 +1,83 @@
 @use "/src/styles/variables" as *;
 
 .create-group-container {
-display: flex;
-justify-content: center;
-
-.button--secondary {
-  min-width: auto;
-  max-width: 200px;
-  justify-self: center;
-  margin-top: 30px;
-}
-
-
-.create-group {
-  .image-upload > input
-  {
-      display: none;
-  }
-  
-  .image-upload img
-  {
-      width: auto;
-      cursor: pointer;
-  }
-  .labelToClick {
-    display: block;
-    width: 85%;
-    margin: 40px 20px 50px;
-  }
-  align-self: center;
+  display: flex;
+  justify-content: center;
 
   .button--secondary {
-    width: 35%;
-    margin: 50px 20px;
+    min-width: auto;
+    max-width: 200px;
+    justify-self: center;
+    margin-top: 30px;
   }
 
-  .create-group__name {
-    width: 80%;
+  .create-group {
+    .labelToClick {
+      display: block;
+      width: 85%;
+      margin: 40px 20px 50px;
+      cursor: pointer;
+
+      img {
+        width: auto;
+      }
+    }
+    align-self: center;
+
+    .button--secondary {
+      width: 35%;
+      margin: 50px 20px;
+    }
+
+    .create-group__name {
+      width: 80%;
 
       label {
         margin-top: 30px;
       }
-  }
-
-  .create-group__dates {
-    display: flex;
-    width: 90%;
-
-    .date {
-      width: 95%;
     }
-  }
+
+    .create-group__dates {
+      display: flex;
+      width: 90%;
+
+      .date {
+        width: 95%;
+      }
+    }
 
     .text-field {
       margin: 20px 20px;
-      margin-left: 20px;
       display: flex;
       flex-direction: column;
 
-        label {
-          color: $black-color;
-          text-align: left;
-          margin-bottom: 5px;
-        }
+      label {
+        color: $black-color;
+        text-align: left;
+        margin-bottom: 5px;
+      }
 
-        input {
-          width: 90%;
-          padding: 10px;
-          border-radius: 5px;
-          border: 1px solid $grey-color;
+      input {
+        width: 90%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid $grey-color;
 
-          &:focus {
-            outline: none;
-            border-color: #007bff;
-          }
+        &:focus {
+          outline: none;
+          border-color: #007bff;
         }
+      }
 
-        .create-group__error{
-          color: red;
-        }
+      .create-group__error {
+        color: red;
+      }
     }
 
-
-
     .create-group__media {
-
-      width: 100%;
+      width: 85%;
       height: 200px;
+      margin: 35px 0 10px 20px;
       border-radius: 5px;
       border: 1px solid $grey-color;
       display: flex;
@@ -94,28 +85,40 @@ justify-content: center;
       justify-content: center;
       align-items: center;
 
-        p {
-          text-align: center;
-          font-size: $font-p;
-          margin: 0;
-        }
+      p {
+        text-align: center;
+        font-size: $font-p;
+        color: #959595;
+        margin: 0;
+      }
 
-        img {
-          width: 50px;
-          height: 50px;
-        }
+      img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .create-group__upload {
+        width: 100%;
+        height: 200px;
+        border-radius: 5px;
+        border: 1px solid $grey-color;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #file-input {
+        display: none;
+      }
     }
 
     .create-group__success {
       color: green;
       margin: 0 20px;
     }
+  }
 }
-}
-
-
-
-
 
 @media screen and (min-width: $mobile-breakpoint) {
   .create-group {
