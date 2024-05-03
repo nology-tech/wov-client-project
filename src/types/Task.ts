@@ -6,6 +6,15 @@ export type ActiveTask = {
   points: number;
 }
 
+export type SetTask = {
+  id: string;
+  category: string;
+  date: string;
+  description: string;
+  name: string;
+  points: string;
+}
+
 export type CompletedTask = {
   id: string;
   taskHeading: string;

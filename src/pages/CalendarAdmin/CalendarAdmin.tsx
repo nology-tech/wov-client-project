@@ -4,21 +4,22 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs, { Dayjs } from "dayjs";
 import updateLocale from "dayjs/plugin/updateLocale";
 import Stack from "@mui/material/Stack";
-import CompletedTask from "../../components/CompletedTask/CompletedTask";
 import { Divider } from "@mui/material";
 import Header from "../../components/Header/Header";
 import "./CalendarAdmin.scss";
-import filterCompletedTasks from "../../utils/filterCompletedTasks";
-import { useFirestore } from "../../hooks/useFireStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
+import TaskTile from "../../components/TaskTile/TaskTile";
+import { FirestoreCollections, getCollectionFromFirestore } from "../../utils/dbUtils";
+import { SetTask } from "../../types/Task";
+
 
 const CalendarAdmin = () => {
-  const { getCompletedTasks } = useFirestore();
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [currentTasks, setCurrentTasks] = useState<SetTask[]>([])  // remember to add a new type for set tasks
   const { getUser } = useAuth();
   const user = getUser();
-  const completedTasks = getCompletedTasks(user.id);
   const [date, setDate] = useState<Date>(new Date());
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
@@ -29,7 +30,35 @@ const CalendarAdmin = () => {
     weekStart: 1,
   });
 
-  const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
+  const getSetTasks = async () => {
+    try {
+      const setTasks: SetTask[] | null = await getCollectionFromFirestore (
+        FirestoreCollections.TEST_TASKS
+      )
+      if(setTasks === null){
+        setErrorMessage("No set tasks have been found")
+        errorMessage; // remember to render this in the return for the admin to actually see it
+        return;
+      }
+      setCurrentTasks(setTasks)
+      console.log(currentTasks);
+      
+      return setTasks;
+      
+    } catch(error) {
+      setErrorMessage("Error fetching tasks");
+      errorMessage; // remember to render this in the return for the admin to actually see it
+    }
+  }
+    
+
+  // getSetTasks();
+
+
+  // useEffect(()=> {
+  //   getSetTasks();
+  // })
+
 
   return (
     <div className="calendar">
@@ -75,16 +104,19 @@ const CalendarAdmin = () => {
         }}
         className="calendar__task-container"
       >
-        {filteredCompletedTasks.length > 0 ? (
-          filteredCompletedTasks.map((task) => (
-            <CompletedTask
+
+        {/* check whether docs for each task created has an id so that 
+        I can give a key to the task tile */}
+        {currentTasks ? (
+          currentTasks.map((task) => (
+            <TaskTile
               key={task.id}
-              taskHeading={task.taskHeading}
-              category={task.category}
-              points={task.points}
-              description={task.description}
-              image={task.image}
-            />
+              id={task.id}
+              name={task.name}
+              requirement=""
+              category={task?.category}
+              points={parseFloat(task.points)}
+              />
           ))
         ) : (
           <p className="calendar__no-tasks-message">
