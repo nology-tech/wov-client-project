@@ -35,13 +35,12 @@ const UpdateProfile = () => {
   const [openPasswordPopup, setOpenPasswordPopup] = useState<boolean>(false);
 
   const { img, name, bio, email } = userUpdate;
-  console.log("img:", img)
-  console.log("name:", name)
-  
+  console.log("img:", img);
+  console.log("name:", name);
+
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  console.log("selectedFile:", selectedFile)
-
+  console.log("selectedFile:", selectedFile);
 
   const handleClickOpenPasswordPopup = () => {
     setOpenPasswordPopup(true);
@@ -53,14 +52,13 @@ const UpdateProfile = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
-    console.log("key:", key)
+    console.log("key:", key);
     const value = event.currentTarget.value;
-    console.log("value:", value)
+    console.log("value:", value);
     setUserUpdate({ ...userUpdate, [key]: value });
   };
 
-  console.log("userUpdate:", userUpdate)
-
+  console.log("userUpdate:", userUpdate);
 
   const handlePaswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
@@ -69,8 +67,17 @@ const UpdateProfile = () => {
   };
 
   const updateDatabase = async () => {
-    // updateUser.img = 
-    const { error } = await updateUser({ name, bio, email, img});
+    // updateUser.img =
+    const filePath = `${user.id}/images/profile`;
+    const { fileDownloadUrl, error: uploadError } =
+      await saveFileAndRetrieveDownloadUrl(filePath, selectedFile, false);
+      if (uploadError) {
+        throw new Error(uploadError);
+      }
+    const img = fileDownloadUrl || undefined;
+    const { error } = await updateUser({ name, bio, email, img });
+    console.log({ img });
+
     if (error) {
       setErrorMessage(error);
       setSuccessMessage("");
@@ -78,6 +85,7 @@ const UpdateProfile = () => {
       setErrorMessage("");
       setSuccessMessage("Profile Updated");
     }
+
   };
 
   const changePassword = async () => {
@@ -106,22 +114,20 @@ const UpdateProfile = () => {
     setShowUploadPrompt(!showUploadPrompt);
   };
 
-  const handlePictureChange = async (event: ChangeEvent<HTMLInputElement>
-    ) => {
+  const handlePictureChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0] as File;
-      const filePath = `${user.id}/images/profile`;
-      const { fileDownloadUrl, error: uploadError } = await saveFileAndRetrieveDownloadUrl(
-        filePath,
-        file,
-        false)
-
       setSelectedFile(file);
-      const img = fileDownloadUrl;
+      // const filePath = `${user.id}/images/profile`;
+      // const { fileDownloadUrl, error: uploadError } = await saveFileAndRetrieveDownloadUrl(
+      //   filePath,
+      //   file,
+      //   false)
+
+      // const img = fileDownloadUrl;
       // setUserUpdate({ ...userUpdate, img: fileDownloadUrl });
     }
   };
-
 
   return (
     <div>
