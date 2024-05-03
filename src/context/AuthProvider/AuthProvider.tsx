@@ -132,7 +132,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     data:
       | Pick<UserProfile, "bio" | "name" | "email"| "img">
       | Pick<UserProfile, "totalScore">,
-      profileFile?: File
+      // profileFile?: File
       ): PromiseObjectNullString => {
         if (user === null) {
           return { error: "No user stored" };
@@ -149,21 +149,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUser({ ...user, ...data });
         }
       
-        // If a new profile image file is provided, update the profile image
+        // // If a new profile image file is provided, update the profile image
         
-          const filePath = `${user.id}/images/profile`;
-          const { fileDownloadUrl, error: uploadError } = await saveFileAndRetrieveDownloadUrl(
-            filePath,
-            profileFile,
-            false
-          );
-          if (uploadError) {
-            throw new Error(uploadError);
-          }
-          console.log("fileDownloadUrl:", fileDownloadUrl);
-          // Update the user's profile image URL in the local state
-          setUser({ ...user, img: fileDownloadUrl || "" });
-          console.log("user:", user)
+        //   const filePath = `${user.id}/images/profile`;
+        //   const { fileDownloadUrl, error: uploadError } = await saveFileAndRetrieveDownloadUrl(
+        //     filePath,
+        //     profileFile,
+        //     false
+        //   );
+        //   if (uploadError) {
+        //     throw new Error(uploadError);
+        //   }
+        //   console.log("fileDownloadUrl:", fileDownloadUrl);
+        //   // Update the user's profile image URL in the local state
+        //   setUser({ ...user, img: fileDownloadUrl || "" });
+        //   console.log("user:", user)
         
       
         return { error };

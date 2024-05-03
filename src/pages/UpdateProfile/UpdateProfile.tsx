@@ -40,7 +40,8 @@ const UpdateProfile = () => {
   
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [userImage, setUserImage] = useState<string | (() => string | null) | undefined>(user.img);
+  console.log("selectedFile:", selectedFile)
+
 
   const handleClickOpenPasswordPopup = () => {
     setOpenPasswordPopup(true);
@@ -55,15 +56,11 @@ const UpdateProfile = () => {
     console.log("key:", key)
     const value = event.currentTarget.value;
     console.log("value:", value)
-
-        if (event.target.files && event.target.files.length > 0) {
-          setSelectedFile(event.target.files[0]);
-        }
     setUserUpdate({ ...userUpdate, [key]: value });
   };
 
   console.log("userUpdate:", userUpdate)
-  console.log("selectedFile:", selectedFile)
+
 
   const handlePaswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
@@ -109,18 +106,19 @@ const UpdateProfile = () => {
     setShowUploadPrompt(!showUploadPrompt);
   };
 
-  const handlePictureChange = async (event: ChangeEvent<HTMLInputElement>,  profileFile?: File
+  const handlePictureChange = async (event: ChangeEvent<HTMLInputElement>
     ) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0] as File;
       const filePath = `${user.id}/images/profile`;
       const { fileDownloadUrl, error: uploadError } = await saveFileAndRetrieveDownloadUrl(
         filePath,
-        profileFile,
+        file,
         false)
 
       setSelectedFile(file);
-      setUserUpdate({ ...userUpdate, img: fileDownloadUrl });
+      const img = fileDownloadUrl;
+      // setUserUpdate({ ...userUpdate, img: fileDownloadUrl });
     }
   };
 
