@@ -109,7 +109,7 @@ const CalendarAdmin = () => {
               id={task.id}
               name={task.name}
               requirement=""
-              category={task?.category}
+              category={task.category}
               points={parseFloat(task.points)}
               />
           ))
