@@ -7,6 +7,7 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { useAuth } from "../../hooks/useAuth";
 import { UserProfile } from "../../types/User";
 import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
+import { GroupData } from "../../types/Groups";
 
 
 const LeaderboardAdmin = () => {
@@ -14,11 +15,12 @@ const LeaderboardAdmin = () => {
   const user = getUser();
   const {getTribes} = useFirestore()
   const { getLeaderboard } = useFirestore();
-  const [tribe, setTribe] = useState<string[]>([]);
+  const [tribe, setTribe] = useState<GroupData[]>([]);
   const [users, setUsers] = useState<UserProfile[]>([]);
+  const [chosenTribe, setChosenTribe] = useState<string>("")
 
   const handleChange = (event: SelectChangeEvent) => {
-    setTribe(event.target.value as string);
+    setChosenTribe(event.target.value)
   };
 
   useEffect(() => {
@@ -26,19 +28,15 @@ const LeaderboardAdmin = () => {
       const result = await getTribes();
       setTribe(result);
     };
-  
     getTribeData();
-  
   }, [getTribes]);
 
   useEffect(() => {
     const getLeaderboardData = async () => {
-      const result = await getLeaderboard(user.tribe);
+      const result = await getLeaderboard(chosenTribe);
       setUsers(result);
     };
-  
-    getLeaderboardData();
-  
+    getLeaderboardData();  
   }, [getLeaderboard, user]);
 
   const sortUserByScore = () => {
@@ -60,7 +58,7 @@ const LeaderboardAdmin = () => {
 
       {/* drop down of tribes */}
       
-      <DropdownMenu arrayOfDropDownItems={tribe} handleChange={handleChange} />
+      <DropdownMenu arrayOfGroups={tribe} chosenTribe={chosenTribe} handleChange={handleChange} />
 
       {/* list of people and scores from selected tribe */}
       {sortUserByScore().map((sortedUser, index) => (

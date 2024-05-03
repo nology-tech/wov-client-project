@@ -4,13 +4,15 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { GroupData } from "../../types/Groups";
 
 type DropdownMenuProps = {
-  arrayOfDropDownItems: string[];
+  arrayOfGroups: GroupData[];
   handleChange: (event: SelectChangeEvent) => void;
+  chosenTribe: string;
 };
 
-const DropdownMenu = ({arrayOfDropDownItems, handleChange} : DropdownMenuProps) => {
+const DropdownMenu = ({arrayOfGroups, handleChange, chosenTribe} : DropdownMenuProps) => {
 
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -19,12 +21,14 @@ const DropdownMenu = ({arrayOfDropDownItems, handleChange} : DropdownMenuProps) 
         <Select
           labelId="tribe-input"
           id="tribe"
-          value={arrayOfDropDownItems}
+          value={chosenTribe}
           label="Tribe"
           onChange={handleChange}
         >
           {/* get tribe data from db, map over, create menu item for each one */}
-          <MenuItem>Test Tribe</MenuItem>
+          {arrayOfGroups.map((tribe) => {
+            return <MenuItem value={tribe.name}> {tribe.name} </MenuItem>;
+          })}
         </Select>
       </FormControl>
     </Box>

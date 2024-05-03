@@ -20,7 +20,7 @@ export type FirestoreContextProps = {
   ) => Promise<void>;
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
-  getTribes: () => Promise<TribeName[]>;
+  getTribes: () => Promise<GroupData[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -174,12 +174,12 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
     const getTribes = async () => {
-      let result = [] as TribeName[];
+      let result = [] as GroupData[];
       try {
-        const tribes = await getCollectionFromFireStore<TribeName[]>(
+        const tribes = await getCollectionFromFirestore<GroupData>(
           FirestoreCollections.TRIBELIST
         );
-        result = tribes ?? ([] as TribeName[]);
+        result = tribes ?? ([] as GroupData[]);
       } catch (error) {
         console.error("Error fetching list of Tribes:", error);
       }
