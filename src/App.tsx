@@ -27,7 +27,7 @@ const App = () => {
             <Route path="/" element={<PrivateRoute />}>
               {isAdmin ? (
                 <>
-                  <Route path="/" element={<AdminDashboard />} />
+                  <Route path="/" element={<AdminDashboard tasks={[]} />} />
                   <Route path="/create" element={<Create/>}/>
                 </>
               ) : (
