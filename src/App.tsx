@@ -15,6 +15,7 @@ import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Create from "./pages/Create/Create";
+import CalendarAdmin from "./pages/CalendarAdmin/CalendarAdmin";
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -29,7 +30,7 @@ const App = () => {
                 <>
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/create" element={<Create/>}/>
-                  <Route path="/calendar-admin" element={<Calendar />} />
+                  <Route path="/calendar-admin" element={<CalendarAdmin/>} />
                 </>
               ) : (
                 <>
