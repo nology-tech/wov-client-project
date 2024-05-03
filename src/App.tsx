@@ -19,7 +19,7 @@ import Create from "./pages/Create/Create";
 
 
 const App = () => {
-  const { isAuthenticated, isAdmin } = useAuth();
+const { isAuthenticated, isAdmin } = useAuth();
 
   return (
     <>
@@ -30,8 +30,9 @@ const App = () => {
               {isAdmin ? (
                 <>
                   <Route path="/" element={<AdminDashboard />} />
-                  <Route path="/create" element={<Create/>}/>
-                  <Route path="/dashboard" element={<Dashboard/>}/>
+                  <Route path="/create" element={<Create />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/profile" element={<Profile />} />
                 </>
               ) : (
                 <>
@@ -41,7 +42,6 @@ const App = () => {
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/edit" element={<UpdateProfile />} />
-                  
                 </>
               )}
             </Route>
