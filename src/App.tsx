@@ -14,7 +14,7 @@ import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import Dashboard from "./pages/Dashboard/DashBoard";
 import Create from "./pages/Create/Create";
 
 

@@ -1,0 +1,16 @@
+@use "../../styles/variables" as *;
+
+.dashboard{
+    .search-bar{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+          border-radius: 30px;
+        width: 300px;
+        
+       
+        }
+    }
+}
