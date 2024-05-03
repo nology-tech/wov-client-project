@@ -18,7 +18,11 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
 
 const App = () => {
-  const { isAuthenticated, isAdmin } = useAuth();
+  // const { isAuthenticated, isAdmin } = useAuth();
+
+  isAuthenticated = true;
+
+  isAdmin = true;
 
   return (
     <>
