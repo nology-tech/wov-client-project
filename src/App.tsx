@@ -14,6 +14,9 @@ import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Create from "./pages/Create/Create";
+
 import { useState} from 'react';
 import Loading from "./components/Loading/Loading";
 
@@ -33,7 +36,6 @@ const App = () => {
               {isAdmin ? (
                 <>
                   <Route path="/" element={<AdminDashboard />} />
-                  <Route path="/leaderboard-admin" element={<LeaderboardAdmin/>}/>
                 </>
               ) : (
                 <>
@@ -43,6 +45,7 @@ const App = () => {
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/edit" element={<UpdateProfile />} />
+                  
                 </>
               )}
             </Route>

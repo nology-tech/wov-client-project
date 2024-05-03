@@ -29,7 +29,7 @@ const LeaderboardCard = ({
     >
       <div className="leaderboard-card__img-div">
         <img
-          src={profileImage ?? "./assets/images/default-profile-image.png"}
+          src={profileImage}
           className="leaderboard-card__img-div leaderboard-card__img-div--img"
         />
       </div>

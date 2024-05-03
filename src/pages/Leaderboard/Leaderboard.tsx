@@ -44,7 +44,7 @@ const Leaderboard = () => {
             key={sortedUser.id + sortedUser.name}
             name={sortedUser.name}
             profileImage={
-              sortedUser.img ?? "./assets/images/default-profile-image.png"
+              sortedUser.img ? sortedUser.img : "./assets/images/default-profile-image.png"
             }
             totalScore={sortedUser.totalScore}
             isFirstCard={index === 0}
@@ -55,7 +55,7 @@ const Leaderboard = () => {
         ;
       </div>
       <div className="leaderboard__navigation">
-        <Navigation navActionIndex={3} />
+        <Navigation navActionIndex={4} />
       </div>
     </div>
   );

@@ -9,8 +9,8 @@
   color: $white-color;
   cursor: pointer;
   padding: 1rem 1.25rem;
-  width: 100%;
-  max-width: 20.938rem;
+  
+  
 
   &--primary {
     background-color: $primary-color;
@@ -24,12 +24,35 @@
     background-color: $light-grey-color;
     color: $slate-grey-color;
   }
+    &--light-grey-lighter {
+      background-color: $light-grey-color;
+      color: $slate-grey-color;
+      font-weight: lighter;
+    }
+
+  &--large{
+    width:100%;
+  }
+
+  &--medium{
+    width:75%;
+  }
+
+  &--small{
+    width: 20%;
+    padding: 1rem 0.5rem;
+  }
 }
 
 @media screen and (min-width: $tablet-breakpoint) {
   .button {
     max-width: 24rem;
     min-width: 18rem;
+
+    &--small{
+      max-width: 14rem;
+      min-width: 8rem;
+    }
   }
 }
 
@@ -46,5 +69,6 @@
     max-width: 35rem;
     min-width: 40rem;
     font-size: 1.6rem;
+
   }
 }

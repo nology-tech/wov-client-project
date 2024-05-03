@@ -4,11 +4,13 @@ import {
   getCollectionFromFirestore,
   updateDocumentInFirestoreCollection,
   FirestoreCollections,
+  createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
+import { GroupData, CreateDocumentResult } from "../../types/Groups";
 
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
@@ -18,7 +20,7 @@ export type FirestoreContextProps = {
   ) => Promise<void>;
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
-  getTribes: () => Promise<TribeName[]>
+  getTribes: () => Promise<TribeName[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -171,20 +173,18 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
-  const getTribes = async () => {
-    let result = [] as TribeName[]
-    try{
-      const tribes = 
-        await getCollectionFromFireStore<TribeName[]>(
+    const getTribes = async () => {
+      let result = [] as TribeName[];
+      try {
+        const tribes = await getCollectionFromFireStore<TribeName[]>(
           FirestoreCollections.TRIBELIST
         );
-      result = tribes ?? ([] as TribeName[])
-    }
-    catch (error){
-      console.error("Error fetching list of Tribes:", error)
-    }
-    return result;
-  }
+        result = tribes ?? ([] as TribeName[]);
+      } catch (error) {
+        console.error("Error fetching list of Tribes:", error);
+      }
+      return result;
+    };
 
   return (
     <FirestoreContext.Provider
@@ -193,7 +193,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         completeActiveTask,
         getCompletedTasks,
         getLeaderboard,
-        getTribes
+        getTribes,
       }}
     >
       {children}
