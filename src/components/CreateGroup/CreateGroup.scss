@@ -13,8 +13,22 @@ justify-content: center;
 
 
 .create-group {
+  .image-upload > input
+  {
+      display: none;
+  }
+  
+  .image-upload img
+  {
+      width: auto;
+      cursor: pointer;
+  }
+  .labelToClick {
+    display: block;
+    width: 85%;
+    margin: 40px 20px 50px;
+  }
   align-self: center;
-
 
   .button--secondary {
     width: 35%;
@@ -67,12 +81,14 @@ justify-content: center;
         }
     }
 
+
+
     .create-group__media {
-      width: 85%;
+
+      width: 100%;
       height: 200px;
       border-radius: 5px;
       border: 1px solid $grey-color;
-      margin: 40px 20px 50px;
       display: flex;
       flex-direction: column;
       justify-content: center;

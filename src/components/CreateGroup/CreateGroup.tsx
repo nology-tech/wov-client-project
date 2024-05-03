@@ -148,11 +148,13 @@ const CreateGroup = () => {
             />
           </div>
         </section>
-
+            <label htmlFor="file-input" className="labelToClick">
         <div className="create-group__media">
           <img src={camera} alt="Media" />
           <p>Media</p>
         </div>
+        </label>
+        <input className="file-input" type="file"/>
         {successMessage && (
           <p className="create-group__success">{successMessage}</p>
         )}
