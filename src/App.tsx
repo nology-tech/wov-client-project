@@ -29,6 +29,7 @@ const App = () => {
                 <>
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/create" element={<Create/>}/>
+                  <Route path="/calendar-admin" element={<Calendar />} />
                 </>
               ) : (
                 <>
