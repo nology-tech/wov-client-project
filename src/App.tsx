@@ -13,7 +13,7 @@ import Register from "./pages/Register/Register";
 import Account from "./pages/Account/Account";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import AdminProfile from "./pages/AdminProfile/AdminProfile";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
 
@@ -28,7 +28,7 @@ const App = () => {
             <Route path="/" element={<PrivateRoute />}>
               {isAdmin ? (
                 <>
-                  <Route path="/" element={<AdminDashboard />} />
+                  <Route path="/admin-profile" element={<AdminProfile />} />
                   <Route path="/create" element={<Create/>}/>
                   <Route path="/dashboard" element={<Dashboard/>}/>
                 </>
