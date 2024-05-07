@@ -4,6 +4,10 @@ import {useState } from "react";
 import ButtonContainer from "../../containers/ButtonContainer/ButtonContainer"
 import Groups from "../../containers/Groups/Groups"
 import groups from "../../mockData/groups"
+import { InputAdornment, TextField } from "@mui/material"
+import SearchIcon from "@mui/icons-material/Search";
+import "./DashBoard.scss"
+
 import TaskTile from "../../components/TaskTile/TaskTile"
 import { activeTasks } from "../../mockData/mockActiveTasks"
 import {tribeUsers} from "../../mockData/mockTribe.ts"
@@ -18,10 +22,21 @@ const Dashboard = () => {
   }
       
   return (
-    <div>
+    <div className="dashboard">
       {/* <Header subtitle={"Dashboard"}/> */}
       {/* <NavigationAdmin navActionIndex={0}/> */} 
       <ButtonContainer handleButtonClick = {handleButtonClick}/>
+        <div className="search-bar">
+          <TextField fullWidth  
+          InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon className="search-icon" />
+                </InputAdornment>
+              ),
+            }}
+          placeholder="Search by task, category" variant="outlined" role="search" />
+        </div>
       {selectedDataType === "groups" && <Groups groups={groups} />}
 
       {selectedDataType === "users" && (
