@@ -33,6 +33,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
     querySnapshot.forEach((doc) => {
       storedData.push(doc.data);
     });
+    
     if (
       formData.name &&
       formData.date &&
