@@ -2,7 +2,7 @@ import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./Tasks.scss";
 import { useFirestore } from "../../hooks/useFireStore";
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Task } from "../../types/Task";
 import TaskTile from "../../components/TaskTile/TaskTile";
 
