@@ -37,7 +37,7 @@ const NavigationAdmin = ({ navActionIndex = 0 }: NavAdminProps) => {
           label="Dashboard"
           icon={<HomeOutlinedIcon/>}
           component={Link}
-          to="/dashboard"
+          to="/"
         />
         <BottomNavigationAction
           className="bottom-navigation__item"
