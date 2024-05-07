@@ -19,8 +19,6 @@ import Create from "./pages/Create/Create";
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
-  // const isAuthenticated = true;
-  // const isAdmin = true;
 
   return (
     <>
