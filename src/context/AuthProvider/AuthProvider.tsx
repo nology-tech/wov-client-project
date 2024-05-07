@@ -140,7 +140,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsAdmin(false);
     setIsAuthenticated(false);
     setUser(userLoading);
-    navigate("/auth");
+    navigate("/");
   };
   const updateUser = async (
     data:
