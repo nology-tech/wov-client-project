@@ -8,7 +8,13 @@ import {
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
-import { NewUser, UserLoading, UserProfile } from "../../types/User";
+import {
+  NewUser,
+  UserLoading,
+  UserProfile,
+  AdminProfile,
+  AdminLoading,
+} from "../../types/User";
 import {
   createDocumentInFirestoreCollection,
   FirestoreCollections,
@@ -26,12 +32,18 @@ const userLoading: UserLoading = {
   tribe: "",
   loading: true,
 };
+const adminLoading: AdminLoading = {
+  id: "",
+  email: "",
+  reference: "",
+};
 export type AuthContextProps = {
   isAuthenticated: boolean;
   isAdmin: boolean;
   loginUser: (email: string, password: string) => PromiseObjectNullString;
   logoutUser: () => void;
   getUser: () => UserProfile | UserLoading;
+  getAdmin: () => AdminProfile;
   createUser: (newUser: NewUser, profilePic?: File) => PromiseObjectNullString;
   updateUser: (
     data:
@@ -48,12 +60,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [admin, setAdmin] = useState<AdminProfile | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const localStorageUID = localStorage.getItem("userUID");
     if (localStorageUID) {
       setIsAuthenticated(true);
       getUserFromFirestore(localStorageUID);
+      getAdminFromFirestore(localStorageUID);
       checkAdminStatus(localStorageUID);
     } else {
       setIsAuthenticated(false);
@@ -97,6 +111,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       getUserFromFirestore(userID);
     }
     checkAdminStatus(userID);
+    getAdminFromFirestore(userID);
     setIsAuthenticated(true);
   };
   const getUserFromFirestore = async (userID: string) => {
@@ -108,6 +123,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setUser(storedUser);
     }
   };
+
+  const getAdminFromFirestore = async (userID: string) => {
+    const adminData = await getDocumentFromFirestoreCollection<AdminProfile>(
+      FirestoreCollections.ADMIN,
+      userID
+    );
+    if (adminData) {
+      setAdmin(adminData);
+    }
+  };
+
   const logoutUser = () => {
     signOut(auth);
     localStorage.removeItem("userUID");
@@ -199,10 +225,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return userLoading;
     }
   };
+
+  const getAdmin = () => {
+    if (admin) {
+      return admin;
+    } else {
+      return adminLoading;
+    }
+  };
   return (
     <AuthContext.Provider
       value={{
         getUser,
+        getAdmin,
         isAuthenticated,
         isAdmin,
         loginUser,
