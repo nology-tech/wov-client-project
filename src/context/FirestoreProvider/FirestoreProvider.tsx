@@ -7,7 +7,7 @@ import {
   createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
-import { CompletedTask, ActiveTask } from "../../types/Task";
+import { CompletedTask, ActiveTask, Task } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { GroupData, CreateDocumentResult } from "../../types/Groups";
@@ -21,7 +21,7 @@ export type FirestoreContextProps = {
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
-  getAllTasksAdmin: () => void;
+  getAllTasksAdmin: () => Promise<Task[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -189,17 +189,19 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getAllTasksAdmin = async () => {
+    let result = [] as Task[]
     try {
-      const taskList = await getCollectionFromFirestore(
+      const taskDocument = await getCollectionFromFirestore<Task>(
         FirestoreCollections.TASKS
       );
-      console.log(taskList);
-      // const userProfiles = completedTaskDocument ?? ([] as UserProfile[]);
-      // const tribeUsers = userProfiles.filter((user) => user.tribe === tribe);
-      // result = tribeUsers ?? ([] as UserProfile[]);
+      console.log(taskDocument);
+      const taskList = taskDocument ?? [] as Task[];
+      result = taskList;
+
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
     }
+    return result
   };
 
   return (
