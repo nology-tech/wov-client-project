@@ -168,10 +168,10 @@ const ActiveTasks = () => {
           <>
 
 
-              {/* <input 
+              {/* { <input 
               type="file" 
               // onChange={handleFileInputChange}  
-            /> */}
+            /> } */}
 
             <Popup
               heading=""
@@ -183,11 +183,15 @@ const ActiveTasks = () => {
             />
           </>
         )}
+        
         <div>
+          <> {console.log(showUploadPrompt)}</>
+       
           {showUploadPrompt && 
             <input 
               type="file" 
-              // onChange={handleFileInputChange}  
+              multiple
+              onChange={handleFileInputChange}  
             />}
         </div>
       </div>
