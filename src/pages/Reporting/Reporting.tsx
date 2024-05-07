@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../../components/Header/Header";
 import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 import ReportingTile from "../../components/ReportingTile/ReportingTile";
