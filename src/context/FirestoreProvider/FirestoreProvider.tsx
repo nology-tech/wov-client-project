@@ -21,6 +21,7 @@ export type FirestoreContextProps = {
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
+  getAllTasksAdmin: () => void;
 };
 
 export const FirestoreContext = createContext<
@@ -187,6 +188,20 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const getAllTasksAdmin = async () => {
+    try {
+      const taskList = await getCollectionFromFirestore(
+        FirestoreCollections.TASKS
+      );
+      console.log(taskList);
+      // const userProfiles = completedTaskDocument ?? ([] as UserProfile[]);
+      // const tribeUsers = userProfiles.filter((user) => user.tribe === tribe);
+      // result = tribeUsers ?? ([] as UserProfile[]);
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+  };
+
   return (
     <FirestoreContext.Provider
       value={{
@@ -195,6 +210,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getCompletedTasks,
         getLeaderboard,
         createGroup,
+        getAllTasksAdmin,
       }}
     >
       {children}
