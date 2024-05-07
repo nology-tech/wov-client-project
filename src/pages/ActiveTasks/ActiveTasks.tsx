@@ -12,7 +12,6 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
 import CompletedTask from "../../components/CompletedTask/CompletedTask";
-import { input } from "@testing-library/user-event/dist/cjs/event/input.js";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
