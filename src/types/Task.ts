@@ -4,7 +4,7 @@ export type ActiveTask = {
   type?: "weekly" | "daily" | "monthly";
   category?: string;
   points: number;
-}
+};
 
 export type CompletedTask = {
   id: string;
@@ -15,12 +15,12 @@ export type CompletedTask = {
   completed: string;
   description?: string;
   image?: string;
-}
+};
 
 export type Task = {
   category: string;
   date: string;
   description: string;
   name: string;
-  points: string;
-}
+  points: number;
+};

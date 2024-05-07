@@ -2,20 +2,21 @@ import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./Tasks.scss";
 import { useFirestore } from "../../hooks/useFireStore";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { Task } from "../../types/Task";
+import TaskTile from "../../components/TaskTile/TaskTile";
 
 const Tasks = () => {
   const { getAllTasksAdmin } = useFirestore();
   const [taskList, setTaskList] = useState<Task[]>([]);
 
   useEffect(() => {
-  getAllTasksAdmin().then((tempTaskList) => {
-    setTaskList(tempTaskList);
-    console.log(`this is the console log: ${taskList}`);
-  })
-   
-  }, [])
+    getAllTasksAdmin().then((tempTaskList) => {
+      setTaskList(tempTaskList);
+    });
+  }, []);
+  console.log(`this is the console log: ${taskList}`);
+  console.log(taskList);
 
   return (
     <div className="tasks-component">
@@ -35,10 +36,18 @@ const Tasks = () => {
         />
       </div>
       <div className="task-tile__container">
-        <p>Tasks</p>
-        {taskList && taskList.map((task) => {
-          return <p>{task.name}</p>
-        })}
+        {taskList &&
+          taskList.map((task, index) => {
+            return (
+              <TaskTile
+                id={index.toString()}
+                name={task.name}
+                requirement={task.description}
+                category={task.category}
+                points={task.points}
+              />
+            );
+          })}
       </div>
     </div>
   );
