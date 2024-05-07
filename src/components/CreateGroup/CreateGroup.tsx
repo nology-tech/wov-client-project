@@ -16,6 +16,7 @@ const CreateGroup = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [errorExistingGroup, setErrorExistingGroup] = useState("");
   const [successMessage, setsuccessMessage] = useState("");
+  const [groupImage, setGroupImage] = useState<string>(camera);
 
   const checkMissingFields = () => {
     const missingFields = [];
@@ -95,9 +96,11 @@ const CreateGroup = () => {
       setErrorExistingGroup("");
     };
 
-  const handleUpload = (event: HTMLInputElement) => {
-    const userImage = event.files;
-    console.log(userImage);
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setGroupImage(URL.createObjectURL(e.target.files[0]));
+      console.log(e.target.files);
+    }
   };
 
   return (
@@ -155,10 +158,15 @@ const CreateGroup = () => {
         </section>
         <div className="create-group__media">
           <label htmlFor="file-input" className="create-group__upload">
-            <img src={camera} alt="Media" />
+            <img src={groupImage} alt="Media" />
             <p>Media</p>
           </label>
-          <input id="file-input" type="file" onSubmit={handleUpload()} />
+          <input
+            id="file-input"
+            type="file"
+            onChange={handleUpload}
+            accept="image/*"
+          />
         </div>
 
         {successMessage && (

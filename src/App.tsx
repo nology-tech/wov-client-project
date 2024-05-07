@@ -17,9 +17,10 @@ import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
 
-
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
+  // const isAuthenticated = true;
+  // const isAdmin = true;
 
   return (
     <>
@@ -30,8 +31,8 @@ const App = () => {
               {isAdmin ? (
                 <>
                   <Route path="/" element={<AdminDashboard />} />
-                  <Route path="/create" element={<Create/>}/>
-                  <Route path="/dashboard" element={<Dashboard/>}/>
+                  <Route path="/create" element={<Create />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
                 </>
               ) : (
                 <>
@@ -41,7 +42,6 @@ const App = () => {
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/edit" element={<UpdateProfile />} />
-                  
                 </>
               )}
             </Route>

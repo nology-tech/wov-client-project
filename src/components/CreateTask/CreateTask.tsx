@@ -65,7 +65,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   return (
     <section className="create-task">
       <div className="create-task__form">
-        <form action="">
+        <form action="" onClick={handleCreateTask}>
           <label>Name</label>
           <input
             name="name"
@@ -109,12 +109,8 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
           {taskPassedMessage && (
             <p className="success--message">{taskPassedMessage}</p>
           )}
+          <Button variant="secondary" label={buttonLabel}></Button>
         </form>
-        <Button
-          variant="secondary"
-          label={buttonLabel}
-          onClick={handleCreateTask}
-        ></Button>
       </div>
     </section>
   );
