@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
 import Loading from "./components/Loading/Loading";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
+import ProfileAdmin from "./pages/ProfileAdmin/ProfileAdmin";
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -40,9 +41,10 @@ const App = () => {
               <Route path="/" element={<PrivateRoute />}>
                 {isAdmin ? (
                   <>
-                    <Route path="/" element={<AdminDashboard />} />
+                    <Route path="/" element={<Dashboard />} />
                     <Route path="/create" element={<Create />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard" element={<AdminDashboard />} />
+                    <Route path="/profile" element={<ProfileAdmin />} />
                   </>
                 ) : (
                   <>
