@@ -163,6 +163,7 @@ const Register = () => {
               value={formData.img}
               className="register__input register__input--img-upload"
               type="file"
+              accept="image/png, image/jpeg,"
               onChange={handleFileInputChange}
             />
           ) : (

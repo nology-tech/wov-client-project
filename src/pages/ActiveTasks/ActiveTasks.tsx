@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
+import CompletedTask from "../../components/CompletedTask/CompletedTask";
+import { input } from "@testing-library/user-event/dist/cjs/event/input.js";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -27,7 +29,7 @@ const ActiveTasks = () => {
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const [popupAddVideo, setpopupAddVideo] = useState<boolean>(false);
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null >(null);
   const navigate = useNavigate();
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -84,9 +86,13 @@ const ActiveTasks = () => {
   };
 
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event);
     if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
+      const file = event.target.files[0] as File;
+      setSelectedFile(file);
+      console.log(file)
     }
+    console.log(event);
   };
 
   const searchedTasks = activeTasks.filter(
@@ -161,13 +167,20 @@ const ActiveTasks = () => {
           descriptionShown={true}
         />
       )}
+      <>
+      <CompletedTask 
+        taskHeading="fake task"
+        category="fitness"
+        points={10}
+        description="blah"
+        image={selectedFile}
+      />
+      </>
 
       <div>
         <button onClick={handlePopupVideo}>Add Video</button>
         {popupAddVideo && (
           <>
-
-
               {/* { <input 
               type="file" 
               // onChange={handleFileInputChange}  
@@ -177,7 +190,7 @@ const ActiveTasks = () => {
               heading=""
               labelButtonOne="ADD A VIDEO"
               labelButtonTwo="CANCEL"
-              onButtonOne={() => handleShowUploadPrompt}
+              onButtonOne={() => handleShowUploadPrompt()}
               onButtonTwo={handlePopupVideo}
               descriptionShown={true}
             />
@@ -185,14 +198,16 @@ const ActiveTasks = () => {
         )}
         
         <div>
-          <> {console.log(showUploadPrompt)}</>
        
           {showUploadPrompt && 
             <input 
               type="file" 
-              multiple
-              onChange={handleFileInputChange}  
+              id="file"
+              name="file"
+              onChange={handleFileInputChange} 
+             
             />}
+            <>{console.log(selectedFile)}</>
         </div>
       </div>
       <Navigation navActionIndex={1} />

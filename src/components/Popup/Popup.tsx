@@ -57,7 +57,6 @@ const Popup = ({
               type="file"
               name="image-upload"
               id="image-upload"
-              accept="image/png, image/jpeg"
               className="custom"
             />
             ADD MEDIA
