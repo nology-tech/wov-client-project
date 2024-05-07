@@ -1,27 +1,21 @@
-import React,{useEffect} from 'react'
 
-type LoadingProps = {
-    loading: boolean;
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-    isAuthenticated: boolean
-}
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
-const Loading = ({loading, setLoading, isAuthenticated}: LoadingProps) => {
+const Loading = () => {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        height: "100vh",
+        "justify-content": "center",
+        "align-items": "center",
+      }}
+    >
+      <CircularProgress size="80px" thickness={5} />
+    </Box>
+  );
+};
 
-    useEffect(() => {
-        
-        setLoading(false);
-        }, [isAuthenticated]);
-
-    if (loading) {
-    return null;
-    }
-
-    return (
-        <div>
-            
-        </div>
-    )
-}
-
-export default Loading
+export default Loading;
