@@ -2,7 +2,12 @@ import { useState } from "react";
 import Button from "../../components/Button/Button";
 import "./ButtonContainer.scss";
 
-const ButtonContainer = () => {
+export type ButtonContainerProps = {
+  handleButtonClick: (toRender : string) => void;
+}
+
+const ButtonContainer = ({handleButtonClick} : ButtonContainerProps ) => {
+
   let [groupClick, setGroupClick] = useState<boolean>(false);
   let [userClick, setUserClick] = useState<boolean>(false);
   let [taskClick, setTaskClick] = useState<boolean>(false);
@@ -14,7 +19,7 @@ const ButtonContainer = () => {
     setGroupClick(true);
     setUserClick(false);
     setTaskClick(false);
-
+    handleButtonClick("groups");
   }
 
   const handleUserClick = () =>  {
@@ -22,7 +27,7 @@ const ButtonContainer = () => {
     setUserClick(true);
     setGroupClick(false);
     setTaskClick(false);
-
+    handleButtonClick("users");
   }
 
   const handleTaskClick = () =>  {
@@ -30,7 +35,7 @@ const ButtonContainer = () => {
     setTaskClick(true);
     setGroupClick(false);
     setUserClick(false);
-
+    handleButtonClick("tasks");
   }
 
   return (

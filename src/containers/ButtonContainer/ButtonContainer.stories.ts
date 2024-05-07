@@ -20,6 +20,6 @@ type Story = StoryObj<typeof ButtonContainer>;
 
 export const Primary: Story = {
   args: {
-    name: "Sam Joyce",
+
   },
 };
