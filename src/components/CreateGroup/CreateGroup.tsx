@@ -65,6 +65,7 @@ const CreateGroup = () => {
       name: groupName,
       "start-date": startDate,
       "end-date": endDate,
+      image: groupImage,
     };
 
     try {
