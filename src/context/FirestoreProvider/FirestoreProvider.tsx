@@ -4,13 +4,13 @@ import {
   getCollectionFromFirestore,
   updateDocumentInFirestoreCollection,
   FirestoreCollections,
-  createDocumentInFirestoreCollection,
+ 
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
-import { GroupData, CreateDocumentResult } from "../../types/Groups";
+import { GroupData } from "../../types/Groups";
 
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
