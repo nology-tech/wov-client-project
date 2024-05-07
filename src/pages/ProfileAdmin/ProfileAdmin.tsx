@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../../components/Header/Header";
 import Button from "../../components/Button/Button";
 import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
@@ -6,9 +5,10 @@ import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const ProfileAdmin = () => {
-    const navigate = useNavigate();
-    const { logoutUser } = useAuth();
-    
+  const navigate = useNavigate();
+  const { logoutUser, getAdmin } = useAuth();
+  const { email, id, reference } = getAdmin();
+
   return (
     <div>
       <Header subtitle="profile" profileImage="" />
@@ -17,13 +17,13 @@ const ProfileAdmin = () => {
 
         <section className="profile__info">
           <p>
-            <span className="profile__label">Name</span> :
+            <span className="profile__label">Name</span> : {id}
           </p>
           <p>
-            <span className="profile__label">Bio</span> :
+            <span className="profile__label">Bio</span> : {reference}
           </p>
           <p>
-            <span className="profile__label">Email</span> :
+            <span className="profile__label">Email</span> : {email}
           </p>
           <p>
             <span className="profile__label">Password</span> : {"*********"}
