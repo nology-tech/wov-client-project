@@ -26,8 +26,8 @@ const DropdownMenu = ({arrayOfGroups, handleChange, chosenTribe} : DropdownMenuP
           onChange={handleChange}
         >
           {/* get tribe data from db, map over, create menu item for each one */}
-          {arrayOfGroups.map((tribe) => {
-            return <MenuItem value={tribe.name}> {tribe.name} </MenuItem>;
+          {arrayOfGroups.map((tribe, index) => {
+            return <MenuItem key={index} value={tribe.name}> {tribe.name} </MenuItem>;
           })}
         </Select>
       </FormControl>

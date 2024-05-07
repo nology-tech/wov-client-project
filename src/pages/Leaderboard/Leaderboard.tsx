@@ -17,6 +17,7 @@ const Leaderboard = () => {
   const getData = useCallback(async () => {
     const result = await getLeaderboard(user.tribe);
     setUsers(result);
+    console.log("result:", result);
   }, [getLeaderboard, user]);
 
   useEffect(() => {

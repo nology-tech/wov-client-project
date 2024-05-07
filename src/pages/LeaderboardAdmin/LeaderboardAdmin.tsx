@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, SetStateAction } from "react";
+import { useState,  useEffect} from "react";
 import DropdownMenu from "../../components/DropdownMenu/DropdownMenu";
 import Header from "../../components/Header/Header";
 import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
@@ -35,9 +35,11 @@ const LeaderboardAdmin = () => {
     const getLeaderboardData = async () => {
       const result = await getLeaderboard(chosenTribe);
       setUsers(result);
+
     };
     getLeaderboardData();  
-  }, [getLeaderboard, user]);
+  }, [getLeaderboard, user, chosenTribe]);
+
 
   const sortUserByScore = () => {
     const sortedUsers = [...users.map((user) => ({ ...user }))].sort((a, b) => {
@@ -62,17 +64,18 @@ const LeaderboardAdmin = () => {
 
       {/* list of people and scores from selected tribe */}
       {sortUserByScore().map((sortedUser, index) => (
-          <LeaderboardCard
-            key={sortedUser.id + sortedUser.name}
-            name={sortedUser.name}
-            profileImage={
-              sortedUser.img ?? "./assets/images/default-profile-image.png"
-            }
-            totalScore={sortedUser.totalScore}
-            isFirstCard={index === 0}
-            userID={sortedUser.id}
-            currentUserID={user.id}
-          />
+
+        <LeaderboardCard
+          key={sortedUser.id + sortedUser.name}
+          name={sortedUser.name}
+          profileImage={
+            sortedUser.img ?? "./assets/images/default-profile-image.png"
+          }
+          totalScore={sortedUser.totalScore}
+          isFirstCard={index === 0}
+          userID={sortedUser.id}
+          currentUserID={user.id}
+        />
         ))}
       {/* leaderboard admin navigation */}
       <div>

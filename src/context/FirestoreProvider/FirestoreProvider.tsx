@@ -154,14 +154,20 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getLeaderboard = async (tribe: string) => {
     if (!tribe) {
+      console.log("no tribes available")
       return [] as UserProfile[];
+    }
+
+    if (!Object.values(FirestoreCollections).includes(tribe as FirestoreCollections)) {
+      console.error("Invalid tribe:", tribe);
+      return [] as UserProfile[]; 
     }
 
     let result = [] as UserProfile[];
     try {
       const completedTaskDocument =
         await getCollectionFromFirestore<UserProfile>(
-          FirestoreCollections.TRIBE
+          tribe as FirestoreCollections
         );
       const userProfiles = completedTaskDocument ?? ([] as UserProfile[]);
       const tribeUsers = userProfiles.filter((user) => user.tribe === tribe);
