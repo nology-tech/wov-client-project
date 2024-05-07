@@ -2,7 +2,7 @@ import "./ActiveTasks.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import ActiveTaskTile from "../../components/ActiveTaskTile/ActiveTaskTile";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
@@ -27,8 +27,7 @@ const ActiveTasks = () => {
   const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const [popupAddVideo, setpopupAddVideo] = useState<boolean>(false);
-  const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
-  const [selectedFile, setSelectedFile] = useState<File | null >(null);
+  const [selectedFile, setSelectedFile] = useState<string | undefined >("");
   const navigate = useNavigate();
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -79,20 +78,13 @@ const ActiveTasks = () => {
     setpopupAddVideo(!popupAddVideo);
   };
 
-
-  const handleShowUploadPrompt = () => {
-    setShowUploadPrompt(prevState => !prevState);
-  };
-
-  const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0] as File;
-      setSelectedFile(file);
-      console.log(file)
-    }
-    console.log(event);
-  };
+  const handleVideoFormSubmission = async (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const filePath = (e.currentTarget.elements[1] as HTMLInputElement).value;
+    setSelectedFile(filePath)
+    setpopupAddVideo(!popupAddVideo)
+    return;
+  }
 
   const searchedTasks = activeTasks.filter(
     (task) =>
@@ -157,7 +149,7 @@ const ActiveTasks = () => {
           onButtonTwo={() => navigate("/leaderboard")}
           descriptionShown={false}
         />
-      )}
+      )} 
       {popupAddMedia && (
         <Popup
           heading="ADD MEDIA"
@@ -165,47 +157,36 @@ const ActiveTasks = () => {
           labelButtonTwo="UPDATE TASK"
           descriptionShown={true}
         />
-      )}
+      )} 
       <>
-      <CompletedTask 
-        taskHeading="fake task"
-        category="fitness"
-        points={10}
-        description="blah"
-        image={selectedFile}
-      />
+      {
+        selectedFile && (
+            <><CompletedTask
+              taskHeading="fake task"
+              category="fitness"
+              points={10}
+              description="blah"
+              image={selectedFile} />
+              
+              <img src={selectedFile} alt="" /></>
+        )
+      }
       </>
-
       <div>
         <button onClick={handlePopupVideo}>Add Video</button>
         {popupAddVideo && (
           <>
-              {/* { <input 
-              type="file" 
-              // onChange={handleFileInputChange}  
-            /> } */}
-
             <Popup
-              heading=""
+              heading="pls work"
               labelButtonOne="ADD A VIDEO"
-              labelButtonTwo="CANCEL"
-              onButtonOne={() => handleShowUploadPrompt()}
-              onButtonTwo={handlePopupVideo}
+              labelButtonTwo="Submit"
               descriptionShown={true}
+              handleSubmit={handleVideoFormSubmission}
             />
           </>
         )}
         
         <div>
-       
-          {showUploadPrompt && 
-            <input 
-              type="file" 
-              id="file"
-              name="file"
-              onChange={handleFileInputChange} 
-             
-            />}
             <>{console.log(selectedFile)}</>
         </div>
       </div>
