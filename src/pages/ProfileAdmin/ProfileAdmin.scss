@@ -1,0 +1,95 @@
+@use "../../styles/variables" as *;
+
+.profile {
+  font-family: "poppins";
+  font-size: 1.125rem;
+  background-color: $off-white-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3rem 0 0 0;
+  height: auto;
+  padding-bottom: 7rem;
+  &__img {
+    height: 9em;
+    width: 9em;
+    border-radius: 50%;
+    border: 3px solid $black-color;
+  }
+  &__score {
+    font-size: 2.25rem;
+
+    display: flex;
+    justify-content: center;
+    color: $primary-color;
+  }
+  &__info {
+    p {
+      color: $slate-grey-color;
+    }
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 3rem 0 4rem;
+    color: $black-color;
+    font-size: 1rem;
+    .profile__label {
+      font-weight: bold;
+    }
+  }
+
+  &__buttons {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-end;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .profile {
+    font-size: 1.4rem;
+    padding-bottom: 8rem;
+    &__score {
+      font-size: 2.7rem;
+    }
+    &__info {
+      gap: 20px;
+      font-size: 1.5rem;
+    }
+  }
+}
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .profile {
+    font-size: 1.8rem;
+    padding-bottom: 10rem;
+    &__score {
+      font-size: 3.6rem;
+    }
+    &__info {
+      gap: 20px;
+      font-size: 2rem;
+    }
+  }
+}
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .profile {
+    font-size: 3.5rem;
+    &__score {
+      font-size: 6rem;
+      padding-bottom: 3rem;
+    }
+    &__info {
+      gap: 50px;
+      font-size: 4rem;
+    }
+    &__buttons {
+      margin-top: 10rem;
+      gap: 2.9rem;
+    }
+  }
+}
