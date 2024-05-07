@@ -2,10 +2,11 @@ import "./CreateGroup.scss";
 import Button from "../Button/Button";
 import camera from "../../assets/images/camera-placeholder.png";
 import { useFirestore } from "../../hooks/useFireStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FirestoreCollections,
   getDocumentFromFirestoreCollection,
+  getCollectionFromFirestore,
 } from "../../utils/dbUtils";
 
 const CreateGroup = () => {
@@ -17,6 +18,11 @@ const CreateGroup = () => {
   const [errorExistingGroup, setErrorExistingGroup] = useState("");
   const [successMessage, setsuccessMessage] = useState("");
   const [groupImage, setGroupImage] = useState<string>(camera);
+  const [getGroup, setGetGroup] = useState<unknown[] | null>([]);
+
+  useEffect(() => {
+    getGroups();
+  }, []);
 
   const checkMissingFields = () => {
     const missingFields = [];
@@ -104,6 +110,18 @@ const CreateGroup = () => {
     }
   };
 
+  const getGroups = async () => {
+    const groups = await getCollectionFromFirestore(
+      FirestoreCollections.TRIBELIST
+    );
+    setGetGroup(groups);
+    return groups;
+  };
+
+  const handleShow = () => {
+    console.log(getGroup);
+  };
+
   return (
     <div className="create-group-container">
       <div className="create-group">
@@ -179,6 +197,7 @@ const CreateGroup = () => {
             variant="secondary"
             onClick={handleCreateGroup}
           />
+          <button onClick={handleShow}>Here</button>
         </div>
       </div>
     </div>
