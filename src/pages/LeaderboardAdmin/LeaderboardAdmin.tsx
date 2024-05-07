@@ -77,7 +77,6 @@ const LeaderboardAdmin = () => {
           currentUserID={user.id}
         />
         ))}
-      {/* leaderboard admin navigation */}
       <div>
         <NavigationAdmin navActionIndex={4} />
       </div>
