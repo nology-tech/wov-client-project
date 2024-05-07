@@ -40,9 +40,9 @@ const App = () => {
               <Route path="/" element={<PrivateRoute />}>
                 {isAdmin ? (
                   <>
-                    <Route path="/" element={<AdminDashboard />} />
+                    <Route path="/" element={<Dashboard />} />
                     <Route path="/create" element={<Create />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard" element={<AdminDashboard />} />
                   </>
                 ) : (
                   <>
