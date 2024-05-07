@@ -19,9 +19,9 @@ import Create from "./pages/Create/Create";
 import CalendarAdmin from "./pages/CalendarAdmin/CalendarAdmin";
 
 
-const App = () => {
-  const { isAuthenticated, isAdmin } = useAuth();
 
+const App = () => {
+ const { isAuthenticated, isAdmin } = useAuth();
   return (
     <>
       <FirestoreProvider>
@@ -40,7 +40,7 @@ const App = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/tasks" element={<ActiveTasks />} />
                   <Route path="/calendar" element={<Calendar />} />
-                  <Route path="/leaderboard" element={<Leaderboard />} />
+                  <Route path="/leaderboard" element={<Leaderboard/>} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/edit" element={<UpdateProfile />} />
                   
