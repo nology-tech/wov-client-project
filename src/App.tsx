@@ -17,10 +17,8 @@ import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
 
-
 const App = () => {
-const { isAuthenticated, isAdmin } = useAuth();
-
+  const { isAuthenticated, isAdmin } = useAuth();
   return (
     <>
       <FirestoreProvider>
