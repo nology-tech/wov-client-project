@@ -125,12 +125,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getAdminFromFirestore = async (userID: string) => {
-    const storedAdmin = await getDocumentFromFirestoreCollection<AdminProfile>(
+    const adminData = await getDocumentFromFirestoreCollection<AdminProfile>(
       FirestoreCollections.ADMIN,
       userID
     );
-    if (storedAdmin) {
-      setAdmin(storedAdmin);
+    if (adminData) {
+      setAdmin(adminData);
     }
   };
 
@@ -233,7 +233,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return adminLoading;
     }
   };
-
   return (
     <AuthContext.Provider
       value={{

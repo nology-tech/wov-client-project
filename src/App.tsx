@@ -16,6 +16,7 @@ import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
+import ProfileAdmin from "./pages/ProfileAdmin/ProfileAdmin";
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -30,7 +31,8 @@ const App = () => {
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/create" element={<Create />} />
                   <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/profile" element={<ProfileAdmin />} />
+                  {/* <Route path="/edit" element={<UpdateProfile />} /> need a route for admin profile update but to the admin collection */}
                 </>
               ) : (
                 <>

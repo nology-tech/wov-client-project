@@ -3,11 +3,12 @@ import Button from "../../components/Button/Button";
 import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import "./ProfileAdmin.scss";
 
 const ProfileAdmin = () => {
   const navigate = useNavigate();
   const { logoutUser, getAdmin } = useAuth();
-  const { email, id, reference } = getAdmin();
+  const { email, id } = getAdmin();
 
   return (
     <div>
@@ -20,7 +21,7 @@ const ProfileAdmin = () => {
             <span className="profile__label">Name</span> : {id}
           </p>
           <p>
-            <span className="profile__label">Bio</span> : {reference}
+            <span className="profile__label">Bio</span> :
           </p>
           <p>
             <span className="profile__label">Email</span> : {email}
