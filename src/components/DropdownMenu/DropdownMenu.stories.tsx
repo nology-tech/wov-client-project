@@ -1,4 +1,4 @@
-import {Meta, StoryObj} from "@storybook/react"
+import {Meta} from "@storybook/react"
 import DropdownMenu from "./DropdownMenu"
 
 const meta = {
