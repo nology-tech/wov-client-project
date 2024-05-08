@@ -12,6 +12,7 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
 import CompletedTask from "../../components/CompletedTask/CompletedTask";
+import tasks from "../../mockData/tasks";
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -24,7 +25,6 @@ const ActiveTasks = () => {
   const activeTasks = getActiveTasks(user.id);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
-  const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const [popupAddVideo, setpopupAddVideo] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | undefined >("");
@@ -57,7 +57,7 @@ const ActiveTasks = () => {
   ) => {
     setCompletedTasks((prev) => ({ ...prev, [id]: isCompleted }));
     if (isCompleted) {
-      setPopupTaskCompleted(!popupTaskCompleted);
+      setpopupAddVideo(!popupAddVideo);
 
       try {
         updateCompletedTask(id);
@@ -67,15 +67,6 @@ const ActiveTasks = () => {
         throw error;
       }
     }
-  };
-
-  const handleGoToAddMediaPopup = () => {
-    setPopupTaskCompleted(!popupTaskCompleted);
-    setPopupAddMedia(!popupAddMedia);
-  };
-
-  const handlePopupVideo = () => {
-    setpopupAddVideo(!popupAddVideo);
   };
 
   const handleVideoFormSubmission = async (e:FormEvent<HTMLFormElement>) => {
@@ -115,12 +106,12 @@ const ActiveTasks = () => {
           }}
         />
       </div>
-      {searchedTasks.length === 0 ? (
+      {searchTerm.length === 0 ? (
         <p className="task-page__no-task-message">
           There are no tasks that fit your search.
         </p>
       ) : (
-        searchedTasks.map((task, index) => (
+        searchTerm.map((task, index) => (
           <ActiveTaskTile
             key={task.id}
             id={task.id}
@@ -140,16 +131,6 @@ const ActiveTasks = () => {
         ))
       )}
 
-      {popupTaskCompleted && (
-        <Popup
-          heading="Task Completed"
-          labelButtonOne="ADD MEDIA"
-          labelButtonTwo="VIEW LEADERBOARD"
-          onButtonOne={handleGoToAddMediaPopup}
-          onButtonTwo={() => navigate("/leaderboard")}
-          descriptionShown={false}
-        />
-      )} 
       {popupAddMedia && (
         <Popup
           heading="ADD MEDIA"
@@ -173,7 +154,6 @@ const ActiveTasks = () => {
       }
       </>
       <div>
-        <button onClick={handlePopupVideo}>Add Video</button>
         {popupAddVideo && (
           <>
             <Popup
