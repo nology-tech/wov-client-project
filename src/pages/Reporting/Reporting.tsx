@@ -3,13 +3,36 @@ import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 import ReportingTile from "../../components/ReportingTile/ReportingTile";
 
 const Reporting = () => {
+  const reportingOptions = [
+    {
+      heading: "Most Active Users",
+      subHeading: "View the most active users",
+      linkTo: "/most-active-users",
+    },
+    {
+      heading: "Inactive Users",
+      subHeading: "Find users who haven't been active lately",
+      linkTo: "/inactive-users",
+    },
+    {
+      heading: "User Streaks",
+      subHeading: "Check users with the longest streaks",
+      linkTo: "/user-streaks",
+    },
+  ];
+
   return (
     <div>
       <Header subtitle="Reporting" />
-      {/* tiles that will contain what the information will be and the box will link to  */}
-      {/* tiles: most active user, users that haven't signed in, users with streaks of certain activities (eg completing task x amount of times) */}
-      {/* tile component and will be reused and will map over the data from the db*/}
-      <ReportingTile />
+      <div className="reporting-tiles">
+        {reportingOptions.map((option) => (
+          <ReportingTile
+            heading={option.heading}
+            subHeading={option.subHeading}
+            linkTo={option.linkTo}
+          />
+        ))}
+      </div>
       <NavigationAdmin navActionIndex={2} />
     </div>
   );
