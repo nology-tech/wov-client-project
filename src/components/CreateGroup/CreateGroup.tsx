@@ -7,7 +7,9 @@ import {
   FirestoreCollections,
   getDocumentFromFirestoreCollection,
   getCollectionFromFirestore,
+  saveFileAndRetrieveDownloadUrl,
 } from "../../utils/dbUtils";
+import { GroupData } from "../../types/Groups";
 
 const CreateGroup = () => {
   const { createGroup } = useFirestore();
@@ -18,7 +20,7 @@ const CreateGroup = () => {
   const [errorExistingGroup, setErrorExistingGroup] = useState("");
   const [successMessage, setsuccessMessage] = useState("");
   const [groupImage, setGroupImage] = useState<string>(camera);
-  const [getGroup, setGetGroup] = useState<unknown[] | null>([]);
+  const [getGroup, setGetGroup] = useState<any[] | null>();
 
   useEffect(() => {
     getGroups();
@@ -68,7 +70,7 @@ const CreateGroup = () => {
     }
 
     const groupData = {
-      name: groupName,
+      tribeName: groupName,
       "start-date": startDate,
       "end-date": endDate,
       image: groupImage,
@@ -105,8 +107,7 @@ const CreateGroup = () => {
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setGroupImage(URL.createObjectURL(e.target.files[0]));
-      console.log(e.target.files);
+      testCreateImage(e.target.files[0]);
     }
   };
 
@@ -118,8 +119,23 @@ const CreateGroup = () => {
     return groups;
   };
 
-  const handleShow = () => {
-    console.log(getGroup);
+  const testCreateImage = async (groupFile?: File) => {
+    const groupProfile = {
+      img: "",
+    };
+
+    if (groupFile) {
+      const filePath = `groups/images`;
+      const { fileDownloadUrl, error } = await saveFileAndRetrieveDownloadUrl(
+        filePath,
+        groupFile,
+        true
+      );
+      if (error) {
+        throw new Error(error);
+      }
+      groupProfile.img = fileDownloadUrl || "";
+    }
   };
 
   return (
@@ -197,8 +213,8 @@ const CreateGroup = () => {
             variant="secondary"
             onClick={handleCreateGroup}
           />
-          <button onClick={handleShow}>Here</button>
         </div>
+        {getGroup && <img src={getGroup[0].image} alt="test" />}
       </div>
     </div>
   );

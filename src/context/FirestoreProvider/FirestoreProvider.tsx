@@ -175,10 +175,10 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const createGroup = async (groupData: GroupData) => {
     try {
-      const { name } = groupData;
+      const { tribeName } = groupData;
       await createDocumentInFirestoreCollection(
         FirestoreCollections.TRIBELIST,
-        name,
+        tribeName,
         groupData
       );
       return { error: null, created: true };
