@@ -1,19 +1,15 @@
 import GroupTile from "../../components/GroupTile/GroupTile";
-// import { GroupData } from "../../mockData/groups";
 import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./Groups.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useFirestore } from "../../hooks/useFireStore";
-
-// type GroupsProps = {
-//   groups: GroupData[];
-// };
+import { GroupData } from "../../types/Groups";
 
 const Groups = () => {
   const { getAllGroupsAdmin } = useFirestore();
-  const [groupList, setGroupList] = useState<any[]>([]);
-  const [displayGroupList, setDisplayGroupList] = useState<any[]>([]);
+  const [groupList, setGroupList] = useState<GroupData[]>([]);
+  const [displayGroupList, setDisplayGroupList] = useState<GroupData[]>([]);
 
   useEffect(() => {
     getAllGroupsAdmin().then((groups) => {
@@ -26,7 +22,7 @@ const Groups = () => {
     const tempSearchTerm = event.target.value;
 
     const filteredDisplayGroupList = groupList.filter((group) => {
-      const nameMatch = group.name
+      const nameMatch = group.tribeName
         .toLowerCase()
         .includes(tempSearchTerm.toLowerCase());
 
@@ -56,11 +52,11 @@ const Groups = () => {
       <div className="group-tile__container">
         {displayGroupList.map((group) => (
           <GroupTile
-            key={group.name}
-            tribeName={group.name}
+            key={group.tribeName}
+            tribeName={group.tribeName}
             numberOfMembers={0}
             totalPoints={0}
-            dateGroupStarted={group["start-date"]}
+            dateGroupStarted={group.startDate}
           />
         ))}
         ;

@@ -16,6 +16,7 @@ const Tasks = () => {
       setTaskList(tempTaskList);
       setDisplayTaskList(tempTaskList);
     });
+    // eslint-disable-next-line
   }, []);
 
   const handleTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {

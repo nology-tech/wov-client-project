@@ -22,7 +22,7 @@ export type FirestoreContextProps = {
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
   getAllTasksAdmin: () => Promise<Task[]>;
-  getAllGroupsAdmin: () => Promise<any[]>;
+  getAllGroupsAdmin: () => Promise<GroupData[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -177,10 +177,10 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const createGroup = async (groupData: GroupData) => {
     try {
-      const { name } = groupData;
+      const { tribeName } = groupData;
       await createDocumentInFirestoreCollection(
         FirestoreCollections.TRIBELIST,
-        name,
+        tribeName,
         groupData
       );
       return { error: null, created: true };
@@ -204,12 +204,12 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getAllGroupsAdmin = async () => {
-    let result = [] as any[];
+    let result = [] as GroupData[];
     try {
-      const tribeDocument = await getCollectionFromFirestore<any>(
+      const tribeDocument = await getCollectionFromFirestore<GroupData>(
         FirestoreCollections.TRIBELIST
       );
-      const tribeList = tribeDocument ?? ([] as any[]);
+      const tribeList = tribeDocument ?? ([] as GroupData[]);
       result = tribeList;
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
