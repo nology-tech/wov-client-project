@@ -16,6 +16,7 @@ const Groups = () => {
       setGroupList(groups);
       setDisplayGroupList(groups);
     });
+    // eslint-disable-next-line
   }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
