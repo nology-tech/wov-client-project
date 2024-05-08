@@ -20,6 +20,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
 import ProfileAdmin from "./pages/ProfileAdmin/ProfileAdmin";
 import Reporting from "./pages/Reporting/Reporting";
+import ReportingMostActive from "./pages/ReportingMostActive/ReportingMostActive";
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -47,6 +48,10 @@ const App = () => {
                     <Route path="/dashboard" element={<AdminDashboard />} />
                     <Route path="/profile" element={<ProfileAdmin />} />
                     <Route path="/reporting" element={<Reporting />} />
+                    <Route
+                      path="/most-active-users"
+                      element={<ReportingMostActive />}
+                    />
                   </>
                 ) : (
                   <>
