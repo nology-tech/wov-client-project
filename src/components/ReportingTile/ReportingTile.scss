@@ -1,0 +1,29 @@
+@use "../../styles/variables" as *;
+
+.reporting-tiles {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reporting-tile {
+  margin: 10px;
+  padding: 10px;
+  width: 50%;
+  background-color: $primary-color;
+  border-radius: 15px;
+
+  &__heading,
+  &__sub-heading {
+    text-decoration: none;
+    color: $secondary-color;
+	text-align: center;
+  }
+
+  &:hover {
+	background-color: lighten($color: $primary-color, $amount: 0.5);
+  }
+}
+
+
