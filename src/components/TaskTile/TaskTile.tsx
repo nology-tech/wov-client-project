@@ -6,6 +6,7 @@ type TaskTileProps = {
     requirement: string;
     category: string;
     points: number;
+
 }
 
 const TaskTile = ({id, name, requirement, category, points} : TaskTileProps) => {
