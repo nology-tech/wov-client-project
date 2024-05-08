@@ -35,7 +35,7 @@ const CreateGroup = () => {
     return missingFields;
   };
 
-  const today = new Date().toISOString().split("T")[0];
+  //const today = new Date().toISOString().split("T")[0];
 
   const handleCreateGroup = async () => {
     setErrorMessage("");
