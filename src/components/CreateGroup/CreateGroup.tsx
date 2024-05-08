@@ -11,8 +11,8 @@ import {
 const CreateGroup = () => {
   const { createGroup } = useFirestore();
   const [groupName, setGroupName] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  //const [startDate, setStartDate] = useState("");
+  //const [endDate, setEndDate] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [errorExistingGroup, setErrorExistingGroup] = useState("");
   const [successMessage, setsuccessMessage] = useState("");
@@ -24,13 +24,13 @@ const CreateGroup = () => {
       missingFields.push("Group Name");
     }
 
-    if (!startDate) {
-      missingFields.push("Start Date");
-    }
+    // if (!startDate) {
+    //   missingFields.push("Start Date");
+    // }
 
-    if (!endDate) {
-      missingFields.push("End Date");
-    }
+    // if (!endDate) {
+    //   missingFields.push("End Date");
+    // }
 
     return missingFields;
   };
@@ -62,8 +62,8 @@ const CreateGroup = () => {
 
     const groupData = {
       name: groupName,
-      "start-date": startDate,
-      "end-date": endDate,
+      // "start-date": startDate,
+      // "end-date": endDate,
     };
 
     try {
@@ -82,8 +82,8 @@ const CreateGroup = () => {
 
   const clearInputValues = () => {
     setGroupName("");
-    setStartDate("");
-    setEndDate("");
+    // setStartDate("");
+    // setEndDate("");
   };
 
   const handleInputChange =
@@ -118,12 +118,12 @@ const CreateGroup = () => {
 
         <section className="create-group__dates">
           <div className="create-group__start text-field">
-            <label htmlFor="Start Date">Start Date</label>
+           {/* <label htmlFor="Start Date">Start Date</label>
             {errorMessage && errorMessage.includes("Start Date") && (
               <p className="create-group__error">This is a required field</p>
-            )}
+            )}*/}
 
-            <input
+           {/* <input
               className="date"
               type="date"
               id="Start Date"
@@ -131,21 +131,21 @@ const CreateGroup = () => {
               onChange={handleInputChange(setStartDate)}
               min={today}
               max={endDate}
-            />
+            />*/}
           </div>
           <div className="create-group__end text-field">
-            <label htmlFor="End Date">End Date</label>
+            {/*<label htmlFor="End Date">End Date</label>
             {errorMessage && errorMessage.includes("End Date") && (
               <p className="create-group__error">This is a required field</p>
-            )}
-            <input
+            )}*/}
+            {/*<input
               className="date"
               type="date"
               id="endDate"
               value={endDate}
               onChange={handleInputChange(setEndDate)}
               min={startDate || today}
-            />
+            />*/}
           </div>
         </section>
 
