@@ -60,10 +60,14 @@ const CreateGroup = () => {
       return;
     }
 
+    const today = new Date().toISOString().split("T")[0];
+
     const groupData = {
-      name: groupName,
-      "start-date": startDate,
-      "end-date": endDate,
+      tribeName: groupName,
+      startDate: today,
+      numberOfMembers: 0,
+      image: "",
+      totalPoints: 0,
     };
 
     try {
