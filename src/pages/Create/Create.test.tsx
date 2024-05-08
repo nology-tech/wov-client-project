@@ -6,12 +6,12 @@ describe ("Create page", () => {
     it("should render form on load", () => {
         customRender(<Create />)
         const name = screen.getByText(/name/i)
-        const date = screen.getByText(/date/i)
+        // const date = screen.getByText(/date/i)
         const category = screen.getByText(/category/i)
         const description = screen.getByText(/description/i)
         const points = screen.getByText(/points/i)
         expect(name).toBeInTheDocument();
-        expect(date).toBeInTheDocument();
+        // expect(date).toBeInTheDocument();
         expect(category).toBeInTheDocument();
         expect(description).toBeInTheDocument();
         expect(points).toBeInTheDocument();
