@@ -1,8 +1,8 @@
 import Button from "../../components/Button/Button";
 import { useAuth } from "../../hooks/useAuth";
-import "./AdminProfile.scss"
+import "./AdminDashboard.scss";
 
-const AdminProfile = () => {
+const AdminDashboard = () => {
   const { logoutUser } = useAuth();
   // const { getActiveTasks, completeActiveTask } = useFirestore();
 
@@ -15,8 +15,6 @@ const AdminProfile = () => {
       </div>
     </div>
   );
-
-
 };
 
-export default AdminProfile;
+export default AdminDashboard;
