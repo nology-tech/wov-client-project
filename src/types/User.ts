@@ -6,6 +6,7 @@ export type UserProfile = {
   bio?: string;
   email: string;
   tribe: string;
+  loginCount?: number;
 };
 
 export type NewUser = {
