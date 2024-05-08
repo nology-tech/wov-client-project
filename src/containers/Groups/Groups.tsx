@@ -26,7 +26,7 @@ const Groups = () => {
     const tempSearchTerm = event.target.value;
 
     const filteredDisplayGroupList = groupList.filter((group) => {
-      const nameMatch = group.tribeName
+      const nameMatch = group.name
         .toLowerCase()
         .includes(tempSearchTerm.toLowerCase());
 
@@ -60,7 +60,7 @@ const Groups = () => {
             tribeName={group.name}
             numberOfMembers={0}
             totalPoints={0}
-            dateGroupStarted={0}
+            dateGroupStarted={group["start-date"]}
           />
         ))}
         ;
