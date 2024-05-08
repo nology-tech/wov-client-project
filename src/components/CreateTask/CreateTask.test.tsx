@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import CreateTask from "./CreateTask";
 
-describe.only("Create Task Component", () => {
+describe("Create Task Component", () => {
     it ("should render the Create Task Component", async () => {
         render(<CreateTask buttonLabel="Create"/>)
 
