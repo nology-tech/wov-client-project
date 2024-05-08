@@ -2,29 +2,20 @@ import "./CreateGroup.scss";
 import Button from "../Button/Button";
 import camera from "../../assets/images/camera-placeholder.png";
 import { useFirestore } from "../../hooks/useFireStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   FirestoreCollections,
   getDocumentFromFirestoreCollection,
-  getCollectionFromFirestore,
   saveFileAndRetrieveDownloadUrl,
 } from "../../utils/dbUtils";
-import { GroupData } from "../../types/Groups";
 
 const CreateGroup = () => {
   const { createGroup } = useFirestore();
   const [groupName, setGroupName] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [errorExistingGroup, setErrorExistingGroup] = useState("");
   const [successMessage, setsuccessMessage] = useState("");
   const [groupImage, setGroupImage] = useState<string>(camera);
-  const [getGroup, setGetGroup] = useState<any[] | null>();
-
-  useEffect(() => {
-    getGroups();
-  }, []);
 
   const checkMissingFields = () => {
     const missingFields = [];
@@ -33,18 +24,8 @@ const CreateGroup = () => {
       missingFields.push("Group Name");
     }
 
-    if (!startDate) {
-      missingFields.push("Start Date");
-    }
-
-    if (!endDate) {
-      missingFields.push("End Date");
-    }
-
     return missingFields;
   };
-
-  const today = new Date().toISOString().split("T")[0];
 
   const handleCreateGroup = async () => {
     setErrorMessage("");
@@ -69,11 +50,14 @@ const CreateGroup = () => {
       return;
     }
 
+    const today = new Date().toISOString().split("T")[0];
+
     const groupData = {
       tribeName: groupName,
-      "start-date": startDate,
-      "end-date": endDate,
+      startDate: today,
       image: groupImage,
+      numberOfMembers: 0,
+      totalPoints: 0,
     };
 
     try {
@@ -92,8 +76,7 @@ const CreateGroup = () => {
 
   const clearInputValues = () => {
     setGroupName("");
-    setStartDate("");
-    setEndDate("");
+    setGroupImage(camera);
   };
 
   const handleInputChange =
@@ -105,21 +88,15 @@ const CreateGroup = () => {
       setErrorExistingGroup("");
     };
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      testCreateImage(e.target.files[0]);
+      let fileDownloadURL = await createImage(e.target.files[0]);
+      fileDownloadURL = fileDownloadURL ?? camera;
+      setGroupImage(fileDownloadURL);
     }
   };
 
-  const getGroups = async () => {
-    const groups = await getCollectionFromFirestore(
-      FirestoreCollections.TRIBELIST
-    );
-    setGetGroup(groups);
-    return groups;
-  };
-
-  const testCreateImage = async (groupFile?: File) => {
+  const createImage = async (groupFile?: File) => {
     const groupProfile = {
       img: "",
     };
@@ -131,10 +108,12 @@ const CreateGroup = () => {
         groupFile,
         true
       );
+
       if (error) {
         throw new Error(error);
       }
       groupProfile.img = fileDownloadUrl || "";
+      return fileDownloadUrl;
     }
   };
 
@@ -159,38 +138,6 @@ const CreateGroup = () => {
           />
         </div>
 
-        <section className="create-group__dates">
-          <div className="create-group__start text-field">
-            <label htmlFor="Start Date">Start Date</label>
-            {errorMessage && errorMessage.includes("Start Date") && (
-              <p className="create-group__error">This is a required field</p>
-            )}
-
-            <input
-              className="date"
-              type="date"
-              id="Start Date"
-              value={startDate}
-              onChange={handleInputChange(setStartDate)}
-              min={today}
-              max={endDate}
-            />
-          </div>
-          <div className="create-group__end text-field">
-            <label htmlFor="End Date">End Date</label>
-            {errorMessage && errorMessage.includes("End Date") && (
-              <p className="create-group__error">This is a required field</p>
-            )}
-            <input
-              className="date"
-              type="date"
-              id="endDate"
-              value={endDate}
-              onChange={handleInputChange(setEndDate)}
-              min={startDate || today}
-            />
-          </div>
-        </section>
         <div className="create-group__media">
           <label htmlFor="file-input" className="create-group__upload">
             <img src={groupImage} alt="Media" />
@@ -214,7 +161,6 @@ const CreateGroup = () => {
             onClick={handleCreateGroup}
           />
         </div>
-        {getGroup && <img src={getGroup[0].image} alt="test" />}
       </div>
     </div>
   );
