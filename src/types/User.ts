@@ -19,4 +19,12 @@ export type NewUser = {
   tribe: string;
 };
 
+export type AdminProfile = {
+  email: string;
+  id: string;
+  reference: string;
+};
+
+export type AdminLoading = AdminProfile;
+
 export type UserLoading = UserProfile & { loading: true };

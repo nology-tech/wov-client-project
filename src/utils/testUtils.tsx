@@ -8,7 +8,12 @@ import {
   AuthContext,
   AuthContextProps,
 } from "../context/AuthProvider/AuthProvider";
-import { UserLoading, UserProfile } from "../types/User";
+import {
+  AdminLoading,
+  AdminProfile,
+  UserLoading,
+  UserProfile,
+} from "../types/User";
 import { ActiveTask } from "../types/Task";
 type Options = {
   useRouting?: boolean;
@@ -16,6 +21,7 @@ type Options = {
   useAuthProvider?: boolean;
   isAuthenticated?: boolean;
   user?: UserProfile | UserLoading;
+  admin?: AdminProfile;
 };
 const testUser: UserProfile = {
   id: "OuZ1eeH9c5ZosgoXUi6Iraq7oM03",
@@ -24,12 +30,18 @@ const testUser: UserProfile = {
   email: "test@example.com",
   tribe: "test-tribe",
 };
+const testAdmin: AdminProfile = {
+  email: "test@example.com",
+  id: "OuZ1eeH9c5ZosgoXUi6Iraq7oM03",
+  reference: "test",
+};
 const defaultOptions: Options = {
   useRouting: true,
   firestoreValue: undefined,
   useAuthProvider: true,
   isAuthenticated: false,
   user: testUser,
+  admin: testAdmin,
 };
 export const customRender = (
   ui: JSX.Element,
@@ -39,6 +51,7 @@ export const customRender = (
     useAuthProvider = true,
     isAuthenticated = false,
     user,
+    admin,
   }: Options = defaultOptions
 ) => {
   // wrap components in routing if requested
@@ -53,6 +66,7 @@ export const customRender = (
     uiResult = wrapWithAuthProvider(uiResult, {
       isAuthenticated,
       user: user || testUser,
+      admin: admin || testAdmin,
     });
   }
   // use RTL's render function to return the test component
@@ -65,10 +79,11 @@ type AuthProviderOptions = {
   isAuthenticated?: boolean;
   user: UserProfile | UserLoading;
   isAdmin?: boolean;
+  admin: AdminProfile | AdminLoading;
 };
 const wrapWithAuthProvider = (
   ui: JSX.Element,
-  { isAuthenticated, user, isAdmin }: AuthProviderOptions
+  { isAuthenticated, user, isAdmin, admin }: AuthProviderOptions
 ): JSX.Element => {
   const defaultAuthContext: AuthContextProps = {
     createUser: (_, __) => Promise.resolve({ error: null }),
@@ -78,6 +93,7 @@ const wrapWithAuthProvider = (
     isAuthenticated: isAuthenticated ?? false,
     isAdmin: isAdmin ?? false,
     getUser: () => user,
+    getAdmin: () => admin,
   };
   return (
     <AuthContext.Provider value={{ ...AuthContext, ...defaultAuthContext }}>
@@ -103,15 +119,3 @@ const wrapWithFirestoreProvider = (
     </FirestoreContext.Provider>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
