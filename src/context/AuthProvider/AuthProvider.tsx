@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import {
   NewUser,
   UserLoading,
@@ -23,6 +23,7 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
+import { doc, increment, updateDoc } from "firebase/firestore";
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
   id: "",
@@ -80,6 +81,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     );
     setIsAdmin(adminDoc !== null);
   };
+
+  const incrementLogin = async (userID: string) => {
+    const userDoc = doc(db, "test-tribe", userID);
+    await updateDoc(userDoc, {
+      loginCount: increment(1),
+    });
+  };
+
   const loginUser = async (
     email: string,
     password: string
@@ -90,6 +99,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         email,
         password
       );
+      const userID = userCredential.user.uid;
+      await incrementLogin(userID);
       updateAuthState(userCredential);
       navigate("/");
     } catch (error) {
