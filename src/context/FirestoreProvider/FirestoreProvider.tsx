@@ -22,6 +22,7 @@ export type FirestoreContextProps = {
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
   getAllTasksAdmin: () => Promise<Task[]>;
+  getAllGroupsAdmin: () => Promise<any[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -189,19 +190,31 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getAllTasksAdmin = async () => {
-    let result = [] as Task[]
+    let result = [] as Task[];
     try {
       const taskDocument = await getCollectionFromFirestore<Task>(
         FirestoreCollections.TASKS
       );
-      console.log(taskDocument);
-      const taskList = taskDocument ?? [] as Task[];
+      const taskList = taskDocument ?? ([] as Task[]);
       result = taskList;
-
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
     }
-    return result
+    return result;
+  };
+
+  const getAllGroupsAdmin = async () => {
+    let result = [] as any[];
+    try {
+      const tribeDocument = await getCollectionFromFirestore<any>(
+        FirestoreCollections.TRIBELIST
+      );
+      const tribeList = tribeDocument ?? ([] as any[]);
+      result = tribeList;
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+    return result;
   };
 
   return (
@@ -213,6 +226,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getLeaderboard,
         createGroup,
         getAllTasksAdmin,
+        getAllGroupsAdmin,
       }}
     >
       {children}
