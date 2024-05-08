@@ -4,13 +4,13 @@ import {
   getCollectionFromFirestore,
   updateDocumentInFirestoreCollection,
   FirestoreCollections,
- 
+  createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
-import { GroupData } from "../../types/Groups";
+import { CreateDocumentResult, GroupData } from "../../types/Groups";
 
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
@@ -21,6 +21,7 @@ export type FirestoreContextProps = {
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
   getTribes: () => Promise<GroupData[]>;
+  createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
 };
 
 export const FirestoreContext = createContext<
@@ -154,13 +155,17 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getLeaderboard = async (tribe: string) => {
     if (!tribe) {
-      console.log("no tribes available")
+      console.log("no tribes available");
       return [] as UserProfile[];
     }
 
-    if (!Object.values(FirestoreCollections).includes(tribe as FirestoreCollections)) {
+    if (
+      !Object.values(FirestoreCollections).includes(
+        tribe as FirestoreCollections
+      )
+    ) {
       console.error("Invalid tribe:", tribe);
-      return [] as UserProfile[]; 
+      return [] as UserProfile[];
     }
 
     let result = [] as UserProfile[];
@@ -179,18 +184,33 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
-    const getTribes = async () => {
-      let result = [] as GroupData[];
-      try {
-        const tribes = await getCollectionFromFirestore<GroupData>(
-          FirestoreCollections.TRIBELIST
-        );
-        result = tribes ?? ([] as GroupData[]);
-      } catch (error) {
-        console.error("Error fetching list of Tribes:", error);
-      }
-      return result;
-    };
+  const getTribes = async () => {
+    let result = [] as GroupData[];
+    try {
+      const tribes = await getCollectionFromFirestore<GroupData>(
+        FirestoreCollections.TRIBELIST
+      );
+      result = tribes ?? ([] as GroupData[]);
+    } catch (error) {
+      console.error("Error fetching list of Tribes:", error);
+    }
+    return result;
+  };
+
+  const createGroup = async (groupData: GroupData) => {
+    try {
+      const { name } = groupData;
+      await createDocumentInFirestoreCollection(
+        FirestoreCollections.TRIBELIST,
+        name,
+        groupData
+      );
+
+      return { error: null, created: true };
+    } catch (error) {
+      return { error: (error as Error).message, created: false };
+    }
+  };
 
   return (
     <FirestoreContext.Provider
@@ -200,6 +220,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getCompletedTasks,
         getLeaderboard,
         getTribes,
+        createGroup
       }}
     >
       {children}
