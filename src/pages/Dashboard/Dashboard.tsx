@@ -6,18 +6,27 @@ import groups from "../../mockData/groups";
 import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./DashBoard.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskTile from "../../components/TaskTile/TaskTile";
 import { Task, activeTasks } from "../../mockData/mockActiveTasks";
 import EditTaskPopup from "../../components/EditTaskPopup/EditTaskPopup";
+import { FirestoreCollections, getCollectionFromFirestore } from "../../utils/dbUtils";
+import { SetTask } from "../../types/Task";
+import { MouseEventHandler } from "react";
+import { MouseEvent } from "react";
+import firebase from "firebase/compat/app";
+
 
 const Dashboard = () => {
   const [groupClick, setGroupClick] = useState<boolean>(true);
   const [userClick, setUserClick] = useState<boolean>(false);
   const [taskClick, setTaskClick] = useState<boolean>(false);
-  const [editedTask, setEditedTask] = useState<Task>();
+  const [editedTask, setEditedTask] = useState<SetTask>();
   const [showEditPopup, setShowEditPopup] = useState<boolean>(false);
-  const [allTasks, setAllTasks] = useState<Task[]>(activeTasks)
+  const [allTasks, setAllTasks] = useState<SetTask[]>()
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+
 
   const handleGroupClick = () => {
     setGroupClick(true);
@@ -31,13 +40,45 @@ const Dashboard = () => {
     setTaskClick(false);
   };
 
-  const handleTaskClick = () => {
+  const handleTaskClick = async () => {
     setTaskClick(true);
     setGroupClick(false);
     setUserClick(false);
+    getSetTasks();
   };
 
-  const handleEdit = (task: Task) => (event: MouseEvent) => {
+  const getSetTasks = async () => {
+  try {
+    const setTasks: SetTask[] | null = await getCollectionFromFirestore (
+      FirestoreCollections.TEST_TASKS
+    )
+
+    if(setTasks === null || setTasks === undefined){
+      setErrorMessage("No set tasks have been found")
+      return;
+    }
+    setAllTasks(setTasks)
+    console.log(setTasks);
+    
+    console.log(allTasks);
+    
+    return setTasks;
+    
+  } catch(error) {
+    setErrorMessage("Error fetching tasks");
+  }
+};
+
+useEffect(() => {
+getSetTasks();
+console.log("I have been triggered");
+}, [editedTask])
+
+
+
+
+
+  const handleEdit = (task: SetTask) => (event: MouseEvent<HTMLButtonElement>) => {
     // console.log(event);
     // console.log(task);
 
@@ -59,13 +100,13 @@ const Dashboard = () => {
       }
   
       if (id === "name") {
-        updatedTask.taskHeading = value;
+        updatedTask.name = value;
       }
       if (id === "category") {
         updatedTask.category = value;
       }
       if (id === "frequency") {
-        updatedTask.type = value;
+        updatedTask.category = value;
       }
       if (id === "points") {
         updatedTask.points = value;
@@ -74,7 +115,7 @@ const Dashboard = () => {
       setEditedTask(updatedTask);
 
 
-      const newTaskArr = activeTasks.map((task) => task.id === updatedTask.id? updatedTask : task)
+      // const newTaskArr = allTasks.map((task) => task.id === updatedTask.id? updatedTask : task)
 
 
 
@@ -87,9 +128,18 @@ const Dashboard = () => {
   const handleSubmit = () => {
     // what if only need to grab certain things from the form because it's a form event and tehn update those things
     setShowEditPopup(false);
-    const findIndexOfTask = activeTasks.findIndex(task => task.id === editedTask.id)
-    activeTasks.splice(findIndexOfTask,1,editedTask)
+    if (allTasks === undefined || editedTask === undefined) {
+      return;
+    }
+    const findIndexOfTask = allTasks.findIndex(task => task.id === editedTask.id)
+    allTasks.splice(findIndexOfTask,1,editedTask)
+    setAllTasks([...allTasks]);
+
+    console.log("updated task is ", allTasks)
     console.log("selected task", editedTask)
+
+    firebase.database().ref("test-tasks").push(allTasks);
+
   };
 
   return (
@@ -120,27 +170,28 @@ const Dashboard = () => {
       </div>
       {groupClick && <Groups groups={groups} />}
 
-      {taskClick && filteredTasks &&
-        filteredTasks.map((task) => (
+      {taskClick && allTasks &&
+        allTasks.map((task) => (
           <TaskTile
             id={task.id}
-            name={task.taskHeading}
-            requirement={task.type ?? undefined}
+            name={task.name}
+            requirement={task.description}
             category={task.category}
-            points={task.points}
+            points={Number(task.points)}
             key={task.id}
             handleEdit={handleEdit(task)}
             editedTask={editedTask}
           />
         ))}
 
+<>{console.log("all tasks is now " + allTasks)}</>
       {showEditPopup && (
         <EditTaskPopup
           handleInputValues={handleInputValues}
           handleSubmit={handleSubmit}
         />
       )}
-      <>{console.log(showEditPopup)}</>
+
       <NavigationAdmin navActionIndex={0} />
     </div>
   );

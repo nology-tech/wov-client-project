@@ -1,5 +1,6 @@
-import { Task } from "../../mockData/mockActiveTasks";
+import { SetTask } from "../../types/Task";
 import "./TaskTile.scss";
+import { MouseEventHandler } from "react";
 
 type TaskTileProps = {
     id: string;
@@ -7,17 +8,17 @@ type TaskTileProps = {
     requirement: string;
     category: string;
     points: number;
-    handleEdit?: () => void;
-    editedTask?: Task;
+    handleEdit?: MouseEventHandler<HTMLButtonElement> ;
+    editedTask?: SetTask;
 }
 
-const TaskTile = ({id, name, requirement, category, points, handleEdit, editedTask} : TaskTileProps) => {
+const TaskTile = ({id, name, requirement, category, points, handleEdit} : TaskTileProps) => {
   
   return (
     <div key={id} className='task-tile'>
-        <h4 className='task-tile__name'>{editedTask?.id === id ? editedTask.taskHeading : name}</h4>
-        <p className='task-tile__category'>{editedTask?.id === id ? editedTask.category : category} | {editedTask?.id === id ? editedTask.type : requirement}</p>
-        <p className='task-tile__points'>{editedTask?.id === id ? editedTask.points +  " points" : points +  " points"}</p>
+        <h4 className='task-tile__name'>{name}</h4>
+        <p className='task-tile__category'>{category} | {requirement}</p>
+        <p className='task-tile__points'>{points +  " points"}</p>
         <button className='task-tile__editButton' onClick={handleEdit} >EDIT</button>
     </div>
   )
