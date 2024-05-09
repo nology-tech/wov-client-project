@@ -74,6 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsAuthenticated(false);
     }
   }, []);
+
   const checkAdminStatus = async (userID: string) => {
     const adminDoc = await getDocumentFromFirestoreCollection(
       FirestoreCollections.ADMIN,
@@ -100,7 +101,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         password
       );
       const userID = userCredential.user.uid;
-      await incrementLogin(userID);
+      const userDoc = await getDocumentFromFirestoreCollection<UserProfile>(
+        FirestoreCollections.TRIBE,
+        userID
+      );
+      if (userDoc) {
+        await incrementLogin(userID);
+      }
       updateAuthState(userCredential);
       navigate("/");
     } catch (error) {

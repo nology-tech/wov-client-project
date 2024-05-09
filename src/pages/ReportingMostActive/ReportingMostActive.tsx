@@ -6,6 +6,7 @@ import {
   FirestoreCollections,
 } from "../../utils/dbUtils";
 import UserCard from "../../components/UserCard/UserCard";
+import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
 
 const ReportingMostActive = () => {
   const [users, setUsers] = useState<UserProfile[]>([]);
@@ -55,6 +56,7 @@ const ReportingMostActive = () => {
           />
         ))}
       </div>
+      <NavigationAdmin navActionIndex={2}/>
     </div>
   );
 };
