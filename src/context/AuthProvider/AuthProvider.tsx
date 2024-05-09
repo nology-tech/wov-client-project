@@ -23,8 +23,8 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import {Task}  from "../../mockData/mockActiveTasks";
-import {CompletedTask} from "../../mockData/mockCompletedTasks";
+import { Task } from "../../mockData/mockActiveTasks";
+import { CompletedTask } from "../../mockData/mockCompletedTasks";
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
   id: "",
@@ -52,6 +52,7 @@ export type AuthContextProps = {
       | Pick<UserProfile, "bio" | "name" | "email">
       | Pick<UserProfile, "totalScore">
   ) => PromiseObjectNullString;
+  updateAdmin: (data: Pick<AdminProfile, "email">) => PromiseObjectNullString;
 };
 export const AuthContext = createContext<AuthContextProps | undefined>(
   undefined
@@ -136,6 +137,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const updateAdmin = async (
+    data:
+      | Pick<AdminProfile, "email">
+  ): PromiseObjectNullString => {
+    if (admin === null) {
+      return { error: "No user stored" };
+    }
+    const { error, updated } = await updateDocumentInFirestoreCollection(
+      FirestoreCollections.ADMIN,
+      admin.email,
+      data
+    );
+    if (updated) {
+      setAdmin({ ...admin, ...data });
+    }
+    return { error };
+  };
+
   const logoutUser = () => {
     signOut(auth);
     localStorage.removeItem("userUID");
@@ -144,6 +163,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(userLoading);
     navigate("/");
   };
+
   const updateUser = async (
     data:
       | Pick<UserProfile, "bio" | "name" | "email">
@@ -162,6 +182,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return { error };
   };
+
   const createUser = async (
     { email, password, firstName, lastName, bio, tribe }: NewUser,
     profileFile?: File
@@ -248,6 +269,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         logoutUser,
         createUser,
         updateUser,
+        updateAdmin,
       }}
     >
       {children}
