@@ -1,11 +1,10 @@
+import { useState } from "react";
 import Header from "../../components/Header/Header";
 import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
-import { useState } from "react";
 import ButtonContainer from "../../containers/ButtonContainer/ButtonContainer";
 import Groups from "../../containers/Groups/Groups";
+import Tasks from "../../containers/Tasks/Tasks.tsx";
 import Users from "../../containers/Users/Users.tsx";
-import { tribeUsers } from "../../mockData/mockTribe.ts";
-import tasks from "../../mockData/tasks.ts";
 import "./DashBoard.scss";
 
 // import groups from "../../mockData/groups"

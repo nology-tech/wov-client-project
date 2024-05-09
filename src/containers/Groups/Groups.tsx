@@ -1,6 +1,8 @@
 import GroupTile from "../../components/GroupTile/GroupTile";
 import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { InputAdornment, TextField } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import "./Groups.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useFirestore } from "../../hooks/useFireStore";

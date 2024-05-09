@@ -2,6 +2,8 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { ChangeEvent, useEffect, useState } from "react";
 import { User } from "../../types/User";
 import UserTile from "../../components/UserTile/UserTile";
+import { InputAdornment, TextField } from "@mui/material"; 
+import SearchIcon from "@mui/icons-material/Search";
 
 const Users = () => {
     const { getAllUsersAdmin } = useFirestore();
@@ -15,7 +17,6 @@ const Users = () => {
         });
         // eslint-disable-next-line
     }, []);
-
 
   const handleTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const tempSearchTerm = e.target.value;
@@ -54,10 +55,12 @@ const Users = () => {
             return (
               <UserTile
                 key={index.toString()}
+                image={user.image}
                 name={user.name}
-                requirement={user.description}
-                category={user.category}
                 points={user.points}
+                tribe={user.tribe}
+                memberSince={user.memberSince}
+
               />
             );
           })}
