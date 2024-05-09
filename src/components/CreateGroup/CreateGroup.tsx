@@ -6,6 +6,7 @@ import { useState } from "react";
 import {
   FirestoreCollections,
   getDocumentFromFirestoreCollection,
+  saveFileAndRetrieveDownloadUrl,
 } from "../../utils/dbUtils";
 
 const CreateGroup = () => {
@@ -14,6 +15,7 @@ const CreateGroup = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [errorExistingGroup, setErrorExistingGroup] = useState("");
   const [successMessage, setsuccessMessage] = useState("");
+  const [groupImage, setGroupImage] = useState<string>(camera);
 
   const checkMissingFields = () => {
     const missingFields = [];
@@ -51,10 +53,10 @@ const CreateGroup = () => {
     const today = new Date().toISOString().split("T")[0];
 
     const groupData = {
-      tribeName: groupName,
+      name: groupName,
       startDate: today,
+      image: groupImage,
       numberOfMembers: 0,
-      image: "",
       totalPoints: 0,
     };
 
@@ -74,6 +76,7 @@ const CreateGroup = () => {
 
   const clearInputValues = () => {
     setGroupName("");
+    setGroupImage(camera);
   };
 
   const handleInputChange =
@@ -84,6 +87,35 @@ const CreateGroup = () => {
       setsuccessMessage("");
       setErrorExistingGroup("");
     };
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      let fileDownloadURL = await createImage(e.target.files[0]);
+      fileDownloadURL = fileDownloadURL ?? camera;
+      setGroupImage(fileDownloadURL);
+    }
+  };
+
+  const createImage = async (groupFile?: File) => {
+    const groupProfile = {
+      img: "",
+    };
+
+    if (groupFile) {
+      const filePath = `groups/images`;
+      const { fileDownloadUrl, error } = await saveFileAndRetrieveDownloadUrl(
+        filePath,
+        groupFile,
+        true
+      );
+
+      if (error) {
+        throw new Error(error);
+      }
+      groupProfile.img = fileDownloadUrl || "";
+      return fileDownloadUrl;
+    }
+  };
 
   return (
     <div className="create-group-container">
@@ -105,10 +137,20 @@ const CreateGroup = () => {
             onChange={handleInputChange(setGroupName)}
           />
         </div>
+
         <div className="create-group__media">
-          <img src={camera} alt="Media" />
-          <p>Media</p>
+          <label htmlFor="file-input" className="create-group__upload">
+            <img src={groupImage} alt="Media" />
+            <p>Media</p>
+          </label>
+          <input
+            id="file-input"
+            type="file"
+            onChange={handleUpload}
+            accept="image/*"
+          />
         </div>
+
         {successMessage && (
           <p className="create-group__success">{successMessage}</p>
         )}

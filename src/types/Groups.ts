@@ -4,7 +4,7 @@ export type CreateDocumentResult = {
 };
 
 export type GroupData = {
-  tribeName: string;
+  name: string;
   startDate: string;
   numberOfMembers: number;
   totalPoints: number;
