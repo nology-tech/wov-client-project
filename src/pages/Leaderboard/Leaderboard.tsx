@@ -10,12 +10,14 @@ import { useCallback, useEffect, useState } from "react";
 const Leaderboard = () => {
   const { getUser } = useAuth();
   const user = getUser();
+  // takes a string where we can differentiate on tribes 
   const { getLeaderboard } = useFirestore();
   const [users, setUsers] = useState<UserProfile[]>([]);
 
   const getData = useCallback(async () => {
     const result = await getLeaderboard(user.tribe);
     setUsers(result);
+    console.log("result:", result);
   }, [getLeaderboard, user]);
 
   useEffect(() => {

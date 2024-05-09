@@ -10,7 +10,7 @@ import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask, Task} from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
-import { GroupData, CreateDocumentResult } from "../../types/Groups";
+import { CreateDocumentResult, GroupData } from "../../types/Groups";
 
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
@@ -20,6 +20,7 @@ export type FirestoreContextProps = {
   ) => Promise<void>;
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
+  getTribes: () => Promise<GroupData[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
@@ -156,6 +157,16 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getLeaderboard = async (tribe: string) => {
     if (!tribe) {
+      console.log("no tribes available");
+      return [] as UserProfile[];
+    }
+
+    if (
+      !Object.values(FirestoreCollections).includes(
+        tribe as FirestoreCollections
+      )
+    ) {
+      console.error("Invalid tribe:", tribe);
       return [] as UserProfile[];
     }
 
@@ -163,7 +174,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const completedTaskDocument =
         await getCollectionFromFirestore<UserProfile>(
-          FirestoreCollections.TRIBE
+          tribe as FirestoreCollections
         );
       const userProfiles = completedTaskDocument ?? ([] as UserProfile[]);
       const tribeUsers = userProfiles.filter((user) => user.tribe === tribe);
@@ -175,6 +186,19 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
+  const getTribes = async () => {
+    let result = [] as GroupData[];
+    try {
+      const tribes = await getCollectionFromFirestore<GroupData>(
+        FirestoreCollections.TRIBELIST
+      );
+      result = tribes ?? ([] as GroupData[]);
+    } catch (error) {
+      console.error("Error fetching list of Tribes:", error);
+    }
+    return result;
+  };
+
   const createGroup = async (groupData: GroupData) => {
     try {
       const { name } = groupData;
@@ -183,6 +207,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         name,
         groupData
       );
+
       return { error: null, created: true };
     } catch (error) {
       return { error: (error as Error).message, created: false };
@@ -196,7 +221,8 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         completeActiveTask,
         getCompletedTasks,
         getLeaderboard,
-        createGroup,
+        getTribes,
+        createGroup
       }}
     >
       {children}
