@@ -7,7 +7,7 @@ import {
   createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
-import { CompletedTask, ActiveTask } from "../../types/Task";
+import { CompletedTask, ActiveTask, Task} from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { GroupData, CreateDocumentResult } from "../../types/Groups";
@@ -21,6 +21,8 @@ export type FirestoreContextProps = {
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
+  getAllTasksAdmin: () => Promise<Task[]>;
+  getAllGroupsAdmin: () => Promise<GroupData[]>;
 };
 
 export const FirestoreContext = createContext<

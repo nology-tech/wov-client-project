@@ -1,48 +1,52 @@
-import { useState } from "react";
 import Button from "../../components/Button/Button";
 import "./ButtonContainer.scss";
+import { Dispatch, SetStateAction, useState } from "react";
+
 
 export type ButtonContainerProps = {
-  handleButtonClick: (toRender : string) => void;
-}
+  setShowGroup: Dispatch<SetStateAction<boolean>>;
+  setShowUser: Dispatch<SetStateAction<boolean>>;
+  setShowTask: Dispatch<SetStateAction<boolean>>;
+};
 
-const ButtonContainer = ({handleButtonClick} : ButtonContainerProps ) => {
+const ButtonContainer = ({ setShowGroup, setShowUser, setShowTask }: ButtonContainerProps) => {
+  const [groupClick, setGroupClick] = useState<boolean>(false);
+  const [userClick, setUserClick] = useState<boolean>(false);
+  const [taskClick, setTaskClick] = useState<boolean>(false);
 
-  let [groupClick, setGroupClick] = useState<boolean>(false);
-  let [userClick, setUserClick] = useState<boolean>(false);
-  let [taskClick, setTaskClick] = useState<boolean>(false);
-
-  console.log(groupClick, userClick, taskClick);
-
-  const handleGroupClick = () =>  {
-
-    setGroupClick(true);
+  const handleGroupClick = () => {
+    setGroupClick(!groupClick);
     setUserClick(false);
     setTaskClick(false);
-    handleButtonClick("groups");
+    setShowGroup(true);
+    setShowUser(false);
+    setShowTask(false);
   }
 
-  const handleUserClick = () =>  {
-
-    setUserClick(true);
+  const handleUserClick = () => {
+    setUserClick(!userClick);
     setGroupClick(false);
     setTaskClick(false);
-    handleButtonClick("users");
-  }
+    setShowGroup(false);
+    setShowUser(true);
+    setShowTask(false);
+  };
 
-  const handleTaskClick = () =>  {
-
-    setTaskClick(true);
+  const handleTaskClick = () => {
+    setTaskClick(!taskClick);
     setGroupClick(false);
     setUserClick(false);
-    handleButtonClick("tasks");
-  }
+    setShowGroup(false);
+    setShowUser(false);
+    setShowTask(true);
+  };
 
   return (
     <div className="buttons-container">
+
       <Button
         label={"groups"}
-        variant={groupClick ? "secondary" : "light-grey-lighter"}
+        variant={userClick ? "secondary" : "light-grey-lighter"}
         onClick={handleGroupClick}
         size="small"
       />
@@ -62,8 +66,6 @@ const ButtonContainer = ({handleButtonClick} : ButtonContainerProps ) => {
       />
     </div>
   );
-}
+};
 
 export default ButtonContainer;
-
- 
