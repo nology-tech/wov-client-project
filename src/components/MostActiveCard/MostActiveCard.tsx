@@ -1,4 +1,5 @@
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
+import "./MostActiveCard.scss";
 
 type MostActiveCardProps = {
   name: string;
