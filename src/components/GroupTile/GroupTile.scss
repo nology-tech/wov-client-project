@@ -1,12 +1,8 @@
 @use "../../styles/variables" as *;
 
-    .group-tile {    
-        color: $pure-black-color;
-        width: 80%;
-        border-bottom: solid 1px $grey-color;
-        font: $font-subText/$line-height-subtext $font-family-modern-content;
-        
-        
-    }
-
-
+.group-tile {
+  color: $pure-black-color;
+  max-width: 80%;
+  border-bottom: solid 1px $grey-color;
+  font: $font-subText/$line-height-subtext $font-family-modern-content;
+}
