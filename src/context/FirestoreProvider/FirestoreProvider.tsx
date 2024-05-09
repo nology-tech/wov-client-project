@@ -12,6 +12,7 @@ import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
 
+
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
   completeActiveTask: (
@@ -240,6 +241,27 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return result;
   };
+
+  // const updatingCreatedTasks = async (
+  //   task: Task,
+  // ) => {
+
+  //   await getAllTasksAdmin();
+
+  //   setCompletedTasksCache((completedTaskData) => ({
+  //     ...completedTaskData,
+  //     data: [...completedTaskData.data, completedTask],
+  //   }));
+
+  //   const updatedCompleteTasks = [...completedTasksCache.data, completedTask];
+
+  //   updateDocumentInFirestoreCollection(
+  //     FirestoreCollections.COMPLETED_TASKS,
+  //     user.id,
+  //     {
+  //       completedTasks: updatedCompleteTasks,
+  //     }
+  //   );
 
   return (
     <FirestoreContext.Provider
