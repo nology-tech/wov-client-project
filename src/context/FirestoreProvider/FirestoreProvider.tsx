@@ -7,7 +7,7 @@ import {
   createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
-import { CompletedTask, ActiveTask } from "../../types/Task";
+import { CompletedTask, ActiveTask, Task } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
@@ -22,6 +22,8 @@ export type FirestoreContextProps = {
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
   getTribes: () => Promise<GroupData[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
+  getAllTasksAdmin: () => Promise<Task[]>;
+  getAllGroupsAdmin: () => Promise<GroupData[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -212,6 +214,34 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const getAllTasksAdmin = async () => {
+    let result = [] as Task[];
+    try {
+      const taskDocument = await getCollectionFromFirestore<Task>(
+        FirestoreCollections.TASKS
+      );
+      const taskList = taskDocument ?? ([] as Task[]);
+      result = taskList;
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+    return result;
+  };
+
+  const getAllGroupsAdmin = async () => {
+    let result = [] as GroupData[];
+    try {
+      const tribeDocument = await getCollectionFromFirestore<GroupData>(
+        FirestoreCollections.TRIBELIST
+      );
+      const tribeList = tribeDocument ?? ([] as GroupData[]);
+      result = tribeList;
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+    return result;
+  };
+
   return (
     <FirestoreContext.Provider
       value={{
@@ -221,6 +251,8 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getLeaderboard,
         getTribes,
         createGroup,
+        getAllTasksAdmin,
+        getAllGroupsAdmin,
       }}
     >
       {children}
