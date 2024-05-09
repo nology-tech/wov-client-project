@@ -50,5 +50,3 @@ export const tribeUsers: UserProfile[] = [
     email: "baheer.wardak@example.com",
   },
 ];
-
-export default mockTribe;
