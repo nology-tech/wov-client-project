@@ -23,8 +23,8 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import {Task}  from "../../mockData/mockActiveTasks";
-import {CompletedTask} from "../../mockData/mockCompletedTasks";
+import { Task } from "../../mockData/mockActiveTasks";
+import { CompletedTask } from "../../mockData/mockCompletedTasks";
 import { doc, increment, updateDoc } from "firebase/firestore";
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
@@ -86,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const incrementLogin = async (userID: string) => {
-    const userDoc = doc(db, "test-tribe", userID);
+    const userDoc = doc(db, "users", userID);
     await updateDoc(userDoc, {
       loginCount: increment(1),
     });
@@ -104,7 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       const userID = userCredential.user.uid;
       const userDoc = await getDocumentFromFirestoreCollection<UserProfile>(
-        FirestoreCollections.TRIBE,
+        FirestoreCollections.USERS,
         userID
       );
       if (userDoc) {
@@ -136,7 +136,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const getUserFromFirestore = async (userID: string) => {
     const storedUser = await getDocumentFromFirestoreCollection<UserProfile>(
-      FirestoreCollections.TRIBE,
+      FirestoreCollections.USERS,
       userID
     );
     if (storedUser) {
@@ -171,7 +171,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return { error: "No user stored" };
     }
     const { error, updated } = await updateDocumentInFirestoreCollection(
-      FirestoreCollections.TRIBE,
+      FirestoreCollections.USERS,
       user.id,
       data
     );
@@ -215,7 +215,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         userProfile.img = fileDownloadUrl || "";
       }
       await createDocumentInFirestoreCollection(
-        FirestoreCollections.TRIBE,
+        FirestoreCollections.USERS,
         uid,
         userProfile
       );
