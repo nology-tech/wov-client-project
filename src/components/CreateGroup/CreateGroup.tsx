@@ -100,14 +100,6 @@ const CreateGroup = () => {
             onChange={handleInputChange(setGroupName)}
           />
         </div>
-
-        <section className="create-group__dates">
-          <div className="create-group__start text-field">
-          </div>
-          <div className="create-group__end text-field">
-          </div>
-        </section>
-
         <div className="create-group__media">
           <img src={camera} alt="Media" />
           <p>Media</p>
