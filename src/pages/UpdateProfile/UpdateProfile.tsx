@@ -48,13 +48,9 @@ const UpdateProfile = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
-    console.log("key:", key);
     const value = event.currentTarget.value;
-    console.log("value:", value);
     setUserUpdate({ ...userUpdate, [key]: value });
   };
-
-  console.log("userUpdate:", userUpdate);
 
   const handlePaswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.currentTarget.id;
@@ -63,40 +59,32 @@ const UpdateProfile = () => {
   };
 
   const updateDatabase = async () => {
-    let img: string | undefined = user.img
-  
-  
+    let img: string | undefined = user.img;
     if (selectedFile) {
       const filePath = `${user.id}/images/profile`;
       const { fileDownloadUrl, error: uploadError } =
         await saveFileAndRetrieveDownloadUrl(filePath, selectedFile, false);
-  
       if (uploadError) {
         throw new Error(uploadError);
       }
-  
-      img = fileDownloadUrl || img || undefined; 
+      img = fileDownloadUrl || img || undefined;
     }
+
     const { error } = await updateUser({ name, bio, email, img });
-    console.log("errorUser:", error)
-    
-    console.log("did we get here!")
 
     if (error) {
       setErrorMessage(error);
       setSuccessMessage("");
-      console.error("error occurred:", error)
+      console.error("error occurred:", error);
     } else {
       setErrorMessage("");
       setSuccessMessage("Profile Updated");
     }
-  
+
     setTimeout(() => {
       navigate("/profile");
     }, 2000);
   };
-  
-  
 
   const changePassword = async () => {
     if (password.new !== password.confirm) {
@@ -131,32 +119,27 @@ const UpdateProfile = () => {
     }
   };
 
-  console.log("file:", selectedFile)
-
   return (
     <div>
       <Header subtitle="Profile" profileImage={img} />
       <div className="profile-update">
-      <input
-        id="img"
-        name="img"
-        className=""
-        type="file"
-        onChange={handlePictureChange}
-        style={{ display: "none" }}
-      />
-      {/* Label associated with the input element */}
-      <label htmlFor="img">
-        <img
-          src={img}
-          className="profile-update__img"
-          alt="Profile"
-          style={{ cursor: 'pointer' }}
+        <input
+          id="img"
+          name="img"
+          className=""
+          type="file"
+          onChange={handlePictureChange}
+          style={{ display: "none" }}
         />
-      </label>
-
-      
-
+        {/* Label associated with the input element */}
+        <label htmlFor="img">
+          <img
+            src={img}
+            className="profile-update__img"
+            alt="Profile"
+            style={{ cursor: "pointer" }}
+          />
+        </label>
 
         <form className="profile-update__info">
           <label htmlFor="name" className="profile-update__label">

@@ -9,7 +9,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const { logoutUser, getUser } = useAuth();
   const { totalScore, img, name, bio, email } = getUser();
-  console.log("img:", img)
 
   return (
     <div>
