@@ -5,6 +5,4 @@ export type CreateDocumentResult = {
 
 export type GroupData = {
   name: string;
-  // "start-date": string;
-  // "end-date": string;
 };
