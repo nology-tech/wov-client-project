@@ -76,8 +76,7 @@ const Dashboard = () => {
 
 
       const newTaskArr = activeTasks.map((task) => task.id === updatedTask.id? updatedTask : task)
-      setAllTasks(newTaskArr)
-      console.log("selected task", newTaskArr)
+
 
 
       // console.log(updatedTask.id)
@@ -89,9 +88,9 @@ const Dashboard = () => {
   const handleSubmit = () => {
     // what if only need to grab certain things from the form because it's a form event and tehn update those things
     setShowEditPopup(false);
-    activeTasks.push(editedTask)
-    activeTasks.filter((task) => task.id != updatedtask.id)
-
+    const findIndexOfTask = activeTasks.findIndex(task => task.id === editedTask.id)
+    activeTasks.splice(findIndexOfTask,1,editedTask)
+    console.log("selected task", editedTask)
   };
 
   return (
