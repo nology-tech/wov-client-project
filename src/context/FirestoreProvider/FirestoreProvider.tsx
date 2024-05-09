@@ -214,6 +214,15 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  // const addToTribe = async(groupData: GroupData) => {
+  //   const {name} = groupData;
+  //   await createDocumentInFirestoreCollection(
+  //     FirestoreCollections.TRIBELIST,
+  //     name,
+  //     name
+  //   )
+  // }
+
   const getAllTasksAdmin = async () => {
     let result = [] as Task[];
     try {

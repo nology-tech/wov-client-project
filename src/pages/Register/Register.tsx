@@ -1,10 +1,12 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/images/arrow-left.png";
 import Button from "../../components/Button/Button";
 import "./Register.scss";
 import { NewUser } from "../../types/User";
 import { useAuth } from "../../hooks/useAuth";
+import { useFirestore } from "../../hooks/useFireStore";
+import { GroupData } from "../../types/Groups";
 
 const emptyFormData: NewUser = {
   firstName: "",
@@ -26,6 +28,18 @@ const Register = () => {
   const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const navigate = useNavigate();
+  const {getTribes} = useFirestore()
+  const [tribes, setTribes] = useState<GroupData[]>([]);
+
+
+  useEffect(() => {
+    const getTribeData = async () => {
+      const result = await getTribes();
+      setTribes(result);
+    };
+    getTribeData();
+  }, [getTribes]);
+
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -78,15 +92,19 @@ const Register = () => {
     }
   };
 
+
   const handleTribeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.currentTarget;
     setFormData({ ...formData, [name]: value });
+    console.log("name:",name)
+    console.log("value:",value)
   };
 
   const handleShowUploadPrompt = () => {
     setShowUploadPrompt(!showUploadPrompt);
   };
 
+  console.log("formData:", formData);
   return (
     <section className="register">
       <div className="register__icon--container">
@@ -147,8 +165,14 @@ const Register = () => {
             className="register__input register__input--margin-bottom"
             onChange={handleTribeChange}
           >
+            {tribes.map((tribe) => (
+              <option key={tribe.name} value={tribe.name}>
+                {tribe.name}
+              </option>
+            ))}
+
             <option value=""></option>
-            <option value="test-tribe">test-tribe</option>
+            {/* <option value="test-tribe">test-tribe</option> */}
           </select>
           {missingFieldsError && (
             <p className="register__error-message--missing-fields">

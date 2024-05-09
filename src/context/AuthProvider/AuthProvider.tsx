@@ -215,6 +215,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           activeTasks: [],
         }
       );
+      await updateDocumentInFirestoreCollection(
+        FirestoreCollections.TRIBELIST,
+        uid,
+        userProfile
+      ) 
       setUser(userProfile);
       navigate("/");
       return { error: null };
