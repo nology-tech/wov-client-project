@@ -241,11 +241,15 @@ const UpdateProfile = () => {
             <input
               id="img"
               name="img"
-              className=""
+              className="file-upload-img"
               type="file"
               onChange={handlePictureChange}
             />
-            {selectedFile && <span>{selectedFile.name}</span>}
+            {selectedFile && (
+              <p className="img-file-name">
+                {selectedFile.name}
+              </p>
+            )}
           </>
         ) : (
           <Button
@@ -255,11 +259,6 @@ const UpdateProfile = () => {
           />
         )}
 
-        {selectedFile && (
-          <p className="register__error-message--file-name">
-            {selectedFile.name}
-          </p>
-        )}
         <Button
           label={"CHANGE PASSWORD"}
           variant={"light-grey"}

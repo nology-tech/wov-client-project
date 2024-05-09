@@ -43,6 +43,25 @@
       margin: 1rem;
       margin-top: 0;
     }
+
+  }
+  
+  .img-file-name {
+    color: green;
+    text-align: center;
+  }
+
+  .file-upload-img {
+    width: 100%;
+    padding: 0.6rem;
+    outline: none;
+    border: none;
+    background-color: $off-white-color;
+    border-radius: 0.5rem;
+    color: $slate-grey-color;
+    padding: 1rem 0;
+    padding-left: 1rem;
+    background-color: $light-grey-color;
   }
 
   Button {
