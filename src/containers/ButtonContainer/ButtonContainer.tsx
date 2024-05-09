@@ -2,7 +2,6 @@ import Button from "../../components/Button/Button";
 import "./ButtonContainer.scss";
 import { Dispatch, SetStateAction, useState } from "react";
 
-
 export type ButtonContainerProps = {
   setShowGroup: Dispatch<SetStateAction<boolean>>;
   setShowUser: Dispatch<SetStateAction<boolean>>;

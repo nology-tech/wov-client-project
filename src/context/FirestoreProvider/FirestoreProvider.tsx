@@ -247,7 +247,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     let result = [] as User[];
     try {
       const tribeDocument = await getCollectionFromFirestore<User>(
-        FirestoreCollections.TRIBE
+        FirestoreCollections.USERS
       );
       const tribeList = tribeDocument ?? ([] as User[]);
       result = tribeList;
