@@ -17,9 +17,12 @@ export enum FirestoreCollections {
   ACTIVE_TASKS = "test-active-tasks",
   TEST_TASKS = "test-tasks",
   COMPLETED_TASKS = "test-completed-tasks",
-  TRIBE = "test-tribe",
   ADMIN = "admin",
   TRIBELIST = "tribes",
+  TRIBE = "test-tribe",
+  TESTGROUP = "Test group",
+  TESTGROUP2 = "Test group 2",
+  TESTTRIBE1 = "test-tribe1",
 }
 
 /**
