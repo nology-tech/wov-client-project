@@ -18,8 +18,6 @@ const ButtonContainer = ({
   userClick,
   taskClick,
 }: ButtonContainerProps) => {
-
-  console.log(groupClick, userClick, taskClick);
   
 
   return (

@@ -9,36 +9,73 @@ import "./DashBoard.scss";
 import { useState } from "react";
 import TaskTile from "../../components/TaskTile/TaskTile";
 import ActiveTasks from "../ActiveTasks/ActiveTasks";
-import { activeTasks } from "../../mockData/mockActiveTasks";
+import { Task, activeTasks } from "../../mockData/mockActiveTasks";
 import EditTaskPopup from "../../components/EditTaskPopup/EditTaskPopup";
 
 const Dashboard = () => {
   const [groupClick, setGroupClick] = useState<boolean>(true);
   const [userClick, setUserClick] = useState<boolean>(false);
   const [taskClick, setTaskClick] = useState<boolean>(false);
-  const [taskName, setTaskName] = useState<string>("");
+  const [editedTask, setEditedTask] = useState<Task>();
   const [showEditPopup, setShowEditPopup] = useState<boolean>(false);
 
   const handleGroupClick = () => {
-    setGroupClick(!groupClick);
+    setGroupClick(true);
     setUserClick(false);
     setTaskClick(false);
   };
 
   const handleUserClick = () => {
-    setUserClick(!userClick);
+    setUserClick(true);
     setGroupClick(false);
     setTaskClick(false);
   };
 
   const handleTaskClick = () => {
-    setTaskClick(!taskClick);
+    setTaskClick(true);
     setGroupClick(false);
     setUserClick(false);
   };
 
-  const handleEdit = () => {
-    setShowEditPopup(!showEditPopup);
+  const handleEdit = (task: Task) => (event: MouseEvent) => {
+    // console.log(event);
+    // console.log(task);
+
+    setEditedTask(task);
+    setShowEditPopup(true);
+  };
+
+  const handleInputValues = (event: ChangeEvent<HTMLFormElement>) => {
+    console.log(event);
+
+    console.log(editedTask);
+
+    const {id, value} = event.target;
+    const updatedTask = {...editedTask};
+
+      if(!editedTask) {
+        return;
+      }
+  
+      if (id === "name") {
+        updatedTask.taskHeading = value;
+      }
+      if (id === "category") {
+        updatedTask.category = event.target.value;
+      }
+      if (id === "frequency") {
+        updatedTask.type = value;
+      }
+      if (id === "points") {
+        updatedTask.points = value;
+      }
+
+      setEditedTask(updatedTask);
+    };
+
+  const handleSubmit = () => {
+    // what if only need to grab certain things from the form because it's a form event and tehn update those things
+    setShowEditPopup(false);
   };
 
   return (
@@ -78,11 +115,17 @@ const Dashboard = () => {
             category={task.category}
             points={task.points}
             key={task.id}
-            handleEdit={handleEdit}
+            handleEdit={handleEdit(task)}
+            editedTask={editedTask}
           />
         ))}
 
-      {showEditPopup && <EditTaskPopup />}
+      {showEditPopup && (
+        <EditTaskPopup
+          handleInputValues={handleInputValues}
+          handleSubmit={handleSubmit}
+        />
+      )}
       <>{console.log(showEditPopup)}</>
       <NavigationAdmin navActionIndex={0} />
     </div>

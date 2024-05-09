@@ -1,3 +1,4 @@
+import { Task } from "../../mockData/mockActiveTasks";
 import "./TaskTile.scss";
 
 type TaskTileProps = {
@@ -6,16 +7,19 @@ type TaskTileProps = {
     requirement: string;
     category: string;
     points: number;
-    handleEdit: () => void;
-
+    handleEdit?: () => void;
+    editedTask?: Task;
 }
 
-const TaskTile = ({id, name, requirement, category, points, handleEdit} : TaskTileProps) => {
+const TaskTile = ({id, name, requirement, category, points, handleEdit, editedTask} : TaskTileProps) => {
+
+  console.log(editedTask);
+  
   return (
     <div key={id} className='task-tile'>
-        <h4 className='task-tile__name'>{name}</h4>
-        <p className='task-tile__category'>{category} | {requirement}</p>
-        <p className='task-tile__points'>{points +  " points"}</p>
+        <h4 className='task-tile__name'>{editedTask?.id === id ? editedTask.taskHeading : name}</h4>
+        <p className='task-tile__category'>{editedTask?.id === id ? editedTask.category : category} | {editedTask?.id === id ? editedTask.type : requirement}</p>
+        <p className='task-tile__points'>{editedTask?.id === id ? editedTask.points +  " points" : points +  " points"}</p>
         <button className='task-tile__editButton' onClick={handleEdit} >EDIT</button>
     </div>
   )
