@@ -5,7 +5,7 @@ import {
   getCollectionFromFirestore,
   FirestoreCollections,
 } from "../../utils/dbUtils";
-import MostActiveCard from "../../components/MostActiveCard/MostActiveCard";
+import UserCard from "../../components/UserCard/UserCard";
 
 const ReportingMostActive = () => {
   const [users, setUsers] = useState<UserProfile[]>([]);
@@ -44,7 +44,7 @@ const ReportingMostActive = () => {
       <Header subtitle="Most Active Users" />
       <div className="user-list">
         {sortedUsers.map((user, index) => (
-          <MostActiveCard
+          <UserCard
             key={user.id}
             name={user.name}
             img={user.img}

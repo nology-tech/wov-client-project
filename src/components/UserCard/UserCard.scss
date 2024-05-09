@@ -2,7 +2,7 @@
 @use "../../styles/variables" as *;
 @use "../../styles/typography";
 
-.most-active-card {
+.user-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,19 +36,19 @@
   }
 }
 
-.most-active-card--current-user {
+.user-card--current-user {
   background-color: $light-grey-color;
 }
 
-.most-active-card--first {
+.user-card--first {
   background-color: $primary-color;
-  .most-active-card__name--first {
+  .user-card__name--first {
     color: white;
   }
 }
 
 @media screen and (min-width: $tablet-breakpoint) {
-  .most-active-card {
+  .user-card {
     &__img-div {
       width: 3.2rem;
       height: 3.2rem;
@@ -65,7 +65,7 @@
 }
 
 @media screen and (min-width: $desktop-breakpoint) {
-  .most-active-card {
+  .user-card {
     margin: 2.5rem auto;
     border-radius: 15px;
     &__img-div {
@@ -83,7 +83,7 @@
 }
 
 @media screen and (min-width: $large-desktop-breakpoint) {
-  .most-active-card {
+  .user-card {
     border-radius: 20px;
     padding: 0.7rem 1.7rem;
     &__img-div {
@@ -100,7 +100,7 @@
 }
 
 @media screen and (min-width: $extra-large-desktop-breakpoint) {
-  .most-active-card {
+  .user-card {
     margin: 3.5rem auto;
     border-radius: 25px;
     padding: 1.3rem 2.5rem;
