@@ -15,7 +15,7 @@ export type CompletedTask = {
   completed: string;
   description?: string;
   image?: string;
-};
+}
 
 export type Task = {
   category: string;
