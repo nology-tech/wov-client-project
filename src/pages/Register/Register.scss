@@ -90,31 +90,6 @@
   }
 }
 
-// &--img-upload {
-//   color: transparent;
-  
-//   ::-webkit-file-upload-button {
-//     visibility: hidden;
-//   }
-//   ::before {
-//     content: 'Select Picture';
-//     color: $slate-grey-color;
-//     padding: 1rem 0;
-//     padding-left: 1rem;
-//     background-color: $light-grey-color;
-//   }
-// }
-// .custom-file-input:hover::before {
-//   border-color: black;
-// }
-// .custom-file-input:active {
-//   outline: 0;
-// }
-// .custom-file-input:active::before {
-//   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
-// }
-
-
 @media screen and (min-width: $tablet-breakpoint) {
   .register {
     width: 60%;
