@@ -19,6 +19,7 @@ import Loading from "./components/Loading/Loading";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Create from "./pages/Create/Create";
 import ProfileAdmin from "./pages/ProfileAdmin/ProfileAdmin";
+import LeaderboardAdmin from "./pages/LeaderboardAdmin/LeaderboardAdmin";
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -45,6 +46,7 @@ const App = () => {
                     <Route path="/create" element={<Create />} />
                     <Route path="/dashboard" element={<AdminDashboard />} />
                     <Route path="/profile" element={<ProfileAdmin />} />
+                    <Route path="/leaderboard-admin" element={<LeaderboardAdmin />} />
                   </>
                 ) : (
                   <>
