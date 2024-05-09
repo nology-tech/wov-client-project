@@ -11,6 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
+import { db } from "../../firebase";
+import { doc, increment, updateDoc } from "firebase/firestore";
+
 
 
 
@@ -48,6 +51,13 @@ const ActiveTasks = () => {
 
     completeActiveTask(user, completedActiveTask);
   };
+
+  // const incrementTaskCompletionStreak = async (id: string) => {
+  //   const taskDoc = doc(db, "users", id);
+  //   await updateDoc(taskDoc, {
+  //     activeTasks: increment(1)
+  //   })
+  // }
 
   const handleTaskCompletionChange = async (
     id: string,

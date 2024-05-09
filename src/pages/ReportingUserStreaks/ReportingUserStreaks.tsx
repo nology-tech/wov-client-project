@@ -12,7 +12,7 @@ const ReportingUserStreaks = () => {
 
   const fetchAllUsers = useCallback(async () => {
     const fetchedUsers = await getCollectionFromFirestore<UserProfile>(
-      FirestoreCollections.TRIBE
+      FirestoreCollections.USERS
     );
 
     if (fetchedUsers) {
