@@ -119,7 +119,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const getUserFromFirestore = async (userID: string) => {
     const storedUser = await getDocumentFromFirestoreCollection<UserProfile>(
-      FirestoreCollections.TRIBE,
+      FirestoreCollections.USERS,
       userID
     );
     if (storedUser) {
@@ -173,7 +173,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return { error: "No user stored" };
     }
     const { error, updated } = await updateDocumentInFirestoreCollection(
-      FirestoreCollections.TRIBE,
+      FirestoreCollections.USERS,
       user.id,
       data
     );
@@ -218,7 +218,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         userProfile.img = fileDownloadUrl || "";
       }
       await createDocumentInFirestoreCollection(
-        FirestoreCollections.TRIBE,
+        FirestoreCollections.USERS,
         uid,
         userProfile
       );
