@@ -219,7 +219,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getCompletedTasks,
         getLeaderboard,
         getTribes,
-        createGroup
+        createGroup,
       }}
     >
       {children}
