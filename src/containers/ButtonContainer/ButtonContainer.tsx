@@ -1,24 +1,43 @@
+import { Dispatch, SetStateAction, useState } from "react";
 import Button from "../../components/Button/Button";
 import "./ButtonContainer.scss";
 
 type ButtonContainerProps = {
-  handleGroupClick: () => void;
-  handleUserClick: () => void;
-  handleTaskClick: () => void;
-  groupClick: boolean;
-  userClick: boolean;
-  taskClick: boolean;
+  setShowGroup: Dispatch<SetStateAction<boolean>>;
+  setShowTask: Dispatch<SetStateAction<boolean>>;
 };
 
 const ButtonContainer = ({
-  handleGroupClick,
-  handleUserClick,
-  handleTaskClick,
-  groupClick,
-  userClick,
-  taskClick,
+  setShowGroup,
+  setShowTask,
 }: ButtonContainerProps) => {
-  
+  const [groupClick, setGroupClick] = useState<boolean>(true);
+  const [userClick, setUserClick] = useState<boolean>(false);
+  const [taskClick, setTaskClick] = useState<boolean>(false);
+
+  const handleGroupClick = () => {
+    setGroupClick(!groupClick);
+    setUserClick(false);
+    setTaskClick(false);
+
+    setShowGroup(true);
+    setShowTask(false);
+  };
+
+  const handleUserClick = () => {
+    setUserClick(!userClick);
+    setGroupClick(false);
+    setTaskClick(false);
+  };
+
+  const handleTaskClick = () => {
+    setTaskClick(!taskClick);
+    setGroupClick(false);
+    setUserClick(false);
+
+    setShowGroup(false);
+    setShowTask(true);
+  };
 
   return (
     <div className="buttons-container">

@@ -23,6 +23,8 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
+import {Task}  from "../../mockData/mockActiveTasks";
+import {CompletedTask} from "../../mockData/mockCompletedTasks";
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
   id: "",
@@ -179,6 +181,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         email,
         tribe,
         img: "",
+        activeTasks: [] as Task[],
+        completedTasks: [] as CompletedTask[],
       };
       if (profileFile) {
         const filePath = `${uid}(${firstName}-${lastName})/images/profile`;
