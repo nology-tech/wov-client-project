@@ -30,7 +30,6 @@ const UserCard = ({
       <div className="user-card__img-div">
         <img
           src={img}
-          alt={`Profile picture of ${myName}`}
           className="user-card__img-div user-card__img-div--img"
         />
       </div>

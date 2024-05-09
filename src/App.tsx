@@ -22,6 +22,7 @@ import ProfileAdmin from "./pages/ProfileAdmin/ProfileAdmin";
 import LeaderboardAdmin from "./pages/LeaderboardAdmin/LeaderboardAdmin";
 import Reporting from "./pages/Reporting/Reporting";
 import ReportingMostActive from "./pages/ReportingMostActive/ReportingMostActive";
+import ReportingLeastActive from "./pages/ReportingLeastActive/ReportingLeastActive";
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -56,6 +57,10 @@ const App = () => {
                     <Route
                       path="/most-active-users"
                       element={<ReportingMostActive />}
+                    />
+                    <Route
+                      path="/inactive-users"
+                      element={<ReportingLeastActive />}
                     />
                   </>
                 ) : (
