@@ -16,3 +16,11 @@ export type CompletedTask = {
   description?: string;
   image?: string;
 }
+
+export type Task = {
+  category: string;
+  date: string;
+  description: string;
+  name: string;
+  points: number;
+};

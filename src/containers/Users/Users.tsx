@@ -5,9 +5,8 @@ import UserTile from "../../components/UserTile/UserTile";
 
 const Users = () => {
     const { getAllUsersAdmin } = useFirestore();
-    const {userList, setUserList} = useState<User[]>([]);
+    const [userList, setUserList] = useState<User[]>([]);
     const [displayUserList, setDisplayUserList] = useState<User[]>([]);
-
 
     useEffect(() => {
         getAllUsersAdmin().then((tempUserList) => {
@@ -26,11 +25,7 @@ const Users = () => {
         .toLowerCase()
         .includes(tempSearchTerm.toLowerCase());
 
-      const categoryMatch = user.category
-        .toLowerCase()
-        .includes(tempSearchTerm.toLowerCase());
-
-      return nameMatch || categoryMatch;
+      return nameMatch;
     });
     setDisplayUserList(tempDisplayUserlist);
   };

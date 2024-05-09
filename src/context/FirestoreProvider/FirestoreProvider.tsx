@@ -11,6 +11,7 @@ import { CompletedTask, ActiveTask, Task} from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
+import { User } from "../../types/User";
 
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
@@ -23,6 +24,7 @@ export type FirestoreContextProps = {
   getTribes: () => Promise<GroupData[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
   getAllTasksAdmin: () => Promise<Task[]>;
+  getAllUsersAdmin: () => Promise<User[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
 };
 
@@ -214,6 +216,48 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const getAllTasksAdmin = async () => {
+    let result = [] as Task[];
+    try {
+      const taskDocument = await getCollectionFromFirestore<Task>(
+        FirestoreCollections.TASKS
+      );
+      const taskList = taskDocument ?? ([] as Task[]);
+      result = taskList;
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+    return result;
+  };
+
+  const getAllGroupsAdmin = async () => {
+    let result = [] as GroupData[];
+    try {
+      const tribeDocument = await getCollectionFromFirestore<GroupData>(
+        FirestoreCollections.TRIBELIST
+      );
+      const tribeList = tribeDocument ?? ([] as GroupData[]);
+      result = tribeList;
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+    return result;
+  };
+
+  const getAllUsersAdmin = async () => {
+    let result = [] as User[];
+    try {
+      const tribeDocument = await getCollectionFromFirestore<User>(
+        FirestoreCollections.TRIBE
+      );
+      const tribeList = tribeDocument ?? ([] as User[]);
+      result = tribeList;
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+    return result;
+  };
+
   return (
     <FirestoreContext.Provider
       value={{
@@ -223,6 +267,9 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getLeaderboard,
         getTribes,
         createGroup,
+        getAllTasksAdmin,
+        getAllGroupsAdmin,
+        getAllUsersAdmin,
       }}
     >
       {children}
