@@ -113,13 +113,6 @@ console.log("I have been triggered");
       }
 
       setEditedTask(updatedTask);
-
-
-      // const newTaskArr = allTasks.map((task) => task.id === updatedTask.id? updatedTask : task)
-
-
-
-      // console.log(updatedTask.id)
     };
 
 
@@ -137,8 +130,6 @@ console.log("I have been triggered");
 
     console.log("updated task is ", allTasks)
     console.log("selected task", editedTask)
-
-    firebase.database().ref("test-tasks").push(allTasks);
 
   };
 
