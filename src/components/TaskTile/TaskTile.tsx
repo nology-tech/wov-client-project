@@ -12,8 +12,6 @@ type TaskTileProps = {
 }
 
 const TaskTile = ({id, name, requirement, category, points, handleEdit, editedTask} : TaskTileProps) => {
-
-  console.log(editedTask);
   
   return (
     <div key={id} className='task-tile'>

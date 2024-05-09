@@ -8,7 +8,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./DashBoard.scss";
 import { useState } from "react";
 import TaskTile from "../../components/TaskTile/TaskTile";
-import ActiveTasks from "../ActiveTasks/ActiveTasks";
 import { Task, activeTasks } from "../../mockData/mockActiveTasks";
 import EditTaskPopup from "../../components/EditTaskPopup/EditTaskPopup";
 
@@ -18,6 +17,7 @@ const Dashboard = () => {
   const [taskClick, setTaskClick] = useState<boolean>(false);
   const [editedTask, setEditedTask] = useState<Task>();
   const [showEditPopup, setShowEditPopup] = useState<boolean>(false);
+  const [filteredTasks, setFilteredTasks] = useState<Task>()
 
   const handleGroupClick = () => {
     setGroupClick(true);
@@ -73,6 +73,8 @@ const Dashboard = () => {
       setEditedTask(updatedTask);
     };
 
+
+
   const handleSubmit = () => {
     // what if only need to grab certain things from the form because it's a form event and tehn update those things
     setShowEditPopup(false);
@@ -106,8 +108,8 @@ const Dashboard = () => {
       </div>
       {groupClick && <Groups groups={groups} />}
 
-      {taskClick &&
-        activeTasks.map((task) => (
+      {taskClick && filteredTasks &&
+        filteredTasks.map((task) => (
           <TaskTile
             id={task.id}
             name={task.taskHeading}
