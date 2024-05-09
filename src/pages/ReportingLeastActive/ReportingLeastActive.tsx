@@ -13,7 +13,7 @@ const ReportingLeastActive = () => {
 
   const fetchAllUsers = useCallback(async () => {
     const fetchedUsers = await getCollectionFromFirestore<UserProfile>(
-      FirestoreCollections.TRIBE
+      FirestoreCollections.USERS
     );
 
     if (fetchedUsers) {
@@ -33,7 +33,7 @@ const ReportingLeastActive = () => {
       const bLoginCount = b.loginCount ?? 0;
 
       if (bLoginCount !== aLoginCount) {
-        return  aLoginCount - bLoginCount;
+        return aLoginCount - bLoginCount;
       }
       return (a.name || "").localeCompare(b.name || "");
     });

@@ -13,7 +13,7 @@ const ReportingMostActive = () => {
 
   const fetchAllUsers = useCallback(async () => {
     const fetchedUsers = await getCollectionFromFirestore<UserProfile>(
-      FirestoreCollections.TRIBE
+      FirestoreCollections.USERS
     );
 
     if (fetchedUsers) {
@@ -56,7 +56,7 @@ const ReportingMostActive = () => {
           />
         ))}
       </div>
-      <NavigationAdmin navActionIndex={2}/>
+      <NavigationAdmin navActionIndex={2} />
     </div>
   );
 };
