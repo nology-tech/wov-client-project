@@ -1,8 +1,6 @@
 import GroupTile from "../../components/GroupTile/GroupTile";
 import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { InputAdornment, TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import "./Groups.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useFirestore } from "../../hooks/useFireStore";
@@ -25,7 +23,7 @@ const Groups = () => {
     const tempSearchTerm = event.target.value;
 
     const filteredDisplayGroupList = groupList.filter((group) => {
-      const nameMatch = group.tribeName
+      const nameMatch = group.name
         .toLowerCase()
         .includes(tempSearchTerm.toLowerCase());
 
@@ -57,8 +55,8 @@ const Groups = () => {
       <div className="group-tile__container">
         {displayGroupList.map((group) => (
           <GroupTile
-            key={group.tribeName}
-            tribeName={group.tribeName}
+            key={group.name}
+            tribeName={group.name}
             numberOfMembers={0}
             totalPoints={0}
             dateGroupStarted={group.startDate}

@@ -46,7 +46,7 @@ const ButtonContainer = ({ setShowGroup, setShowUser, setShowTask }: ButtonConta
 
       <Button
         label={"groups"}
-        variant={userClick ? "secondary" : "light-grey-lighter"}
+        variant={groupClick ? "secondary" : "light-grey-lighter"}
         onClick={handleGroupClick}
         size="small"
       />
@@ -58,19 +58,6 @@ const ButtonContainer = ({ setShowGroup, setShowUser, setShowTask }: ButtonConta
         size="small"
       />
       <Button
-        label={"users"}
-        variant={userClick ? "secondary" : "light-grey-lighter"}
-        onClick={handleUserClick}
-        size="small"
-      />
-
-      <Button
-        label={"tasks"}
-        variant={taskClick ? "secondary" : "light-grey-lighter"}
-        onClick={handleTaskClick}
-        size="small"
-      />
-      <Button
         label={"tasks"}
         variant={taskClick ? "secondary" : "light-grey-lighter"}
         onClick={handleTaskClick}
@@ -78,7 +65,6 @@ const ButtonContainer = ({ setShowGroup, setShowUser, setShowTask }: ButtonConta
       />
     </div>
   );
-};
 };
 
 export default ButtonContainer;

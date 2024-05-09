@@ -60,7 +60,6 @@ const Users = () => {
                 points={user.points}
                 tribe={user.tribe}
                 memberSince={user.memberSince}
-
               />
             );
           })}
