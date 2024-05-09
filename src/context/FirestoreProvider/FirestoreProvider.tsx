@@ -155,7 +155,6 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getLeaderboard = async (tribe: string) => {
     if (!tribe) {
-      console.log("no tribes available");
       return [] as UserProfile[];
     }
 
