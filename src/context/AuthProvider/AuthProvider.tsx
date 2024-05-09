@@ -50,7 +50,7 @@ export type AuthContextProps = {
   createUser: (newUser: NewUser, profilePic?: File) => PromiseObjectNullString;
   updateUser: (
     data:
-      | Pick<UserProfile, "bio" | "name" | "email">
+      | Pick<UserProfile, "bio" | "name" | "email" | "img">
       | Pick<UserProfile, "totalScore">
   ) => PromiseObjectNullString;
 };
@@ -164,22 +164,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const updateUser = async (
     data:
-      | Pick<UserProfile, "bio" | "name" | "email">
-      | Pick<UserProfile, "totalScore">
-  ): PromiseObjectNullString => {
-    if (user === null) {
-      return { error: "No user stored" };
-    }
-    const { error, updated } = await updateDocumentInFirestoreCollection(
-      FirestoreCollections.USERS,
-      user.id,
-      data
-    );
-    if (updated) {
-      setUser({ ...user, ...data });
-    }
-    return { error };
-  };
+      | Pick<UserProfile, "bio" | "name" | "email"| "img">
+      | Pick<UserProfile, "totalScore">,
+      // profileFile?: File
+      ): PromiseObjectNullString => {
+        if (user === null) {
+          return { error: "No user stored" };
+        }
+              const { error, updated } = await updateDocumentInFirestoreCollection(
+          FirestoreCollections.USERS,
+          user.id,
+          data
+        );
+              if (updated) {
+          // Update local user state with the new data
+          setUser({ ...user, ...data });
+        }
+        return { error };
+      };
   const createUser = async (
     { email, password, firstName, lastName, bio, tribe }: NewUser,
     profileFile?: File

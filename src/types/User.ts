@@ -29,3 +29,11 @@ export type AdminProfile = {
 export type AdminLoading = AdminProfile;
 
 export type UserLoading = UserProfile & { loading: true };
+
+export type User = {
+  image: string;
+  name: string ;
+  points: number
+  tribe: string;
+  memberSince: number;
+}
