@@ -54,7 +54,6 @@ const CreateGroup = () => {
 
     const groupData = {
       name: groupName,
-      tribeName: groupName,
       startDate: today,
       image: groupImage,
       numberOfMembers: 0,
