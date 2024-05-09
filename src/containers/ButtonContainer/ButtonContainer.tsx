@@ -11,7 +11,7 @@ const ButtonContainer = ({
   setShowGroup,
   setShowTask,
 }: ButtonContainerProps) => {
-  const [groupClick, setGroupClick] = useState<boolean>(false);
+  const [groupClick, setGroupClick] = useState<boolean>(true);
   const [userClick, setUserClick] = useState<boolean>(false);
   const [taskClick, setTaskClick] = useState<boolean>(false);
 
