@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [taskClick, setTaskClick] = useState<boolean>(false);
   const [editedTask, setEditedTask] = useState<Task>();
   const [showEditPopup, setShowEditPopup] = useState<boolean>(false);
+  const [allTasks, setAllTasks] = useState<Task[]>(activeTasks)
 
   const handleGroupClick = () => {
     setGroupClick(true);
@@ -50,6 +51,7 @@ const Dashboard = () => {
 
     console.log(editedTask);
 
+
     const {id, value} = event.target;
     const updatedTask = {...editedTask};
 
@@ -61,7 +63,7 @@ const Dashboard = () => {
         updatedTask.taskHeading = value;
       }
       if (id === "category") {
-        updatedTask.category = event.target.value;
+        updatedTask.category = value;
       }
       if (id === "frequency") {
         updatedTask.type = value;
@@ -71,11 +73,25 @@ const Dashboard = () => {
       }
 
       setEditedTask(updatedTask);
+
+
+      const newTaskArr = activeTasks.map((task) => task.id === updatedTask.id? updatedTask : task)
+      setAllTasks(newTaskArr)
+      console.log("selected task", newTaskArr)
+
+
+      // console.log(updatedTask.id)
     };
+
+
+
 
   const handleSubmit = () => {
     // what if only need to grab certain things from the form because it's a form event and tehn update those things
     setShowEditPopup(false);
+    activeTasks.push(editedTask)
+    activeTasks.filter((task) => task.id != updatedtask.id)
+
   };
 
   return (
