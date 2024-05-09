@@ -53,6 +53,7 @@ const CreateGroup = () => {
     const today = new Date().toISOString().split("T")[0];
 
     const groupData = {
+      name: groupName,
       tribeName: groupName,
       startDate: today,
       image: groupImage,

@@ -12,7 +12,6 @@ type CreateTaskProps = {
 
 const emptyFormData = {
   name: "",
-  date: "",
   category: "",
   description: "",
   points: "",
@@ -36,7 +35,6 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
     
     if (
       formData.name &&
-      formData.date &&
       formData.category &&
       formData.description &&
       formData.points &&
@@ -75,14 +73,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
             data-testid="name-input"
             value={formData.name}
           />
-          <label>Date</label>
-          <input
-            name="date"
-            type="Date"
-            onChange={handleChange}
-            min={new Date().toISOString().split("T")[0]}
-            value={formData.date}
-          />
+      
           <label>Category</label>
           <input
             name="category"
