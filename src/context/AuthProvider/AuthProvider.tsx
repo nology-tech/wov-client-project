@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import {
   NewUser,
   UserLoading,
@@ -24,6 +24,12 @@ import {
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import {Task, CompletedTask} from "../../types/Task"
+// import { Task } from "../../mockData/mockActiveTasks";
+// import { CompletedTask } from "../../mockData/mockCompletedTasks";
+import { doc, updateDoc } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+import 'firebase/compat/firestore'; // Import Firestore module
+
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
   id: "",
@@ -145,24 +151,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const updateUser = async (
     data:
-      | Pick<UserProfile, "bio" | "name" | "email"| "img">
-      | Pick<UserProfile, "totalScore">,
-      // profileFile?: File
-      ): PromiseObjectNullString => {
-        if (user === null) {
-          return { error: "No user stored" };
-        }
-              const { error, updated } = await updateDocumentInFirestoreCollection(
-          FirestoreCollections.USERS,
-          user.id,
-          data
-        );
-              if (updated) {
-          // Update local user state with the new data
-          setUser({ ...user, ...data });
-        }
-        return { error };
-      };
+      | Pick<UserProfile, "bio" | "name" | "email">
+      | Pick<UserProfile, "totalScore">
+  ): PromiseObjectNullString => {
+    if (user === null) {
+      return { error: "No user stored" };
+    }
+    const { error, updated } = await updateDocumentInFirestoreCollection(
+      FirestoreCollections.USERS,
+      user.id,
+      data
+    );
+    if (updated) {
+      setUser({ ...user, ...data });
+    }
+    return { error };
+  };
+
+  const updateTribeDocumentWithUser = async (tribeId: string, userId: string) => {
+    try {
+      const tribeDocRef = doc(db, 'tribes', tribeId);
+      await updateDoc(tribeDocRef, {
+        users: firebase.firestore.FieldValue.arrayUnion(userId)
+      });
+      console.log(`Tribe document updated successfully with user ${userId}.`);
+    } catch (error) {
+      console.error(`Error updating tribe document with user ${userId}:`, error);
+      throw error; // Propagate the error to the caller
+    }
+  };
+
+
   const createUser = async (
     { email, password, firstName, lastName, bio, tribe }: NewUser,
     profileFile?: File
@@ -202,6 +221,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         uid,
         userProfile
       );
+
+      await updateTribeDocumentWithUser(tribe, uid);
+
       await createDocumentInFirestoreCollection(
         FirestoreCollections.COMPLETED_TASKS,
         uid,
@@ -216,6 +238,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           activeTasks: [],
         }
       );
+
+      
       setUser(userProfile);
       navigate("/");
       return { error: null };

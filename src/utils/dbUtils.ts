@@ -19,6 +19,9 @@ export enum FirestoreCollections {
   ADMIN = "admin",
   TRIBELIST = "tribes",
   USERS = "users",
+  testng = "testng",
+  testGroup2 = "Test group 2",
+  lemaTribe = "lema tribe"
 }
 
 /**
