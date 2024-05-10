@@ -11,11 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
-import { db } from "../../firebase";
-import { doc, increment, updateDoc } from "firebase/firestore";
-
-
-
 
 type ActiveTasksItem = {
   [key: string]: boolean;
@@ -52,13 +47,6 @@ const ActiveTasks = () => {
     completeActiveTask(user, completedActiveTask);
   };
 
-  // const incrementTaskCompletionStreak = async (id: string) => {
-  //   const taskDoc = doc(db, "users", id);
-  //   await updateDoc(taskDoc, {
-  //     activeTasks: increment(1)
-  //   })
-  // }
-
   const handleTaskCompletionChange = async (
     id: string,
     isCompleted: boolean,
@@ -91,7 +79,6 @@ const ActiveTasks = () => {
 
   return (
     <div className="task-page" data-testid="task-page">
-
       <Header subtitle="Task" profileImage={user.img} />
       <label htmlFor="task-search" className="task-page__label">
         Search Bar
@@ -157,7 +144,6 @@ const ActiveTasks = () => {
         />
       )}
       <Navigation navActionIndex={1} />
-
     </div>
   );
 };
