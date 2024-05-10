@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import Register from "./Register";
 import { customRender } from "../../utils/testUtils";
 import { FirestoreContextProps } from "../../context/FirestoreProvider/FirestoreProvider";

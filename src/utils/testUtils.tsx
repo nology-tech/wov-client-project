@@ -15,7 +15,6 @@ import {
   UserProfile,
 } from "../types/User";
 import { ActiveTask } from "../types/Task";
-import { GroupData } from "../types/Groups";
 type Options = {
   useRouting?: boolean;
   firestoreValue?: FirestoreContextProps;
