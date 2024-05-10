@@ -1,12 +1,44 @@
 @use "../../styles/variables" as *;
 
-    .group-tile {    
+    .group-tile { 
+        display: flex;   
+        flex-direction: column;
+        width: 85%;
+        max-width: 85%;
         color: $pure-black-color;
-        width: 80%;
-        border-bottom: solid 1px $grey-color;
-        font: $font-subText/$line-height-subtext $font-family-modern-content;
-        
-        
+        border-bottom: solid 2px $light-grey-color;
+        padding-bottom: 1.2rem;
+        align-items: flex-start;
+        font: $font-subText/$line-height-subtext $font-family-modern-content;  
+
+        &__name {
+            margin-bottom: 20px;
+        }
+
+        &__members,
+        &__points,
+        &__date {
+            color: $slate-grey-color;
+            margin-bottom: 2px;
+        }
+
+        &__editButton {
+            position: absolute;
+            align-self: flex-end;
+            margin: 3px;
+            padding: 6px;
+            border: none;
+            border-radius: 10px;
+            background-color: transparent;
+            cursor: pointer;
+            transition: transform 0.2s;
+
+            &:hover {
+                border-bottom: 3px solid black;
+                border-radius: 0px;
+                transform: scale(1.2);
+              }
+        }
     }
 
 

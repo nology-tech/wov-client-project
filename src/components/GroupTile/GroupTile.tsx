@@ -16,14 +16,13 @@ const GroupTile = ({
   const date = dateGroupStarted;
 
   return (
-    <div className="group-tile__container">
       <div className="group-tile">
         <h3 className="group-tile__name">{tribeName}</h3>
         <p className="group-tile__members">Members: {numberOfMembers}</p>
-        <h4 className="group-tile__points">Total Points: {totalPoints}</h4>
+        <p className="group-tile__points">Total Points: {totalPoints}</p>
         <p className="group-tile__date">Date created: {date}</p>
+        <button className="group-tile__editButton">EDIT</button>
       </div>
-    </div>
   );
 };
 
