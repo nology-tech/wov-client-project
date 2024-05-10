@@ -14,7 +14,6 @@ const ProfileAdmin = () => {
       <Header subtitle="profile" profileImage="" />
       <div className="profile">
         <img src={defaultImg} className="profile__img" alt="Profile" />
-
         <section className="profile__info">
           <p>
             <span className="profile__label">Email</span> : {email}
