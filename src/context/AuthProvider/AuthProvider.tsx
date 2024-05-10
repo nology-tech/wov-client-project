@@ -26,7 +26,7 @@ import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import {Task, CompletedTask} from "../../types/Task"
 // import { Task } from "../../mockData/mockActiveTasks";
 // import { CompletedTask } from "../../mockData/mockCompletedTasks";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, increment, updateDoc } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore'; // Import Firestore module
 
@@ -80,6 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsAuthenticated(false);
     }
   }, []);
+
   const checkAdminStatus = async (userID: string) => {
     const adminDoc = await getDocumentFromFirestoreCollection(
       FirestoreCollections.ADMIN,
@@ -87,6 +88,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     );
     setIsAdmin(adminDoc !== null);
   };
+
+  const incrementLogin = async (userID: string) => {
+    const userDoc = doc(db, "users", userID);
+    await updateDoc(userDoc, {
+      loginCount: increment(1),
+    });
+  };
+
   const loginUser = async (
     email: string,
     password: string
@@ -97,6 +106,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         email,
         password
       );
+      const userID = userCredential.user.uid;
+      const userDoc = await getDocumentFromFirestoreCollection<UserProfile>(
+        FirestoreCollections.USERS,
+        userID
+      );
+      if (userDoc) {
+        await incrementLogin(userID);
+      }
       updateAuthState(userCredential);
       navigate("/");
     } catch (error) {
@@ -149,10 +166,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(userLoading);
     navigate("/");
   };
+
   const updateUser = async (
     data:
-      | Pick<UserProfile, "bio" | "name" | "email">
+      | Pick<UserProfile, "bio" | "name" | "email" | "img">
       | Pick<UserProfile, "totalScore">
+    // profileFile?: File
   ): PromiseObjectNullString => {
     if (user === null) {
       return { error: "No user stored" };
@@ -163,6 +182,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       data
     );
     if (updated) {
+      // Update local user state with the new data
       setUser({ ...user, ...data });
     }
     return { error };
