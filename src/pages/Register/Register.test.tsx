@@ -2,6 +2,7 @@ import { screen, fireEvent, waitFor } from "@testing-library/react";
 import Register from "./Register";
 import { customRender } from "../../utils/testUtils";
 
+
 describe("Register Component", () => {
 
   it("should render the heading", () => {

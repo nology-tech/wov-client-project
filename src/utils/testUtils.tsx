@@ -15,6 +15,7 @@ import {
   UserProfile,
 } from "../types/User";
 import { ActiveTask } from "../types/Task";
+import { GroupData } from "../types/Groups";
 type Options = {
   useRouting?: boolean;
   firestoreValue?: FirestoreContextProps;
@@ -110,6 +111,7 @@ const wrapWithFirestoreProvider = (
     getCompletedTasks: (_: string) => Promise.resolve([]),
     getLeaderboard: (_: string) => Promise.resolve([]),
     completeActiveTask: (_: UserProfile, __: ActiveTask) => Promise.resolve(),
+    getTribes: () => Promise.resolve([]), 
   };
   return (
     <FirestoreContext.Provider

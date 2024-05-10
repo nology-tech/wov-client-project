@@ -180,11 +180,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!tribe) {
       return [] as UserProfile[];
     }
-  
-    if (!Object.values(FirestoreCollections).includes(tribe as FirestoreCollections)) {
-      console.error("Invalid tribe:", tribe);
-      return [] as UserProfile[];
-    }
+
   
     try {
       const tribeRef = collection(db, FirestoreCollections.TRIBELIST); // Reference to the "tribes" collection
