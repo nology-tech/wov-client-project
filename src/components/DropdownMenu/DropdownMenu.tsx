@@ -11,8 +11,11 @@ type DropdownMenuProps = {
   chosenTribe: string;
 };
 
-const DropdownMenu = ({arrayOfGroups, handleChange, chosenTribe} : DropdownMenuProps) => {
-
+const DropdownMenu = ({
+  arrayOfGroups,
+  handleChange,
+  chosenTribe,
+}: DropdownMenuProps) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -21,12 +24,17 @@ const DropdownMenu = ({arrayOfGroups, handleChange, chosenTribe} : DropdownMenuP
           labelId="tribe-input"
           id="tribe"
           value={chosenTribe}
-          label="Tribe"
+          label="Select Tribe"
           onChange={handleChange}
         >
           {/* get tribe data from db, map over, create menu item for each one */}
           {arrayOfGroups.map((tribe, index) => {
-            return <MenuItem key={index} value={tribe.name}> {tribe.name} </MenuItem>;
+            return (
+              <MenuItem key={index} value={tribe.name}>
+                {" "}
+                {tribe.name}{" "}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>

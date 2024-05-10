@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { UserProfile } from "../../types/User";
 import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
 import { GroupData } from "../../types/Groups";
+import "./LeaderboardAdmin.scss";
 
 const LeaderboardAdmin = () => {
   const { getUser } = useAuth();
@@ -55,12 +56,13 @@ const LeaderboardAdmin = () => {
       <Header subtitle="Leaderboard" profileImage="user's img" />
 
       {/* drop down of tribes */}
-
-      <DropdownMenu
-        arrayOfGroups={tribe}
-        chosenTribe={chosenTribe}
-        handleChange={handleChange}
-      />
+      <div className="dropdown">
+        <DropdownMenu
+          arrayOfGroups={tribe}
+          chosenTribe={chosenTribe}
+          handleChange={handleChange}
+        />
+      </div>
 
       {/* list of people and scores from selected tribe */}
       {sortUserByScore().map((sortedUser, index) => (
