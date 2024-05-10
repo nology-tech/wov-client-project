@@ -1,6 +1,4 @@
-import { Task } from "../../types/Task";
 import "./TaskTile.scss";
-import { MouseEventHandler } from "react";
 
 type TaskTileProps = {
   id: string;
@@ -8,17 +6,30 @@ type TaskTileProps = {
   requirement: string;
   category: string;
   points: number;
-  handleEdit?: MouseEventHandler<HTMLButtonElement> ;
-  editedTask?: Task;
-}
-const TaskTile = ({id, name, requirement, category, points, handleEdit} : TaskTileProps) => {
- return (
-  <div key={id} className='task-tile'>
-    <h4 className='task-tile__name'>{name}</h4>
-    <p className='task-tile__category'>{category} | {requirement}</p>
-    <p className='task-tile__points'>{points + " points"}</p>
-    <button className='task-tile__editButton' onClick={handleEdit} >EDIT</button>
-  </div>
- )
-}
+  handleEdit?: (taskName: string) => void;
+};
+const TaskTile = ({
+  id,
+  name,
+  requirement,
+  category,
+  points,
+  handleEdit,
+}: TaskTileProps) => {
+  return (
+    <div key={id} className="task-tile">
+      <h4 className="task-tile__name">{name}</h4>
+      <p className="task-tile__category">
+        {category} | {requirement}
+      </p>
+      <p className="task-tile__points">{points + " points"}</p>
+      <button
+        className="task-tile__editButton"
+        onClick={handleEdit ? () => handleEdit(name) : undefined}
+      >
+        EDIT
+      </button>
+    </div>
+  );
+};
 export default TaskTile;

@@ -3,7 +3,15 @@ import Button from "../Button/Button";
 import "./CreateTask.scss";
 import { createDocumentInFirestoreCollection } from "../../utils/dbUtils";
 import { FirestoreCollections } from "../../utils/dbUtils";
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 
 type CreateTaskProps = {
@@ -41,12 +49,18 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
       storedData.length == 0
     ) {
       setMissingFieldsError("");
-      const docRef = await addDoc(collection(db, "test-tasks"), formData);
-      await createDocumentInFirestoreCollection(
-        FirestoreCollections.TASKS,
-        docRef.id,
-        formData
-      );
+
+      try {
+        const docRef = await addDoc(collection(db, "test-tasks"), formData);
+        console.log(docRef.id);
+
+        await updateDoc(doc(db, "test-tasks", docRef.id), {
+          id: docRef.id,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
       await setFormData(emptyFormData);
       setTaskPassedMessage("Task Successfully Created");
     } else if (storedData.length > 0) {

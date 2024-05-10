@@ -1,42 +1,25 @@
 import { TextField } from "@mui/material";
 import "./EditTaskPopup.scss";
-import { ChangeEvent } from "react";
-import { activeTasks } from "../../mockData/mockActiveTasks";
 import Button from "../Button/Button";
+import { ChangeEvent } from "react";
 
 type EditTaskPopupProps = {
-handleInputValues: () => ChangeEvent<HTMLFormElement>
-handleSubmit: () => void
+  handleSubmit: (e: ChangeEvent<HTMLFormElement>) => void;
 };
 
-const EditTaskPopup = ({handleInputValues, handleSubmit}: EditTaskPopupProps) => {
-
-// const {type, taskHeading, category, points} = activeTasks;
-
-
+const EditTaskPopup = ({ handleSubmit }: EditTaskPopupProps) => {
   return (
     <div>
-      <form action="" className="task-edit">
+      <form action="" className="task-edit" onSubmit={handleSubmit}>
         <label htmlFor="">Name</label>
-        <TextField id="name" 
-          onChange={handleInputValues}
-          />
+        <TextField id="name" />
         <label htmlFor="">Category</label>
-        <TextField id="category" 
-          onChange={handleInputValues}
-          />
+        <TextField id="category" />
         <label htmlFor="">Frequency</label>
-        <TextField id="frequency" 
-          onChange={handleInputValues}
-          />
+        <TextField id="frequency" />
         <label htmlFor="">Points</label>
-        <TextField id="points" 
-          onChange={handleInputValues}
-          />
-          <Button 
-            label="Submit"
-            onClick={handleSubmit}
-          />
+        <TextField id="points" />
+        <Button label="Submit" />
       </form>
     </div>
   );

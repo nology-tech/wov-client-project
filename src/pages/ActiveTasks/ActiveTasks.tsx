@@ -27,7 +27,7 @@ const ActiveTasks = () => {
   const [popupTaskCompleted, setPopupTaskCompleted] = useState<boolean>(false);
   const [popupAddMedia, setPopupAddMedia] = useState<boolean>(false);
   const [popupAddVideo, setpopupAddVideo] = useState<boolean>(false);
-  const [selectedFile, setSelectedFile] = useState<string | undefined >("");
+  const [selectedFile, setSelectedFile] = useState<string | undefined>("");
   const navigate = useNavigate();
 
   const handleTaskSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -78,13 +78,13 @@ const ActiveTasks = () => {
     setpopupAddVideo(!popupAddVideo);
   };
 
-  const handleVideoFormSubmission = async (e:FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleVideoFormSubmission = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const filePath = (e.currentTarget.elements[1] as HTMLInputElement).value;
-    setSelectedFile(filePath)
-    setpopupAddVideo(!popupAddVideo)
+    setSelectedFile(filePath);
+    setpopupAddVideo(!popupAddVideo);
     return;
-  }
+  };
 
   const searchedTasks = activeTasks.filter(
     (task) =>
@@ -149,7 +149,7 @@ const ActiveTasks = () => {
           onButtonTwo={() => navigate("/leaderboard")}
           descriptionShown={false}
         />
-      )} 
+      )}
       {popupAddMedia && (
         <Popup
           heading="ADD MEDIA"
@@ -157,20 +157,21 @@ const ActiveTasks = () => {
           labelButtonTwo="UPDATE TASK"
           descriptionShown={true}
         />
-      )} 
+      )}
       <>
-      {
-        selectedFile && (
-            <><CompletedTask
+        {selectedFile && (
+          <>
+            <CompletedTask
               taskHeading="fake task"
               category="fitness"
               points={10}
               description="blah"
-              image={selectedFile} />
-              
-              <img src={selectedFile} alt="" /></>
-        )
-      }
+              image={selectedFile}
+            />
+
+            <img src={selectedFile} alt="" />
+          </>
+        )}
       </>
       <div>
         <button onClick={handlePopupVideo}>Add Video</button>
@@ -185,9 +186,9 @@ const ActiveTasks = () => {
             />
           </>
         )}
-        
+
         <div>
-            <>{console.log(selectedFile)}</>
+          <>{console.log(selectedFile)}</>
         </div>
       </div>
       <Navigation navActionIndex={1} />

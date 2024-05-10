@@ -13,9 +13,8 @@ import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
 import { User } from "../../types/User";
 type PromiseObjectNullString = Promise<{ error: null | string }>;
-const [allTasks, setAllTasks] = useState<Task[]>()
-const [taskId, setTaskId] = useState<string>("");
-
+// const [allTasks, setAllTasks] = useState<Task[]>()
+// const [taskId, setTaskId] = useState<string>("");
 
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
@@ -30,9 +29,9 @@ export type FirestoreContextProps = {
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllUsersAdmin: () => Promise<User[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
-  updateTasks: ( data:
-  | Pick<Task, "name" | "category" | "points" >
-) => PromiseObjectNullString
+  updateTasks: (
+    data: Pick<Task, "name" | "category" | "points">
+  ) => PromiseObjectNullString;
 };
 
 export const FirestoreContext = createContext<
@@ -250,25 +249,24 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
-
-
   const updateTasks = async (
-    data:
-      | Pick<Task,  "name" | "category" | "points" | "description" | "date">
+    data: Pick<Task, "name" | "category" | "points" | "description" | "date">
   ): PromiseObjectNullString => {
-    const EditedTask = allTasks?.map((task)=> {
-      setTaskId(task.name)
-    })
-    EditedTask
-    const { error } = await updateDocumentInFirestoreCollection(
-      FirestoreCollections.TEST_TASKS,
-      taskId,
-      data
-    );
+    console.log(data);
 
-    return { error };
+    // const EditedTask = allTasks?.map((task)=> {
+    //   setTaskId(task.name)
+    // })
+    // EditedTask
+    // const { error } = await updateDocumentInFirestoreCollection(
+    //   FirestoreCollections.TEST_TASKS,
+    //   taskId,
+    //   data
+    // );
+
+    // return { error };
+    return { error: null };
   };
-
 
   return (
     <FirestoreContext.Provider
