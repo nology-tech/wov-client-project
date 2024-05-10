@@ -11,7 +11,6 @@ type GroupTileProps = {
 
 const GroupTile = ({
   tribeName,
-  numberOfMembers,
   totalPoints,
   dateGroupStarted,
 }: GroupTileProps) => {
@@ -25,7 +24,7 @@ const GroupTile = ({
       setMembers(userIds);
     };
     getAllMembersData();
-  }, [tribeName]);
+  }, [tribeName, getAllMembers]);
 
   const noOfMembers = members.length;
 

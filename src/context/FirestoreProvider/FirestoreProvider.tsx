@@ -28,7 +28,7 @@ export type FirestoreContextProps = {
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllUsersAdmin: () => Promise<User[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
-  getAllMembers: (tribe: string) => Promise<any>
+  getAllMembers: (tribe: string) => Promise<string[]>
 };
 
 export const FirestoreContext = createContext<
@@ -177,7 +177,6 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
 
   const getAllMembers = async (tribe: string) => {
-    console.log("Tribe Name:", tribe);
     if (!tribe) {
       return [] as UserProfile[];
     }
@@ -322,7 +321,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     </FirestoreContext.Provider>
   );
 };
-function getDocumentFromFirestore(USERS: FirestoreCollections, userId: string) {
-  throw new Error("Function not implemented.");
-}
+// function getDocumentFromFirestore(USERS: FirestoreCollections, userId: string) {
+//   throw new Error("Function not implemented.");
+// }
 
