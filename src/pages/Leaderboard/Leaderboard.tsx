@@ -10,14 +10,13 @@ import { useCallback, useEffect, useState } from "react";
 const Leaderboard = () => {
   const { getUser } = useAuth();
   const user = getUser();
-  // takes a string where we can differentiate on tribes 
+  // takes a string where we can differentiate on tribes
   const { getLeaderboard } = useFirestore();
   const [users, setUsers] = useState<UserProfile[]>([]);
 
   const getData = useCallback(async () => {
     const result = await getLeaderboard(user.tribe);
     setUsers(result);
-    console.log("result:", result);
   }, [getLeaderboard, user]);
 
   useEffect(() => {
@@ -35,7 +34,6 @@ const Leaderboard = () => {
     return sortedUsers;
   };
 
-
   return (
     <div className="leaderboard">
       <Header subtitle="Leaderboard" profileImage={user.img} />
@@ -45,7 +43,9 @@ const Leaderboard = () => {
             key={sortedUser.id + sortedUser.name}
             name={sortedUser.name}
             profileImage={
-              sortedUser.img ? sortedUser.img : "./assets/images/default-profile-image.png"
+              sortedUser.img
+                ? sortedUser.img
+                : "./assets/images/default-profile-image.png"
             }
             totalScore={sortedUser.totalScore}
             isFirstCard={index === 0}

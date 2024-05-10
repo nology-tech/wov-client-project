@@ -12,8 +12,6 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { useAuth } from "../../hooks/useAuth";
 
-
-
 type ActiveTasksItem = {
   [key: string]: boolean;
 };
@@ -81,7 +79,6 @@ const ActiveTasks = () => {
 
   return (
     <div className="task-page" data-testid="task-page">
-
       <Header subtitle="Task" profileImage={user.img} />
       <label htmlFor="task-search" className="task-page__label">
         Search Bar
@@ -147,7 +144,6 @@ const ActiveTasks = () => {
         />
       )}
       <Navigation navActionIndex={1} />
-
     </div>
   );
 };
