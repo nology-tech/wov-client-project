@@ -161,6 +161,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(userLoading);
     navigate("/");
   };
+
   const updateUser = async (
     data:
       | Pick<UserProfile, "bio" | "name" | "email" | "img">
