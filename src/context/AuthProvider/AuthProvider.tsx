@@ -51,7 +51,6 @@ export type AuthContextProps = {
       | Pick<UserProfile, "bio" | "name" | "email" | "img">
       | Pick<UserProfile, "totalScore">
   ) => PromiseObjectNullString;
-  updateAdmin: (data: Pick<AdminProfile, "email">) => PromiseObjectNullString;
 };
 export const AuthContext = createContext<AuthContextProps | undefined>(
   undefined
@@ -134,24 +133,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (adminData) {
       setAdmin(adminData);
     }
-  };
-
-  const updateAdmin = async (
-    data:
-      | Pick<AdminProfile, "email">
-  ): PromiseObjectNullString => {
-    if (admin === null) {
-      return { error: "No user stored" };
-    }
-    const { error, updated } = await updateDocumentInFirestoreCollection(
-      FirestoreCollections.ADMIN,
-      admin.email,
-      data
-    );
-    if (updated) {
-      setAdmin({ ...admin, ...data });
-    }
-    return { error };
   };
 
   const logoutUser = () => {
@@ -269,7 +250,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         logoutUser,
         createUser,
         updateUser,
-        updateAdmin,
       }}
     >
       {children}
