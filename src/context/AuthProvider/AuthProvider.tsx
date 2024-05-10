@@ -23,8 +23,7 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import { Task } from "../../mockData/mockActiveTasks";
-import { CompletedTask } from "../../mockData/mockCompletedTasks";
+import { Task, CompletedTask } from "../../types/Task";
 import { doc, increment, updateDoc } from "firebase/firestore";
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
@@ -164,24 +163,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const updateUser = async (
     data:
-      | Pick<UserProfile, "bio" | "name" | "email"| "img">
-      | Pick<UserProfile, "totalScore">,
-      // profileFile?: File
-      ): PromiseObjectNullString => {
-        if (user === null) {
-          return { error: "No user stored" };
-        }
-              const { error, updated } = await updateDocumentInFirestoreCollection(
-          FirestoreCollections.USERS,
-          user.id,
-          data
-        );
-              if (updated) {
-          // Update local user state with the new data
-          setUser({ ...user, ...data });
-        }
-        return { error };
-      };
+      | Pick<UserProfile, "bio" | "name" | "email" | "img">
+      | Pick<UserProfile, "totalScore">
+    // profileFile?: File
+  ): PromiseObjectNullString => {
+    if (user === null) {
+      return { error: "No user stored" };
+    }
+    const { error, updated } = await updateDocumentInFirestoreCollection(
+      FirestoreCollections.USERS,
+      user.id,
+      data
+    );
+    if (updated) {
+      // Update local user state with the new data
+      setUser({ ...user, ...data });
+    }
+    return { error };
+  };
   const createUser = async (
     { email, password, firstName, lastName, bio, tribe }: NewUser,
     profileFile?: File

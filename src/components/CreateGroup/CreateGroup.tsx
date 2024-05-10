@@ -8,6 +8,7 @@ import {
   getDocumentFromFirestoreCollection,
   saveFileAndRetrieveDownloadUrl,
 } from "../../utils/dbUtils";
+import { GroupData } from "../../types/Groups";
 
 const CreateGroup = () => {
   const { createGroup } = useFirestore();
@@ -52,7 +53,7 @@ const CreateGroup = () => {
 
     const today = new Date().toISOString().split("T")[0];
 
-    const groupData = {
+    const groupData: GroupData = {
       name: groupName,
       startDate: today,
       image: groupImage,

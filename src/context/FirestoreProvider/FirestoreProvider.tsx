@@ -7,7 +7,7 @@ import {
   createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
-import { CompletedTask, ActiveTask, Task} from "../../types/Task";
+import { CompletedTask, ActiveTask, Task } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
@@ -158,32 +158,17 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getLeaderboard = async (tribe: string) => {
-    if (!tribe) {
-      return [] as UserProfile[];
-    }
-
-    if (
-      !Object.values(FirestoreCollections).includes(
-        tribe as FirestoreCollections
-      )
-    ) {
-      console.error("Invalid tribe:", tribe);
-      return [] as UserProfile[];
-    }
-
     let result = [] as UserProfile[];
     try {
-      const completedTaskDocument =
-        await getCollectionFromFirestore<UserProfile>(
-          tribe as FirestoreCollections
-        );
-      const userProfiles = completedTaskDocument ?? ([] as UserProfile[]);
-      const tribeUsers = userProfiles.filter((user) => user.tribe === tribe);
-      result = tribeUsers ?? ([] as UserProfile[]);
+      const tribeDocument = await getCollectionFromFirestore<UserProfile>(
+        FirestoreCollections.USERS
+      );
+      const userList = tribeDocument ?? ([] as UserProfile[]);
+      const usersInTribe = userList.filter((user) => user.tribe === tribe);
+      result = usersInTribe;
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
     }
-
     return result;
   };
 
