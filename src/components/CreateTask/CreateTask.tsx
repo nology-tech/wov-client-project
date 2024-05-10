@@ -22,7 +22,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   const [missingFieldsError, setMissingFieldsError] = useState<string>("");
   const [taskPassedMessage, setTaskPassedMessage] = useState<string>("");
 
-  const handleCreateTask = async () => {  
+  const handleCreateTask = async () => {
     setMissingFieldsError("");
     setTaskPassedMessage("");
     const taskRef = collection(db, "test-tasks");
@@ -32,7 +32,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
     querySnapshot.forEach((doc) => {
       storedData.push(doc.data);
     });
-    
+
     if (
       formData.name &&
       formData.category &&
@@ -64,7 +64,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   return (
     <section className="create-task">
       <div className="create-task__form">
-        <form action="" onClick={handleCreateTask}>
+        <div>
           <label>Name</label>
           <input
             name="name"
@@ -73,7 +73,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
             data-testid="name-input"
             value={formData.name}
           />
-      
+
           <label>Category</label>
           <input
             name="category"
@@ -101,8 +101,12 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
           {taskPassedMessage && (
             <p className="success--message">{taskPassedMessage}</p>
           )}
-          <Button variant="secondary" label={buttonLabel}></Button>
-        </form>
+          <Button
+            variant="secondary"
+            label={buttonLabel}
+            onClick={handleCreateTask}
+          ></Button>
+        </div>
       </div>
     </section>
   );
