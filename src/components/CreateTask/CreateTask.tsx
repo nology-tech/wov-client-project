@@ -22,7 +22,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   const [missingFieldsError, setMissingFieldsError] = useState<string>("");
   const [taskPassedMessage, setTaskPassedMessage] = useState<string>("");
 
-  const handleCreateTask = async () => {
+  const handleCreateTask = async () => {  
     setMissingFieldsError("");
     setTaskPassedMessage("");
     const taskRef = collection(db, "test-tasks");
