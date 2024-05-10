@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useFirestore } from "../../hooks/useFireStore";
-import Button from "../Button/Button";
 import "./GroupTile.scss";
 
 type GroupTileProps = {
