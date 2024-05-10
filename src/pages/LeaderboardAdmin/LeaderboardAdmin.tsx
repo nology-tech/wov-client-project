@@ -52,7 +52,10 @@ const LeaderboardAdmin = () => {
   return (
     <div className="leaderboard-admin">
       {/* header */}
-      <Header subtitle="Leaderboard" profileImage="user's img" />
+      <Header
+        subtitle="Leaderboard"
+        profileImage="./assets/images/default-profile-image.png"
+      />
       {/* drop down of tribes */}
       <DropdownMenu
         arrayOfTribe={tribe}

@@ -48,7 +48,9 @@ const ReportingMostActive = () => {
           <UserCard
             key={user.id}
             name={user.name}
-            img={user.img}
+            img={
+              user.img ? user.img : "./assets/images/default-profile-image.png"
+            }
             loginCount={user.loginCount ?? 0}
             isFirstCard={index === 0}
             currentUserID={null}
