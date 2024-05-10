@@ -30,6 +30,9 @@ export type FirestoreContextProps = {
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllUsersAdmin: () => Promise<User[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
+  updateTasks: ( data:
+  | Pick<Task, "name" | "category" | "points" >
+) => PromiseObjectNullString
 };
 
 export const FirestoreContext = createContext<
@@ -247,11 +250,11 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
-  
+
 
   const updateTasks = async (
     data:
-      | Pick<Task, "name" | "category" | "points">
+      | Pick<Task,  "name" | "category" | "points" | "description" | "date">
   ): PromiseObjectNullString => {
     const EditedTask = allTasks?.map((task)=> {
       setTaskId(task.name)
@@ -262,6 +265,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
       taskId,
       data
     );
+
     return { error };
   };
 
@@ -278,6 +282,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getAllTasksAdmin,
         getAllGroupsAdmin,
         getAllUsersAdmin,
+        updateTasks,
       }}
     >
       {children}

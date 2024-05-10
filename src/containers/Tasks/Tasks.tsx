@@ -16,12 +16,14 @@ const Tasks = () => {
   const [showEditPopup, setShowEditPopup] = useState<boolean>(false);
   const [allTasks, setAllTasks] = useState<Task[]>()
   const [errorMessage, setErrorMessage] = useState<string>("");
-  
+  const { updateTasks} =  useFirestore();
+
   useEffect(() => {
     getAllTasksAdmin().then((tempTaskList) => {
       setTaskList(tempTaskList);
       setDisplayTaskList(tempTaskList);
       console.log(tempTaskList);
+      
       
     });
   }, []);
@@ -90,7 +92,8 @@ const Tasks = () => {
       console.log("updated task is ", allTasks)
       console.log("selected task", editedTask)
       // firebase.database().ref("test-tasks").push(allTasks);
-     };
+      updateTasks(allTasks) 
+    };
 
   return (
     <div className="tasks-component">
