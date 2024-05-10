@@ -59,10 +59,17 @@
       background-color: $white-color;
     }
     &--img-upload {
-      color: $slate-grey-color;
-      padding: 1rem 0;
-      padding-left: 1rem;
-      background-color: $light-grey-color;
+      color: transparent;
+      ::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+      ::before {
+        content: 'Select Picture';
+        color: $slate-grey-color;
+        padding: 1rem 0;
+        padding-left: 1rem;
+        background-color: $light-grey-color;
+      }
     }
     ::placeholder {
       color: $light-grey-color;
