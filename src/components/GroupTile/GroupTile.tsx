@@ -13,6 +13,7 @@ const GroupTile = ({
   tribeName,
   totalPoints,
   dateGroupStarted,
+  numberOfMembers
 }: GroupTileProps) => {
   const date = dateGroupStarted;
   const { getAllMembers } = useFirestore();
@@ -26,7 +27,7 @@ const GroupTile = ({
     getAllMembersData();
   }, [tribeName, getAllMembers]);
 
-  const numberOfMembers  = members.length;
+  numberOfMembers  = members.length;
 
   // You can fetch user profiles based on the IDs if necessary
   // For example:

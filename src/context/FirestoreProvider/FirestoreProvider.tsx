@@ -201,7 +201,6 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   
       // Access the "users" array field from the tribe document
       const users = tribeDoc.data().users || [];
-      console.log("users:", users)
       return users
   
       // Now you have the array of user IDs associated with the tribe
