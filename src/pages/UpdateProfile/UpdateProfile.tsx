@@ -9,6 +9,8 @@ import { auth } from "../../firebase";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
 import { Dialog, DialogContent, DialogActions } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
+import { saveFileAndRetrieveDownloadUrl } from "../../utils/dbUtils";
+import { useNavigate } from "react-router-dom";
 
 type UpdatePasswordForm = {
   current: string;
@@ -33,7 +35,9 @@ const UpdateProfile = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openPasswordPopup, setOpenPasswordPopup] = useState<boolean>(false);
   const { img, name, bio, email } = userUpdate;
-
+  const [showUploadPrompt, setShowUploadPrompt] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const navigate = useNavigate();
   const handleClickOpenPasswordPopup = () => {
     setOpenPasswordPopup(true);
   };
@@ -55,14 +59,31 @@ const UpdateProfile = () => {
   };
 
   const updateDatabase = async () => {
-    const { error } = await updateUser({ name, bio, email });
+    let img: string | undefined = user.img;
+    if (selectedFile) {
+      const filePath = `${user.id}/images/profile`;
+      const { fileDownloadUrl, error: uploadError } =
+        await saveFileAndRetrieveDownloadUrl(filePath, selectedFile, false);
+      if (uploadError) {
+        throw new Error(uploadError);
+      }
+      img = fileDownloadUrl || img || undefined;
+    }
+
+    const { error } = await updateUser({ name, bio, email, img });
+
     if (error) {
       setErrorMessage(error);
       setSuccessMessage("");
+      console.error("error occurred:", error);
     } else {
       setErrorMessage("");
       setSuccessMessage("Profile Updated");
     }
+
+    setTimeout(() => {
+      navigate("/profile");
+    }, 2000);
   };
 
   const changePassword = async () => {
@@ -87,11 +108,38 @@ const UpdateProfile = () => {
     setPassword({ current: "", new: "", confirm: "" });
   };
 
+  const handleShowUploadPrompt = () => {
+    setShowUploadPrompt(!showUploadPrompt);
+  };
+
+  const handlePictureChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0] as File;
+      setSelectedFile(file);
+    }
+  };
+
   return (
     <div>
       <Header subtitle="Profile" profileImage={img} />
       <div className="profile-update">
-        <img src={img} className="profile-update__img" alt="Profile" />
+        <input
+          id="img"
+          name="img"
+          className=""
+          type="file"
+          onChange={handlePictureChange}
+          style={{ display: "none" }}
+        />
+        {/* Label associated with the input element */}
+        <label htmlFor="img">
+          <img
+            src={img}
+            className="profile-update__img"
+            alt="Profile"
+            style={{ cursor: "pointer" }}
+          />
+        </label>
 
         <form className="profile-update__info">
           <label htmlFor="name" className="profile-update__label">
@@ -187,6 +235,30 @@ const UpdateProfile = () => {
         {successMessage && (
           <p className="profile-update__success-message">{successMessage}</p>
         )}
+
+        {showUploadPrompt ? (
+          <>
+            <input
+              id="img"
+              name="img"
+              className="file-upload-img"
+              type="file"
+              onChange={handlePictureChange}
+            />
+            {selectedFile && (
+              <p className="img-file-name">
+                {selectedFile.name}
+              </p>
+            )}
+          </>
+        ) : (
+          <Button
+            label={"CHANGE PICTURE"}
+            variant={"light-grey"}
+            onClick={handleShowUploadPrompt}
+          />
+        )}
+
         <Button
           label={"CHANGE PASSWORD"}
           variant={"light-grey"}
