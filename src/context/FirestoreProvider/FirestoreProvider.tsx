@@ -11,6 +11,9 @@ import { CompletedTask, ActiveTask, Task } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
+type PromiseObjectNullString = Promise<{ error: null | string }>;
+const [allTasks, setAllTasks] = useState<Task[]>()
+const [taskId, setTaskId] = useState<string>("");
 
 
 export type FirestoreContextProps = {
@@ -225,6 +228,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
     }
+    // setAllTasks(result);
     return result;
   };
 
@@ -242,26 +246,24 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
-  // const updatingCreatedTasks = async (
-  //   task: Task,
-  // ) => {
+  
 
-  //   await getAllTasksAdmin();
+  const updateTasks = async (
+    data:
+      | Pick<Task, "name" | "category" | "points">
+  ): PromiseObjectNullString => {
+    const EditedTask = allTasks?.map((task)=> {
+      setTaskId(task.name)
+    })
+    EditedTask
+    const { error } = await updateDocumentInFirestoreCollection(
+      FirestoreCollections.TEST_TASKS,
+      taskId,
+      data
+    );
+    return { error };
+  };
 
-  //   setCompletedTasksCache((completedTaskData) => ({
-  //     ...completedTaskData,
-  //     data: [...completedTaskData.data, completedTask],
-  //   }));
-
-  //   const updatedCompleteTasks = [...completedTasksCache.data, completedTask];
-
-  //   updateDocumentInFirestoreCollection(
-  //     FirestoreCollections.COMPLETED_TASKS,
-  //     user.id,
-  //     {
-  //       completedTasks: updatedCompleteTasks,
-  //     }
-  //   );
 
   return (
     <FirestoreContext.Provider

@@ -21,8 +21,9 @@ const Tasks = () => {
     getAllTasksAdmin().then((tempTaskList) => {
       setTaskList(tempTaskList);
       setDisplayTaskList(tempTaskList);
+      console.log(tempTaskList);
+      
     });
-    // eslint-disable-next-line
   }, []);
 
   const handleTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -119,7 +120,6 @@ const Tasks = () => {
                 requirement={task.description}
                 category={task.category}
                 points={task.points}
-                key={task.id}
                 handleEdit={handleEdit(task)}
                 editedTask={editedTask}
               />
