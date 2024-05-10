@@ -11,6 +11,8 @@ const Groups = () => {
   const [groupList, setGroupList] = useState<GroupData[]>([]);
   const [displayGroupList, setDisplayGroupList] = useState<GroupData[]>([]);
 
+  
+
   useEffect(() => {
     getAllGroupsAdmin().then((groups) => {
       setGroupList(groups);
