@@ -4,6 +4,7 @@ import { customRender } from "../../utils/testUtils";
 import { FirestoreContextProps } from "../../context/FirestoreProvider/FirestoreProvider";
 import { GroupData } from "../../types/Groups";
 
+
 describe("Register Component", () => {
   const mockTribes: GroupData[] = [
     {
