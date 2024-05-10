@@ -1,12 +1,12 @@
-import GroupTile from "../../components/GroupTile/GroupTile";
+import TribeTile from "../../components/TribeTile/TribeTile";
 import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import "./Groups.scss";
+import "./Tribes.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useFirestore } from "../../hooks/useFireStore";
-import { GroupData } from "../../types/Groups";
+import { TribeData } from "../../types/Tribes";
 
-const Groups = () => {
+const Tribes = () => {
   const {getAllGroupsAdmin} = useFirestore();
   const [groupList, setGroupList] = useState<GroupData[]>([]);
   const [displayGroupList, setDisplayGroupList] = useState<GroupData[]>([]);

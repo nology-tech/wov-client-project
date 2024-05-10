@@ -1,4 +1,4 @@
-import "./CreateGroup.scss";
+import "./CreateTribe.scss";
 import Button from "../Button/Button";
 import camera from "../../assets/images/camera-placeholder.png";
 import { useFirestore } from "../../hooks/useFireStore";
@@ -8,30 +8,30 @@ import {
   getDocumentFromFirestoreCollection,
   saveFileAndRetrieveDownloadUrl,
 } from "../../utils/dbUtils";
-import { GroupData } from "../../types/Groups";
+import { TribeData } from "../../types/Tribes";
 
-const CreateGroup = () => {
-  const { createGroup } = useFirestore();
-  const [groupName, setGroupName] = useState("");
+const CreateTribe = () => {
+  const { createTribe } = useFirestore();
+  const [tribeName, setTribeName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [errorExistingGroup, setErrorExistingGroup] = useState("");
+  const [errorExistingTribe, setErrorExistingTribe] = useState("");
   const [successMessage, setsuccessMessage] = useState("");
-  const [groupImage, setGroupImage] = useState<string>(camera);
+  const [tribeImage, setTribeImage] = useState<string>(camera);
 
   const checkMissingFields = () => {
     const missingFields = [];
 
-    if (!groupName.trim()) {
-      missingFields.push("Group Name");
+    if (!tribeName.trim()) {
+      missingFields.push("Tribe Name");
     }
 
     return missingFields;
   };
 
-  const handleCreateGroup = async () => {
+  const handleCreateTribe = async () => {
     setErrorMessage("");
     setsuccessMessage("");
-    setErrorExistingGroup("");
+    setErrorExistingTribe("");
 
     const missingFields = checkMissingFields();
     if (missingFields.length > 0) {
@@ -39,45 +39,45 @@ const CreateGroup = () => {
       return;
     }
 
-    const existingGroup = await getDocumentFromFirestoreCollection(
+    const existingTribe = await getDocumentFromFirestoreCollection(
       FirestoreCollections.TRIBELIST,
-      groupName.trim()
+      tribeName.trim()
     );
 
-    if (existingGroup) {
-      setErrorExistingGroup(
-        "This group already exists. Please choose a different name."
+    if (existingTribe) {
+      setErrorExistingTribe(
+        "A tribe with this name already exists. Please choose a different name."
       );
       return;
     }
 
     const today = new Date().toISOString().split("T")[0];
 
-    const groupData: GroupData = {
-      name: groupName,
+    const tribeData: TribeData = {
+      name: tribeName,
       startDate: today,
-      image: groupImage,
+      image: tribeImage,
       numberOfMembers: 0,
       totalPoints: 0,
     };
 
     try {
-      const result = await createGroup(groupData);
+      const result = await createTribe(tribeData);
 
       if (result.created) {
         setsuccessMessage("Your new tribe has been created!");
         clearInputValues();
       } else {
-        setErrorMessage(result.error || "Error creating the group");
+        setErrorMessage(result.error || "Error creating the tribe");
       }
     } catch (error) {
-      setErrorMessage("Error creating the group");
+      setErrorMessage("Error creating the tribe");
     }
   };
 
   const clearInputValues = () => {
-    setGroupName("");
-    setGroupImage(camera);
+    setTribeName("");
+    setTribeImage(camera);
   };
 
   const handleInputChange =
@@ -86,62 +86,62 @@ const CreateGroup = () => {
       setter(e.target.value);
       setErrorMessage("");
       setsuccessMessage("");
-      setErrorExistingGroup("");
+      setErrorExistingTribe("");
     };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       let fileDownloadURL = await createImage(e.target.files[0]);
       fileDownloadURL = fileDownloadURL ?? camera;
-      setGroupImage(fileDownloadURL);
+      setTribeImage(fileDownloadURL);
     }
   };
 
-  const createImage = async (groupFile?: File) => {
-    const groupProfile = {
+  const createImage = async (tribeImgFile?: File) => {
+    const tribeProfile = {
       img: "",
     };
 
-    if (groupFile) {
-      const filePath = `groups/images`;
+    if (tribeImgFile) {
+      const filePath = `tribes/images`;
       const { fileDownloadUrl, error } = await saveFileAndRetrieveDownloadUrl(
         filePath,
-        groupFile,
+        tribeImgFile,
         true
       );
 
       if (error) {
         throw new Error(error);
       }
-      groupProfile.img = fileDownloadUrl || "";
+      tribeProfile.img = fileDownloadUrl || "";
       return fileDownloadUrl;
     }
   };
 
   return (
-    <div className="create-group-container">
-      <div className="create-group">
-        <div className="create-group__new-group"></div>
+    <div className="create-tribe-container">
+      <div className="create-tribe">
+        <div className="create-tribe__new-tribe"></div>
 
-        <div className="create-group__name text-field">
-          <label htmlFor="Group Name">Name</label>
-          {errorMessage && errorMessage.includes("Group Name") && (
-            <p className="create-group__error">This is a required field</p>
+        <div className="create-tribe__name text-field">
+          <label htmlFor="tribe Name">Name</label>
+          {errorMessage && errorMessage.includes("tribe Name") && (
+            <p className="create-tribe__error">This is a required field</p>
           )}
-          {errorExistingGroup && (
-            <p className="create-group__error">{errorExistingGroup}</p>
+          {errorExistingTribe && (
+            <p className="create-tribe__error">{errorExistingTribe}</p>
           )}
           <input
             type="text"
-            id="Group Name"
-            value={groupName}
-            onChange={handleInputChange(setGroupName)}
+            id="tribe Name"
+            value={tribeName}
+            onChange={handleInputChange(setTribeName)}
           />
         </div>
 
-        <div className="create-group__media">
-          <label htmlFor="file-input" className="create-group__upload">
-            <img src={groupImage} alt="Media" />
+        <div className="create-tribe__media">
+          <label htmlFor="file-input" className="create-tribe__upload">
+            <img src={tribeImage} alt="Media" />
             <p>Media</p>
           </label>
           <input
@@ -153,17 +153,17 @@ const CreateGroup = () => {
         </div>
 
         {successMessage && (
-          <p className="create-group__success">{successMessage}</p>
+          <p className="create-tribe__success">{successMessage}</p>
         )}
-        <div className="create-group__create">
+        <div className="create-tribe__create">
           <Button
             label="Create"
             variant="secondary"
-            onClick={handleCreateGroup}
+            onClick={handleCreateTribe}
           />
         </div>
       </div>
     </div>
   );
 };
-export default CreateGroup;
+export default CreateTribe;

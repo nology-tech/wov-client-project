@@ -1,6 +1,6 @@
 @use "/src/styles/variables" as *;
 
-.create-group-container {
+.create-tribe-container {
   display: flex;
   justify-content: center;
 
@@ -11,7 +11,7 @@
     margin-top: 30px;
   }
 
-  .create-group {
+  .create-tribe {
     .labelToClick {
       display: block;
       width: 85%;
@@ -29,7 +29,7 @@
       margin: 50px 20px;
     }
 
-    .create-group__name {
+    .create-tribe__name {
       width: 80%;
 
       label {
@@ -37,7 +37,7 @@
       }
     }
 
-    .create-group__dates {
+    .create-tribe__dates {
       display: flex;
       width: 90%;
 
@@ -69,12 +69,12 @@
         }
       }
 
-      .create-group__error {
+      .create-tribe__error {
         color: red;
       }
     }
 
-    .create-group__media {
+    .create-tribe__media {
       width: 85%;
       height: 200px;
       margin: 35px 0 10px 20px;
@@ -97,7 +97,7 @@
         height: 50px;
       }
 
-      .create-group__upload {
+      .create-tribe__upload {
         width: 100%;
         height: 200px;
         border-radius: 5px;
@@ -113,7 +113,7 @@
       }
     }
 
-    .create-group__success {
+    .create-tribe__success {
       color: green;
       margin: 0 20px;
     }
@@ -121,19 +121,19 @@
 }
 
 @media screen and (min-width: $mobile-breakpoint) {
-  .create-group {
+  .create-tribe {
     width: 95vw;
   }
 }
 
 @media screen and (min-width: $tablet-breakpoint) {
-  .create-group {
+  .create-tribe {
     width: 55vw;
   }
 }
 
 @media screen and (min-width: $desktop-breakpoint) {
-  .create-group {
+  .create-tribe {
     width: 35vw;
   }
 }

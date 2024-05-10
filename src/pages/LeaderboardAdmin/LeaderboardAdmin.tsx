@@ -7,7 +7,7 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { useAuth } from "../../hooks/useAuth";
 import { UserProfile } from "../../types/User";
 import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
-import { GroupData } from "../../types/Groups";
+import { GroupData } from "../../types/Tribes";
 
 
 const LeaderboardAdmin = () => {

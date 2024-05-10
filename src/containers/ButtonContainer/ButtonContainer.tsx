@@ -3,53 +3,51 @@ import "./ButtonContainer.scss";
 import { Dispatch, SetStateAction, useState } from "react";
 
 export type ButtonContainerProps = {
-  setShowGroup: Dispatch<SetStateAction<boolean>>;
+  setShowTribe: Dispatch<SetStateAction<boolean>>;
   setShowUser: Dispatch<SetStateAction<boolean>>;
   setShowTask: Dispatch<SetStateAction<boolean>>;
 };
 
-const ButtonContainer = ({ setShowGroup, setShowUser, setShowTask }: ButtonContainerProps) => {
-  const [groupClick, setGroupClick] = useState<boolean>(false);
+const ButtonContainer = ({ setShowTribe, setShowUser, setShowTask }: ButtonContainerProps) => {
+  const [tribeClick, setTribeClick] = useState<boolean>(false);
   const [userClick, setUserClick] = useState<boolean>(false);
   const [taskClick, setTaskClick] = useState<boolean>(false);
 
   const handleGroupClick = () => {
-    setGroupClick(!groupClick);
+    setTribeClick(!tribeClick);
     setUserClick(false);
     setTaskClick(false);
-    setShowGroup(true);
+    setShowTribe(true);
     setShowUser(false);
     setShowTask(false);
   }
 
   const handleUserClick = () => {
     setUserClick(!userClick);
-    setGroupClick(false);
+    setTribeClick(false);
     setTaskClick(false);
-    setShowGroup(false);
+    setShowTribe(false);
     setShowUser(true);
     setShowTask(false);
   };
 
   const handleTaskClick = () => {
     setTaskClick(!taskClick);
-    setGroupClick(false);
+    setTribeClick(false);
     setUserClick(false);
-    setShowGroup(false);
+    setShowTribe(false);
     setShowUser(false);
     setShowTask(true);
   };
 
   return (
     <div className="buttons-container">
-
       <Button
-        label={"groups"}
-        variant={groupClick ? "secondary" : "light-grey-lighter"}
+        label={"tribes"}
+        variant={tribeClick ? "secondary" : "light-grey-lighter"}
         onClick={handleGroupClick}
         size="small"
       />
-
       <Button
         label={"users"}
         variant={userClick ? "secondary" : "light-grey-lighter"}
