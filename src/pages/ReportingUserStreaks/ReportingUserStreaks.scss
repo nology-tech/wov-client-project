@@ -1,0 +1,10 @@
+@use "../../styles/variables" as *;
+
+.userstreaks__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $primary-color;
+  font-size: 1.5rem;
+}

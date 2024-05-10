@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import {
   NewUser,
   UserLoading,
@@ -23,7 +23,8 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import {Task, CompletedTask} from "../../types/Task"
+import { Task, CompletedTask } from "../../types/Task";
+import { doc, increment, updateDoc } from "firebase/firestore";
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
   id: "",
@@ -74,6 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsAuthenticated(false);
     }
   }, []);
+
   const checkAdminStatus = async (userID: string) => {
     const adminDoc = await getDocumentFromFirestoreCollection(
       FirestoreCollections.ADMIN,
@@ -81,6 +83,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     );
     setIsAdmin(adminDoc !== null);
   };
+
+  const incrementLogin = async (userID: string) => {
+    const userDoc = doc(db, "users", userID);
+    await updateDoc(userDoc, {
+      loginCount: increment(1),
+    });
+  };
+
   const loginUser = async (
     email: string,
     password: string
@@ -91,6 +101,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         email,
         password
       );
+      const userID = userCredential.user.uid;
+      const userDoc = await getDocumentFromFirestoreCollection<UserProfile>(
+        FirestoreCollections.USERS,
+        userID
+      );
+      if (userDoc) {
+        await incrementLogin(userID);
+      }
       updateAuthState(userCredential);
       navigate("/");
     } catch (error) {
@@ -143,26 +161,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(userLoading);
     navigate("/");
   };
+
   const updateUser = async (
     data:
-      | Pick<UserProfile, "bio" | "name" | "email"| "img">
-      | Pick<UserProfile, "totalScore">,
-      // profileFile?: File
-      ): PromiseObjectNullString => {
-        if (user === null) {
-          return { error: "No user stored" };
-        }
-              const { error, updated } = await updateDocumentInFirestoreCollection(
-          FirestoreCollections.USERS,
-          user.id,
-          data
-        );
-              if (updated) {
-          // Update local user state with the new data
-          setUser({ ...user, ...data });
-        }
-        return { error };
-      };
+      | Pick<UserProfile, "bio" | "name" | "email" | "img">
+      | Pick<UserProfile, "totalScore">
+    // profileFile?: File
+  ): PromiseObjectNullString => {
+    if (user === null) {
+      return { error: "No user stored" };
+    }
+    const { error, updated } = await updateDocumentInFirestoreCollection(
+      FirestoreCollections.USERS,
+      user.id,
+      data
+    );
+    if (updated) {
+      // Update local user state with the new data
+      setUser({ ...user, ...data });
+    }
+    return { error };
+  };
   const createUser = async (
     { email, password, firstName, lastName, bio, tribe }: NewUser,
     profileFile?: File
