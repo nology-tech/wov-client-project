@@ -12,6 +12,8 @@ import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
 import { User } from "../../types/User";
+import { db } from "../../firebase";
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 export type FirestoreContextProps = {
   getActiveTasks: (userId: string) => ActiveTask[];
@@ -26,6 +28,7 @@ export type FirestoreContextProps = {
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllUsersAdmin: () => Promise<User[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
+  getAllMembers: (tribe: string) => Promise<string[]>
 };
 
 export const FirestoreContext = createContext<
@@ -172,6 +175,47 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
+
+  const getAllMembers = async (tribe: string) => {
+    if (!tribe) {
+      return [] as UserProfile[];
+    }
+
+  
+    try {
+      const tribeRef = collection(db, FirestoreCollections.TRIBELIST); // Reference to the "tribes" collection
+      const q = query(tribeRef, where('name', '==', tribe)); // Query to filter by tribe name
+  
+      const querySnapshot = await getDocs(q); // Execute the query and get snapshot of documents
+  
+      if (querySnapshot.empty) {
+        console.log('No matching documents.');
+        return [] as UserProfile[];
+      }
+  
+      const tribeDoc = querySnapshot.docs[0]; // Assuming there's only one document per tribe
+  
+      // Access the "users" array field from the tribe document
+      const users = tribeDoc.data().users || [];
+      return users
+  
+      // Now you have the array of user IDs associated with the tribe
+      // You can fetch user profiles using these IDs
+  
+      // For example, fetch user profiles using the IDs
+      // const usersProfiles = await Promise.all(users.map(async (userId: string) => {
+      //   const userDoc = await getDocumentFromFirestore(FirestoreCollections.USERS, userId); // Fetch user document
+      //   return userDoc.data(); // Return user profile
+      // }));
+  
+      // return usersProfiles as UserProfile[]; // Return array of user profiles
+    } catch (error) {
+      console.error("Error fetching members from tribe:", error);
+      return [] as UserProfile[];
+    }
+  };
+  
+
   const getTribes = async () => {
     let result = [] as GroupData[];
     try {
@@ -199,6 +243,17 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
       return { error: (error as Error).message, created: false };
     }
   };
+
+  // const addToTribe = async(groupData: GroupData) => {
+  //   const {name} = groupData;
+  //   await createDocumentInFirestoreCollection(
+  //     FirestoreCollections.TRIBELIST,
+  //     name,
+  //     name
+  //   )
+  // }
+
+
 
   const getAllTasksAdmin = async () => {
     let result = [] as Task[];
@@ -254,9 +309,14 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getAllTasksAdmin,
         getAllGroupsAdmin,
         getAllUsersAdmin,
+        getAllMembers
       }}
     >
       {children}
     </FirestoreContext.Provider>
   );
 };
+// function getDocumentFromFirestore(USERS: FirestoreCollections, userId: string) {
+//   throw new Error("Function not implemented.");
+// }
+

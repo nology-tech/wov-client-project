@@ -23,8 +23,13 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import { Task, CompletedTask } from "../../types/Task";
+import {Task, CompletedTask} from "../../types/Task"
+// import { Task } from "../../mockData/mockActiveTasks";
+// import { CompletedTask } from "../../mockData/mockCompletedTasks";
 import { doc, increment, updateDoc } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+import 'firebase/compat/firestore'; // Import Firestore module
+
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
   id: "",
@@ -182,6 +187,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return { error };
   };
+
+  const updateTribeDocumentWithUser = async (tribeId: string, userId: string) => {
+    try {
+      const tribeDocRef = doc(db, 'tribes', tribeId);
+      await updateDoc(tribeDocRef, {
+        users: firebase.firestore.FieldValue.arrayUnion(userId)
+      });
+      console.log(`Tribe document updated successfully with user ${userId}.`);
+    } catch (error) {
+      console.error(`Error updating tribe document with user ${userId}:`, error);
+      throw error; // Propagate the error to the caller
+    }
+  };
+
+
   const createUser = async (
     { email, password, firstName, lastName, bio, tribe }: NewUser,
     profileFile?: File
@@ -221,6 +241,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         uid,
         userProfile
       );
+
+      await updateTribeDocumentWithUser(tribe, uid);
+
       await createDocumentInFirestoreCollection(
         FirestoreCollections.COMPLETED_TASKS,
         uid,
@@ -235,6 +258,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           activeTasks: [],
         }
       );
+
+      
       setUser(userProfile);
       navigate("/");
       return { error: null };

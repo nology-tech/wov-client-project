@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useFirestore } from "../../hooks/useFireStore";
 import "./GroupTile.scss";
 
 type GroupTileProps = {
@@ -9,11 +11,39 @@ type GroupTileProps = {
 
 const GroupTile = ({
   tribeName,
-  numberOfMembers,
   totalPoints,
   dateGroupStarted,
+  numberOfMembers
 }: GroupTileProps) => {
   const date = dateGroupStarted;
+  const { getAllMembers } = useFirestore();
+  const [members, setMembers] = useState<string[]>([]);
+
+  useEffect(() => {
+    const getAllMembersData = async () => {
+      const userIds = await getAllMembers(tribeName); // Fetch user IDs associated with the tribe
+      setMembers(userIds);
+    };
+    getAllMembersData();
+  }, [tribeName, getAllMembers]);
+
+  numberOfMembers  = members.length;
+
+  // You can fetch user profiles based on the IDs if necessary
+  // For example:
+  // const [userProfiles, setUserProfiles] = useState<UserProfile[]>([]);
+  // useEffect(() => {
+  //   const fetchUserProfiles = async () => {
+  //     const profiles = await Promise.all(
+  //       members.map(async (userId) => {
+  //         const userProfile = await getUserProfile(userId); // Implement this function to fetch user profile
+  //         return userProfile;
+  //       })
+  //     );
+  //     setUserProfiles(profiles);
+  // };
+  // fetchUserProfiles();
+  // }, [members]);
 
   return (
     <div className="group-tile__container">
