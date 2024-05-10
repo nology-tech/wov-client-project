@@ -21,7 +21,7 @@ const DropdownMenu = ({arrayOfTribe, handleChange, chosenTribe} : DropdownMenuPr
           labelId="tribe-input"
           id="tribe"
           value={chosenTribe}
-          label="Tribe"
+          label="Select Tribe"
           onChange={handleChange}
         >
           {/* get tribe data from db, map over, create menu item for each one */}
