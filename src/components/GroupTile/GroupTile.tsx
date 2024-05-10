@@ -26,7 +26,7 @@ const GroupTile = ({
     getAllMembersData();
   }, [tribeName, getAllMembers]);
 
-  const noOfMembers = members.length;
+  const numberOfMembers  = members.length;
 
   // You can fetch user profiles based on the IDs if necessary
   // For example:
@@ -48,7 +48,7 @@ const GroupTile = ({
     <div className="group-tile__container">
       <div className="group-tile">
         <h3 className="group-tile__name">{tribeName}</h3>
-        <p className="group-tile__members">Members: {noOfMembers}</p>
+        <p className="group-tile__members">Members: {numberOfMembers}</p>
         <h4 className="group-tile__points">Total Points: {totalPoints}</h4>
         <p className="group-tile__date">Date created: {date}</p>
       </div>
