@@ -1,13 +1,15 @@
-export type CompletedTask = {
-  id: string;
-  taskHeading: string;
-  type?: "weekly" | "daily" | "monthly";
-  category?: string;
-  points: number;
-  completed: string;
-  description?: string;
-  image?: string;
-}
+import { CompletedTask } from "../types/Task"
+
+// export type CompletedTask = {
+//   id: string;
+//   taskHeading: string;
+//   type?: "weekly" | "daily" | "monthly";
+//   category?: string;
+//   points: number;
+//   completed: string;
+//   description?: string;
+//   image?: string;
+// }
 
 // NOTE:
 // Completed tasks will be stored per user, these are a list of tasks for a single user

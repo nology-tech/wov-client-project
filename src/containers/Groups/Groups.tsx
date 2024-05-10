@@ -7,7 +7,7 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { GroupData } from "../../types/Groups";
 
 const Groups = () => {
-  const { getAllGroupsAdmin } = useFirestore();
+  const {getAllGroupsAdmin} = useFirestore();
   const [groupList, setGroupList] = useState<GroupData[]>([]);
   const [displayGroupList, setDisplayGroupList] = useState<GroupData[]>([]);
 
@@ -32,24 +32,26 @@ const Groups = () => {
     setDisplayGroupList(filteredDisplayGroupList);
   };
 
+
   return (
     <div className="group-component">
-      <div className="search-bar">
-        <TextField
-          fullWidth
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon className="search-icon" />
-              </InputAdornment>
-            ),
-          }}
-          placeholder="Search by group, category"
-          variant="outlined"
-          role="search"
-          onChange={handleInputChange}
-        />
-      </div>
+    <div className="search-bar">
+      <TextField
+        fullWidth
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon className="search-icon" />
+            </InputAdornment>
+          ),
+        }}
+        placeholder="Search by task, category"
+        variant="outlined"
+        role="search"
+        onChange={handleInputChange}
+      />
+
+    </div>
       <div className="group-tile__container">
         {displayGroupList.map((group) => (
           <GroupTile
