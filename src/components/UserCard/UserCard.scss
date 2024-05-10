@@ -1,0 +1,119 @@
+@use "../../styles/reset";
+@use "../../styles/variables" as *;
+@use "../../styles/typography";
+
+.user-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 80%;
+  margin: 1rem auto;
+  border: 1px $light-grey-color solid;
+  border-radius: 10px;
+  padding: 0.5rem 0.8rem;
+
+  &__img-div {
+    width: 2.5rem;
+    height: 2.5rem;
+    &--img {
+      border-radius: 50%;
+      background-color: $white-color;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__name {
+    font-size: 0.85rem;
+    width: 10rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $slate-grey-color;
+    margin-left: 1rem;
+  }
+  &__login-count {
+    color: $primary-color;
+  }
+}
+
+.user-card--current-user {
+  background-color: $light-grey-color;
+}
+
+.user-card--first {
+  background-color: $primary-color;
+  .user-card__name--first {
+    color: white;
+  }
+}
+
+@media screen and (min-width: $tablet-breakpoint) {
+  .user-card {
+    &__img-div {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+    &__name {
+      font-size: 1.2rem;
+      width: 70%;
+    }
+    &__login-count {
+      font-size: 1.5rem;
+      padding-right: 0.8rem;
+    }
+  }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .user-card {
+    margin: 2.5rem auto;
+    border-radius: 15px;
+    &__img-div {
+      width: 4rem;
+      height: 4rem;
+    }
+    &__name {
+      font-size: 1.4rem;
+    }
+    &__login-count {
+      font-size: 1.8rem;
+      padding-right: 1rem;
+    }
+  }
+}
+
+@media screen and (min-width: $large-desktop-breakpoint) {
+  .user-card {
+    border-radius: 20px;
+    padding: 0.7rem 1.7rem;
+    &__img-div {
+      width: 5rem;
+      height: 5rem;
+    }
+    &__name {
+      font-size: 1.8rem;
+    }
+    &__login-count {
+      font-size: 2.2rem;
+    }
+  }
+}
+
+@media screen and (min-width: $extra-large-desktop-breakpoint) {
+  .user-card {
+    margin: 3.5rem auto;
+    border-radius: 25px;
+    padding: 1.3rem 2.5rem;
+    &__img-div {
+      width: 8rem;
+      height: 8rem;
+    }
+    &__name {
+      font-size: 3.5rem;
+    }
+    &__login-count {
+      font-size: 3.9rem;
+      padding-right: 1.8rem;
+    }
+  }
+}
