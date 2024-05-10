@@ -1,14 +1,15 @@
-import { MouseEventHandler, useEffect } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useFirestore } from "../../hooks/useFireStore";
 import Button from "../Button/Button";
 import "./GroupTile.scss";
-
+import { count } from "firebase/firestore";
 
 type GroupTileProps = {
   tribeName: string;
   numberOfMembers: number;
   totalPoints: number;
   dateGroupStarted: string;
+  handleDeleteAttempt: () => void;
 };
 
 const GroupTile = ({
@@ -16,18 +17,25 @@ const GroupTile = ({
   numberOfMembers,
   totalPoints,
   dateGroupStarted,
+  handleDeleteAttempt,
 }: GroupTileProps) => {
   const date = dateGroupStarted;
-  const {removeGroupAdmin} = useFirestore();
+  const { removeTribeAdmin } = useFirestore();
 
-  useEffect(() => {
-    removeGroupAdmin(tribeName)
-  }, [])
+  const [hasPressedDelete, setHasPressedDelete] = useState(false);
+  const [countdown, setCountdown] = useState(3);
 
+  const handleDelete = (): MouseEventHandler<HTMLButtonElement> => {
+    setHasPressedDelete(true);
 
-  const handleDelete = (tribeName: string) : MouseEventHandler<HTMLButtonElement> => {
-    removeGroupAdmin(tribeName)
-  }
+    if (countdown == 1) {
+      removeTribeAdmin(tribeName);
+      handleDeleteAttempt();
+    } else {
+      setCountdown(countdown - 1);
+    }
+  };
+
   return (
     <>
       <div className="group-tile">
@@ -36,10 +44,15 @@ const GroupTile = ({
         <p className="group-tile__points">Total Points: {totalPoints}</p>
         <p className="group-tile__date">Date created: {date}</p>
         <button className="group-tile__editButton">EDIT</button>
-        <Button label={"Delete"} variant="light-grey" size="small" onClick={handleDelete(tribeName)}/>
+        {hasPressedDelete ? <p>Will delete in {countdown} presses</p> : <></>}
+        <Button
+          label={"Delete"}
+          variant="light-grey"
+          size="small"
+          onClick={handleDelete}
+        />
       </div>
     </>
-
   );
 };
 

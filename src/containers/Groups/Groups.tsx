@@ -7,9 +7,14 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { GroupData } from "../../types/Groups";
 
 const Groups = () => {
-  const {getAllGroupsAdmin} = useFirestore();
+  const { getAllGroupsAdmin } = useFirestore();
   const [groupList, setGroupList] = useState<GroupData[]>([]);
   const [displayGroupList, setDisplayGroupList] = useState<GroupData[]>([]);
+  const [deleteAttempt, setDeleteAttempt] = useState(false);
+
+  const handleDeleteAttempt = () => {
+    setDeleteAttempt(!deleteAttempt);
+  };
 
   useEffect(() => {
     getAllGroupsAdmin().then((groups) => {
@@ -17,7 +22,7 @@ const Groups = () => {
       setDisplayGroupList(groups);
     });
     // eslint-disable-next-line
-  }, []);
+  }, [deleteAttempt]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const tempSearchTerm = event.target.value;
@@ -32,26 +37,24 @@ const Groups = () => {
     setDisplayGroupList(filteredDisplayGroupList);
   };
 
-
   return (
     <div className="group-component">
-    <div className="search-bar">
-      <TextField
-        fullWidth
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon className="search-icon" />
-            </InputAdornment>
-          ),
-        }}
-        placeholder="Search by task, category"
-        variant="outlined"
-        role="search"
-        onChange={handleInputChange}
-      />
-
-    </div>
+      <div className="search-bar">
+        <TextField
+          fullWidth
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon className="search-icon" />
+              </InputAdornment>
+            ),
+          }}
+          placeholder="Search by task, category"
+          variant="outlined"
+          role="search"
+          onChange={handleInputChange}
+        />
+      </div>
       <div className="group-tile__container">
         {displayGroupList.map((group) => (
           <GroupTile
@@ -60,8 +63,8 @@ const Groups = () => {
             numberOfMembers={0}
             totalPoints={0}
             dateGroupStarted={group.startDate}
+            handleDeleteAttempt={handleDeleteAttempt}
           />
-  
         ))}
         ;
       </div>

@@ -10,6 +10,7 @@ import {
   WithFieldValue,
   DocumentData,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 export enum FirestoreCollections {
@@ -88,6 +89,18 @@ export const createDocumentInFirestoreCollection = async <
 ): Promise<CreateDocumentResult> => {
   try {
     await setDoc(doc(db, collectionName, userId), data);
+    return { error: null, created: true };
+  } catch (error) {
+    return { error: (error as Error).message, created: false };
+  }
+};
+
+export const deleteDocumentInFirestoreCollection = async (
+  collectionName: FirestoreCollections,
+  docID: string
+) => {
+  try {
+    await deleteDoc(doc(db, collectionName, docID));
     return { error: null, created: true };
   } catch (error) {
     return { error: (error as Error).message, created: false };

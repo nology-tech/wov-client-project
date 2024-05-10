@@ -5,6 +5,7 @@ import {
   updateDocumentInFirestoreCollection,
   FirestoreCollections,
   createDocumentInFirestoreCollection,
+  deleteDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask, Task } from "../../types/Task";
@@ -26,7 +27,7 @@ export type FirestoreContextProps = {
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllUsersAdmin: () => Promise<User[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
-  removeGroupAdmin: (tribeName: string) => Promise<void>;
+  removeTribeAdmin: (tribeName: string) => Promise<void>;
 };
 
 export const FirestoreContext = createContext<
@@ -243,44 +244,25 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
-  const removeGroupAdmin = async (tribeName: string) => {
-
-    // const updatedGroupList = activeTasksCache.data.filter(
-    //   (task) => task.id !== completedTaskId
-    // );
-    // setActiveTasksCache((updatedActiveTaskData) => ({
-    //   ...updatedActiveTaskData,
-    //   data: updatedActiveTasks,
-    // }));
-    // updateDocumentInFirestoreCollection(
-    //   FirestoreCollections.ACTIVE_TASKS,
-    //   userId,
-    //   {
-    //     activeTasks: updatedActiveTasks,
-    //   }
-    // );
-
+  const removeTribeAdmin = async (tribeName: string) => {
     try {
-      const completedTribesList = await getCollectionFromFirestore<
-       GroupData
-      >(FirestoreCollections.TRIBELIST);
-      const tribes = completedTribesList
-        ? (completedTribesList as GroupData[])
-        : ([] as GroupData[]);
-      const filterTribes = tribes?.filter((tribe)=> {     
-        return tribe.name !== tribeName
-      });
-
-      console.log(filterTribes);
-      // console.log(tribes[0].name);
-      
-      
+      // const completedTribesList = await getCollectionFromFirestore<GroupData>(
+      //   FirestoreCollections.TRIBELIST
+      // );
+      // const tribes = completedTribesList
+      //   ? (completedTribesList as GroupData[])
+      //   : ([] as GroupData[]);
+      // const filterTribes = tribes?.filter((tribe) => {
+      //   return tribe.name !== tribeName;
+      // });
+      deleteDocumentInFirestoreCollection(
+        FirestoreCollections.TRIBELIST,
+        tribeName
+      );
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
     }
   };
-
-
 
   return (
     <FirestoreContext.Provider
@@ -294,7 +276,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getAllTasksAdmin,
         getAllGroupsAdmin,
         getAllUsersAdmin,
-        removeGroupAdmin,
+        removeTribeAdmin,
       }}
     >
       {children}
