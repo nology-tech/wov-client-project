@@ -25,7 +25,7 @@ export type FirestoreContextProps = {
   createTribe: (tribeData: TribeData) => Promise<CreateDocumentResult>;
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllUsersAdmin: () => Promise<User[]>;
-  getAllGroupsAdmin: () => Promise<TribeData[]>;
+  getAllTribesAdmin: () => Promise<TribeData[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -214,7 +214,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
-  const getAllGroupsAdmin = async () => {
+  const getAllTribesAdmin = async () => {
     let result = [] as TribeData[];
     try {
       const tribeDocument = await getCollectionFromFirestore<TribeData>(
@@ -252,7 +252,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getTribes,
         createTribe,
         getAllTasksAdmin,
-        getAllGroupsAdmin,
+        getAllTribesAdmin,
         getAllUsersAdmin,
       }}
     >

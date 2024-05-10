@@ -7,14 +7,14 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { TribeData } from "../../types/Tribes";
 
 const Tribes = () => {
-  const {getAllGroupsAdmin} = useFirestore();
-  const [groupList, setGroupList] = useState<GroupData[]>([]);
-  const [displayGroupList, setDisplayGroupList] = useState<GroupData[]>([]);
+  const {getAllTribesAdmin} = useFirestore();
+  const [tribeList, setTribeList] = useState<TribeData[]>([]);
+  const [displayTribeList, setDisplayTribeList] = useState<TribeData[]>([]);
 
   useEffect(() => {
-    getAllGroupsAdmin().then((groups) => {
-      setGroupList(groups);
-      setDisplayGroupList(groups);
+    getAllTribesAdmin().then((tribes) => {
+      setTribeList(tribes);
+      setDisplayTribeList(tribes);
     });
     // eslint-disable-next-line
   }, []);
@@ -22,19 +22,19 @@ const Tribes = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const tempSearchTerm = event.target.value;
 
-    const filteredDisplayGroupList = groupList.filter((group) => {
-      const nameMatch = group.name
+    const filteredDisplayTribeList = tribeList.filter((tribe) => {
+      const nameMatch = tribe.name
         .toLowerCase()
         .includes(tempSearchTerm.toLowerCase());
 
       return nameMatch;
     });
-    setDisplayGroupList(filteredDisplayGroupList);
+    setDisplayTribeList(filteredDisplayTribeList);
   };
 
 
   return (
-    <div className="group-component">
+    <div className="tribe-component">
     <div className="search-bar">
       <TextField
         fullWidth
@@ -52,14 +52,14 @@ const Tribes = () => {
       />
 
     </div>
-      <div className="group-tile__container">
-        {displayGroupList.map((group) => (
-          <GroupTile
-            key={group.name}
-            tribeName={group.name}
+      <div className="tribe-tile__container">
+        {displayTribeList.map((tribe) => (
+          <TribeTile
+            key={tribe.name}
+            tribeName={tribe.name}
             numberOfMembers={0}
             totalPoints={0}
-            dateGroupStarted={group.startDate}
+            dateTribeStarted={tribe.startDate}
           />
         ))}
         ;
@@ -68,4 +68,4 @@ const Tribes = () => {
   );
 };
 
-export default Groups;
+export default Tribes;

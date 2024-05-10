@@ -4,17 +4,17 @@ import CreateTask from "../../components/CreateTask/CreateTask";
 import { useState } from "react";
 import Header from "../../components/Header/Header";
 import NavigationAdmin from "../../components/NavigationAdmin/NavigationAdmin";
-import CreateGroup from "../../components/CreateGroup/CreateGroup";
+import CreateTribe from "../../components/CreateTribe/CreateTribe";
 
 const Create = () => {
-  const [showCreateGroup, setShowCreateGroup] = useState<boolean>(false);
+  const [showCreateTribe, setShowCreateTribe] = useState<boolean>(false);
   const [showCreateTask, setShowCreateTask] = useState<boolean>(true);
 
-  const handleGroupButtonClick = (
+  const handleTribeButtonClick = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    setShowCreateGroup(true);
+    setShowCreateTribe(true);
     setShowCreateTask(false);
   };
 
@@ -22,7 +22,7 @@ const Create = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    setShowCreateGroup(false);
+    setShowCreateTribe(false);
     setShowCreateTask(true);
   };
 
@@ -32,9 +32,9 @@ const Create = () => {
 
       <div className="create">
         <Button
-          label="New Group"
-          variant={showCreateGroup ? "secondary" : "light-grey"}
-          onClick={handleGroupButtonClick}
+          label="New Tribe"
+          variant={showCreateTribe ? "secondary" : "light-grey"}
+          onClick={handleTribeButtonClick}
         />
         <Button
           label="New Task"
@@ -45,7 +45,7 @@ const Create = () => {
 
       <hr />
 
-      {showCreateGroup && <CreateGroup />}
+      {showCreateTribe && <CreateTribe />}
       {showCreateTask && <CreateTask buttonLabel="create" />}
 
       <NavigationAdmin navActionIndex={1} />

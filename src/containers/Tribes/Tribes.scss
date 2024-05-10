@@ -1,6 +1,6 @@
 @use "../../styles/variables" as *;
 
-.group-component{
+.tribe-component{
     .search-bar{
       display: flex;
       justify-content: center;
@@ -12,10 +12,9 @@
         }
     }
     
-    .group-tile__container{
+    .tribe-tile__container{
         display: flex;
         flex-direction: column;
-        // border: solid 2px red;
         justify-content: center;
         align-items: center;
         gap: 20px;

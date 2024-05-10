@@ -13,7 +13,7 @@ const ButtonContainer = ({ setShowTribe, setShowUser, setShowTask }: ButtonConta
   const [userClick, setUserClick] = useState<boolean>(false);
   const [taskClick, setTaskClick] = useState<boolean>(false);
 
-  const handleGroupClick = () => {
+  const handleTribeClick = () => {
     setTribeClick(!tribeClick);
     setUserClick(false);
     setTaskClick(false);
@@ -45,7 +45,7 @@ const ButtonContainer = ({ setShowTribe, setShowUser, setShowTask }: ButtonConta
       <Button
         label={"tribes"}
         variant={tribeClick ? "secondary" : "light-grey-lighter"}
-        onClick={handleGroupClick}
+        onClick={handleTribeClick}
         size="small"
       />
       <Button

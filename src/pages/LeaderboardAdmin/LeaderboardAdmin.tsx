@@ -7,7 +7,7 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { useAuth } from "../../hooks/useAuth";
 import { UserProfile } from "../../types/User";
 import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
-import { GroupData } from "../../types/Tribes";
+import { TribeData } from "../../types/Tribes";
 
 
 const LeaderboardAdmin = () => {
@@ -15,7 +15,7 @@ const LeaderboardAdmin = () => {
   const user = getUser();
   const {getTribes} = useFirestore()
   const { getLeaderboard } = useFirestore();
-  const [tribe, setTribe] = useState<GroupData[]>([]);
+  const [tribe, setTribe] = useState<TribeData[]>([]);
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [chosenTribe, setChosenTribe] = useState<string>("")
 
@@ -60,7 +60,7 @@ const LeaderboardAdmin = () => {
 
       {/* drop down of tribes */}
       
-      <DropdownMenu arrayOfGroups={tribe} chosenTribe={chosenTribe} handleChange={handleChange} />
+      <DropdownMenu arrayOfTribe={tribe} chosenTribe={chosenTribe} handleChange={handleChange} />
 
       {/* list of people and scores from selected tribe */}
       {sortUserByScore().map((sortedUser, index) => (
