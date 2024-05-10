@@ -16,6 +16,8 @@ const Groups = () => {
     setDeleteAttempt(!deleteAttempt);
   };
 
+  
+
   useEffect(() => {
     getAllGroupsAdmin().then((groups) => {
       setGroupList(groups);

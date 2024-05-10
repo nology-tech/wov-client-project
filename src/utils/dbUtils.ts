@@ -20,7 +20,22 @@ export enum FirestoreCollections {
   ADMIN = "admin",
   TRIBELIST = "tribes",
   USERS = "users",
+
 }
+
+// export type FirestoreCollection = {
+//   name: string
+// }
+
+// export const collections: FirestoreCollection = {
+//   TASKS: "test-tasks",
+//   ACTIVE_TASKS: "test-active-tasks",
+//   COMPLETED_TASKS: "test-completed-tasks",
+//   ADMIN: "admin",
+//   TRIBELIST: "tribes",
+//   USERS: "users",
+// };
+
 
 /**
  * Retrieves a document from a Firestore collection.
