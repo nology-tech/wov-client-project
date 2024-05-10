@@ -1,16 +1,17 @@
-export type Task = {
-  id: string;
-  taskHeading: string;
-  type?: "weekly" | "daily" | "monthly";
-  category?: string;
-  points: number;
-}
+import { ActiveTask } from "../types/Task"
+// export type Task = {
+//   id: string;
+//   taskHeading: string;
+//   type?: "weekly" | "daily" | "monthly";
+//   category?: string;
+//   points: number;
+// }
 
 // NOTE:
 // Active tasks will be stored per user, these are a list of tasks for a single user
 //
 
-export const activeTasks: Task[] = [
+export const activeTasks: ActiveTask[] = [
   {
     id: "k2321",
     type: "daily",

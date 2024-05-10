@@ -6,7 +6,7 @@ export type CreateDocumentResult = {
 export type GroupData = {
   name: string;
   startDate: string;
+  image: string;
   numberOfMembers: number;
   totalPoints: number;
-  image: string;
 };

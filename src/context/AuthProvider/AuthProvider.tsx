@@ -23,8 +23,7 @@ import {
   updateDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
-import { Task } from "../../mockData/mockActiveTasks";
-import { CompletedTask } from "../../mockData/mockCompletedTasks";
+import {Task, CompletedTask} from "../../types/Task"
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
   id: "",
