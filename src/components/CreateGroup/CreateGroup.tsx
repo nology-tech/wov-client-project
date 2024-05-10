@@ -59,6 +59,7 @@ const CreateGroup = () => {
       image: groupImage,
       numberOfMembers: 0,
       totalPoints: 0,
+      users: []
     };
 
     try {

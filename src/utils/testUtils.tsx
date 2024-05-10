@@ -110,6 +110,7 @@ const wrapWithFirestoreProvider = (
     getCompletedTasks: (_: string) => Promise.resolve([]),
     getLeaderboard: (_: string) => Promise.resolve([]),
     completeActiveTask: (_: UserProfile, __: ActiveTask) => Promise.resolve(),
+    getTribes: (_: string) => Promise.resolve([]),
   };
   return (
     <FirestoreContext.Provider

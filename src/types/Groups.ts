@@ -9,4 +9,5 @@ export type GroupData = {
   image: string;
   numberOfMembers: number;
   totalPoints: number;
+  users: string[]
 };
