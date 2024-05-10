@@ -1,12 +1,13 @@
-export type UserProfile = {
-  id: string;
-  img: string;
-  totalScore: number;
-  name: string;
-  bio: string;
-  email: string;
-  
-};
+import { UserProfile } from "../types/User";
+
+// export type UserProfile = {
+//   id: string;
+//   img: string;
+//   totalScore: number;
+//   name: string;
+//   bio: string;
+//   email: string;
+// };
 
 export const tribeUsers: UserProfile[] = [
   {
@@ -16,6 +17,7 @@ export const tribeUsers: UserProfile[] = [
     name: "John Doe",
     bio: "lean,mean,fighting machine",
     email: "john.doe@example.com",
+    tribe: "test-tribe",
   },
   {
     id: "123f",
@@ -24,6 +26,7 @@ export const tribeUsers: UserProfile[] = [
     name: "Todd Griffin",
     bio: "bold,brave,adventurous spirit",
     email: "todd.griffin@example.com",
+    tribe: "test-tribe",
   },
   {
     id: "12z6",
@@ -32,6 +35,7 @@ export const tribeUsers: UserProfile[] = [
     name: "Hamish Lawson",
     bio: "fierce,driven,never backs down",
     email: "hamish.lawson@example.com",
+    tribe: "test-tribe",
   },
   {
     id: "1l37",
@@ -40,6 +44,7 @@ export const tribeUsers: UserProfile[] = [
     name: "Samuel Raducan",
     bio: "determined,tenacious,always striving",
     email: "samuel.raducan@example.com",
+    tribe: "test-tribe",
   },
   {
     id: "1a38",
@@ -48,5 +53,6 @@ export const tribeUsers: UserProfile[] = [
     name: "Baheer Wardak",
     bio: "vigilant,resilient,unstoppable force",
     email: "baheer.wardak@example.com",
+    tribe: "test-tribe",
   },
 ];

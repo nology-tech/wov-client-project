@@ -15,6 +15,7 @@ const Profile = () => {
       <Header subtitle="Profile" profileImage={img} />
       <div className="profile">
         <img src={img} className="profile__img" alt="Profile" />
+        
         <h1 className="profile__score">{totalScore}</h1>
         <section className="profile__info">
           <p>

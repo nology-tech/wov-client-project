@@ -7,10 +7,11 @@ import {
   createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
 import { UserProfile } from "../../types/User";
-import { CompletedTask, ActiveTask, Task } from "../../types/Task";
+import { CompletedTask, ActiveTask, Task} from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
+import { User } from "../../types/User";
 import { db } from "../../firebase";
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
@@ -25,6 +26,7 @@ export type FirestoreContextProps = {
   getTribes: () => Promise<GroupData[]>;
   createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
   getAllTasksAdmin: () => Promise<Task[]>;
+  getAllUsersAdmin: () => Promise<User[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
   getAllMembers: (tribe: string) => Promise<any>
 };
@@ -303,6 +305,20 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
+  const getAllUsersAdmin = async () => {
+    let result = [] as User[];
+    try {
+      const tribeDocument = await getCollectionFromFirestore<User>(
+        FirestoreCollections.USERS
+      );
+      const tribeList = tribeDocument ?? ([] as User[]);
+      result = tribeList;
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+    return result;
+  };
+
   return (
     <FirestoreContext.Provider
       value={{
@@ -314,7 +330,6 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         createGroup,
         getAllTasksAdmin,
         getAllGroupsAdmin,
-        getAllMembers
       }}
     >
       {children}

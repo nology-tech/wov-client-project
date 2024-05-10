@@ -25,10 +25,8 @@ import {
 import { capitalisedFirstLetters } from "../../utils/capitalisedFirstLetters";
 import { Task } from "../../mockData/mockActiveTasks";
 import { CompletedTask } from "../../mockData/mockCompletedTasks";
-import { doc, updateDoc } from "firebase/firestore";
 import firebase from "firebase/compat/app";
-import 'firebase/compat/firestore'; // Import Firestore module
-
+import { updateDoc } from "firebase/firestore";
 type PromiseObjectNullString = Promise<{ error: null | string }>;
 const userLoading: UserLoading = {
   id: "",
@@ -179,6 +177,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       throw error; // Propagate the error to the caller
     }
   };
+
+
 
 
   const createUser = async (
