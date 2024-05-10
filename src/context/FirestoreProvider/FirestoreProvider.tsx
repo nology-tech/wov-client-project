@@ -26,6 +26,7 @@ export type FirestoreContextProps = {
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllUsersAdmin: () => Promise<User[]>;
   getAllGroupsAdmin: () => Promise<GroupData[]>;
+  removeGroupAdmin: (tribeName: string) => Promise<void>;
 };
 
 export const FirestoreContext = createContext<
@@ -242,6 +243,45 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
+  const removeGroupAdmin = async (tribeName: string) => {
+
+    // const updatedGroupList = activeTasksCache.data.filter(
+    //   (task) => task.id !== completedTaskId
+    // );
+    // setActiveTasksCache((updatedActiveTaskData) => ({
+    //   ...updatedActiveTaskData,
+    //   data: updatedActiveTasks,
+    // }));
+    // updateDocumentInFirestoreCollection(
+    //   FirestoreCollections.ACTIVE_TASKS,
+    //   userId,
+    //   {
+    //     activeTasks: updatedActiveTasks,
+    //   }
+    // );
+
+    try {
+      const completedTribesList = await getCollectionFromFirestore<
+       GroupData
+      >(FirestoreCollections.TRIBELIST);
+      const tribes = completedTribesList
+        ? (completedTribesList as GroupData[])
+        : ([] as GroupData[]);
+      const filterTribes = tribes?.filter((tribe)=> {     
+        return tribe.name !== tribeName
+      });
+
+      console.log(filterTribes);
+      // console.log(tribes[0].name);
+      
+      
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+    }
+  };
+
+
+
   return (
     <FirestoreContext.Provider
       value={{
@@ -254,6 +294,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getAllTasksAdmin,
         getAllGroupsAdmin,
         getAllUsersAdmin,
+        removeGroupAdmin,
       }}
     >
       {children}

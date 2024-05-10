@@ -1,5 +1,8 @@
+import { MouseEventHandler, useEffect } from "react";
+import { useFirestore } from "../../hooks/useFireStore";
 import Button from "../Button/Button";
 import "./GroupTile.scss";
+
 
 type GroupTileProps = {
   tribeName: string;
@@ -15,12 +18,16 @@ const GroupTile = ({
   dateGroupStarted,
 }: GroupTileProps) => {
   const date = dateGroupStarted;
+  const {removeGroupAdmin} = useFirestore();
 
-  const handleDeleteGroup = () => {
-    console.log("delete has been clicked");
-    
+  useEffect(() => {
+    removeGroupAdmin(tribeName)
+  }, [])
+
+
+  const handleDelete = (tribeName: string) : MouseEventHandler<HTMLButtonElement> => {
+    removeGroupAdmin(tribeName)
   }
-
   return (
     <>
       <div className="group-tile">
@@ -29,7 +36,7 @@ const GroupTile = ({
         <p className="group-tile__points">Total Points: {totalPoints}</p>
         <p className="group-tile__date">Date created: {date}</p>
         <button className="group-tile__editButton">EDIT</button>
-        <Button label={"Delete"} variant="light-grey" size="small" onClick={handleDeleteGroup}/>
+        <Button label={"Delete"} variant="light-grey" size="small" onClick={handleDelete(tribeName)}/>
       </div>
     </>
 

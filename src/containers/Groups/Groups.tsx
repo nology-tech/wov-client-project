@@ -61,6 +61,7 @@ const Groups = () => {
             totalPoints={0}
             dateGroupStarted={group.startDate}
           />
+  
         ))}
         ;
       </div>
