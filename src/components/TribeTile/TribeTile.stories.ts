@@ -1,38 +1,34 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import GroupTile from "./GroupTile";
+import TribeTile from "./TribeTile";
 
 
 const meta: Meta = {
-  title: "Components/GroupTile",
-  component: GroupTile,
+  title: "Components/TribeTile",
+  component: TribeTile,
   tags: ["autodocs"],
   parameters: {
     docs: {
       description: {
         component: `
-          A customizable component containing information about a group including; 
+          A customizable component containing information about a tribe including; 
           -Tribe's name
-          -Number of memebers
+          -Number of members
           -Total points
-          -Date group started
-          
+          -Date tribe started
           `,
       },
     },
   },
-} satisfies Meta<typeof GroupTile>;
-
-
+} satisfies Meta<typeof TribeTile>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Group: Story = {
+export const Tribe: Story = {
   args: {
    tribeName: "Yuma",
     numberOfMembers: 10,
     totalPoints: 90,
-    dateGroupStarted: "02/05/2024",
+    dateTribeStarted: "02/05/2024",
 }
-  
 };

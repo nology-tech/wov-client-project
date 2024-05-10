@@ -8,7 +8,7 @@ const meta: Meta<typeof ButtonContainer> = {
     parameters: {
       docs: {
         description: {
-          component: "Buttons categorising groups, users and tasks.",
+          component: "Buttons categorising tribes, users and tasks.",
         },
       },
     },

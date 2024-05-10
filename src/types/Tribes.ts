@@ -3,7 +3,7 @@ export type CreateDocumentResult = {
   created: boolean;
 };
 
-export type GroupData = {
+export type TribeData = {
   name: string;
   startDate: string;
   image: string;

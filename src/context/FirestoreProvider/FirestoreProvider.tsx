@@ -10,7 +10,7 @@ import { UserProfile } from "../../types/User";
 import { CompletedTask, ActiveTask, Task } from "../../types/Task";
 import { hasFetchedInLastFiveMinutes } from "../../utils/dateUtils";
 import dayjs from "dayjs";
-import { CreateDocumentResult, GroupData } from "../../types/Groups";
+import { CreateDocumentResult, TribeData } from "../../types/Tribes";
 import { User } from "../../types/User";
 
 export type FirestoreContextProps = {
@@ -21,11 +21,11 @@ export type FirestoreContextProps = {
   ) => Promise<void>;
   getCompletedTasks: (userId: string) => CompletedTask[];
   getLeaderboard: (tribe: string) => Promise<UserProfile[]>;
-  getTribes: () => Promise<GroupData[]>;
-  createGroup: (groupData: GroupData) => Promise<CreateDocumentResult>;
+  getTribes: () => Promise<TribeData[]>;
+  createTribe: (tribeData: TribeData) => Promise<CreateDocumentResult>;
   getAllTasksAdmin: () => Promise<Task[]>;
   getAllUsersAdmin: () => Promise<User[]>;
-  getAllGroupsAdmin: () => Promise<GroupData[]>;
+  getAllTribesAdmin: () => Promise<TribeData[]>;
 };
 
 export const FirestoreContext = createContext<
@@ -173,25 +173,25 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getTribes = async () => {
-    let result = [] as GroupData[];
+    let result = [] as TribeData[];
     try {
-      const tribes = await getCollectionFromFirestore<GroupData>(
+      const tribes = await getCollectionFromFirestore<TribeData>(
         FirestoreCollections.TRIBELIST
       );
-      result = tribes ?? ([] as GroupData[]);
+      result = tribes ?? ([] as TribeData[]);
     } catch (error) {
       console.error("Error fetching list of Tribes:", error);
     }
     return result;
   };
 
-  const createGroup = async (groupData: GroupData) => {
+  const createTribe = async (tribeData: TribeData) => {
     try {
-      const { name } = groupData;
+      const { name } = tribeData;
       await createDocumentInFirestoreCollection(
         FirestoreCollections.TRIBELIST,
         name,
-        groupData
+        tribeData
       );
 
       return { error: null, created: true };
@@ -214,13 +214,13 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     return result;
   };
 
-  const getAllGroupsAdmin = async () => {
-    let result = [] as GroupData[];
+  const getAllTribesAdmin = async () => {
+    let result = [] as TribeData[];
     try {
-      const tribeDocument = await getCollectionFromFirestore<GroupData>(
+      const tribeDocument = await getCollectionFromFirestore<TribeData>(
         FirestoreCollections.TRIBELIST
       );
-      const tribeList = tribeDocument ?? ([] as GroupData[]);
+      const tribeList = tribeDocument ?? ([] as TribeData[]);
       result = tribeList;
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
@@ -250,9 +250,9 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
         getCompletedTasks,
         getLeaderboard,
         getTribes,
-        createGroup,
+        createTribe,
         getAllTasksAdmin,
-        getAllGroupsAdmin,
+        getAllTribesAdmin,
         getAllUsersAdmin,
       }}
     >

@@ -7,7 +7,7 @@ import { useFirestore } from "../../hooks/useFireStore";
 import { useAuth } from "../../hooks/useAuth";
 import { UserProfile } from "../../types/User";
 import LeaderboardCard from "../../components/LeaderboardCard/LeaderboardCard";
-import { GroupData } from "../../types/Groups";
+import { TribeData } from "../../types/Tribes";
 import "./LeaderboardAdmin.scss";
 
 const LeaderboardAdmin = () => {
@@ -15,7 +15,7 @@ const LeaderboardAdmin = () => {
   const user = getUser();
   const { getTribes } = useFirestore();
   const { getLeaderboard } = useFirestore();
-  const [tribe, setTribe] = useState<GroupData[]>([]);
+  const [tribe, setTribe] = useState<TribeData[]>([]);
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [chosenTribe, setChosenTribe] = useState<string>("");
 
@@ -44,7 +44,6 @@ const LeaderboardAdmin = () => {
       if (b.totalScore !== a.totalScore) {
         return b.totalScore - a.totalScore;
       }
-
       return (a.name || "").localeCompare(b.name || "");
     });
     return sortedUsers;
@@ -53,17 +52,16 @@ const LeaderboardAdmin = () => {
   return (
     <div className="leaderboard-admin">
       {/* header */}
-      <Header subtitle="Leaderboard" profileImage="user's img" />
-
+      <Header
+        subtitle="Leaderboard"
+        profileImage="./assets/images/default-profile-image.png"
+      />
       {/* drop down of tribes */}
-      <div className="dropdown">
-        <DropdownMenu
-          arrayOfGroups={tribe}
-          chosenTribe={chosenTribe}
-          handleChange={handleChange}
-        />
-      </div>
-
+      <DropdownMenu
+        arrayOfTribe={tribe}
+        chosenTribe={chosenTribe}
+        handleChange={handleChange}
+      />
       {/* list of people and scores from selected tribe */}
       {sortUserByScore().map((sortedUser, index) => (
         <LeaderboardCard

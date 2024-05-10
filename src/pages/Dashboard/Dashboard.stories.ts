@@ -8,7 +8,7 @@ const meta: Meta<typeof Dashboard> = {
     parameters: {
       docs: {
         description: {
-          component: "Dashboard containing buttons categorising groups, users and tasks.",
+          component: "Dashboard containing buttons categorising tribes, users and tasks.",
         },
       },
     },
