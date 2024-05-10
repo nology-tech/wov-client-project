@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
+import defaultImg from "../../assets/images/default-profile-image.png"
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -14,8 +15,8 @@ const Profile = () => {
     <div>
       <Header subtitle="Profile" profileImage={img} />
       <div className="profile">
-        <img src={img} className="profile__img" alt="Profile" />
-        
+        <img src={img ? img : defaultImg} className="profile__img" alt="Profile" />
+       
         <h1 className="profile__score">{totalScore}</h1>
         <section className="profile__info">
           <p>

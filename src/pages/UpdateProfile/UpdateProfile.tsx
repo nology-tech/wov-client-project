@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogActions } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 import { saveFileAndRetrieveDownloadUrl } from "../../utils/dbUtils";
 import { useNavigate } from "react-router-dom";
+import defaultImg from "../../assets/images/default-profile-image.png";
 
 type UpdatePasswordForm = {
   current: string;
@@ -134,7 +135,7 @@ const UpdateProfile = () => {
         {/* Label associated with the input element */}
         <label htmlFor="img">
           <img
-            src={img}
+            src={img ? img : defaultImg}
             className="profile-update__img"
             alt="Profile"
             style={{ cursor: "pointer" }}
@@ -246,9 +247,7 @@ const UpdateProfile = () => {
               onChange={handlePictureChange}
             />
             {selectedFile && (
-              <p className="img-file-name">
-                {selectedFile.name}
-              </p>
+              <p className="img-file-name">{selectedFile.name}</p>
             )}
           </>
         ) : (
