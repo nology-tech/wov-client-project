@@ -18,6 +18,7 @@ export type CompletedTask = {
 }
 
 export type Task = {
+  id: string,
   category: string;
   date: string;
   description: string;

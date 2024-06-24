@@ -1,13 +1,15 @@
 import "./TaskTile.scss";
+import { Link } from "react-router-dom";
 
 type TaskTileProps = {
+  id: string,
   name: string;
   requirement: string;
   category: string;
   points: number;
 };
 
-const TaskTile = ({ name, requirement, category, points }: TaskTileProps) => {
+const TaskTile = ({ id, name, requirement, category, points }: TaskTileProps) => {
   return (
     <div className="task-tile">
       <h4 className="task-tile__name">{name}</h4>
@@ -15,7 +17,7 @@ const TaskTile = ({ name, requirement, category, points }: TaskTileProps) => {
         {category} | {requirement}
       </p>
       <p className="task-tile__points">{points + " points"}</p>
-      <button className="task-tile__editButton">EDIT</button>
+      <Link to={`/task/${id}`} className="task-tile__editButton">Info</Link>
     </div>
   );
 };

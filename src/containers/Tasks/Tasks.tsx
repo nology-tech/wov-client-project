@@ -56,15 +56,15 @@ const Tasks = () => {
       </div>
       <div className="task-tile__container">
         {displayTaskList &&
-          displayTaskList.map((task, index) => {
+          displayTaskList.map((task) => {            
             return (
-              <TaskTile
-                key={index.toString()}
-                name={task.name}
-                requirement={task.description}
-                category={task.category}
-                points={task.points}
-              />
+                <TaskTile
+                  id={task.id}
+                  name={task.name}
+                  requirement={task.description}
+                  category={task.category}
+                  points={task.points}
+                />
             );
           })}
       </div>
