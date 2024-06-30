@@ -1,0 +1,110 @@
+.task-form-container { 
+    margin: 10px;
+}
+
+.task-btn-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px auto;
+    width: 90vw;
+
+    Button {
+        min-width: 135px;
+        font-size: 15px;
+        width: 30%;
+        justify-self: center;
+        margin-top: 30px;
+      }
+}
+
+
+form {
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+  
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+  
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+    }
+  
+    input[type="submit"] {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+
+    select {
+        width: 100%;  // Full width
+        padding: 10px;  // Padding
+        margin-bottom: 15px;  // Margin bottom
+        border: 1px solid #ccc;  // Border
+        border-radius: 5px;  // Border radius
+        font-size: 16px;  // Font size
+        box-sizing: border-box;  // Box sizing
+        transition: border-color 0.3s;  // Transition for border color
+      
+        &:focus {
+          border-color: #007bff;  // Border color on focus
+          outline: none;  // Remove default outline
+        }
+
+        .tribe-option {
+            background-color: #f9f9f9;  // Light background color
+            color: #333;  // Text color
+            padding: 10px;  // Padding
+            font-size: 16px;  // Font size
+          
+            &:hover {
+              background-color: #007bff;  // Background color on hover
+              color: #fff;  // Text color on hover
+            }
+          
+            &:focus {
+              background-color: #0056b3;  // Background color on focus
+              color: #fff;  // Text color on focus
+            }
+          }
+      }
+
+      .form-message { 
+        color: black;
+      }
+    
+  
+    @media (min-width: 600px) {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }

@@ -1,9 +1,16 @@
+import { Timestamp } from "firebase/firestore";
+
 export type ActiveTask = {
   id: string;
   taskHeading: string;
   type?: "weekly" | "daily" | "monthly";
   category?: string;
   points: number;
+  dateAssigned: Timestamp;
+  description: string;
+  name: string;
+  completed?: string
+  taskId?: string
 };
 
 export type CompletedTask = {
@@ -15,13 +22,15 @@ export type CompletedTask = {
   completed: string;
   description?: string;
   image?: string;
+  taskId?: string
 }
 
 export type Task = {
   id: string,
   category: string;
-  date: string;
   description: string;
   name: string;
   points: number;
+  dateAssigned: Timestamp;
+  completed?: boolean;
 };

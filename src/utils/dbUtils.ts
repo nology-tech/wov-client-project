@@ -14,8 +14,8 @@ import {
 
 export enum FirestoreCollections {
   TASKS = "tasks",
-  ACTIVE_TASKS = "test-active-tasks",
-  COMPLETED_TASKS = "test-completed-tasks",
+  ACTIVE_TASKS = "active-tasks",
+  COMPLETED_TASKS = "completed-tasks",
   ADMIN = "admin",
   TRIBELIST = "tribes",
   USERS = "users",
@@ -28,8 +28,8 @@ export enum FirestoreCollections {
 
 // export const collections: FirestoreCollection = {
 //   TASKS: "tasks",
-//   ACTIVE_TASKS: "test-active-tasks",
-//   COMPLETED_TASKS: "test-completed-tasks",
+//   ACTIVE_TASKS: "active-tasks",
+//   COMPLETED_TASKS: "completed-tasks",
 //   ADMIN: "admin",
 //   TRIBELIST: "tribes",
 //   USERS: "users",
@@ -132,7 +132,7 @@ export const updateDocumentInFirestoreCollection = async <
   try {
     await updateDoc(doc(db, collection, userId), data);
     return { updated: true, error: null };
-  } catch (error) {
+  } catch (error) {    
     return { error: (error as Error).message, updated: false };
   }
 };

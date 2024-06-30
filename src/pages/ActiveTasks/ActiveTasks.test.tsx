@@ -57,33 +57,34 @@ describe("ActiveTask page component", () => {
     });
   });
 
-  it("should check the search input renders correct results", async () => {
-    customRender(<ActiveTasks />, {
-      useRouting: true,
-      firestoreValue: mockFireStore,
-    });
+  //REMOVED AS REMOVED SEARCH BOX 
+  // it("should check the search input renders correct results", async () => {
+  //   customRender(<ActiveTasks />, {
+  //     useRouting: true,
+  //     firestoreValue: mockFireStore,
+  //   });
 
-    const searchInput = screen.getByRole("search");
-    await userEvent.type(searchInput, "di");
+  //   const searchInput = screen.getByRole("search");
+  //   await userEvent.type(searchInput, "di");
 
-    const filteredTasks = activeTasks.filter(
-      (task) =>
-        task.taskHeading.toLowerCase().includes("di") ||
-        task.category?.toLowerCase().includes("di")
-    );
-    const unexpectedTasks = [
-      "5am wake up",
-      "Walk 70,000 steps",
-      "20 minute run",
-    ];
+  //   const filteredTasks = activeTasks.filter(
+  //     (task) =>
+  //       task.taskHeading.toLowerCase().includes("di") ||
+  //       task.category?.toLowerCase().includes("di")
+  //   );
+  //   const unexpectedTasks = [
+  //     "5am wake up",
+  //     "Walk 70,000 steps",
+  //     "20 minute run",
+  //   ];
 
-    filteredTasks.forEach((task) => {
-      expect(screen.getByText(task.taskHeading)).toBeInTheDocument();
-      unexpectedTasks.forEach((noTask) => {
-        expect(screen.getByText(noTask)).not.toBeInTheDocument;
-      });
-    });
-  });
+  //   filteredTasks.forEach((task) => {
+  //     expect(screen.getByText(task.taskHeading)).toBeInTheDocument();
+  //     unexpectedTasks.forEach((noTask) => {
+  //       expect(screen.getByText(noTask)).not.toBeInTheDocument;
+  //     });
+  //   });
+  // });
 
   it('displays "Task Completed" popup', async () => {
     customRender(<ActiveTasks />, {

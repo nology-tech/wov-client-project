@@ -10,6 +10,6 @@ export const hasFetchedInLastFiveMinutes = (
 ): boolean => {
   return (
     lastFetchTime !== null &&
-    Math.abs(now.getTime() - lastFetchTime.getTime()) <= 5 * 60 * 1000
-  );
+    Math.abs(now.getTime() - lastFetchTime.getTime()) <= 1 * 60 * 1000
+  )
 };
