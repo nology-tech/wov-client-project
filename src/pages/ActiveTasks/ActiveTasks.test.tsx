@@ -1,8 +1,6 @@
 import { screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import ActiveTasks from "./ActiveTasks";
 import { customRender } from "../../utils/testUtils";
-import { activeTasks } from "../../mockData/mockActiveTasks";
 import { FirestoreContextProps } from "../../context/FirestoreProvider/FirestoreProvider";
 
 describe("ActiveTask page component", () => {
