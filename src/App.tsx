@@ -24,6 +24,7 @@ import Reporting from "./pages/Reporting/Reporting";
 import ReportingMostActive from "./pages/ReportingMostActive/ReportingMostActive";
 import ReportingLeastActive from "./pages/ReportingLeastActive/ReportingLeastActive";
 import ReportingUserStreaks from "./pages/ReportingUserStreaks/ReportingUserStreaks";
+import IndividualTask from "./pages/IndividualTask/IndividualTask";
 
 const App = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -47,6 +48,7 @@ const App = () => {
                 {isAdmin ? (
                   <>
                     <Route path="/" element={<Dashboard />} />
+                    <Route path="/task/:taskID" element={<IndividualTask/>}/>
                     <Route path="/create" element={<Create />} />
                     <Route path="/dashboard" element={<AdminDashboard />} />
                     <Route path="/profile" element={<ProfileAdmin />} />

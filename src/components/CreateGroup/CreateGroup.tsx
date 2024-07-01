@@ -9,6 +9,7 @@ import {
   saveFileAndRetrieveDownloadUrl,
 } from "../../utils/dbUtils";
 import { GroupData } from "../../types/Groups";
+import { v4 as uuidv4 } from 'uuid';
 
 const CreateGroup = () => {
   const { createGroup } = useFirestore();
@@ -54,6 +55,7 @@ const CreateGroup = () => {
     const today = new Date().toISOString().split("T")[0];
 
     const groupData: GroupData = {
+      id: uuidv4(),
       name: groupName,
       startDate: today,
       image: groupImage,

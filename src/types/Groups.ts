@@ -4,6 +4,7 @@ export type CreateDocumentResult = {
 };
 
 export type GroupData = {
+  id: string;
   name: string;
   startDate: string;
   image: string;

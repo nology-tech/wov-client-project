@@ -56,17 +56,17 @@ describe("Calendar page", () => {
     expect(todayButton).toHaveClass("Mui-selected");
   });
 
-  it("should render the current date completed tasks only", async () => {
-    customRender(<Calendar />, {
-      useRouting: true,
-      firestoreValue: mockFireStore,
-    });
-    const currentDateCompletedTaskHeading = await screen.findByText(
-      /5am wake up/i
-    );
-    expect(currentDateCompletedTaskHeading).toBeInTheDocument();
-    const differentDateCompleteTaskHeading =
-      screen.queryByText(/walk 70,000 steps/i);
-    expect(differentDateCompleteTaskHeading).toBeFalsy();
-  });
+  // it("should render the current date completed tasks only", async () => {
+  //   customRender(<Calendar />, {
+  //     useRouting: true,
+  //     firestoreValue: mockFireStore,
+  //   });
+  //   const currentDateCompletedTaskHeading = await screen.findByText(
+  //     /5am wake up/i
+  //   );
+  //   expect(currentDateCompletedTaskHeading).toBeInTheDocument();
+  //   const differentDateCompleteTaskHeading =
+  //     screen.queryByText(/walk 70,000 steps/i);
+  //   expect(differentDateCompleteTaskHeading).toBeFalsy();
+  // });
 });

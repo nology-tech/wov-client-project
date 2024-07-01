@@ -2,7 +2,6 @@ import React, { createContext, useState } from "react";
 import {
   getDocumentFromFirestoreCollection,
   getCollectionFromFirestore,
-  updateDocumentInFirestoreCollection,
   FirestoreCollections,
   createDocumentInFirestoreCollection,
 } from "../../utils/dbUtils";
@@ -13,12 +12,10 @@ import dayjs from "dayjs";
 import { CreateDocumentResult, GroupData } from "../../types/Groups";
 import { User } from "../../types/User";
 import { db } from "../../firebase";
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, doc, addDoc, deleteDoc } from 'firebase/firestore';
 
 export type FirestoreContextProps = {
-  getActiveTasks: (userId: string) => ActiveTask[];
   completeActiveTask: (
-    user: UserProfile,
     completedActiveTask: ActiveTask
   ) => Promise<void>;
   getCompletedTasks: (userId: string) => CompletedTask[];
@@ -43,44 +40,54 @@ type CachedData<T> = {
 export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [activeTasksCache, setActiveTasksCache] = useState<
-    CachedData<ActiveTask[]>
-  >({ data: [], lastFetched: null });
+  // const [activeTasksCache, setActiveTasksCache] = useState<
+  //   CachedData<ActiveTask[]>
+  // >({ data: [], lastFetched: null });
   const [completedTasksCache, setCompletedTasksCache] = useState<
     CachedData<CompletedTask[]>
   >({ data: [], lastFetched: null });
 
-  const fetchActiveTasks = async (userId: string, date: Date) => {
-    if (!userId) {
-      return;
-    }
+  // const fetchActiveTasks = async (userId: string) => {    
+  //   if (!userId) {
+  //     return;
+  //   }
 
-    try {
-      const activeTaskDocument = await getDocumentFromFirestoreCollection<{
-        activeTasks: ActiveTask[];
-      }>(FirestoreCollections.ACTIVE_TASKS, userId);
-      const activeTasks = activeTaskDocument
-        ? activeTaskDocument.activeTasks
-        : ([] as ActiveTask[]);
-      setActiveTasksCache({ data: activeTasks, lastFetched: date });
-    } catch (error) {
-      console.error("Error fetching active tasks:", error);
-    }
-  };
+  //   try {
+  //     //LEAVING THIS HERE FOR REF AT THE MOMENT
+  //     // const activeTaskDocument = await getDocumentFromFirestoreCollection<{
+  //     //   activeTasks: ActiveTask[];
+  //     // }>(FirestoreCollections.ACTIVE_TASKS, userId);
+  //     // const activeTasks = activeTaskDocument
+  //     //   ? activeTaskDocument.activeTasks
+  //     //   : ([] as ActiveTask[]);
+  //     // setActiveTasksCache({ data: activeTasks, lastFetched: date });
+  //  const userDoc = doc(db, "users", userId)
+  //  const userSnap = await getDoc(userDoc)
 
-  const getActiveTasks = (userId: string) => {
-    const now = new Date();
+  //  if(userSnap.exists()){
+  //   const userData = userSnap.data()
+  //   // setActiveTasksCache({data: userData.task, lastFetched: date})
+  //   return {data: userData.task}
+  //  } else {
+  //   console.error("error fetching user")
+  //  }
+  //   } catch (error) {
+  //     console.error("Error fetching active tasks:", error);
+  //   }
+  // };
 
-    if (hasFetchedInLastFiveMinutes(now, activeTasksCache.lastFetched)) {
-      return activeTasksCache.data;
-    } else {
-      fetchActiveTasks(userId, now);
-    }
-    return activeTasksCache.data ?? ([] as ActiveTask[]);
-  };
+  // const getActiveTasks = (userId: string) => {
+  //   const now = new Date();
+
+  //   if (hasFetchedInLastFiveMinutes(now, activeTasksCache.lastFetched)) {
+  //     return activeTasksCache.data;
+  //   } else {
+  //     fetchActiveTasks(userId);
+  //   }
+  //   return activeTasksCache.data ?? ([] as ActiveTask[]);
+  // };
 
   const completeActiveTask = async (
-    user: UserProfile,
     completedActiveTask: ActiveTask
   ) => {
     const today = new Date();
@@ -90,46 +97,50 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
       completed,
       id: completedActiveTask.id + Date.now(),
     };
-
-    await fetchCompletedTasks(user.id, today);
+    
+// not sure if this is needed here, EDIT: none of these work
+    // await fetchCompletedTasks(user.id, today);
 
     setCompletedTasksCache((completedTaskData) => ({
       ...completedTaskData,
       data: [...completedTaskData.data, completedTask],
-    }));
+    }));        
 
-    const updatedCompleteTasks = [...completedTasksCache.data, completedTask];
+    // const updatedCompleteTasks = [...completedTasksCache.data, completedTask];    
 
-    updateDocumentInFirestoreCollection(
-      FirestoreCollections.COMPLETED_TASKS,
-      user.id,
-      {
-        completedTasks: updatedCompleteTasks,
-      }
-    );
+    // this needs to create a document as it's a new one each time
+    await addDoc(collection(db, FirestoreCollections.COMPLETED_TASKS), completedTask)
 
-    removeActiveTask(user.id, completedActiveTask.id);
+    
+    // Delete the task from the active task collection, using the unique task id for each task stored on the document
+    // need to query active tasks collection and then remove the doc
+    const activeTaskRef = collection(db, FirestoreCollections.ACTIVE_TASKS)
+    const activeTask = query(activeTaskRef, where("taskId", "==",  completedTask.taskId))
+    const querySnapshot = await getDocs(activeTask)  
+    querySnapshot.forEach((docu)=> {
+          deleteDoc(doc(db, FirestoreCollections.ACTIVE_TASKS, docu.id ))
+    })
   };
 
-  const removeActiveTask = async (userId: string, completedTaskId: string) => {
-    if (!activeTasksCache) {
-      return;
-    }
-    const updatedActiveTasks = activeTasksCache.data.filter(
-      (task) => task.id !== completedTaskId
-    );
-    setActiveTasksCache((updatedActiveTaskData) => ({
-      ...updatedActiveTaskData,
-      data: updatedActiveTasks,
-    }));
-    updateDocumentInFirestoreCollection(
-      FirestoreCollections.ACTIVE_TASKS,
-      userId,
-      {
-        activeTasks: updatedActiveTasks,
-      }
-    );
-  };
+  // const removeActiveTask = async (userId: string, completedTaskId: string) => {
+  //   if (!activeTasksCache) {
+  //     return;
+  //   }
+  //   const updatedActiveTasks = activeTasksCache.data.filter(
+  //     (task) => task.id !== completedTaskId
+  //   );
+  //   setActiveTasksCache((updatedActiveTaskData) => ({
+  //     ...updatedActiveTaskData,
+  //     data: updatedActiveTasks,
+  //   }));
+  //   updateDocumentInFirestoreCollection(
+  //     FirestoreCollections.ACTIVE_TASKS,
+  //     userId,
+  //     {
+  //       activeTasks: updatedActiveTasks,
+  //     }
+  //   );
+  // };
 
   const fetchCompletedTasks = async (userId: string, date: Date) => {
     if (!userId) {
@@ -142,7 +153,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
       }>(FirestoreCollections.COMPLETED_TASKS, userId);
       const completedTasks = completedTaskDocument
         ? completedTaskDocument.completedTasks
-        : ([] as CompletedTask[]);
+        : ([] as CompletedTask[]);        
       setCompletedTasksCache({ data: completedTasks, lastFetched: date });
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
@@ -152,7 +163,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   const getCompletedTasks = (userId: string) => {
     const now = new Date();
 
-    if (hasFetchedInLastFiveMinutes(now, completedTasksCache.lastFetched)) {
+    if (hasFetchedInLastFiveMinutes(now, completedTasksCache.lastFetched)) {  
       return completedTasksCache.data;
     } else {
       fetchCompletedTasks(userId, now);
@@ -189,7 +200,7 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
       const querySnapshot = await getDocs(q); // Execute the query and get snapshot of documents
   
       if (querySnapshot.empty) {
-        console.log('No matching documents.');
+        console.error('No matching documents.');
         return [] as UserProfile[];
       }
   
@@ -300,7 +311,6 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <FirestoreContext.Provider
       value={{
-        getActiveTasks,
         completeActiveTask,
         getCompletedTasks,
         getLeaderboard,

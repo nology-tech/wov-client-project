@@ -5,12 +5,14 @@ import { createDocumentInFirestoreCollection } from "../../utils/dbUtils";
 import { FirestoreCollections } from "../../utils/dbUtils";
 import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
+import { v4 as uuidv4 } from 'uuid';
 
 type CreateTaskProps = {
   buttonLabel: string;
 };
 
 const emptyFormData = {
+  id: "",
   name: "",
   category: "",
   description: "",
@@ -25,7 +27,7 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
   const handleCreateTask = async () => {
     setMissingFieldsError("");
     setTaskPassedMessage("");
-    const taskRef = collection(db, "test-tasks");
+    const taskRef = collection(db, "tasks");
     const storedData = [];
     const q = query(taskRef, where("name", "==", `${formData.name}`));
     const querySnapshot = await getDocs(q);
@@ -41,7 +43,8 @@ export const CreateTask = ({ buttonLabel }: CreateTaskProps) => {
       storedData.length == 0
     ) {
       setMissingFieldsError("");
-      const docRef = await addDoc(collection(db, "test-tasks"), formData);
+      formData.id = uuidv4()
+      const docRef = await addDoc(collection(db, "tasks"), formData);
       await createDocumentInFirestoreCollection(
         FirestoreCollections.TASKS,
         docRef.id,

@@ -5,6 +5,7 @@ import "./Groups.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useFirestore } from "../../hooks/useFireStore";
 import { GroupData } from "../../types/Groups";
+import { Link } from "react-router-dom";
 
 const Groups = () => {
   const {getAllGroupsAdmin} = useFirestore();
@@ -56,13 +57,16 @@ const Groups = () => {
     </div>
       <div className="group-tile__container">
         {displayGroupList.map((group) => (
-          <GroupTile
-            key={group.name}
+          <Link to={`/group/${group.id}`}>
+            <GroupTile
+            key={group.id}
             tribeName={group.name}
             numberOfMembers={0}
             totalPoints={0}
             dateGroupStarted={group.startDate}
           />
+          </Link>
+          
         ))}
         ;
       </div>

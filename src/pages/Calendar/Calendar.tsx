@@ -9,27 +9,62 @@ import { Divider } from "@mui/material";
 import Navigation from "../../components/Navigation/Navigation";
 import Header from "../../components/Header/Header";
 import "./Calendar.scss";
-import filterCompletedTasks from "../../utils/filterCompletedTasks";
-import { useFirestore } from "../../hooks/useFireStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { FirestoreCollections } from "../../utils/dbUtils";
+import { db } from "../../firebase";
+import { ActiveTask } from "../../types/Task";
+
+
 
 const Calendar = () => {
-  const { getCompletedTasks } = useFirestore();
   const { getUser } = useAuth();
   const user = getUser();
-  const completedTasks = getCompletedTasks(user.id);
   const [date, setDate] = useState<Date>(new Date());
   const changeDate = (value: Dayjs) => {
     setDate(new Date(value.year(), value.month(), value.date()));
   };
+  const [ completedTasks, setCompletedTasks] = useState<ActiveTask[]>([])
 
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
     weekStart: 1,
   });
 
-  const filteredCompletedTasks = filterCompletedTasks(completedTasks, date);
+  const getCompletedTasks = async() => {
+
+    const taskRef = collection(db, FirestoreCollections.COMPLETED_TASKS)
+    const taskQuery = query(taskRef, where("userId", "==", user.id))
+    const taskSnap = await getDocs(taskQuery) 
+
+    if(taskSnap.docs.length > 0){
+      const activeTasksData = taskSnap.docs.map((doc)=> {
+        return doc.data()
+      });      
+      
+      const todaysTasks = activeTasksData.filter((task)=> {
+        // this is funky couldn't work out a better way, works for now
+        const completedTaskDate = `${task.dateAssigned.toDate().getDay()}${task.dateAssigned.toDate().getMonth()}${task.dateAssigned.toDate().getFullYear()}`
+        const calendarDate = `${date.getDay()}${date.getMonth()}${date.getFullYear()}`
+
+        if(completedTaskDate === calendarDate) {
+          return task
+        }
+      }) as ActiveTask[];
+      
+      setCompletedTasks(todaysTasks)
+    }
+
+  }
+
+  useEffect(()=> {
+getCompletedTasks()
+  },
+      // eslint-disable-next-line
+  [date])
+
+
 
   return (
     <div className="calendar">
@@ -75,15 +110,15 @@ const Calendar = () => {
         }}
         className="calendar__task-container"
       >
-        {filteredCompletedTasks.length > 0 ? (
-          filteredCompletedTasks.map((task) => (
+        {completedTasks.length > 0 ? (
+          completedTasks.map((task) => (
             <CompletedTask
               key={task.id}
               taskHeading={task.taskHeading}
               category={task.category}
               points={task.points}
               description={task.description}
-              image={task.image}
+              image={""}
             />
           ))
         ) : (
