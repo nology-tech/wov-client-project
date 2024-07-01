@@ -84,6 +84,11 @@ const handleTaskAdd = async (event: FormEvent) => {
   
   //get users in that tribe(user id), fetch all users
   const userIds = tribes.filter(tribe => tribe.id === tribeID ).map(tribeInfo => tribeInfo.users)
+  
+  if(userIds[0].length === 0 ){
+    setFormMessage("no users in this tribe yet")
+    return
+  }
   const userRef = collection(db, "users")
   const queryUsers = query(userRef, where("id", "in", userIds[0] ))
   const querySnapshot = await getDocs(queryUsers)   

@@ -104,18 +104,18 @@ export const FirestoreProvider: React.FC<{ children: React.ReactNode }> = ({
     setCompletedTasksCache((completedTaskData) => ({
       ...completedTaskData,
       data: [...completedTaskData.data, completedTask],
-    }));    
+    }));        
 
-    const updatedCompleteTasks = [...completedTasksCache.data, completedTask];
+    // const updatedCompleteTasks = [...completedTasksCache.data, completedTask];    
 
     // this needs to create a document as it's a new one each time
-    await addDoc(collection(db, FirestoreCollections.COMPLETED_TASKS), updatedCompleteTasks[0])
+    await addDoc(collection(db, FirestoreCollections.COMPLETED_TASKS), completedTask)
 
     
     // Delete the task from the active task collection, using the unique task id for each task stored on the document
     // need to query active tasks collection and then remove the doc
     const activeTaskRef = collection(db, FirestoreCollections.ACTIVE_TASKS)
-    const activeTask = query(activeTaskRef, where("taskId", "==",  updatedCompleteTasks[0].taskId))
+    const activeTask = query(activeTaskRef, where("taskId", "==",  completedTask.taskId))
     const querySnapshot = await getDocs(activeTask)  
     querySnapshot.forEach((docu)=> {
           deleteDoc(doc(db, FirestoreCollections.ACTIVE_TASKS, docu.id ))
