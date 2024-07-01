@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState, ChangeEvent } from 'react'
+import { FormEvent, MouseEvent, useEffect, useState,  } from 'react'
 import "./IndividualTask.scss"
 import { db } from "../../firebase";
 import { collection, query, where, getDocs, writeBatch, doc } from 'firebase/firestore'
@@ -11,7 +11,7 @@ import { useFirestore } from '../../hooks/useFireStore';
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { FirestoreCollections } from '../../utils/dbUtils';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -56,7 +56,9 @@ getTaskInfo()
 getAllGroupsAdmin().then((tribes) => {
   setTribes(tribes);
 });
-}, [])
+},
+    // eslint-disable-next-line
+ [])
 
 
 const handleSelectTribe = (event: FormEvent<HTMLSelectElement>) => {
@@ -85,10 +87,12 @@ const handleTaskAdd = async (event: FormEvent) => {
   const userRef = collection(db, "users")
   const queryUsers = query(userRef, where("id", "in", userIds[0] ))
   const querySnapshot = await getDocs(queryUsers)   
-  const allUsers:any = []
-  querySnapshot.forEach((doc) => {
-    allUsers.push(doc.data());
-  });
+  // const allUsers:any = []
+  // querySnapshot.forEach((doc) => {
+  //   allUsers.push(doc.data());
+  // });
+
+  const allUsers = querySnapshot.docs.map(doc => doc.data())
 
   if(allUsers.length <= 0){
     setFormMessage("Update was unsuccesful, no users in this tribe")
@@ -109,7 +113,7 @@ const handleTaskAdd = async (event: FormEvent) => {
   //add the selected task to users
   const batch = writeBatch(db)
 
-  allUsers.forEach((user: any) => {
+  allUsers.forEach((user) => {
     //to be added - check that the user doesn't already have this task assigned on the same day   
     // const userRef = doc(db, FirestoreCollections.ACTIVE_TASKS, )
     // this makes sure it doesn't overwrite the taks and adds a new one each time
@@ -131,14 +135,15 @@ const handleTaskAdd = async (event: FormEvent) => {
   
 }
 
-const handleBtnClick = (event: any) => {
-  if(event.target.textContent === "Add"){
+const handleBtnClick = (event: MouseEvent<HTMLButtonElement>) => {
+
+  if(event.currentTarget.textContent === "Add"){
     setFormType({
       edit: false,
       add: true
     })
   }
-  if(event.target.textContent === "Edit"){
+  if(event.currentTarget.textContent === "Edit"){
     setFormType( {
       add: false,
       edit: true

@@ -60,7 +60,9 @@ const Calendar = () => {
 
   useEffect(()=> {
 getCompletedTasks()
-  }, [date])
+  },
+      // eslint-disable-next-line
+  [date])
 
 
 

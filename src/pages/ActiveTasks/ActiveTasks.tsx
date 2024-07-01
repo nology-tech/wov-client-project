@@ -28,7 +28,6 @@ const ActiveTasks = () => {
   const { getUser, updateUser } = useAuth();
   const user = getUser();
   const { completeActiveTask } = useFirestore();
-  // const activeTasks = getActiveTasks(user.id);
   const [ activeTasks, setActiveTasks] = useState<ActiveTask[]>([])
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [completedTasks, setCompletedTasks] = useState<ActiveTasksItem>({});
@@ -38,7 +37,9 @@ const ActiveTasks = () => {
 
   useEffect(()=> {
     fetchActiveTasks()
-  },[])
+  },
+      // eslint-disable-next-line
+  [])
 
 
   const fetchActiveTasks = async () => {
@@ -86,7 +87,7 @@ const ActiveTasks = () => {
       return;
     }
     
-    completeActiveTask(user, completedActiveTask);
+    completeActiveTask(completedActiveTask);
   };
 
   const handleTaskCompletionChange = async (
@@ -114,11 +115,11 @@ const ActiveTasks = () => {
   };
 
   // not really active it's being used as a prop though so left it but makes no difference
-  // const searchedTasks = activeTasks.filter(
-  //   (task) =>
-  //     task.name.toLowerCase().includes(searchTerm) ||
-  //     task.category?.toLowerCase().includes(searchTerm)
-  // );
+  const searchedTasks = activeTasks.filter(
+    (task) =>
+      task.name.toLowerCase().includes(searchTerm) ||
+      task.category?.toLowerCase().includes(searchTerm)
+  );
   
   return (
     <div className="task-page" data-testid="task-page">
@@ -147,8 +148,24 @@ const ActiveTasks = () => {
         <p className="task-page__no-task-message">
           There are no tasks that fit your search.
         </p>
-      ) : (
-        activeTasks.map((task, index) => {
+      ) : searchTerm ? searchedTasks.map((task, index) => {
+        return !task.completed ? <ActiveTaskTile
+          key={task.id}
+          id={task.id}
+          requirement={task.description === "" ? "N/A" : task.description}
+          category={`${task.category || ""} | ${
+            task.type ? capitalisedFirstLetters(task.type) : ""
+          }`}
+          points={task.points}
+          completed={!!completedTasks[task.id]}
+          onCompletionChange={handleTaskCompletionChange}
+          classModifier={
+            index === activeTasks.length - 1 && activeTasks.length > 4
+              ? "active-task active-task--last"
+              : "active-task"
+          }
+        /> : null})  : (
+      activeTasks.map((task, index) => {
           return !task.completed ? <ActiveTaskTile
             key={task.id}
             id={task.id}
