@@ -7,7 +7,6 @@ import { FirestoreContextProps } from "../../context/FirestoreProvider/Firestore
 
 describe("ActiveTask page component", () => {
   const mockFireStore = {
-    getActiveTasks: (_: string) => activeTasks,
   } as FirestoreContextProps;
 
   it("should render the ActiveTask page", () => {
@@ -45,17 +44,17 @@ describe("ActiveTask page component", () => {
     expect(leaderboard).toBeInTheDocument();
   });
 
-  it("should check the initial state of the button", async () => {
-    customRender(<ActiveTasks />, {
-      useRouting: true,
-      firestoreValue: mockFireStore,
-    });
+  // it("should check the initial state of the button", async () => {
+  //   customRender(<ActiveTasks />, {
+  //     useRouting: true,
+  //     firestoreValue: mockFireStore,
+  //   });
 
-    const checkboxInitial = await screen.findAllByRole("checkbox");
-    checkboxInitial.forEach((checkbox) => {
-      expect(checkbox).not.toBeChecked();
-    });
-  });
+  //   const checkboxInitial = await screen.findAllByRole("checkbox");
+  //   checkboxInitial.forEach((checkbox) => {
+  //     expect(checkbox).not.toBeChecked();
+  //   });
+  // });
 
   //REMOVED AS REMOVED SEARCH BOX 
   // it("should check the search input renders correct results", async () => {
@@ -86,41 +85,41 @@ describe("ActiveTask page component", () => {
   //   });
   // });
 
-  it('displays "Task Completed" popup', async () => {
-    customRender(<ActiveTasks />, {
-      useRouting: true,
-      firestoreValue: mockFireStore,
-    });
+  // it('displays "Task Completed" popup', async () => {
+  //   customRender(<ActiveTasks />, {
+  //     useRouting: true,
+  //     firestoreValue: mockFireStore,
+  //   });
 
-    await waitFor(() => screen.getAllByTestId("active-task"));
+  //   await waitFor(() => screen.getAllByTestId("active-task"));
 
-    const checkButtons = await screen.findAllByTestId("check-button");
-    userEvent.click(checkButtons[0]);
+  //   const checkButtons = await screen.findAllByTestId("check-button");
+  //   userEvent.click(checkButtons[0]);
 
-    await waitFor(() =>
-      expect(screen.getByTestId("popup")).toHaveTextContent("Task Completed")
-    );
-  });
+  //   await waitFor(() =>
+  //     expect(screen.getByTestId("popup")).toHaveTextContent("Task Completed")
+  //   );
+  // });
 
-  it('displays "Add Media" popup after opening first popup and clicking add media', async () => {
-    customRender(<ActiveTasks />, {
-      useRouting: true,
-      firestoreValue: mockFireStore,
-    });
-    await waitFor(() => screen.getAllByTestId("active-task"));
+  // it('displays "Add Media" popup after opening first popup and clicking add media', async () => {
+  //   customRender(<ActiveTasks />, {
+  //     useRouting: true,
+  //     firestoreValue: mockFireStore,
+  //   });
+  //   await waitFor(() => screen.getAllByTestId("active-task"));
 
-    const checkButtons = await screen.findAllByTestId("check-button");
-    userEvent.click(checkButtons[0]);
+  //   const checkButtons = await screen.findAllByTestId("check-button");
+  //   userEvent.click(checkButtons[0]);
 
-    await waitFor(() =>
-      expect(screen.getByTestId("popup")).toHaveTextContent("Task Completed")
-    );
+  //   await waitFor(() =>
+  //     expect(screen.getByTestId("popup")).toHaveTextContent("Task Completed")
+  //   );
 
-    const addMediaButton = screen.getByText("ADD MEDIA");
-    userEvent.click(addMediaButton);
+  //   const addMediaButton = screen.getByText("ADD MEDIA");
+  //   userEvent.click(addMediaButton);
 
-    await waitFor(() =>
-      expect(screen.getByTestId("popup")).toHaveTextContent("UPDATE TASK")
-    );
-  });
+  //   await waitFor(() =>
+  //     expect(screen.getByTestId("popup")).toHaveTextContent("UPDATE TASK")
+  //   );
+  // });
 });

@@ -15,7 +15,6 @@ import { db } from "../../firebase";
 import { collection, getDocs, query, where, doc, addDoc, deleteDoc } from 'firebase/firestore';
 
 export type FirestoreContextProps = {
-
   completeActiveTask: (
     completedActiveTask: ActiveTask
   ) => Promise<void>;
