@@ -47,7 +47,6 @@ const ActiveTasks = () => {
     const ActiveTaskRef = collection(db, FirestoreCollections.ACTIVE_TASKS)
     const queryActiveTasks = query(ActiveTaskRef, where("userId", "==", user.id ))
     const querySnapshotActiveTask = await getDocs(queryActiveTasks)   
-    console.log("active tasks for this user?", querySnapshotActiveTask);
 
    if(querySnapshotActiveTask.docs.length > 0){
     const activeTasksData = querySnapshotActiveTask.docs.map((doc)=> {
@@ -58,16 +57,12 @@ const ActiveTasks = () => {
       // this is funky couldn't work out a better way, works for now
       const taskDate = `${task.dateAssigned.toDate().getDay()}${task.dateAssigned.toDate().getMonth()}${task.dateAssigned.toDate().getFullYear()}`
       const todaysDate = `${dayjs().toDate().getDay()}${dayjs().toDate().getMonth()}${dayjs().toDate().getFullYear()}`
-      console.log("task date", taskDate );
-      console.log("todays date", todaysDate);
       if(taskDate === todaysDate) {
         return task
       }
     }) as ActiveTask[];
     
     setActiveTasks(todaysTask)
-   } else {
-    console.error("error fetching user")
    }
     } catch (error) {
       console.error("Error fetching active tasks:", error);
