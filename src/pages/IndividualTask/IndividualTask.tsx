@@ -193,9 +193,6 @@ const addTsx = (<form onSubmit={handleTaskAdd
   <Button label='Add' ></Button>
 </form>)
 
-console.log(selectedTribeName);
-
-
   return (
     <>
     <Header subtitle='Individual Task'/>
