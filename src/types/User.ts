@@ -1,3 +1,5 @@
+import { Task } from "./Task";
+
 export type UserProfile = {
   id: string;
   img?: string;
@@ -7,6 +9,7 @@ export type UserProfile = {
   email: string;
   tribe: string;
   loginCount?: number;
+  task?: Task[]
 };
 
 export type NewUser = {
@@ -18,6 +21,8 @@ export type NewUser = {
   bio: string;
   img: string;
   tribe: string;
+  tribeId: string;
+  task: Task[]
 };
 
 export type AdminProfile = {
