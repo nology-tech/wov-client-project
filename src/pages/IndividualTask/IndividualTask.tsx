@@ -55,6 +55,7 @@ useEffect(()=> {
 getTaskInfo()
 getAllGroupsAdmin().then((tribes) => {
   setTribes(tribes);
+  setSelectedTribeName(tribes[0].name)
 });
 },
     // eslint-disable-next-line
@@ -191,6 +192,8 @@ const addTsx = (<form onSubmit={handleTaskAdd
   {formMessage && (<p className='form-message'>{formMessage}</p>)}
   <Button label='Add' ></Button>
 </form>)
+
+console.log(selectedTribeName);
 
 
   return (
