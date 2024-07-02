@@ -171,6 +171,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     data:
       | Pick<UserProfile, "bio" | "name" | "email" | "img">
       | Pick<UserProfile, "totalScore">
+      | Pick<UserProfile, "task">
     // profileFile?: File
   ): PromiseObjectNullString => {
     if (user === null) {
@@ -194,7 +195,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       await updateDoc(tribeDocRef, {
         users: firebase.firestore.FieldValue.arrayUnion(userId)
       });
-      console.log(`Tribe document updated successfully with user ${userId}.`);
     } catch (error) {
       console.error(`Error updating tribe document with user ${userId}:`, error);
       throw error; // Propagate the error to the caller
@@ -203,7 +203,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
 
   const createUser = async (
-    { email, password, firstName, lastName, bio, tribe }: NewUser,
+    { email, password, firstName, lastName, bio, tribe, tribeId }: NewUser,
     profileFile?: File
   ): PromiseObjectNullString => {
     try {
@@ -223,6 +223,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         img: "",
         activeTasks: [] as Task[],
         completedTasks: [] as CompletedTask[],
+        tribeId,
+        task : []
       };
       if (profileFile) {
         const filePath = `${uid}(${firstName}-${lastName})/images/profile`;
@@ -243,21 +245,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       );
 
       await updateTribeDocumentWithUser(tribe, uid);
-
-      await createDocumentInFirestoreCollection(
-        FirestoreCollections.COMPLETED_TASKS,
-        uid,
-        {
-          completedTasks: [],
-        }
-      );
-      await createDocumentInFirestoreCollection(
-        FirestoreCollections.ACTIVE_TASKS,
-        uid,
-        {
-          activeTasks: [],
-        }
-      );
 
       
       setUser(userProfile);

@@ -17,6 +17,8 @@ const emptyFormData: NewUser = {
   bio: "",
   img: "",
   tribe: "",
+  tribeId: "",
+  task: []
 };
 
 const Register = () => {
@@ -74,7 +76,7 @@ const Register = () => {
       if (passwordMatchError) {
         setPasswordMatchError("");
       }
-
+      
       const { error } = await createUser(formData, selectedFile ?? undefined);
 
       if (error) {
@@ -95,16 +97,14 @@ const Register = () => {
 
   const handleTribeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.currentTarget;
-    setFormData({ ...formData, [name]: value });
-    console.log("name:",name)
-    console.log("value:",value)
+    const allTribeData = tribes.filter(tribe => tribe.name === value)
+    setFormData({ ...formData, [name]: value, tribeId: allTribeData[0].id });
   };
 
   const handleShowUploadPrompt = () => {
     setShowUploadPrompt(!showUploadPrompt);
   };
 
-  console.log("formData:", formData);
   return (
     <section className="register">
       <div className="register__icon--container">

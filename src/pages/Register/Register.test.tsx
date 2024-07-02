@@ -8,6 +8,7 @@ import { GroupData } from "../../types/Groups";
 describe("Register Component", () => {
   const mockTribes: GroupData[] = [
     {
+      id: "1",
       name: "testing",
       startDate: "",
       image: "",
@@ -16,6 +17,7 @@ describe("Register Component", () => {
       users: ["2", "4"],
     },
     {
+      id: "2",
       name: "testing two",
       startDate: "",
       image: "",
