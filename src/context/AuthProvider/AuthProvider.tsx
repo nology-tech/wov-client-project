@@ -195,7 +195,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       await updateDoc(tribeDocRef, {
         users: firebase.firestore.FieldValue.arrayUnion(userId)
       });
-      console.log(`Tribe document updated successfully with user ${userId}.`);
     } catch (error) {
       console.error(`Error updating tribe document with user ${userId}:`, error);
       throw error; // Propagate the error to the caller

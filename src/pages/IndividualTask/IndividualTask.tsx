@@ -130,7 +130,7 @@ const handleTaskAdd = async (event: FormEvent) => {
   try{
     await batch.commit()
   } catch(e) {
-    console.log("error", e);
+    console.error("error", e);
     
     setFormMessage("Issue updating the users with tasks")
     throw new Error("Issue with updating the users")
