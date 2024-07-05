@@ -56,6 +56,7 @@ getTaskInfo()
 getAllGroupsAdmin().then((tribes) => {
   setTribes(tribes);
   setSelectedTribeName(tribes[0].name)
+  setSelectedTribeID(tribes[0].id)
 });
 },
     // eslint-disable-next-line
@@ -81,10 +82,10 @@ const handleTaskAdd = async (event: FormEvent) => {
   // get date selected  
   const dateSelected = date?.toDate()
    //get the selected tribe
-  const tribeID = selectedTribeID
+   const tribeID = selectedTribeID
   
   //get users in that tribe(user id), fetch all users
-  const userIds = tribes.filter(tribe => tribe.id === tribeID ).map(tribeInfo => tribeInfo.users)
+  const userIds = tribes.filter(tribe => tribe.id === tribeID ).map(tribeInfo => tribeInfo.users)  
   
   if(userIds[0].length === 0 ){
     setFormMessage("no users in this tribe yet")
